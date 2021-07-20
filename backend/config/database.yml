@@ -3,7 +3,7 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:  # デフォルトだと空欄になっているはずなので変更
+  password: # デフォルトだと空欄になっているはずなので変更
   host: localhost # デフォルトだとlocalhostになっているはずなので変更
 
 development:
@@ -20,3 +20,4 @@ production:
   username: <%= ENV["DATABASE_USERNAME"] %>
   password: <%= ENV["DATABASE_PASSWORD"] %>
   host: <%= ENV["DATABASE_HOST"] %>
+  socket: /var/lib/mysql/mysql.sock
