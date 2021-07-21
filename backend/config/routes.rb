@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :test, only: %i[index]
-      namespace :user do
-        resources :tokens
-        resources :message
-      end
+      # namespace :user do
+
+
+      # end
+      resources :messages
+      resources :tokens
       
 
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
