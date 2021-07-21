@@ -30,7 +30,7 @@ export interface User {
 export interface Message {
   title: string
   body: string
-  // image?: string
+  // image: File
   // created_at: Date
   // updated_at: Date
 }
