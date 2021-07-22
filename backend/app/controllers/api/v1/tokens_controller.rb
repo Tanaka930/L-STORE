@@ -15,27 +15,36 @@ class Api::V1::TokensController < ApplicationController
     @token.access_id = make_random_id()
 
     if Token.exists?(user_id: current_api_v1_user.id)
-      update(@token)
+      update(current_api_v1_user)
     else
       if @token.save
-        render json: { status: 'SUCCESS', data: post }
+        render json: { status: 'SUCCESS', data: @token }
+        return
       else
-        render json: { status: 'ERROR', data: post.errors }
+        render json: { status: 'ERROR', data: @token.errors }
+        return
       end
     end
-    render json: { is_login: true, data: current_api_v1_user }
+    # render json: { is_login: true, data: current_api_v1_user }
+    # return
   end
 
   def show
-    render json: { messege: "token#show"}
+
   end
 
-  def update(@token)
-    if @token.update(post_params)
-      render json: { status: 'SUCCESS', message: 'Updated the post', data: @post }
+  def update(current_api_v1_user)
+    @token = Token.find_by(user_id: current_api_v1_user.id)
+    if @token.update(token_params)
+      render json: { status: 'SUCCESS', message: 'Updated the post', data: @token }
+      return
     else
-      render json: { status: 'SUCCESS', message: 'Not updated', data: @post.errors }
+      render json: { status: 'SUCCESS', message: 'Not updated', data: @token.errors }
+      return
     end
+
+    render json: { is_login: true, data: current_api_v1_user }
+    return
   end
 
 
