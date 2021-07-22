@@ -9,44 +9,35 @@ class Api::V1::TokensController < ApplicationController
   end
 
   def create
-
-    @token = Token.new(token_params)
-    @token.user_id = current_api_v1_user.id
-    @token.access_id = make_random_id()
-
     if Token.exists?(user_id: current_api_v1_user.id)
-      update(current_api_v1_user)
-    else
-      if @token.save
-        render json: { status: 'SUCCESS', data: @token }
+      # 更新の場合
+      # result = update_sql(current_api_v1_user.id,params[:chanel_id],params[:chanel_secret],params[:message_token],params[:login_token])
+      result = Token.update(token_params)
+      if result
+        render json: { status: 'SUCCESS', data: current_api_v1_user }
         return
       else
-        render json: { status: 'ERROR', data: @token.errors }
+        render json: { status: 'ERROR', data: current_api_v1_user }
+        return
+      end
+    else
+      # 新規作成の場合
+      @token = Token.new(token_params)
+      @token.user_id = current_api_v1_user.id
+      @token.access_id = make_random_id()
+      if @token.save
+        render json: { status: 'SUCCESS', data: current_api_v1_user }
+        return
+      else
+        render json: { status: 'ERROR', data: current_api_v1_user }
         return
       end
     end
-    # render json: { is_login: true, data: current_api_v1_user }
-    # return
   end
 
   def show
 
   end
-
-  def update(current_api_v1_user)
-    @token = Token.find_by(user_id: current_api_v1_user.id)
-    if @token.update(token_params)
-      render json: { status: 'SUCCESS', message: 'Updated the post', data: @token }
-      return
-    else
-      render json: { status: 'SUCCESS', message: 'Not updated', data: @token.errors }
-      return
-    end
-
-    render json: { is_login: true, data: current_api_v1_user }
-    return
-  end
-
 
   private
   def token_params
@@ -65,21 +56,7 @@ class Api::V1::TokensController < ApplicationController
     redirect_to '/show'
   end
 
-# insert用の関数
-  def insert(user_id, message_token, login_token, chanel_id, chanel_secret, access_id)
-    # トークン情報を作成
-    result = Token.create(user_id: user_id, chanel_id: chanel_id, chanel_secret: chanel_secret, messaging_token: message_token, login_token: login_token ,access_id: access_id)
-    
-    return result
-  end
 
-  # update用の関数
-  def update_sql(message_token, login_token, chanel_id, chanel_secret)
-    # トークン情報を作成
-    result = Token.update(chanel_id: chanel_id, chanel_secret: chanel_secret, messaging_token: message_token, login_token: login_token)
-    
-    return result
-  end
 
   # アクセスID作成用の関数
   def make_random_id()
@@ -99,54 +76,4 @@ class Api::V1::TokensController < ApplicationController
       return 0
     end
   end
-
-  # def getMsgToken
-  #   @message_token
-  # end
-
-  # def setMsgToken(message_token)
-  #   @message_token = message_token
-  # end
-
-  # def getLoginToken
-  #   @login_token
-  # end
-
-  # def setLoginToken(login_token)
-  #   @login_token = login_token
-  # end
-
-  # def getChanelID
-  #   @chanel_id
-  # end
-
-  # def setChanelID(chanel_id)
-  #   @chanel_id = chanel_id
-  # end
-
-  # def getChanelSecret
-  #   @chanel_secret
-  # end
-
-  # def setChanelSecret(chanel_secret)
-  #   @chanel_secret = chanel_secret
-  # end
-
-  # def getAccessId
-  #   @access_id
-  # end
-
-  # def setAccessId(access_id)
-  #   @access_id = access_id
-  # end
-
-  # def getUser
-  #   @user
-  # end
-
-  # # ユーザーセット
-  # def setUser(id)
-  #   @user = User.find(id)
-  # end
-
 end
