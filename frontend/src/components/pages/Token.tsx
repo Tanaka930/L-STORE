@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
-// import Cookies from "js-cookie"
+import Cookies from "js-cookie"
 
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
@@ -9,7 +9,7 @@ import CardContent from "@material-ui/core/CardContent"
 import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
 
-// import { AuthContext } from "App"
+import { AuthContext } from "App"
 import AlertMessage from "components/utils/AlertMessage"
 import { token } from "lib/api/test"
 import { TokenParams } from "interfaces/index"
@@ -37,7 +37,7 @@ const Token: React.FC = () => {
   const classes = useStyles()
   const histroy = useHistory()
 
-  // const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { isSignedIn, currentUser } = useContext(AuthContext)
 
   const [chanel_id, setChanelId] = useState<string>("")
   const [chanel_secret, setChanelSecret] = useState<string>("")
@@ -84,69 +84,75 @@ const Token: React.FC = () => {
 
   return (
     <>
-      <form noValidate autoComplete="off">
-        <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Sign Up" />
-          <CardContent>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="chanel_id"
-              value={chanel_id}
-              margin="dense"
-              onChange={event => setChanelId(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="chanel_secret"
-              value={chanel_secret}
-              margin="dense"
-              onChange={event => setChanelSecret(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="messaging_token"
-              type="messaging_token"
-              value={messaging_token}
-              margin="dense"
+      {
+        isSignedIn && currentUser ? (
+          <form noValidate autoComplete="off">
+            <Card className={classes.card}>
+              <CardHeader className={classes.header} title="Create Token" />
+              <CardContent>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="chanel_id"
+                  value={chanel_id}
+                  margin="dense"
+                  onChange={event => setChanelId(event.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="chanel_secret"
+                  value={chanel_secret}
+                  margin="dense"
+                  onChange={event => setChanelSecret(event.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="messaging_token"
+                  type="messaging_token"
+                  value={messaging_token}
+                  margin="dense"
 
-              onChange={event => setMessagingToken(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              label="login_token"
-              type="login_token"
-              value={login_token}
-              margin="dense"
+                  onChange={event => setMessagingToken(event.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="login_token"
+                  type="login_token"
+                  value={login_token}
+                  margin="dense"
 
-              onChange={event => setLoginToken(event.target.value)}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              fullWidth
-              color="default"
-              disabled={!chanel_id || !chanel_secret || !messaging_token || !login_token}
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </CardContent>
-        </Card>
-      </form>
+                  onChange={event => setLoginToken(event.target.value)}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  fullWidth
+                  color="default"
+                  disabled={!chanel_id || !chanel_secret || !messaging_token || !login_token}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </CardContent>
+            </Card>
+          </form>
+        ) : (
+          <h1>Not signed in</h1>
+        )
+      }
       <AlertMessage // エラーが発生した場合はアラートを表示
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
-        message="Invalid emai or password"
+        message="Invalid id or tokens"
       />
     </>
   )

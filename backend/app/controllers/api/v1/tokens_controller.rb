@@ -1,6 +1,6 @@
 class Api::V1::TokensController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_api_v1_user!
   # IDがあるかを確認する回数
   @@recount = 5
 
@@ -8,24 +8,26 @@ class Api::V1::TokensController < ApplicationController
     render json: { message: "Hello World!"}
   end
 
-  def new
-    @token = Token.new
-  end
-
   def create
+
     @token = Token.new(token_params)
-    @token.user_id = current_user.id
+    @token.user_id = current_api_v1_user.id
     @token.access_id = make_random_id()
 
-    if Token.exists?(user_id: current_user.id)
+    if Token.exists?(user_id: current_api_v1_user.id)
       update()
     else
       if @token.save
-        redirect_to links_path
+        render json: { status: 'SUCCESS', data: post }
       else
-        render :new
+        render json: { status: 'ERROR', data: post.errors }
       end
     end
+    render json: { is_login: true, data: current_api_v1_user }
+  end
+
+  def show
+    render json: { messege: "token#show"}
   end
 
   def update
@@ -53,7 +55,7 @@ class Api::V1::TokensController < ApplicationController
   end
 
   def redirect_method()
-    redirect_to '/users/sign_in'
+    redirect_to '/show'
   end
 
 # insert用の関数
@@ -74,7 +76,7 @@ class Api::V1::TokensController < ApplicationController
 
   # アクセスID作成用の関数
   def make_random_id()
-    id = ''.tap { |s| 11.times { s << rand(0..10).to_s } }
+    id = ''.tap { |s| 11.times { s << rand(0..9).to_s } }
     i = 1
     while i <= @@recount
       if Token.exists?(access_id: id) then
