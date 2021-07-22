@@ -5,7 +5,7 @@ class Api::V1::TokensController < ApplicationController
   @@recount = 5
 
   def index
-    
+    render json: { message: "Hello World!"}
   end
 
   def new

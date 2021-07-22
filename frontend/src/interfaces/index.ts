@@ -25,3 +25,16 @@ export interface User {
   created_at: Date
   updated_at: Date
 }
+
+// トークン
+export interface TokenParams {
+  // id: number
+  chanel_id: string
+  chanel_secret: string
+  messaging_token: string
+  login_token: string
+  // access_id: string
+  // user_id: number
+  // created_at: Date
+  // updated_at: Date
+}
