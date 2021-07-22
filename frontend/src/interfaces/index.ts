@@ -37,4 +37,11 @@ export interface TokenParams {
   // user_id: number
   // created_at: Date
   // updated_at: Date
+  
+  
+// ユーザー
+export interface Message {
+  title: string
+  body: string
+  // image: File
 }

@@ -65,6 +65,7 @@ const SignIn: React.FC = () => {
 
       if (res.status === 200) {
         // ログインに成功した場合はCookieに各値を格納
+        console.log(res.headers["access-token"])
         Cookies.set("_access_token", res.headers["access-token"])
         Cookies.set("_client", res.headers["client"])
         Cookies.set("_uid", res.headers["uid"])
