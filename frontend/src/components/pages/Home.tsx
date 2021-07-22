@@ -1,7 +1,6 @@
 import React, { useCallback,useState, useContext } from "react"
 
 import { AuthContext } from "App"
-import { useHistory, Link } from "react-router-dom"
 
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
@@ -9,11 +8,7 @@ import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
-import { BorderStyleTwoTone } from "@material-ui/icons"
-import { Message } from "interfaces/index"
 import { postMessage } from "lib/api/message"
-import { getCurrentUser } from "lib/api/auth"
-import Cookies from "js-cookie"
 
 
 
@@ -46,10 +41,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Home: React.FC = () => {
-  const { setIsSignedIn, isSignedIn, currentUser, setCurrentUser } = useContext(AuthContext)
+  const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
-  const [loading, setLoading] = useState<boolean>(true)
-  const [label, setLabel] = useState<File>()
 
   const [title, setTitle] = useState<string>("")
   const [body, setBody] = useState<string>("")
@@ -74,29 +67,20 @@ const Home: React.FC = () => {
   const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const data = createFormData()
-
-    const res = await postMessage(data)
-
-    console.log(res)
+    try {
+      const data = createFormData()
+      const res = await postMessage(data)
+      console.log(res)
+      if(res.status === 200){
+        console.log("ok")
+        // おそらくここにリダイレクト処理などを記述する
+      }else{
+        console.log(res.status + "error")
+      }
+    } catch (err){
+      console.log(err)
+    }
     
-  }
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    const data = new FormData();
-    // const params: Message = {
-    //   title: title,
-    //   body: body
-    // }
-    
-    // const res = await postMessage(params)
-
-    // console.log(Cookies.get("_access_token"))
-    // setIsSignedIn(true)
-    // setCurrentUser(res?.data.data)
-    // setLoading(false)
-
   }
 
   return (
@@ -107,7 +91,7 @@ const Home: React.FC = () => {
             <h2>ようこそ {currentUser?.name}さん</h2>
             <form noValidate autoComplete="off" onSubmit={handleCreatePost}>
             <Card className={classes.card}>
-              <CardHeader className={classes.header} title="公式ライン一斉投稿" />
+              <CardHeader className={classes.header} title="公式ライン投稿" />
               <CardContent>
                 <TextField
                   variant="outlined"
@@ -143,15 +127,8 @@ const Home: React.FC = () => {
                 
                 <Button
                   type="submit"
-                  // variant="contained"
-                  // size="large"
-                  // fullWidth
-                  // color="default"
-                  // disabled={!title || !body ? true : false} // 空欄があった場合はボタンを押せないように
-                  // className={classes.submitBtn}
-                  // onClick={handleSubmit}
                 >
-                  送信する
+                  投稿する
                 </Button>
               </CardContent>
             </Card>
