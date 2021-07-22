@@ -12,7 +12,8 @@ class Api::V1::TokensController < ApplicationController
     if Token.exists?(user_id: current_api_v1_user.id)
       # 更新の場合
       # result = update_sql(current_api_v1_user.id,params[:chanel_id],params[:chanel_secret],params[:message_token],params[:login_token])
-      result = Token.update(token_params)
+      @trg = Token.find_by(user_id: current_api_v1_user.id)
+      result = @trg.update(token_params)
       if result
         render json: { status: 'SUCCESS', data: current_api_v1_user }
         return
