@@ -15,10 +15,6 @@ class Linepush < Apicommon
     @body = body
   end
 
-  def setImage(image)
-    @image = image
-  end
-
   def doPushMsg
     # メッセージ部分作成
     send_message = @title + "\n" + @body
