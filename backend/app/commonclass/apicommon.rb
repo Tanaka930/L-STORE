@@ -11,4 +11,8 @@ class Apicommon
     @token = token
   end
 
+  def setImage(image)
+    @image = image
+  end
+
 end

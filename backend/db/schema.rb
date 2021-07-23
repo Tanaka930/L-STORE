@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_062547) do
+ActiveRecord::Schema.define(version: 2021_07_23_091706) do
+
+  create_table "images", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "message_id"
+    t.string "image", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["message_id"], name: "index_images_on_message_id"
+    t.index ["user_id"], name: "index_images_on_user_id"
+  end
 
   create_table "messages", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -59,6 +69,8 @@ ActiveRecord::Schema.define(version: 2021_07_20_062547) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "images", "messages"
+  add_foreign_key "images", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "tokens", "users"
 end
