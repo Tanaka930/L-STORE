@@ -1,7 +1,4 @@
 class Linepush < Apicommon
-  # require 'net/http'
-  # require 'uri'
-  # require 'json' 
   @@url = 'https://api.line.me/v2/bot/message/broadcast'
 
   def initialize()
@@ -9,10 +6,6 @@ class Linepush < Apicommon
     @http = Net::HTTP.new(@uri.host,@uri.port)
     @http.use_ssl = true
   end
-
-  # def setToken(token)
-  #   @token = token
-  # end
 
   def setTitle(title)
     @title = title
