@@ -15,6 +15,10 @@ class Linepush < Apicommon
     @body = body
   end
 
+  def setThumbnail(thumbnail)
+    @thumbnail = thumbnail
+  end
+
   def doPushMsg
     # メッセージ部分作成
     send_message = @title + "\n" + @body
@@ -23,7 +27,7 @@ class Linepush < Apicommon
   end
 
   def doPushImg
-    paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @image.image.to_s}]}
+    paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
     doPush(paramsImg)
   end
 
