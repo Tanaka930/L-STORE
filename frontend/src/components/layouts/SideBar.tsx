@@ -47,11 +47,11 @@ const SideBar: React.FC = () => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        {/* <Toolbar>
           <Typography variant="h6" noWrap>
             Clipped drawer
           </Typography>
-        </Toolbar>
+        </Toolbar> */}
       </AppBar>
       <Drawer
         className={classes.drawer}

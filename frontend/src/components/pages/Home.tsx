@@ -11,8 +11,7 @@ import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
 import { postMessage } from "lib/api/message"
 import Box from "@material-ui/core/Box"
-
-
+import SideBar from "../layouts/SideBar"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -45,9 +44,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'none',
   }
 }))
-
-
-
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Home: React.FC = () => {
@@ -98,80 +94,81 @@ const Home: React.FC = () => {
       {
         isSignedIn && currentUser ? (
           <>
+            <SideBar />
             <h2>ようこそ {currentUser?.name}さん</h2>
             <form noValidate autoComplete="off" onSubmit={handleCreatePost}>
-            <Card className={classes.card}>
-              <CardHeader className={classes.header} title="公式ライン投稿" />
-              <CardContent>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="タイトル"
-                  value={title}
-                  margin="dense"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setTitle(e.target.value)
-                  }}
-                />
-                <TextField
-                  id="outlined-multiline-static"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  multiline
-                  rows={10}
-                  label="メッセージ"
-                  value={body}
-                  margin="dense"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setBody(e.target.value)
-                  }}
-                />
-
-                <Box display="flex" >
-                  <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    multiple
-                    type="file"
+              <Card className={classes.card}>
+                <CardHeader className={classes.header} title="公式ライン投稿" />
+                <CardContent>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    label="タイトル"
+                    value={title}
+                    margin="dense"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      uploadImage(e)
+                      setTitle(e.target.value)
                     }}
                   />
-                  <label htmlFor="contained-button-file">
-                    <Button className={classes.uploadBtn}
+                  <TextField
+                    id="outlined-multiline-static"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    multiline
+                    rows={10}
+                    label="メッセージ"
+                    value={body}
+                    margin="dense"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setBody(e.target.value)
+                    }}
+                  />
 
+                  <Box display="flex" >
+                    <input
+                      accept="image/*"
+                      className={classes.input}
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        uploadImage(e)
+                      }}
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Button className={classes.uploadBtn}
+
+                        variant="contained"
+                        color="primary"
+                        component="span">
+                        Upload
+                      </Button>
+                    </label>
+
+                    {/* <Button className={classes.submitBtn}
+                      component="label"
+                    >
+                      画像添付
+                      <input className={classes.input}
+                      // accept="image/*"
+                      id="icon-button-file" 
+                      type="file"
+
+                    />
+                    </Button> */}
+                    
+                    <Button className={classes.submitBtn}
                       variant="contained"
                       color="primary"
-                      component="span">
-                      Upload
+                      type="submit">
+                      投稿する
                     </Button>
-                  </label>
-
-                  {/* <Button className={classes.submitBtn}
-                    component="label"
-                  >
-                    画像添付
-                    <input className={classes.input}
-                    // accept="image/*"
-                    id="icon-button-file" 
-                    type="file"
-
-                  />
-                  </Button> */}
-                  
-                  <Button className={classes.submitBtn}
-                    variant="contained"
-                    color="primary"
-                    type="submit">
-                    投稿する
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </form>
+                  </Box>
+                </CardContent>
+              </Card>
+            </form>
           </>
         ) : (
           <h1>Not signed in</h1>

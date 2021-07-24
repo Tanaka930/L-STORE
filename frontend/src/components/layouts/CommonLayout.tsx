@@ -4,7 +4,6 @@ import { Container, Grid } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 import Header from "components/layouts/Header"
-// import SideBar from "components/layouts/SideBar"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -25,7 +24,6 @@ const CommonLayout = ({ children }: CommonLayoutProps) => {
       <header>
         <Header />
       </header>
-      {/* <SideBar /> */}
       <main>
         <Container maxWidth="lg" className={classes.container}>
           <Grid container justify="center">
