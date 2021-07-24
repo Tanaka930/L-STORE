@@ -14,6 +14,8 @@ import Box from "@material-ui/core/Box"
 import IconButton from '@material-ui/core/IconButton';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
+import SideBar from "../layouts/SideBar"
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -46,9 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'none',
   }
 }))
-
-
-
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Home: React.FC = () => {
@@ -99,6 +98,7 @@ const Home: React.FC = () => {
       {
         isSignedIn && currentUser ? (
           <>
+            <SideBar />
             <h2>ようこそ {currentUser?.name}さん</h2>
             <form noValidate autoComplete="off" onSubmit={handleCreatePost}>
             <Card className={classes.card}>
@@ -130,15 +130,44 @@ const Home: React.FC = () => {
                   }}
                 />
 
-                <Box display="flex" >
+                  <Box display="flex" >
+                    <input
+                      accept="image/*"
+                      className={classes.input}
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        uploadImage(e)
+                      }}
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Button className={classes.uploadBtn}
 
-                  {/* <label htmlFor="contained-button-file">
-                    <Button className={classes.uploadBtn}
+                        variant="contained"
+                        color="primary"
+                        component="span">
+                        Upload
+                      </Button>
+                    </label>
 
+                    {/* <Button className={classes.submitBtn}
+                      component="label"
+                    >
+                      画像添付
+                      <input className={classes.input}
+                      // accept="image/*"
+                      id="icon-button-file" 
+                      type="file"
+
+                    />
+                    </Button> */}
+                    
+                    <Button className={classes.submitBtn}
                       variant="contained"
                       color="primary"
-                      component="span">
-                      Upload
+                      type="submit">
+                      投稿する
                     </Button>
                   </label> */}
 
