@@ -131,46 +131,6 @@ const Home: React.FC = () => {
                 />
 
                   <Box display="flex" >
-                    <input
-                      accept="image/*"
-                      className={classes.input}
-                      id="contained-button-file"
-                      multiple
-                      type="file"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        uploadImage(e)
-                      }}
-                    />
-                    <label htmlFor="contained-button-file">
-                      <Button className={classes.uploadBtn}
-
-                        variant="contained"
-                        color="primary"
-                        component="span">
-                        Upload
-                      </Button>
-                    </label>
-
-                    {/* <Button className={classes.submitBtn}
-                      component="label"
-                    >
-                      画像添付
-                      <input className={classes.input}
-                      // accept="image/*"
-                      id="icon-button-file" 
-                      type="file"
-
-                    />
-                    </Button> */}
-                    
-                    <Button className={classes.submitBtn}
-                      variant="contained"
-                      color="primary"
-                      type="submit">
-                      投稿する
-                    </Button>
-                  </label> */}
-
                   <input accept="image/*"
                     className={classes.input}
                     id="icon-button-file"
@@ -186,17 +146,6 @@ const Home: React.FC = () => {
                       <PhotoLibraryIcon />
                     </IconButton>
                   </label>
-                  {/* <Button className={classes.submitBtn}
-                    component="label"
-                  >
-                    画像添付
-                    <input className={classes.input}
-                    // accept="image/*"
-                    id="icon-button-file" 
-                    type="file"
-
-                  />
-                  </Button> */}
                   
                   <Button className={classes.submitBtn}
                     variant="contained"
