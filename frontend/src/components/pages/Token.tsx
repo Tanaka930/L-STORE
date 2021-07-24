@@ -113,7 +113,6 @@ const Token: React.FC = () => {
                   required
                   fullWidth
                   label="messaging_token"
-                  type="messaging_token"
                   value={messaging_token}
                   margin="dense"
 
@@ -124,7 +123,6 @@ const Token: React.FC = () => {
                   required
                   fullWidth
                   label="login_token"
-                  type="login_token"
                   value={login_token}
                   margin="dense"
 

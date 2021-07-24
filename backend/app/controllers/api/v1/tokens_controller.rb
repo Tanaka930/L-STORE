@@ -26,6 +26,7 @@ class Api::V1::TokensController < ApplicationController
       @token = Token.new(token_params)
       @token.user_id = current_api_v1_user.id
       @token.access_id = make_random_id()
+      # binding.pry
       if @token.save
         render json: { status: 'SUCCESS', data: current_api_v1_user }
         return
@@ -54,7 +55,7 @@ class Api::V1::TokensController < ApplicationController
   end
 
   def redirect_method()
-    redirect_to '/show'
+
   end
 
 
