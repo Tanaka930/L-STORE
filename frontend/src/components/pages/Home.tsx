@@ -11,7 +11,8 @@ import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
 import { postMessage } from "lib/api/message"
 import Box from "@material-ui/core/Box"
-
+import IconButton from '@material-ui/core/IconButton';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -130,17 +131,8 @@ const Home: React.FC = () => {
                 />
 
                 <Box display="flex" >
-                  <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      uploadImage(e)
-                    }}
-                  />
-                  <label htmlFor="contained-button-file">
+
+                  {/* <label htmlFor="contained-button-file">
                     <Button className={classes.uploadBtn}
 
                       variant="contained"
@@ -148,8 +140,23 @@ const Home: React.FC = () => {
                       component="span">
                       Upload
                     </Button>
-                  </label>
+                  </label> */}
 
+                  <input accept="image/*"
+                    className={classes.input}
+                    id="icon-button-file"
+                    type="file"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      uploadImage(e)
+                    }}/>
+                  <label htmlFor="icon-button-file">
+                    <IconButton className={classes.uploadBtn}
+                      color="primary"
+                      aria-label="upload picture"
+                      component="span">
+                      <PhotoLibraryIcon />
+                    </IconButton>
+                  </label>
                   {/* <Button className={classes.submitBtn}
                     component="label"
                   >
