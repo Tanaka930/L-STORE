@@ -4,11 +4,13 @@ import { AuthContext } from "App"
 
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
+import Input from '@material-ui/core/Input'
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import CardHeader from "@material-ui/core/CardHeader"
 import Button from "@material-ui/core/Button"
 import { postMessage } from "lib/api/message"
+import Box from "@material-ui/core/Box"
 
 
 
@@ -16,7 +18,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginTop: theme.spacing(6)
   },
+  uploadBtn: {
+    marginTop: theme.spacing(2),
+    textTransform: "none"
+  },
   submitBtn: {
+    marginLeft: theme.spacing(2),
     marginTop: theme.spacing(2),
     flexGrow: 1,
     textTransform: "none"
@@ -33,6 +40,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     textDecoration: "none"
+  },
+  input: {
+    display: 'none',
   }
 }))
 
@@ -105,31 +115,60 @@ const Home: React.FC = () => {
                   }}
                 />
                 <TextField
+                  id="outlined-multiline-static"
                   variant="outlined"
                   required
                   fullWidth
+                  multiline
+                  rows={10}
                   label="メッセージ"
                   value={body}
                   margin="dense"
-                  autoComplete="current-password"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setBody(e.target.value)
                   }}
                 />
-                <input
-                  accept="image/*"
-                  id="icon-button-file" 
-                  type="file"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    uploadImage(e)
-                  }}
-                />
-                
-                <Button
-                  type="submit"
-                >
-                  投稿する
-                </Button>
+
+                <Box display="flex" >
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      uploadImage(e)
+                    }}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Button className={classes.uploadBtn}
+
+                      variant="contained"
+                      color="primary"
+                      component="span">
+                      Upload
+                    </Button>
+                  </label>
+
+                  {/* <Button className={classes.submitBtn}
+                    component="label"
+                  >
+                    画像添付
+                    <input className={classes.input}
+                    // accept="image/*"
+                    id="icon-button-file" 
+                    type="file"
+
+                  />
+                  </Button> */}
+                  
+                  <Button className={classes.submitBtn}
+                    variant="contained"
+                    color="primary"
+                    type="submit">
+                    投稿する
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </form>
