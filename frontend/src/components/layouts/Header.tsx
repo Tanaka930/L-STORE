@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   linkBtn: {
     textTransform: "none"
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
   }
 }))
 
@@ -94,28 +97,26 @@ const Header: React.FC = () => {
   }
 
   return (
-    <>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            component={Link}
-            to="/"
-            variant="h6"
-            className={classes.title}
-          >
-            L-store
-          </Typography>
-          <AuthButtons />
-        </Toolbar>
-      </AppBar>
-    </>
+    <AppBar className={classes.appBar}>
+      <Toolbar>
+        <IconButton
+          edge="start"
+          className={classes.iconButton}
+          color="inherit"
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography
+          component={Link}
+          to="/"
+          variant="h6"
+          className={classes.title}
+        >
+          L-store
+        </Typography>
+        <AuthButtons />
+      </Toolbar>
+    </AppBar>
   )
 }
 
