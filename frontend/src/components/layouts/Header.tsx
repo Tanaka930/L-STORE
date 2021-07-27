@@ -97,26 +97,28 @@ const Header: React.FC = () => {
   }
 
   return (
-    <AppBar className={classes.appBar}>
-      <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.iconButton}
-          color="inherit"
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          component={Link}
-          to="/"
-          variant="h6"
-          className={classes.title}
-        >
-          L-store
-        </Typography>
-        <AuthButtons />
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.iconButton}
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            component={Link}
+            to="/"
+            variant="h6"
+            className={classes.title}
+          >
+            L-store
+          </Typography>
+          <AuthButtons />
+        </Toolbar>
+      </AppBar>
+    </>
   )
 }
 
