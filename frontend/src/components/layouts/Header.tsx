@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useState, useContext } from "react"
 import { useHistory, Link } from "react-router-dom"
 import Cookies from "js-cookie"
 import { makeStyles, Theme } from "@material-ui/core/styles"
@@ -10,6 +10,8 @@ import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import { signOut } from "lib/api/auth"
 import { AuthContext } from "App"
+
+import SideBar from "./SideBar"
 
 const useStyles = makeStyles((theme: Theme) => ({
   iconButton: {
@@ -32,6 +34,11 @@ const Header: React.FC = () => {
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext)
   const classes = useStyles()
   const histroy = useHistory()
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+
+  const handleSidebarToggle = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
 
   const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
@@ -100,13 +107,16 @@ const Header: React.FC = () => {
     <>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
+          { isSignedIn &&
+            <IconButton
+              edge="start"
+              className={classes.iconButton}
+              color="inherit"
+              onClick={handleSidebarToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+          }
           <Typography
             component={Link}
             to="/"
@@ -118,6 +128,12 @@ const Header: React.FC = () => {
           <AuthButtons />
         </Toolbar>
       </AppBar>
+      { isSignedIn &&
+        <SideBar
+          isOpen={sidebarOpen}
+          handleSidebarToggle={handleSidebarToggle}
+        />
+      }
     </>
   )
 }

@@ -4,7 +4,6 @@ import { AuthContext } from "App"
 
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
-import Input from '@material-ui/core/Input'
 import Card from "@material-ui/core/Card"
 import CardContent from "@material-ui/core/CardContent"
 import CardHeader from "@material-ui/core/CardHeader"
@@ -13,9 +12,6 @@ import { postMessage } from "lib/api/message"
 import Box from "@material-ui/core/Box"
 import IconButton from '@material-ui/core/IconButton';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-
-import SideBar from "../layouts/SideBar"
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -98,7 +94,6 @@ const Home: React.FC = () => {
       {
         isSignedIn && currentUser ? (
           <>
-            <SideBar />
             <h2>ようこそ {currentUser?.name}さん</h2>
             <form noValidate autoComplete="off" onSubmit={handleCreatePost}>
               <Card className={classes.card}>

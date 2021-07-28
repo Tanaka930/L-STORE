@@ -4,7 +4,6 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -36,15 +35,22 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const SideBar: React.FC = () => {
-  const classes = useStyles();
+type Props = {
+  isOpen: boolean;
+  handleSidebarToggle: VoidFunction;
+}
+
+const SideBar: React.FC<Props> = (props) => {
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <CssBaseline />
       <Drawer
         className={classes.drawer}
-        variant="permanent"
+        variant="persistent"
+        open={props.isOpen}
+        onClose={props.handleSidebarToggle}
         classes={{
           paper: classes.drawerPaper,
         }}
@@ -71,7 +77,7 @@ const SideBar: React.FC = () => {
         </div>
       </Drawer>
     </div>
-  );
+  )
 }
 
 export default SideBar
