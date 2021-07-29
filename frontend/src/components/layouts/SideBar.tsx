@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
 import { Send, RecentActors } from '@material-ui/icons'
@@ -50,11 +51,11 @@ const SideBar: React.FC<Props> = (props) => {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            <ListItem button >
+            <ListItem button component={Link} to="/" >
               <ListItemIcon><Send /></ListItemIcon>
               <ListItemText primary="公式LINE投稿" />
             </ListItem>
-            <ListItem button >
+            <ListItem button component={Link} to="/manage" >
               <ListItemIcon><RecentActors /></ListItemIcon>
               <ListItemText primary="顧客管理" />
             </ListItem>
