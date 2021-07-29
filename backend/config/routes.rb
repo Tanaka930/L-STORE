@@ -9,6 +9,12 @@ Rails.application.routes.draw do
       # end
       resources :messages
       resources :tokens
+
+      resources :users, param: :access_id do
+        resources :line do
+          resources :chat
+        end
+      end
       
 
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
