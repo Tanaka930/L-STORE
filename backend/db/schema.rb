@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_091706) do
+ActiveRecord::Schema.define(version: 2021_07_29_064348) do
+
+  create_table "chats", charset: "utf8", force: :cascade do |t|
+    t.bigint "line_id"
+    t.string "body", null: false
+    t.string "send_flg", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["line_id"], name: "index_chats_on_line_id"
+  end
 
   create_table "images", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -20,6 +29,15 @@ ActiveRecord::Schema.define(version: 2021_07_23_091706) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["message_id"], name: "index_images_on_message_id"
     t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "lines", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "original_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_lines_on_user_id"
   end
 
   create_table "messages", charset: "utf8", force: :cascade do |t|
@@ -69,8 +87,10 @@ ActiveRecord::Schema.define(version: 2021_07_23_091706) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "chats", "lines"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
+  add_foreign_key "lines", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "tokens", "users"
 end
