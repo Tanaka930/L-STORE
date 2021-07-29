@@ -10,10 +10,11 @@ Rails.application.routes.draw do
       resources :messages
       resources :tokens
 
-      resources :users, param: :access_id do
-        resources :line do
-          resources :chat
-        end
+      resources :tokens, param: :access_id do
+        resources :chats
+      end
+      resources :lines do
+        resources :chats
       end
       
 

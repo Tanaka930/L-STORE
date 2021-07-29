@@ -137,6 +137,7 @@ GEM
       ruby-vips (>= 2.0.17, < 3)
     ipaddress (0.8.3)
     jmespath (1.4.0)
+    line-bot-api (1.19.0)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -240,6 +241,7 @@ DEPENDENCIES
   devise_token_auth
   dotenv-rails
   fog-aws
+  line-bot-api
   listen (~> 3.3)
   mini_magick
   mysql2 (~> 0.5)
@@ -254,4 +256,4 @@ RUBY VERSION
    ruby 3.0.1p64
 
 BUNDLED WITH
-   2.2.23
+   2.2.24
