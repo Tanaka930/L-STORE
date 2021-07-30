@@ -14,8 +14,11 @@ import { AuthContext } from "App"
 import SideBar from "./SideBar"
 
 const useStyles = makeStyles((theme: Theme) => ({
-  iconButton: {
+  menuButton: {
     marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
   title: {
     flexGrow: 1,
@@ -34,10 +37,14 @@ const Header: React.FC = () => {
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext)
   const classes = useStyles()
   const histroy = useHistory()
-  const [sidebarOpen, setSidebarOpen] = useState(true)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleSidebarToggle = () => {
-    setSidebarOpen(!sidebarOpen)
+    setMobileOpen(prevState => !prevState)
+  }
+
+  const handleSidebarClose = () => {
+    setMobileOpen(false)
   }
 
   const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -110,7 +117,7 @@ const Header: React.FC = () => {
           { isSignedIn &&
             <IconButton
               edge="start"
-              className={classes.iconButton}
+              className={classes.menuButton}
               color="inherit"
               onClick={handleSidebarToggle}
             >
@@ -130,8 +137,9 @@ const Header: React.FC = () => {
       </AppBar>
       { isSignedIn &&
         <SideBar
-          isOpen={sidebarOpen}
+          isOpen={mobileOpen}
           handleSidebarToggle={handleSidebarToggle}
+          handleSidebarClose={handleSidebarClose}
         />
       }
     </>
