@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2021_07_29_064348) do
     t.bigint "user_id"
     t.string "original_id", null: false
     t.string "name", null: false
+    t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_lines_on_user_id"
