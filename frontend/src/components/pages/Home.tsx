@@ -155,7 +155,10 @@ const Home: React.FC = () => {
             </form>
           </>
         ) : (
-          <h1>Not signed in</h1>
+          <>
+            <h1>トップページ</h1>
+            <p>サインインしてください</p>
+          </>
         )
       }
     </>

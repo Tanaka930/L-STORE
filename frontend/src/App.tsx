@@ -7,6 +7,7 @@ import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Token from "components/pages/Token"
 import Manage from "components/pages/Manage"
+import NotFound from "components/pages/404"
 
 import { getCurrentUser } from "lib/api/auth"
 import { User } from "interfaces/index"
@@ -73,11 +74,14 @@ const App: React.FC = () => {
           <Switch>
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/tokens" component={Token} />
-            <Route exact path="/manage" component={Manage} />
             <Private>
-              <Route exact path="/" component={Home} />
+              <>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/tokens" component={Token} />
+                <Route exact path="/manage" component={Manage} />
+              </>
             </Private>
+            <Route component={NotFound} />
           </Switch>
         </CommonLayout>
       </AuthContext.Provider>
