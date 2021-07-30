@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :tokens
 
       resources :tokens, param: :access_id do
-        resources :chats
+        resources :lines
       end
       resources :lines do
         resources :chats
