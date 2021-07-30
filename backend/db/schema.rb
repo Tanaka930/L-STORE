@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(version: 2021_07_30_051116) do
 
   create_table "chats", charset: "utf8", force: :cascade do |t|
     t.bigint "line_id"
-    t.string "body", null: false
+    t.string "body"
+    t.string "image"
     t.string "send_flg", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
