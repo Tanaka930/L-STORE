@@ -83,7 +83,8 @@ const Home: React.FC = () => {
         toast.error("送信に失敗しました")
         console.log(res.status + "error")
       }
-    } catch (err){
+    } catch(err) {
+      toast.warn("通信に失敗しました")
       console.log(err)
     }
     
