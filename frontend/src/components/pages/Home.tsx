@@ -45,9 +45,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Home: React.FC = () => {
-  const notify = () =>
-  toast.success("送信されました")
-
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
 
@@ -79,9 +76,11 @@ const Home: React.FC = () => {
       const res = await postMessage(data)
       console.log(res)
       if(res.status === 200){
+        toast.success("送信されました")
         console.log("ok")
         // おそらくここにリダイレクト処理などを記述する
-      }else{
+      } else {
+        toast.error("送信に失敗しました")
         console.log(res.status + "error")
       }
     } catch (err){
@@ -96,7 +95,7 @@ const Home: React.FC = () => {
         isSignedIn && currentUser ? (
           <>
             <h2>ようこそ {currentUser?.name}さん</h2>
-            <form noValidate autoComplete="off" onSubmit={handleCreatePost}>
+            <form autoComplete="off" onSubmit={handleCreatePost}>
               <Card className={classes.card}>
                 <CardHeader className={classes.header} title="公式ライン投稿" />
                 <CardContent>
@@ -147,8 +146,7 @@ const Home: React.FC = () => {
                       className={classes.submitBtn}
                       variant="contained"
                       color="primary"
-                      type="submit"
-                      onClick={notify}>
+                      type="submit">
                       投稿する
                     </Button>
                   </Box>
