@@ -30,10 +30,6 @@ class Linepush < Apicommon
     doPush(params)
   end
 
-  def doPushMsgTo()
-    
-  end
-
   def doPushImg
     paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
     doPush(paramsImg)

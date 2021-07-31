@@ -7,11 +7,6 @@ class LineCommonsController < ApplicationController
     if event_type == "message"
       # ここはモデルに書く
       trg_user = search_line_customer(original_id:,original_id)
-
-
-
-
-
       # インサートする
       insert(trg_user.id, params[:events][0][:message][:text],nil,"1")
       
