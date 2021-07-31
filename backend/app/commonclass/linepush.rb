@@ -19,6 +19,10 @@ class Linepush < Apicommon
     @thumbnail = thumbnail
   end
 
+  def setSecret(secret)
+    @secret = secret
+  end
+
   def doPushMsg
     # メッセージ部分作成
     send_message = @title + "\n" + @body
@@ -29,6 +33,16 @@ class Linepush < Apicommon
   def doPushImg
     paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
     doPush(paramsImg)
+  end
+
+  def lineImgSave(body)
+
+    event = getClient().parse_events_from(body)[0]
+    image_response = getClient().get_message_content(event.message['id'])
+    file = File.open("/tmp/#{SecureRandom.uuid}.jpg", "w+b")
+    file.write(image_response.body)
+
+    return file
   end
 
   private
@@ -44,4 +58,13 @@ class Linepush < Apicommon
     def doPush(jsonParam)
       response = @http.post(@uri.path, jsonParam.to_json, getHeader())
     end
+
+    def getClient()
+      client ||= Line::Bot::Client.new { |config|
+        config.channel_secret = @token
+        config.channel_token = @secret
+      }
+      return client
+    end
+
 end

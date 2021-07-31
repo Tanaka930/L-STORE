@@ -1,4 +1,4 @@
-class Api::V1::LineCostmersController < ApplicationController
+class Api::V1::LineCostmersController < LineCommonsController
 
   require 'net/http'
   require 'uri'
