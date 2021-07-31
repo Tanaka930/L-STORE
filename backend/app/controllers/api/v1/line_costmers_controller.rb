@@ -15,9 +15,10 @@ class Api::V1::LineCostmersController < LineCommonsController
 
     event_type = params[:events][0][:type]
 
-    case event_type
-    when "follow"
+    # case event_type
+    # when "follow"
 
+    if event_type == "follow"
       # lineのID取得
       original_id = params[:events][0][:source][:userId]
 
@@ -63,13 +64,18 @@ class Api::V1::LineCostmersController < LineCommonsController
         render json: { status: 'ERROR', data: current_api_v1_user }
         return
       end
-    when "message"
-      return
-    when "unfollow"
-      return
-    else
-      return
+    elsif event_type == "unfollow"
+
+    elsif event_type == "message" or "image"
+      resept_line_message(request)
     end
+    # when "message"
+    #   return
+    # when "unfollow"
+    #   return
+    # else
+    #   return
+    # end
 
   end
 
