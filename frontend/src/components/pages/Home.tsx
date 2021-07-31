@@ -40,6 +40,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   input: {
     display: 'none',
+  },
+  prevImgArea: {
+    textAlign: "center",
+    marginTop: 30
+  },
+  prevImg: {
+    width: 300,
+    height: 300,
+    objectFit: "contain"
   }
 }))
 
@@ -47,13 +56,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Home: React.FC = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
-
   const [title, setTitle] = useState<string>("")
   const [body, setBody] = useState<string>("")
   const [image, setImage] = useState<File>()
+  const [preview, setPreview] = useState("")
 
   const uploadImage = useCallback((e) => {
     const file = e.target.files[0]
+    setPreview(window.URL.createObjectURL(file))
     setImage(file)
   }, [])
 
@@ -165,6 +175,11 @@ const Home: React.FC = () => {
               draggable
               pauseOnHover={false}
             />
+              { preview &&
+                <Box className={classes.prevImgArea}>
+                  <img className={classes.prevImg} src={preview} alt="プレビュー画像" />
+                </Box>
+              }
           </>
         ) : (
           <>
