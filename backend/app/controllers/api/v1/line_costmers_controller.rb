@@ -1,120 +1,71 @@
-class Api::V1::LineCostmersController < ApplicationController
-
+class Api::V1::LinesController < ApplicationController
   require 'net/http'
   require 'uri'
   require 'json'
-
-
-
-  def index
-
-
+  @@url = 'https://api.line.me/v2/bot/message/broadcast'
+  @@url2 = 'https://api-data.line.me/v2/bot/message/'
+  
+  def initialize()
+  @uri = URI.parse(@@url)
+  @http = Net::HTTP.new(@uri.host,@uri.port)
+  @http.use_ssl = true
   end
-
   def create
-
-    event_type = params[:events][0][:type]
-
-    case event_type
-    when "follow"
-
-      # lineのID取得
-      original_id = params[:events][0][:source][:userId]
-
-      # トークン情報を取得
-      token = Token.find_by(access_id: params[:token_access_id])
-
-      # トークンに紐づくユーザーを取得
-      user = User.find(token.user_id)
-
-      @url = "https://api.line.me/v2/bot/profile/#{original_id}"
-      @uri = URI.parse(@url)
-      @http = Net::HTTP.new(@uri.host,@uri.port)
-      @http.use_ssl = true
-      headers = {
-        'Authorization' => "Bearer #{token.messaging_token}",
-        # 'Content-Type' => 'application/json',
-        # 'Accept' => 'application/json'
-      }
-
-      response = @http.get(@uri.path, headers)
-      # binding.pry
-      case response
-      when Net::HTTPSuccess then
-        contact = JSON.parse(response.body)
-        costmer_name = contact['displayName']
-        costmer_image = contact['pictureUrl']
-        
-      else
-        p "#{response.code} #{response.body}"
-      end
-
-      # 新規作成の場合
-      @line_costmer = LineCostmer.new
-      @line_costmer.original_id = original_id
-      @line_costmer.user_id = user.id
-      @line_costmer.name = costmer_name
-      @line_costmer.image = costmer_image
-
-      if @line_costmer.save
-        render json: { status: 'SUCCESS', data: current_api_v1_user }
-        return
-      else
-        render json: { status: 'ERROR', data: current_api_v1_user }
-        return
-      end
-    when "message"
-      return
-    when "unfollow"
-      return
-    else
-      return
-    end
-
+  @client ||= Line::Bot::Client.new { |config|
+  config.channel_secret = "bf03742991e1e3b7bb63928891c3ade8"
+  config.channel_token = "IOrFAeqFk18F/08fPy4ghwbucm8q6QEqoe987UbMkc+dG/IcZOi14QwmuWbc41R+WSONKNMDSfSfCT0fZ8Q3nyLByUY/xNjB9cToukdeq5LMcVs/GnT2DA4lTMNL9cMPqXPdbyf/PuG1RIl9b/S19QdB04t89/1O/w1cDnyilFU="
+  }
+  
+  if params[:events][0][:message][:type] == "image"
+  # @uri2 = URI.parse(@@url2 + params[:events][0][:message][:id] + "/content")
+  # @http2 = Net::HTTP.new(@uri2.host,@uri2.port)
+  # @http2.use_ssl = true
+  # headers = {
+  # 'Authorization'=>"Bearer IOrFAeqFk18F/08fPy4ghwbucm8q6QEqoe987UbMkc+dG/IcZOi14QwmuWbc41R+WSONKNMDSfSfCT0fZ8Q3nyLByUY/xNjB9cToukdeq5LMcVs/GnT2DA4lTMNL9cMPqXPdbyf/PuG1RIl9b/S19QdB04t89/1O/w1cDnyilFU=",
+  # 'Content-Type' =>'application/json',
+  # 'Accept'=>'application/json'
+  # }
+  # # imgparameter = {"to" => ["U740cabcce96e25489ac68f1e2cbc9392"],"messages" => [{"type" => "text", "text" => "返信"}]}
+  # response = @http2.get(@uri2.path, headers)
+  # logger.debug response
+  # user = User.find(response)
+  # body = request.body.read
+  # event = @client.parse_events_from(body)[0]
+  # temp = Tempfile.new("example").binmode.tap do |file|
+  # file.write @client.get_message_content(event.message['id']).body
+  # end
+  body = request.body.read
+  event = @client.parse_events_from(body)[0]
+  image_response = @client.get_message_content(event.message['id'])
+  file = File.open("/tmp/#{SecureRandom.uuid}.jpg", "w+b")
+  file.write(image_response.body)
+  Chat.create(line_id: 1, image: file ,send_flg: "1")
+  else
+  # lineのID取得
+  original_id = params[:events][0][:source][:userId]
+  
+  # トークン情報を取得
+  token = Token.find_by(access_id: params[:token_access_id])
+  
+  # トークンに紐づくユーザーを取得
+  user = User.find(token.user_id)
+  
+  parameter = {"to" => ["U740cabcce96e25489ac68f1e2cbc9392"],"messages" => [{"type" => "text", "text" => "返信"}]}
+  doPush(parameter)
   end
-
+  end
+  
   private
-
-  # def set_type
-  #   event_type = params[:events][0][:type]
-
-  #   case event_type
-  #   when "follow"
-  #     original_id = params[:events][0][:source][:userId]
-
-  #     # トークン情報を取得
-  #     token = Token.find_by(access_id: params[:token_access_id])
+  def getHeader
+  headers = {
+  Authorization'=>"Bearer IOrFAeqFk18F/08fPy4ghwbucm8q6QEqoe987UbMkc+dG/IcZOi14QwmuWbc41R+WSONKNMDSfSfCT0fZ8Q3nyLByUY/xNjB9cToukdeq5LMcVs/GnT2DA4lTMNL9cMPqXPdbyf/PuG1RIl9b/S19QdB04t89/1O/w1cDnyilFU=",
+  Content-Type' =>'application/json',
+  Accept'=>'application/json'
+  }
+  return headers
+  end
   
-  #     # トークンに紐づくユーザーを取得
-  #     user = User.find(token.user_id)
-  
-  #     @url = "https://api.line.me/v2/bot/profile/#{original_id}"
-  #     @uri = URI.parse(@url)
-  #     @http = Net::HTTP.new(@uri.host,@uri.port)
-  #     @http.use_ssl = true
-  #     headers = {
-  #       'Authorization' => "Bearer #{token.messaging_token}",
-  #       # 'Content-Type' => 'application/json',
-  #       # 'Accept' => 'application/json'
-  #     }
-  
-  #     response = @http.get(@uri.path, headers)
-  #     # binding.pry
-  #     case response
-  #     when Net::HTTPSuccess then
-  #       contact = JSON.parse(response.body)
-  #       costmer_name = contact['displayName']
-  #       costmer_image = contact['pictureUrl']
-        
-  #     else
-  #       p "#{response.code} #{response.body}"
-  #     end
-  #   end
-  # end
-
-  # def line_costmer_params
-  #   params.require(:line_costmer).permit(:chanel_id, :chanel_secret, :messaging_token, :login_token)
-  # end
-
-
-end
+  def doPush(jsonParam)
+  response = @http.post(@uri.path, jsonParam.to_json, getHeader())
+  end
+  end
