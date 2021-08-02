@@ -1,5 +1,11 @@
 class Api::V1::ChatsController < LineCommonsController
   before_action :authenticate_api_v1_user!
+
+  def index
+    chats = Chat.where(line_id: params[:line_costmer_id])
+    render json: { is_login: true, data: chats}
+  end
+
   def create
     begin
       trg_line_user = LineCostmer.find(params[:line_costmer_id])
