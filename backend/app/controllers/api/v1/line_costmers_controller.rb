@@ -4,11 +4,11 @@ class Api::V1::LineCostmersController < LineCommonsController
   require 'uri'
   require 'json'
 
-
+  before_action :authenticate_api_v1_user!, except: :create
 
   def index
-
-
+    line_user = LineCostmer.where(user_id: current_api_v1_user.id).pluck(:id,:user_id,:name,:image)
+    render json: { is_login: true, data: line_user}
   end
 
   def create
