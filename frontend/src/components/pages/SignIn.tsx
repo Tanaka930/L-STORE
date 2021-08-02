@@ -1,20 +1,12 @@
 import React, { useState, useContext } from "react"
 import { useHistory, Link } from "react-router-dom"
 import Cookies from "js-cookie"
-
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import { Typography } from "@material-ui/core"
-import TextField from "@material-ui/core/TextField"
-import Card from "@material-ui/core/Card"
-import CardContent from "@material-ui/core/CardContent"
-import CardHeader from "@material-ui/core/CardHeader"
-import Button from "@material-ui/core/Button"
-import Box from "@material-ui/core/Box"
-
 import { AuthContext } from "App"
 import AlertMessage from "components/utils/AlertMessage"
 import { signIn } from "lib/api/auth"
 import { SignInParams } from "interfaces/index"
+import { Typography, TextField, Card, CardContent, CardHeader, Button, Box } from "@material-ui/core"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -30,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     padding: theme.spacing(2),
-    maxWidth: 400
+    maxWidth: 400,
+    marginTop: 40
   },
   box: {
     marginTop: "2rem"
@@ -44,9 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SignIn: React.FC = () => {
   const classes = useStyles()
   const history = useHistory()
-
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
-
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
@@ -89,13 +80,13 @@ const SignIn: React.FC = () => {
     <>
       <form noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Sign In" />
+          <CardHeader className={classes.header} title="ログイン" />
           <CardContent>
             <TextField
               variant="outlined"
               required
               fullWidth
-              label="Email"
+              label="メールアドレス"
               value={email}
               margin="dense"
               onChange={event => setEmail(event.target.value)}
@@ -104,9 +95,9 @@ const SignIn: React.FC = () => {
               variant="outlined"
               required
               fullWidth
-              label="Password"
+              label="パスワード"
               type="password"
-              placeholder="At least 6 characters"
+              placeholder="6文字以上で入力してください"
               value={password}
               margin="dense"
               autoComplete="current-password"
@@ -117,18 +108,18 @@ const SignIn: React.FC = () => {
               variant="contained"
               size="large"
               fullWidth
-              color="default"
+              color="primary"
               disabled={!email || !password ? true : false} // 空欄があった場合はボタンを押せないように
               className={classes.submitBtn}
               onClick={handleSubmit}
             >
-              Submit
+              ログイン
             </Button>
             <Box textAlign="center" className={classes.box}>
               <Typography variant="body2">
-                Don't have an account? &nbsp;
+                アカウントをお持ちでないですか？ &nbsp;
                 <Link to="/signup" className={classes.link}>
-                  Sign Up now!
+                  新規登録
                 </Link>
               </Typography>
             </Box>

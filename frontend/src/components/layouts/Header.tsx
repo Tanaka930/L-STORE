@@ -1,16 +1,11 @@
 import React, { useState, useContext } from "react"
 import { useHistory, Link } from "react-router-dom"
 import Cookies from "js-cookie"
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import { signOut } from "lib/api/auth"
 import { AuthContext } from "App"
-
+import { signOut } from "lib/api/auth"
+import { AppBar, Toolbar, Typography, Button, IconButton } from "@material-ui/core"
+import MenuIcon from "@material-ui/icons/Menu"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import SideBar from "./SideBar"
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -36,8 +31,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Header: React.FC = () => {
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext)
   const classes = useStyles()
-  const histroy = useHistory()
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const history = useHistory()
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false)
 
   const handleSidebarToggle = () => {
     setMobileOpen(prevState => !prevState)
@@ -58,7 +53,7 @@ const Header: React.FC = () => {
         Cookies.remove("_uid")
 
         setIsSignedIn(false)
-        histroy.push("/signin")
+        history.push("/signin")
 
         console.log("Succeeded in sign out")
       } else {
@@ -80,7 +75,7 @@ const Header: React.FC = () => {
             className={classes.linkBtn}
             onClick={handleSignOut}
           >
-            Sign out
+            ログアウト
           </Button>
         )
       } else {
@@ -92,7 +87,7 @@ const Header: React.FC = () => {
               color="inherit"
               className={classes.linkBtn}
             >
-              Sign in
+              ログイン
             </Button>
             <Button
               component={Link}
@@ -100,7 +95,7 @@ const Header: React.FC = () => {
               color="inherit"
               className={classes.linkBtn}
             >
-              Sign Up
+              新規登録
             </Button>
           </>
         )

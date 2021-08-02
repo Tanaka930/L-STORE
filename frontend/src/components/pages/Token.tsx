@@ -1,18 +1,12 @@
 import React, { useContext, useState } from "react"
 import { useHistory } from "react-router-dom"
-import Cookies from "js-cookie"
-
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Card from "@material-ui/core/Card"
-import CardContent from "@material-ui/core/CardContent"
-import CardHeader from "@material-ui/core/CardHeader"
-import Button from "@material-ui/core/Button"
-
 import { AuthContext } from "App"
 import AlertMessage from "components/utils/AlertMessage"
 import { token } from "lib/api/test"
 import { TokenParams } from "interfaces/index"
+import { TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
+import { makeStyles, Theme } from "@material-ui/core/styles"
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -28,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     padding: theme.spacing(2),
-    maxWidth: 400
+    maxWidth: 400,
+    marginTop: 40
   }
 }))
 
@@ -88,13 +83,13 @@ const Token: React.FC = () => {
         isSignedIn && currentUser ? (
           <form noValidate autoComplete="off">
             <Card className={classes.card}>
-              <CardHeader className={classes.header} title="Create Token" />
+              <CardHeader className={classes.header} title="トークン登録" />
               <CardContent>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  label="chanel_id"
+                  label="チャネルID"
                   value={chanel_id}
                   margin="dense"
                   onChange={event => setChanelId(event.target.value)}
@@ -103,7 +98,7 @@ const Token: React.FC = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  label="chanel_secret"
+                  label="チャネルシークレット"
                   value={chanel_secret}
                   margin="dense"
                   onChange={event => setChanelSecret(event.target.value)}
@@ -112,7 +107,7 @@ const Token: React.FC = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  label="messaging_token"
+                  label="チャネルアクセストークン"
                   value={messaging_token}
                   margin="dense"
 
@@ -122,7 +117,7 @@ const Token: React.FC = () => {
                   variant="outlined"
                   required
                   fullWidth
-                  label="login_token"
+                  label="ログイントークン"
                   value={login_token}
                   margin="dense"
 
@@ -133,11 +128,12 @@ const Token: React.FC = () => {
                   variant="contained"
                   size="large"
                   fullWidth
-                  color="default"
+                  color="primary"
+                  className={classes.submitBtn}
                   disabled={!chanel_id || !chanel_secret || !messaging_token || !login_token}
                   onClick={handleSubmit}
                 >
-                  Submit
+                  登録
                 </Button>
               </CardContent>
             </Card>

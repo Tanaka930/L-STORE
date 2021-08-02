@@ -1,12 +1,9 @@
 import React, { useCallback,useState, useContext } from "react"
-
 import { AuthContext } from "App"
-
-import { makeStyles, Theme } from "@material-ui/core/styles"
 import { postMessage } from "lib/api/message"
-import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import { TextField, Card, CardContent, CardHeader, Button, Box, IconButton } from "@material-ui/core"
-
+import { makeStyles, Theme } from "@material-ui/core/styles"
+import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -80,7 +77,6 @@ const Home: React.FC = () => {
 
   const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     try {
       const data = createFormData()
       const res = await postMessage(data)
@@ -97,7 +93,6 @@ const Home: React.FC = () => {
       toast.warn("通信に失敗しました")
       console.log(err)
     }
-    
   }
 
   return (
