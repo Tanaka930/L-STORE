@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_30_051116) do
+ActiveRecord::Schema.define(version: 2021_08_02_022937) do
+
+  create_table "chatimages", charset: "utf8", force: :cascade do |t|
+    t.bigint "chat_id"
+    t.string "image", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_id"], name: "index_chatimages_on_chat_id"
+  end
 
   create_table "chats", charset: "utf8", force: :cascade do |t|
     t.bigint "line_id"
@@ -89,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_07_30_051116) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "chatimages", "chats"
   add_foreign_key "chats", "line_costmers", column: "line_id"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
