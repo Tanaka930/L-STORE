@@ -30,8 +30,20 @@ class Linepush < Apicommon
     doPush(params)
   end
 
+  def doPushMsgTo(to)
+    # メッセージ部分作成
+    send_message = @body
+    params = {"to" => [to],"messages" => [{"type" => "text", "text" => send_message}]}
+    doPush(params)
+  end
+
   def doPushImg
     paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
+    doPush(paramsImg)
+  end
+
+  def doPushImgTo(to)
+    paramsImg = {"to" => [to],"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
     doPush(paramsImg)
   end
 
@@ -58,6 +70,7 @@ class Linepush < Apicommon
       }
       return headers
     end
+  
 
     def doPush(jsonParam)
       response = @http.post(@uri.path, jsonParam.to_json, getHeader())
