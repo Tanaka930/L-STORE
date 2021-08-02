@@ -7,7 +7,6 @@ import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     marginTop: theme.spacing(6)
