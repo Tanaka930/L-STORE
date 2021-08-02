@@ -1,3 +1,4 @@
 class Chat < ApplicationRecord
-  mount_uploader :image, ImageUploader
+  belongs_to :line_costmer
+  mount_uploader :image, ThumbnailUploader
 end

@@ -30,15 +30,31 @@ class Linepush < Apicommon
     doPush(params)
   end
 
+  def doPushMsgTo(to)
+    # メッセージ部分作成
+    send_message = @body
+    params = {"to" => [to],"messages" => [{"type" => "text", "text" => send_message}]}
+    doPush(params)
+  end
+
   def doPushImg
     paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
     doPush(paramsImg)
   end
 
-  def lineImgSave(body)
+  def doPushImgTo(to)
+    paramsImg = {"to" => [to],"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
+    doPush(paramsImg)
+  end
 
-    event = getClient().parse_events_from(body)[0]
-    image_response = getClient().get_message_content(event.message['id'])
+  def lineImgSave(request)
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = @secret
+      config.channel_token = @token
+    }
+    body = request.body.read
+    event = @client.parse_events_from(body)[0]
+    image_response = @client.get_message_content(event.message['id'])
     file = File.open("/tmp/#{SecureRandom.uuid}.jpg", "w+b")
     file.write(image_response.body)
 
@@ -54,17 +70,17 @@ class Linepush < Apicommon
       }
       return headers
     end
+  
 
     def doPush(jsonParam)
       response = @http.post(@uri.path, jsonParam.to_json, getHeader())
     end
 
-    def getClient()
-      client ||= Line::Bot::Client.new { |config|
-        config.channel_secret = @token
-        config.channel_token = @secret
+    def setClient()
+      @client ||= Line::Bot::Client.new { |config|
+        config.channel_secret = @secret
+        config.channel_token = @token
       }
-      return client
     end
 
 end
