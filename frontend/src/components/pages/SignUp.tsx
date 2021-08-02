@@ -1,18 +1,12 @@
 import React, { useState, useContext } from "react"
 import { useHistory } from "react-router-dom"
 import Cookies from "js-cookie"
-
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import TextField from "@material-ui/core/TextField"
-import Card from "@material-ui/core/Card"
-import CardContent from "@material-ui/core/CardContent"
-import CardHeader from "@material-ui/core/CardHeader"
-import Button from "@material-ui/core/Button"
-
 import { AuthContext } from "App"
-import AlertMessage from "components/utils/AlertMessage"
 import { signUp } from "lib/api/auth"
 import { SignUpParams } from "interfaces/index"
+import { TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
+import { makeStyles, Theme } from "@material-ui/core/styles"
+import AlertMessage from "components/utils/AlertMessage"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -28,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     padding: theme.spacing(2),
-    maxWidth: 400
+    maxWidth: 400,
+    marginTop: 40
   }
 }))
 
@@ -36,9 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SignUp: React.FC = () => {
   const classes = useStyles()
   const histroy = useHistory()
-
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
-
   const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -85,13 +78,13 @@ const SignUp: React.FC = () => {
     <>
       <form noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="Sign Up" />
+          <CardHeader className={classes.header} title="新規登録" />
           <CardContent>
             <TextField
               variant="outlined"
               required
               fullWidth
-              label="Name"
+              label="名前"
               value={name}
               margin="dense"
               onChange={event => setName(event.target.value)}
@@ -100,7 +93,7 @@ const SignUp: React.FC = () => {
               variant="outlined"
               required
               fullWidth
-              label="Email"
+              label="メールアドレス"
               value={email}
               margin="dense"
               onChange={event => setEmail(event.target.value)}
@@ -109,7 +102,7 @@ const SignUp: React.FC = () => {
               variant="outlined"
               required
               fullWidth
-              label="Password"
+              label="パスワード"
               type="password"
               value={password}
               margin="dense"
@@ -120,7 +113,7 @@ const SignUp: React.FC = () => {
               variant="outlined"
               required
               fullWidth
-              label="Password Confirmation"
+              label="パスワード(確認用)"
               type="password"
               value={passwordConfirmation}
               margin="dense"
@@ -132,12 +125,12 @@ const SignUp: React.FC = () => {
               variant="contained"
               size="large"
               fullWidth
-              color="default"
+              color="primary"
               disabled={!name || !email || !password || !passwordConfirmation ? true : false}
               className={classes.submitBtn}
               onClick={handleSubmit}
             >
-              Submit
+              新規登録
             </Button>
           </CardContent>
         </Card>
