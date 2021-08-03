@@ -1,4 +1,4 @@
-import React, { useCallback,useState, useContext } from "react"
+import React, { useCallback, useState, useContext } from "react"
 import { AuthContext } from "App"
 import { postMessage } from "lib/api/message"
 import { TextField, Card, CardContent, CardHeader, Button, Box, IconButton } from "@material-ui/core"
@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 
   const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
+    try { 
       const data = createFormData()
       const res = await postMessage(data)
       console.log(res)
