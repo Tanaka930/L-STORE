@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_02_022937) do
+ActiveRecord::Schema.define(version: 2021_08_03_084544) do
 
   create_table "chatimages", charset: "utf8", force: :cascade do |t|
     t.bigint "chat_id"
@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(version: 2021_08_02_022937) do
   end
 
   create_table "chats", charset: "utf8", force: :cascade do |t|
-    t.bigint "line_id"
+    t.bigint "line_costmer_id"
     t.string "body"
     t.string "image"
     t.string "send_flg", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["line_id"], name: "index_chats_on_line_id"
+    t.index ["line_costmer_id"], name: "index_chats_on_line_costmer_id"
   end
 
   create_table "images", charset: "utf8", force: :cascade do |t|
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2021_08_02_022937) do
   end
 
   add_foreign_key "chatimages", "chats"
-  add_foreign_key "chats", "line_costmers", column: "line_id"
+  add_foreign_key "chats", "line_costmers"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
   add_foreign_key "line_costmers", "users"
