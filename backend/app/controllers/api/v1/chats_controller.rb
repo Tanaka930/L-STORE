@@ -12,7 +12,7 @@ class Api::V1::ChatsController < LineCommonsController
       # params[:messate]は仮
       # params[:image]は仮
 
-      message = params[:messate]
+      message = params[:message]
 
       result = insert(trg_line_user.id, message, params[:image], "0")
 
