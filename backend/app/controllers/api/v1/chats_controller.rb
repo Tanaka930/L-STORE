@@ -2,7 +2,7 @@ class Api::V1::ChatsController < LineCommonsController
   before_action :authenticate_api_v1_user!
 
   def index
-    chats = Chat.where(line_id: params[:line_costmer_id])
+    chats = Chat.where(line_costmer_id: params[:line_costmer_id])
     render json: { is_login: true, data: chats}
   end
 
@@ -44,7 +44,7 @@ class Api::V1::ChatsController < LineCommonsController
 
   private
   def insert(line_id, body, image)
-    result = Chat.create(line_id: line_id, body: body, image: image, send_flg: "0")
+    result = Chat.create(line_costmer_id: line_id, body: body, image: image, send_flg: "0")
     return result.id
   end
 

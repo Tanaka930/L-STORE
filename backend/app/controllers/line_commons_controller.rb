@@ -25,7 +25,7 @@ class LineCommonsController < ApplicationController
   end
 
   def insert(line_id,body,image,send_flg)
-    Chat.create(line_id: line_id, body: body, image: image, send_flg: send_flg)
+    Chat.create(line_costmer_id: line_id, body: body, image: image, send_flg: send_flg)
   end
 
   def search_line_customer(original_id,token_access_id)
@@ -40,4 +40,16 @@ class LineCommonsController < ApplicationController
       config.channel_token = client_src
     }
   end
+
+  def fromLine(request, secret_id)
+    http_request_body = request.raw_post
+    hash = OpenSSL::HMAC::digest(OpenSSL::Digest::SHA256.new, secret_id, http_request_body)
+    signature = Base64.strict_encode64(hash)
+    if request.env['HTTP_X_LINE_SIGNATURE'] == signature
+      return true
+    else
+      return false
+    end
+  end
+
 end

@@ -12,17 +12,19 @@ class Api::V1::LineCostmersController < LineCommonsController
   end
 
   def create
+    @token = Token.find_by(access_id: params[:token_access_id])
 
-    event_type = params[:events][0][:type]
+    if fromLine(request, @token.chanel_secret)
+      event_type = params[:events][0][:type]
+      # case event_type
+      # when "follow"
+      if event_type == "follow"
+        follow()
+      elsif event_type == "unfollow"
 
-    # case event_type
-    # when "follow"
-    if event_type == "follow"
-      follow()
-    elsif event_type == "unfollow"
-
-    elsif event_type == "message" or "image"
-      resept_line_message(request)
+      elsif event_type == "message" or "image"
+        resept_line_message(request)
+      end
     end
   end
 
