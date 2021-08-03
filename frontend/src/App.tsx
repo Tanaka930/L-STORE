@@ -6,7 +6,7 @@ import Home from "components/pages/Home"
 import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Token from "components/pages/Token"
-import Manage from "components/pages/Manage"
+import Customers from "components/pages/Customers"
 import NotFound from "components/pages/404"
 
 import { getCurrentUser } from "lib/api/auth"
@@ -36,8 +36,6 @@ const App: React.FC = () => {
       if (res?.data.isLogin === true) {
         setIsSignedIn(true)
         setCurrentUser(res?.data.data)
-
-        console.log(res?.data.data)
       } else {
         console.log("No current user")
       }
@@ -78,7 +76,7 @@ const App: React.FC = () => {
               <>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/tokens" component={Token} />
-                <Route exact path="/manage" component={Manage} />
+                <Route exact path="/customers" component={Customers} />
               </>
             </Private>
             <Route component={NotFound} />
