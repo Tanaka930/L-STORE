@@ -49,9 +49,9 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemIcon><Send /></ListItemIcon>
           <ListItemText primary="公式LINE投稿" />
         </ListItem>
-        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/manage" >
+        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/customers" >
           <ListItemIcon><RecentActors /></ListItemIcon>
-          <ListItemText primary="顧客管理" />
+          <ListItemText primary="お友達リスト" />
         </ListItem>
       </List>
     </div>
