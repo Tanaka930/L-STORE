@@ -7,8 +7,18 @@ class Api::V1::LineCostmersController < LineCommonsController
   before_action :authenticate_api_v1_user!, except: :create
 
   def index
-    line_user = LineCostmer.where(user_id: current_api_v1_user.id).pluck(:id,:user_id,:name,:image)
-    render json: { is_login: true, data: line_user}
+    line_users = LineCostmer.where(user_id: current_api_v1_user.id).pluck(:id,:user_id,:name,:image)
+    json_array = []
+    line_users.each do |line_user|
+      json_data = {
+        "id" => line_user[0] ,
+        "user_id" => line_user[1],
+        "name" => line_user[2],
+        "image" => line_user[3]
+      }
+      json_array.push(json_data)
+    end
+    render json: json_array
   end
 
   def create
