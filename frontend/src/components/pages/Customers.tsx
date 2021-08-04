@@ -2,11 +2,9 @@ import React, { useState ,useEffect, useContext } from 'react'
 import { AuthContext } from "App"
 import axios from 'axios'
 import Cookies from "js-cookie"
-// import { ColorizeSharp } from '@material-ui/icons'
 import { CustomerList } from "interfaces/index"
 
 const Customers: React.FC = () => {
-  // const {isSignedIn, currentUser } = useContext(AuthContext)
   const [datas, setDatas] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
   const config = {
@@ -20,8 +18,8 @@ const Customers: React.FC = () => {
   useEffect(() => {
     axios.get('http://192.168.3.15:3001/api/v1/tokens/' + currentUser?.id + '/line_costmers', config)
       .then(res => {
-        console.log(res.data.data)
-        setDatas(res.data.data)
+        console.log(res.data)
+        setDatas(res.data)
       })
       .catch(error => console.log(error))
   }, [])
