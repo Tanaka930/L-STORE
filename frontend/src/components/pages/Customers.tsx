@@ -3,9 +3,26 @@ import { AuthContext } from "App"
 import axios from 'axios'
 import Cookies from "js-cookie"
 import { CustomerList } from "interfaces/index"
+import { makeStyles } from '@material-ui/core/styles'
+import PersonIcon from '@material-ui/icons/Person'
+import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minWidth: 1000
+  },
+  subhead: {
+    display: "flex",
+  },
+  subheadTitle: {
+    flex: "1"
+  }
+}));
 
 const Customers: React.FC = () => {
-  const [datas, setDatas] = useState<CustomerList[]>([])
+  const classes = useStyles()
+
+  const [customers, setCustomers] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
   const config = {
     headers: {
@@ -19,20 +36,29 @@ const Customers: React.FC = () => {
     axios.get('http://192.168.3.15:3001/api/v1/tokens/' + currentUser?.id + '/line_costmers', config)
       .then(res => {
         console.log(res.data)
-        setDatas(res.data)
+        setCustomers(res.data)
       })
       .catch(error => console.log(error))
   }, [])
 
   return (
-    <>
+    <div className={classes.root}>
       <h1>お友達リスト</h1>
-      <ul>
-        {datas.map((data, index) => (
-          <li key={index}>{data}</li>
+      <List subheader={<ListSubheader className={classes.subhead}><span className={classes.subheadTitle}>アカウント名</span><span className={classes.subheadTitle}>アカウント情報</span></ListSubheader>}>
+        {customers.map((customer, index) => (
+          <ListItem key={index} button>
+            <ListItemAvatar>
+              {customer.image
+                ? <Avatar src={ customer.image }/>
+                : <PersonIcon/>
+              }
+            </ListItemAvatar>
+            <ListItemText>{ customer.name }</ListItemText>
+            <ListItemText>ここにテキストが入ります。</ListItemText>
+          </ListItem>
         ))}
-      </ul>
-    </>
+      </List>
+    </div>
   )
 }
 

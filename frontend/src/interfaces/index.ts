@@ -47,21 +47,10 @@ export interface Message {
 }
 
 // 友達リスト用
-export interface UserLoginStatus {
-  is_login: boolean;
-  data: CustomerList[];
-}
 
 export interface CustomerList {
   id: number;
-  line_costmer_id: number;
-  body: string;
-  image: IconImage;
-  send_flg: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface IconImage {
-  url?: any;
+  name: string;
+  image?: string;
+  user_id: number;
 }
