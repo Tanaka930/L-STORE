@@ -1,7 +1,7 @@
 class Lineprofile < Apicommon
 
   def initialize(original_id)
-    url = "https://api.line.me/v2/bot/profile/" + original_id
+    url = "https://api.line.me/v2/bot/profile/#{original_id}"
     @uri = URI.parse(url)
     @http = Net::HTTP.new(@uri.host,@uri.port)
     @http.use_ssl = true
@@ -16,7 +16,7 @@ class Lineprofile < Apicommon
     when Net::HTTPSuccess then
       contact = JSON.parse(response.body)
       profile_data = {
-        "response" => "success"
+        "response" => "success",
         "name" => contact['displayName'],
         "image" => contact['pictureUrl'],
         "original_id" => @original_id
@@ -40,6 +40,7 @@ class Lineprofile < Apicommon
     end
 
     def getResponse
-      @http.get(@uri.path, getHeader())
+      response = @http.get(@uri.path, getHeader())
       return response
     end
+end

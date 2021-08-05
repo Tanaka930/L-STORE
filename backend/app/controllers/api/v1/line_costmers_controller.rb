@@ -31,7 +31,7 @@ class Api::V1::LineCostmersController < LineCommonsController
       if event_type == "follow"
         follow()
       elsif event_type == "unfollow"
-
+        unfollow()
       elsif event_type == "message" or "image"
         resept_line_message(request)
       end
@@ -49,45 +49,39 @@ class Api::V1::LineCostmersController < LineCommonsController
     # トークンに紐づくユーザーを取得
     user = User.find(token.user_id)
 
-    # @url = "https://api.line.me/v2/bot/profile/#{original_id}"
-    # @uri = URI.parse(@url)
-    # @http = Net::HTTP.new(@uri.host,@uri.port)
-    # @http.use_ssl = true
-    # headers = {
-    #   'Authorization' => "Bearer #{token.messaging_token}",
-    #   # 'Content-Type' => 'application/json',
-    #   # 'Accept' => 'application/json'
-    # }
-
-    # response = @http.get(@uri.path, headers)
-    # # binding.pry
-    # case response
-    # when Net::HTTPSuccess then
-    #   contact = JSON.parse(response.body)
-    #   costmer_name = contact['displayName']
-    #   costmer_image = contact['pictureUrl']
-      
-    # else
-    #   p "#{response.code} #{response.body}"
-    # end
-
-    # 新規作成の場合
-    @line_costmer = LineCostmer.new
-    @line_costmer.original_id = original_id
-    @line_costmer.user_id = user.id
-    @line_costmer.name = costmer_name
-    @line_costmer.image = costmer_image
-
-    if @line_costmer.save
-      render json: { status: 'SUCCESS', data: current_api_v1_user }
-      return
+    # ユーザーがいるかを確認
+    # line_user_exists = LineCostmer.exists?(user_id: user.id, original_id: original_id)
+    line_user = LineCostmer.find_by(user_id: user.id, original_id: original_id)
+    if line_user != nil and line_user.blockflg == "1"
+      # 名前と写真が変わった際の処理をここに記入予定
+      line_user.update(blockflg: "0")
     else
-      render json: { status: 'ERROR', data: current_api_v1_user }
-      return
+      line_prifile = Lineprofile.new(original_id)
+      line_prifile.setToken(token.messaging_token)
+      prifile_hash = line_prifile.getProfile()
+      if prifile_hash["response"] == "success"
+        insert(user.id, original_id,prifile_hash["name"],prifile_hash["image"],"0")
+      end
     end
   end
 
   def unfollow()
+    original_id = params[:events][0][:source][:userId]
+    # トークン情報を取得
+    token = Token.find_by(access_id: params[:token_access_id])
 
+    # トークンに紐づくユーザーを取得
+    user = User.find(token.user_id)
+
+    line_user = LineCostmer.find_by(user_id: user.id, original_id: original_id)
+
+    if line_user.blockflg == "0"
+      line_user.update(blockflg: "1")
+    end
+  end
+
+  private
+  def insert(user_id, original_id,name,image,flg)
+    LineCostmer.create(user_id: user_id, original_id: original_id, name: name, image: image, blockflg: flg)
   end
 end
