@@ -49,6 +49,8 @@ class Api::V1::LineCostmersController < LineCommonsController
     # トークンに紐づくユーザーを取得
     user = User.find(token.user_id)
 
+    
+
     # @url = "https://api.line.me/v2/bot/profile/#{original_id}"
     # @uri = URI.parse(@url)
     # @http = Net::HTTP.new(@uri.host,@uri.port)

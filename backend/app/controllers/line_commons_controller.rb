@@ -1,5 +1,6 @@
 class LineCommonsController < ApplicationController
   require './app/commonclass/linepush'
+  require './app/commonclass/lineprofile'
   protected
   def resept_line_message(request)
     event_type = params[:events][0][:message][:type]
