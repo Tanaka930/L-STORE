@@ -9,7 +9,7 @@ import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } f
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 1000
+    minWidth: 800
   },
   subhead: {
     display: "flex",
