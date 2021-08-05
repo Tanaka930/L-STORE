@@ -49,27 +49,27 @@ class Api::V1::LineCostmersController < LineCommonsController
     # トークンに紐づくユーザーを取得
     user = User.find(token.user_id)
 
-    @url = "https://api.line.me/v2/bot/profile/#{original_id}"
-    @uri = URI.parse(@url)
-    @http = Net::HTTP.new(@uri.host,@uri.port)
-    @http.use_ssl = true
-    headers = {
-      'Authorization' => "Bearer #{token.messaging_token}",
-      # 'Content-Type' => 'application/json',
-      # 'Accept' => 'application/json'
-    }
+    # @url = "https://api.line.me/v2/bot/profile/#{original_id}"
+    # @uri = URI.parse(@url)
+    # @http = Net::HTTP.new(@uri.host,@uri.port)
+    # @http.use_ssl = true
+    # headers = {
+    #   'Authorization' => "Bearer #{token.messaging_token}",
+    #   # 'Content-Type' => 'application/json',
+    #   # 'Accept' => 'application/json'
+    # }
 
-    response = @http.get(@uri.path, headers)
-    # binding.pry
-    case response
-    when Net::HTTPSuccess then
-      contact = JSON.parse(response.body)
-      costmer_name = contact['displayName']
-      costmer_image = contact['pictureUrl']
+    # response = @http.get(@uri.path, headers)
+    # # binding.pry
+    # case response
+    # when Net::HTTPSuccess then
+    #   contact = JSON.parse(response.body)
+    #   costmer_name = contact['displayName']
+    #   costmer_image = contact['pictureUrl']
       
-    else
-      p "#{response.code} #{response.body}"
-    end
+    # else
+    #   p "#{response.code} #{response.body}"
+    # end
 
     # 新規作成の場合
     @line_costmer = LineCostmer.new
