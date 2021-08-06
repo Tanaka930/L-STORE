@@ -1,32 +1,32 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
-import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden } from '@material-ui/core'
-import { Send, RecentActors } from '@material-ui/icons'
+import React from "react"
+import { Link } from "react-router-dom"
+import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
+import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden } from "@material-ui/core"
+import { Send, RecentActors } from "@material-ui/icons"
 
 const drawerWidth = 240
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex",
     },
     drawer: {
       width: drawerWidth,
       flexShrink: 0,
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down("sm")]: {
         width: 200
       }
     },
     drawerPaper: {
       width: drawerWidth,
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down("sm")]: {
         width: 200
       }
     },
     drawerContainer: {
-      overflow: 'auto',
-      [theme.breakpoints.down('sm')]: {
+      overflow: "auto",
+      [theme.breakpoints.down("sm")]: {
         fontSize: 10
       }
     },

@@ -1,11 +1,10 @@
-import React, { useState ,useEffect, useContext } from 'react'
+import React, { useState ,useEffect, useContext } from "react"
 import { AuthContext } from "App"
-import axios from 'axios'
+import axios from "axios"
 import Cookies from "js-cookie"
 import { CustomerList } from "interfaces/index"
-import { makeStyles } from '@material-ui/core/styles'
-import PersonIcon from '@material-ui/icons/Person'
-import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from '@material-ui/core'
+import { makeStyles } from "@material-ui/core/styles"
+import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +32,7 @@ const Customers: React.FC = () => {
   }
 
   useEffect(() => {
-    axios.get('http://192.168.3.15:3001/api/v1/tokens/' + currentUser?.id + '/line_costmers', config)
+    axios.get("http://192.168.3.15:3001/api/v1/tokens/" + currentUser?.id + "/line_costmers", config)
       .then(res => {
         console.log(res.data)
         setCustomers(res.data)
