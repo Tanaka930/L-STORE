@@ -5,7 +5,7 @@ import Cookies from "js-cookie"
 import { CustomerList } from "interfaces/index"
 import { makeStyles } from '@material-ui/core/styles'
 import PersonIcon from '@material-ui/icons/Person'
-import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from '@material-ui/core';
+import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   subheadTitle: {
     flex: "1"
   }
-}));
+}))
 
 const Customers: React.FC = () => {
   const classes = useStyles()
@@ -50,7 +50,7 @@ const Customers: React.FC = () => {
             <ListItemAvatar>
               {customer.image
                 ? <Avatar src={ customer.image }/>
-                : <PersonIcon/>
+                : <Avatar />
               }
             </ListItemAvatar>
             <ListItemText>{ customer.name }</ListItemText>
