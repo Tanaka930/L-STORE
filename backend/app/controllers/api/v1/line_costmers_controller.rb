@@ -60,7 +60,7 @@ class Api::V1::LineCostmersController < LineCommonsController
       line_prifile.setToken(token.messaging_token)
       prifile_hash = line_prifile.getProfile()
       if prifile_hash["response"] == "success"
-        insert(user.id, original_id,prifile_hash["name"],prifile_hash["image"],"0")
+        insert_user(user.id, original_id,prifile_hash["name"],prifile_hash["image"],"0")
       end
     end
   end
@@ -81,7 +81,7 @@ class Api::V1::LineCostmersController < LineCommonsController
   end
 
   private
-  def insert(user_id, original_id,name,image,flg)
+  def insert_user(user_id, original_id,name,image,flg)
     LineCostmer.create(user_id: user_id, original_id: original_id, name: name, image: image, blockflg: flg)
   end
 end
