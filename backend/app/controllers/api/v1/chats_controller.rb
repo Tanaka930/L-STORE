@@ -3,7 +3,7 @@ class Api::V1::ChatsController < LineCommonsController
 
   def index
     chats = Chat.where(line_costmer_id: params[:line_costmer_id])
-    render json: { is_login: true, data: chats}
+    render json: chats
   end
 
   def create
