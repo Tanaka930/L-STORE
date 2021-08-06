@@ -1,11 +1,10 @@
-import React, { useState ,useEffect, useContext } from 'react'
+import React, { useState ,useEffect, useContext } from "react"
 import { AuthContext } from "App"
-import axios from 'axios'
+import axios from "axios"
 import Cookies from "js-cookie"
 import { CustomerList } from "interfaces/index"
-import { makeStyles } from '@material-ui/core/styles'
-import PersonIcon from '@material-ui/icons/Person'
-import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from '@material-ui/core'
+import { makeStyles } from "@material-ui/core/styles"
+import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +23,7 @@ const Customers: React.FC = () => {
 
   const [customers, setCustomers] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
+  
   const config = {
     headers: {
     "access-token": Cookies.get("_access_token"),
@@ -32,13 +32,22 @@ const Customers: React.FC = () => {
     }
   }
 
+  const getCustomers = async () => {
+    try {
+      const res = await axios.get(`http://192.168.3.15:3001/api/v1/tokens/${currentUser?.id}/line_costmers`, config)
+      setCustomers(res.data)
+      console.log(res.data)
+    } catch(err) {
+      console.error(err.message)
+    }
+  }
+
   useEffect(() => {
-    axios.get('http://192.168.3.15:3001/api/v1/tokens/' + currentUser?.id + '/line_costmers', config)
-      .then(res => {
-        console.log(res.data)
-        setCustomers(res.data)
-      })
-      .catch(error => console.log(error))
+    getCustomers()
+    const interval = setInterval(()=>{
+      getCustomers()
+    },10000)
+    return() => clearInterval(interval)
   }, [])
 
   return (
