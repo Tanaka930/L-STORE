@@ -23,6 +23,7 @@ const Customers: React.FC = () => {
 
   const [customers, setCustomers] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
+  
   const config = {
     headers: {
     "access-token": Cookies.get("_access_token"),
@@ -31,13 +32,22 @@ const Customers: React.FC = () => {
     }
   }
 
+  const getCustomers = async () => {
+    try {
+      const res = await axios.get(`http://192.168.3.15:3001/api/v1/tokens/${currentUser?.id}/line_costmers`, config)
+      setCustomers(res.data)
+      console.log(res.data)
+    } catch(err) {
+      console.error(err.message)
+    }
+  }
+
   useEffect(() => {
-    axios.get("http://192.168.3.15:3001/api/v1/tokens/" + currentUser?.id + "/line_costmers", config)
-      .then(res => {
-        console.log(res.data)
-        setCustomers(res.data)
-      })
-      .catch(error => console.log(error))
+    getCustomers()
+    const interval = setInterval(()=>{
+      getCustomers()
+    },10000)
+    return() => clearInterval(interval)
   }, [])
 
   return (
