@@ -11,7 +11,7 @@ class Api::V1::LineCostmersController < LineCommonsController
     json_array = []
     line_users.each do |line_user|
       json_data = {
-        "id" => line_user[0] ,
+        "id" => line_user[0],
         "user_id" => line_user[1],
         "name" => line_user[2],
         "image" => line_user[3]
@@ -19,6 +19,17 @@ class Api::V1::LineCostmersController < LineCommonsController
       json_array.push(json_data)
     end
     render json: json_array
+  end
+
+  def show
+    trg_user = LineCostmer.find(params[:id])
+    json_data = {
+      "id" => trg_user.id,
+      "user_id" => trg_user.user_id,
+      "name" => trg_user.name,
+      "image" => trg_user.image
+    }
+    render json: json_data
   end
 
   def create
