@@ -54,3 +54,13 @@ export interface CustomerList {
   image?: string;
   user_id: number;
 }
+
+// チャット
+
+export interface LineCustomer {
+  id: number;
+  body: string;
+  image?: string;
+  send_flg: number;
+  line_customer_id: number;
+}
