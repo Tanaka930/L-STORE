@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
       resources :line_costmers do
         resources :chats
+        resources :memos
       end
       
 
