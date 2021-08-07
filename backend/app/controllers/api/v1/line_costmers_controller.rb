@@ -22,7 +22,7 @@ class Api::V1::LineCostmersController < LineCommonsController
   end
 
   def show
-    trg_user = LineCostmer.find(params[:id])
+    trg_user = LineCostmer.find(current_api_v1_user.id))
     json_data = {
       "id" => trg_user.id,
       "user_id" => trg_user.user_id,
