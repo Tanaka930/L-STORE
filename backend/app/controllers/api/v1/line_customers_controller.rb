@@ -1,4 +1,4 @@
-class Api::V1::LineCostmersController < LineCommonsController
+class Api::V1::LineCustomersController < LineCommonsController
 
   require 'net/http'
   require 'uri'
@@ -7,7 +7,7 @@ class Api::V1::LineCostmersController < LineCommonsController
   before_action :authenticate_api_v1_user!, except: :create
 
   def index
-    line_users = LineCostmer.where(user_id: current_api_v1_user.id, blockflg: "0").pluck(:id,:user_id,:name,:image)
+    line_users = LineCustomer.where(user_id: current_api_v1_user.id, blockflg: "0").pluck(:id,:user_id,:name,:image)
     json_array = []
     line_users.each do |line_user|
       json_data = {
@@ -22,7 +22,7 @@ class Api::V1::LineCostmersController < LineCommonsController
   end
 
   def show
-    trg_user = LineCostmer.find(current_api_v1_user.id))
+    trg_user = LineCustomer.find(current_api_v1_user.id))
     json_data = {
       "id" => trg_user.id,
       "user_id" => trg_user.user_id,

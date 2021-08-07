@@ -11,7 +11,7 @@ class LineCommonsController < ApplicationController
     # トークン情報を取得
     token = Token.find_by(access_id: params[:token_access_id])
 
-    if !LineCostmer.exists?(user_id: token.user_id, original_id: original_id)
+    if !LineCustomer.exists?(user_id: token.user_id, original_id: original_id)
       # プロフィール情報を取得
       line_prifile = Lineprofile.new(original_id)
       line_prifile.setToken(token.messaging_token)
@@ -45,13 +45,13 @@ class LineCommonsController < ApplicationController
 
   # チャット情報のインサート
   def insert(line_id,body,image,send_flg)
-    Chat.create(line_costmer_id: line_id, body: body, image: image, send_flg: send_flg)
+    Chat.create(line_customer_id: line_id, body: body, image: image, send_flg: send_flg)
   end
 
   # 登録ユーザー検索
   def search_line_customer(original_id,token_access_id)
     user_token = Token.find_by(access_id: token_access_id)
-    trg_line_user = LineCostmer.find_by(original_id: original_id, user_id: user_token.user_id)
+    trg_line_user = LineCustomer.find_by(original_id: original_id, user_id: user_token.user_id)
     return trg_line_user
   end
 
@@ -87,8 +87,8 @@ class LineCommonsController < ApplicationController
     user = User.find(token.user_id)
 
     # ユーザーがいるかを確認
-    # line_user_exists = LineCostmer.exists?(user_id: user.id, original_id: original_id)
-    line_user = LineCostmer.find_by(user_id: user.id, original_id: original_id)
+    # line_user_exists = LineCustomer.exists?(user_id: user.id, original_id: original_id)
+    line_user = LineCustomer.find_by(user_id: user.id, original_id: original_id)
     if line_user != nil and line_user.blockflg == "1"
       # 名前と写真が変わった際の処理をここに記入予定
       line_user.update(blockflg: "0")
@@ -111,7 +111,7 @@ class LineCommonsController < ApplicationController
     # トークンに紐づくユーザーを取得
     user = User.find(token.user_id)
 
-    line_user = LineCostmer.find_by(user_id: user.id, original_id: original_id)
+    line_user = LineCustomer.find_by(user_id: user.id, original_id: original_id)
 
     if line_user.blockflg == "0"
       line_user.update(blockflg: "1")
@@ -120,6 +120,6 @@ class LineCommonsController < ApplicationController
 
   # ユーザー登録
   def insert_user(user_id, original_id,name,image,flg)
-    LineCostmer.create(user_id: user_id, original_id: original_id, name: name, image: image, blockflg: flg)
+    LineCustomer.create(user_id: user_id, original_id: original_id, name: name, image: image, blockflg: flg)
   end
 end

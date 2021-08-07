@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_07_054137) do
+ActiveRecord::Schema.define(version: 2021_08_07_083549) do
 
   create_table "chatimages", charset: "utf8", force: :cascade do |t|
     t.bigint "chat_id"
@@ -21,13 +21,13 @@ ActiveRecord::Schema.define(version: 2021_08_07_054137) do
   end
 
   create_table "chats", charset: "utf8", force: :cascade do |t|
-    t.bigint "line_costmer_id"
+    t.bigint "line_customer_id"
     t.string "body"
     t.string "image"
     t.string "send_flg", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["line_costmer_id"], name: "index_chats_on_line_costmer_id"
+    t.index ["line_customer_id"], name: "index_chats_on_line_customer_id"
   end
 
   create_table "images", charset: "utf8", force: :cascade do |t|
@@ -40,15 +40,15 @@ ActiveRecord::Schema.define(version: 2021_08_07_054137) do
     t.index ["user_id"], name: "index_images_on_user_id"
   end
 
-  create_table "line_costmer_memos", charset: "utf8", force: :cascade do |t|
-    t.bigint "line_costmer_id"
+  create_table "line_customer_memos", charset: "utf8", force: :cascade do |t|
+    t.bigint "line_customer_id"
     t.string "body", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["line_costmer_id"], name: "index_line_costmer_memos_on_line_costmer_id"
+    t.index ["line_customer_id"], name: "index_line_customer_memos_on_line_customer_id"
   end
 
-  create_table "line_costmers", charset: "utf8", force: :cascade do |t|
+  create_table "line_customers", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.string "original_id", null: false
     t.string "name", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2021_08_07_054137) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "blockflg"
-    t.index ["user_id"], name: "index_line_costmers_on_user_id"
+    t.index ["user_id"], name: "index_line_customers_on_user_id"
   end
 
   create_table "messages", charset: "utf8", force: :cascade do |t|
@@ -107,11 +107,11 @@ ActiveRecord::Schema.define(version: 2021_08_07_054137) do
   end
 
   add_foreign_key "chatimages", "chats"
-  add_foreign_key "chats", "line_costmers"
+  add_foreign_key "chats", "line_customers"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
-  add_foreign_key "line_costmer_memos", "line_costmers"
-  add_foreign_key "line_costmers", "users"
+  add_foreign_key "line_customer_memos", "line_customers"
+  add_foreign_key "line_customers", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "tokens", "users"
 end
