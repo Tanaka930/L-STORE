@@ -8,6 +8,7 @@ import SignIn from "components/pages/SignIn"
 import Token from "components/pages/Token"
 import Customers from "components/pages/Customers"
 import NotFound from "components/pages/404"
+import Chat from "components/pages/Chat"
 
 import { getCurrentUser } from "lib/api/auth"
 import { User } from "interfaces/index"
@@ -77,6 +78,7 @@ const App: React.FC = () => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/tokens" component={Token} />
                 <Route exact path="/customers" component={Customers} />
+                <Route exact path="/chats" component={Chat} />
               </>
             </Private>
             <Route component={NotFound} />
