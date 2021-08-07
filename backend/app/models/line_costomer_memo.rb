@@ -1,0 +1,2 @@
+class LineCostomerMemo < ApplicationRecord
+end
