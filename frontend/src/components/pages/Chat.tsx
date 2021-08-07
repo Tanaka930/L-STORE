@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Customers: React.FC = () => {
+const Chat: React.FC = () => {
   const classes = useStyles()
 
   const [customers, setCustomers] = useState<CustomerList[]>([])
@@ -36,7 +36,7 @@ const Customers: React.FC = () => {
 
   const getCustomers = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/api/v1/tokens/${currentUser?.id}/line_costmers/${LineCustomer.id}`, config)
+      const res = await axios.get(`http://localhost:3001/api/v1/tokens/${currentUser?.id}/line_costmers`, config)
       setCustomers(res.data)
       console.log(res.data)
     } catch(err) {
@@ -73,4 +73,4 @@ const Customers: React.FC = () => {
   )
 }
 
-export default Customers
+export default Chat
