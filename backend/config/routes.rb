@@ -11,14 +11,14 @@ Rails.application.routes.draw do
       resources :tokens
 
       resources :tokens, param: :access_id do
-        resources :line_customer, only: [:create]
+        resources :line_customers, only: [:create]
       end
 
       resources :tokens, param: :user_id do
-        resources :line_customer, except: [:create]
+        resources :line_customers, except: [:create]
       end
 
-      resources :line_customer do
+      resources :line_customers do
         resources :chats
         resources :memos
       end
