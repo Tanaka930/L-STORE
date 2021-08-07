@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_05_070430) do
+ActiveRecord::Schema.define(version: 2021_08_07_054137) do
 
   create_table "chatimages", charset: "utf8", force: :cascade do |t|
     t.bigint "chat_id"
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 2021_08_05_070430) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["message_id"], name: "index_images_on_message_id"
     t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "line_costmer_memos", charset: "utf8", force: :cascade do |t|
+    t.bigint "line_costmer_id"
+    t.string "body", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["line_costmer_id"], name: "index_line_costmer_memos_on_line_costmer_id"
   end
 
   create_table "line_costmers", charset: "utf8", force: :cascade do |t|
@@ -102,6 +110,7 @@ ActiveRecord::Schema.define(version: 2021_08_05_070430) do
   add_foreign_key "chats", "line_costmers"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
+  add_foreign_key "line_costmer_memos", "line_costmers"
   add_foreign_key "line_costmers", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "tokens", "users"
