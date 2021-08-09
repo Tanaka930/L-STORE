@@ -64,3 +64,10 @@ export interface Chats {
   send_flg: number;
   line_customer_id: number;
 }
+
+export interface UserInfo {
+  id: number;
+  image?: string;
+  name: string;
+  user_id: number;
+}
