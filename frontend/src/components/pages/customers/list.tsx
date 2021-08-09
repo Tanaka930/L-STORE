@@ -21,10 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Customers: React.FC = () => {
   const classes = useStyles()
-
   const [customers, setCustomers] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
-  
+
   const config = {
     headers: {
     "access-token": Cookies.get("_access_token"),
@@ -35,7 +34,7 @@ const Customers: React.FC = () => {
 
   const getCustomers = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/api/v1/tokens/${currentUser?.id}/line_customers`, config)
+      const res = await axios.get(`http://192.168.3.3:3001/api/v1/tokens/${currentUser?.id}/line_customers`, config)
       setCustomers(res.data)
       console.log(res.data)
     } catch(err) {
@@ -56,7 +55,7 @@ const Customers: React.FC = () => {
       <h1>お友達リスト</h1>
       <List subheader={<ListSubheader className={classes.subhead}><span className={classes.subheadTitle}>アカウント名</span><span className={classes.subheadTitle}>アカウント情報</span></ListSubheader>}>
         {customers.map((customer, index) => (
-          <ListItem key={index} button component={Link} to="/Chats">
+          <ListItem key={index} button component={Link} to={"/customers/" + customer.id}>
             <ListItemAvatar>
               {customer.image
                 ? <Avatar src={ customer.image }/>
