@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import Cookies from "js-cookie"
 import axios from "axios"
 import { AuthContext } from "App"
+import LineMenu from "components/layouts/LineMenu"
 import { UserInfo } from "interfaces/index"
 import { Box, Avatar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
@@ -60,6 +61,7 @@ const CustomerDetail: React.FC = () => {
               <Avatar src={userInfo.image} className={classes.large}/>
               <p className={classes.name}>{userInfo.name}</p>
             </Box>
+            <LineMenu />
           </>
         ) : (
           <>
