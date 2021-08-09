@@ -4,7 +4,7 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { Link } from "react-router-dom"
 import { CustomerList } from "interfaces/index"
-import { LineCustomer } from "interfaces/index"
+import { Chats } from "interfaces/index"
 import { makeStyles } from "@material-ui/core/styles"
 import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from "@material-ui/core"
 
@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Chat: React.FC = () => {
   const classes = useStyles()
-
-  const [customers, setCustomers] = useState<CustomerList[]>([])
+  // const [customers, setCustomers] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
   
   const config = {
@@ -34,41 +33,9 @@ const Chat: React.FC = () => {
     }
   }
 
-  const getCustomers = async () => {
-    try {
-      const res = await axios.get(`http://localhost:3001/api/v1/tokens/${currentUser?.id}/line_costmers`, config)
-      setCustomers(res.data)
-      console.log(res.data)
-    } catch(err) {
-      console.error(err.message)
-    }
-  }
-
-  useEffect(() => {
-    getCustomers()
-    const interval = setInterval(()=>{
-      getCustomers()
-    },10000)
-    return() => clearInterval(interval)
-  }, [])
 
   return (
     <div className={classes.root}>
-      <h1>お友達リスト</h1>
-      <List subheader={<ListSubheader className={classes.subhead}><span className={classes.subheadTitle}>アカウント名</span><span className={classes.subheadTitle}>アカウント情報</span></ListSubheader>}>
-        {customers.map((customer, index) => (
-          <ListItem key={index} button component={Link} to="/chats">
-            <ListItemAvatar>
-              {customer.image
-                ? <Avatar src={ customer.image }/>
-                : <Avatar />
-              }
-            </ListItemAvatar>
-            <ListItemText>{ customer.name }</ListItemText>
-            <ListItemText>ここにテキストが入ります。</ListItemText>
-          </ListItem>
-        ))}
-      </List>
     </div>
   )
 }

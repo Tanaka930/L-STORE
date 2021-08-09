@@ -78,7 +78,7 @@ const App: React.FC = () => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/tokens" component={Token} />
                 <Route exact path="/customers" component={Customers} />
-                <Route exact path="/chats" component={Chat} />
+                <Route exact path="/chat" component={Chat} />
               </>
             </Private>
             <Route component={NotFound} />
