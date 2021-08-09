@@ -36,7 +36,6 @@ const Customers: React.FC = () => {
     try {
       const res = await axios.get(`http://192.168.3.3:3001/api/v1/tokens/${currentUser?.id}/line_customers`, config)
       setCustomers(res.data)
-      console.log(res.data)
     } catch(err) {
       console.error(err.message)
     }
