@@ -28,7 +28,6 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | undefined>()
-  // const { line_customer_id } = useParams<number>()
 
   // 認証済みのユーザーがいるかどうかチェック
   // 確認できた場合はそのユーザーの情報を取得
@@ -80,7 +79,7 @@ const App: React.FC = () => {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/tokens" component={Token} />
                 <Route exact path="/customers" component={CustomersList} />
-                <Route exact path="/customers/:line_customer_id" component={CustomerDetail} />
+                <Route exact path="/customers/:id" component={CustomerDetail} />
                 <Route exact path="/chat" component={Chat} />
               </>
             </Private>
