@@ -6,7 +6,8 @@ import Home from "components/pages/Home"
 import SignUp from "components/pages/SignUp"
 import SignIn from "components/pages/SignIn"
 import Token from "components/pages/Token"
-import Customers from "components/pages/Customers"
+import CustomersList from "components/pages/customers/list"
+import CustomerDetail from "components/pages/customers/show"
 import NotFound from "components/pages/404"
 import Chat from "components/pages/Chat"
 
@@ -27,6 +28,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
   const [currentUser, setCurrentUser] = useState<User | undefined>()
+  // const { line_customer_id } = useParams<number>()
 
   // 認証済みのユーザーがいるかどうかチェック
   // 確認できた場合はそのユーザーの情報を取得
@@ -77,7 +79,8 @@ const App: React.FC = () => {
               <>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/tokens" component={Token} />
-                <Route exact path="/customers" component={Customers} />
+                <Route exact path="/customers" component={CustomersList} />
+                <Route exact path="/customers/:line_customer_id" component={CustomerDetail} />
                 <Route exact path="/chat" component={Chat} />
               </>
             </Private>
