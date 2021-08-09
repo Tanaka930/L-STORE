@@ -57,8 +57,8 @@ export interface CustomerList {
 
 // チャット
 
-export interface LineCustomer {
-  id: number;
+export interface Chats {
+  // id: number;
   body: string;
   image?: string;
   send_flg: number;
