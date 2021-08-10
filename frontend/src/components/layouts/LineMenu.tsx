@@ -1,6 +1,8 @@
 import { useState } from "react"
-import { AppBar, Tabs, Tab } from "@material-ui/core"
+import { AppBar, Tabs, Tab, Toolbar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,25 +14,27 @@ const useStyles = makeStyles((theme) => ({
 
 const LineMenu = () => {
   const classes = useStyles()
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0)
 
-  const handleChange = (value: any) => {
+  const handleChange = (event: React.ChangeEvent<{}>, value: number) => {
     setValue(value)
   }
 
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          textColor="primary"
-          indicatorColor="primary"
-        >
-          <Tab label="アカウント情報" />
-          <Tab label="トーク" />
-          <Tab label="その他" />
-        </Tabs>
+        <Toolbar>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            textColor="primary"
+            indicatorColor="primary"
+          >
+            <Tab label="アカウント情報" />
+            <Tab label="トーク" />
+            <Tab label="その他" />
+          </Tabs>
+        </Toolbar>
       </AppBar>
     </div>
   )
