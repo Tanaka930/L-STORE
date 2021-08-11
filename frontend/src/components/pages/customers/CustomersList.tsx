@@ -4,10 +4,10 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { Link } from "react-router-dom"
 import { CustomerList } from "interfaces/index"
-import { makeStyles } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from "@material-ui/core"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minWidth: 800
   },

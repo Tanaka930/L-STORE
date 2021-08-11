@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
+import { Box, Paper, TextField, Button, Avatar } from "@material-ui/core"
+import SendIcon from "@material-ui/icons/Send"
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 
 type TabPanelProps = {
   index: number
@@ -8,7 +11,16 @@ type TabPanelProps = {
   userId: string
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      width: "500px"
+    }
+  })
+)
+
 const Chat = (props: TabPanelProps) => {
+  const classes = useStyles()
   const { value, index, userId } = props
   const [chats, setChats] = useState<any[]>([])
 
@@ -41,13 +53,23 @@ const Chat = (props: TabPanelProps) => {
   return (
     <>
       {value === index && (
-        <>
-          <h1>トーク画面</h1>
-          <h3>ユーザーID：{userId}</h3>
-          {chats.map((chat, index) => (
-            <p key={index}>チャット文章：{chat.body}</p>
-          ))}
-        </>
+        <Box mx="auto" className={classes.container}>
+          <Paper elevation={3}>
+            <Paper>
+              {chats.map((chat, index) => (
+                <p key={index}>チャット文章：{chat.body}</p>
+              ))}
+            </Paper>
+            <form noValidate autoComplete="off">
+              <TextField
+                label="メッセージを入力"
+              />
+              <Button variant="contained" color="primary">
+                <SendIcon />
+              </Button>
+            </form>
+          </Paper>
+        </Box>
       )}
     </>
   )
