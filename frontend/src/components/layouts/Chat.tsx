@@ -32,6 +32,10 @@ const Chat = (props: TabPanelProps) => {
 
   useEffect(() => {
     getChats()
+    const interval = setInterval(()=>{
+      getChats()
+    },1000)
+    return() => clearInterval(interval)
   }, [])
 
   return (
