@@ -1,7 +1,9 @@
 import { useState } from "react"
 import { AppBar, Tabs, Tab, Toolbar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import Info from "components/layouts/Info"
+import Chat from "components/layouts/Chat"
 
 type UserId = {
   id: string
@@ -24,6 +26,8 @@ const LineMenu = () => {
     setValue(value)
   }
 
+  console.log(value)
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -36,20 +40,21 @@ const LineMenu = () => {
           >
             <Tab
               label="アカウント情報"
-              component={Link}
-              to={`/customers/${id}/info`}
+              value={0}
             />
             <Tab
               label="トーク"
-              component={Link}
-              to={`/customers/${id}/chat`}
+              value={1}
             />
             <Tab
               label="その他"
+              value={2}
             />
           </Tabs>
         </Toolbar>
       </AppBar>
+      <Info value={value} index={0} />
+      <Chat value={value} index={1} />
     </div>
   )
 }
