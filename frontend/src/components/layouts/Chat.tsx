@@ -1,5 +1,7 @@
+import { useState, useEffect, useContext } from "react"
+import axios from "axios"
+
 type TabPanelProps = {
-  children?: React.ReactNode
   index: any
   value: any
   userId: any
@@ -7,6 +9,9 @@ type TabPanelProps = {
 
 const Chat = (props: TabPanelProps) => {
   const { value, index, userId } = props
+
+  useEffect(() => {
+  }, [])
 
   return (
     <>

@@ -41,7 +41,7 @@ const CustomerDetail: React.FC = () => {
 
   const getCustomerDetail = async () => {
     try {
-      const res = await axios.get(`http://192.168.3.28:3001/api/v1/tokens/${currentUser?.id}/line_customers/${id}`, config)
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${id}`, config)
       setUserInfo(res.data)
     } catch(err) {
       console.error(err.message)
