@@ -2,7 +2,10 @@ class Api::V1::ChatsController < LineCommonsController
   before_action :authenticate_api_v1_user!
 
   def index
-    chats = Chat.where(line_customer_id: params[:line_customer_id])
+    chats = LineCustomer.
+            left_joins(:chats).
+            select('chats.*','line_customers.image').
+            where(chats: {line_customer_id: params[:line_customer_id]})
     render json: chats
   end
 
