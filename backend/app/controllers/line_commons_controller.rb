@@ -43,7 +43,7 @@ class LineCommonsController < ApplicationController
 
   # チャット情報のインサート
   def insert(line_id,body,image,send_flg)
-    Chat.create(line_customer_id: line_id, body: body, image: image, send_flg: send_flg)
+    Chat.create(line_customer_id: line_id, body: body, chat_image: image, send_flg: send_flg)
   end
 
   # 登録ユーザー検索

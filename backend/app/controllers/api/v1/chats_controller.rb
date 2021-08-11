@@ -17,7 +17,7 @@ class Api::V1::ChatsController < LineCommonsController
 
       message = params[:message]
 
-      result = insert(trg_line_user.id, message, params[:image], "0")
+      result = insert(trg_line_user.id, message, params[:chat_image], "0")
 
       token = Token.find_by(user_id: trg_line_user.id)
 
@@ -27,10 +27,10 @@ class Api::V1::ChatsController < LineCommonsController
 
       line.setBody(message)
 
-      if params[:image]
-        insert_img(result.id, params[:image])
-        line.setImage(params[:image])
-        line.setThumbnail(params[:image])
+      if params[:chat_image]
+        insert_img(result.id, params[:chat_image])
+        line.setImage(params[:chat_image])
+        line.setThumbnail(params[:chat_image])
         # 画像送信
         line.doPushImgTo(trg_line_user.original_id)
       end
@@ -47,12 +47,12 @@ class Api::V1::ChatsController < LineCommonsController
 
   private
   def insert(line_id, body, image)
-    result = Chat.create(line_customer_id: line_id, body: body, image: image, send_flg: "0")
+    result = Chat.create(line_customer_id: line_id, body: body, chat_image: image, send_flg: "0")
     return result.id
   end
 
   def insert_img(user_id,image)
-    result = Chatimage.create(chat_id: user_id, image: image)
+    result = Chatimage.create(chat_id: user_id, chat_image: image)
     return result.id
   end
 end
