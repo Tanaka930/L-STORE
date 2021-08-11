@@ -10,7 +10,7 @@ type UserId = {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  container: {
     backgroundColor: theme.palette.background.paper,
     width: 1000,
     marginTop: 30
@@ -27,8 +27,8 @@ const LineMenu = () => {
   }
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="default">
+    <>
+      <AppBar position="static" color="default" className={classes.container}>
         <Toolbar>
           <Tabs
             value={value}
@@ -44,7 +44,7 @@ const LineMenu = () => {
       </AppBar>
       <Info value={value} index={0} userId={id} />
       <Chat value={value} index={1} userId={id} />
-    </div>
+    </>
   )
 }
 

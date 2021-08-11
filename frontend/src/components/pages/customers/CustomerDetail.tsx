@@ -5,10 +5,10 @@ import axios from "axios"
 import { AuthContext } from "App"
 import LineMenu from "components/layouts/LineMenu"
 import { UserInfo } from "interfaces/index"
-import { Box, Avatar } from "@material-ui/core"
+import { Box, Avatar, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   account: {
     display: "flex",
     textAlign: "center",
