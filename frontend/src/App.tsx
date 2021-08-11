@@ -8,8 +8,6 @@ import SignIn from "components/pages/SignIn"
 import Token from "components/pages/Token"
 import CustomersList from "components/pages/customers/CustomersList"
 import CustomerDetail from "components/pages/customers/CustomerDetail"
-import Chat from "components/pages/customers/Chat"
-import Info from "components/pages/customers/Info"
 import NotFound from "components/pages/404"
 
 import { getCurrentUser } from "lib/api/auth"
@@ -81,8 +79,6 @@ const App: React.FC = () => {
                 <Route exact path="/tokens" component={Token} />
                 <Route exact path="/customers" component={CustomersList} />
                 <Route exact path="/customers/:id" component={CustomerDetail} />
-                <Route path={"/customers/:id/info"} component={Info} />
-                <Route path={"/customers/:id/chat"} component={Chat} />
               </>
             </Private>
             <Route component={NotFound} />
