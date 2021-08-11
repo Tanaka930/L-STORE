@@ -27,16 +27,22 @@ class Api::V1::ChatsController < LineCommonsController
 
       line.setBody(message)
 
+      # 配列を宣言
+      to = []
+
+      # 配列にIDを入れる
+      to.push(trg_line_user.original_id)
+
       if params[:chat_image]
         insert_img(result.id, params[:chat_image])
         line.setImage(params[:chat_image])
         line.setThumbnail(params[:chat_image])
         # 画像送信
-        line.doPushImgTo(trg_line_user.original_id)
+        line.doPushImgTo(to)
       end
 
       # メッセージ送信
-      line.doPushMsgTo(trg_line_user.original_id)
+      line.doPushMsgTo(to)
 
       msg = "success"
       render json: { is_login: true, data: msg }
