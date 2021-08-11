@@ -26,8 +26,6 @@ const LineMenu = () => {
     setValue(value)
   }
 
-  console.log(value)
-
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -38,23 +36,14 @@ const LineMenu = () => {
             textColor="primary"
             indicatorColor="primary"
           >
-            <Tab
-              label="アカウント情報"
-              value={0}
-            />
-            <Tab
-              label="トーク"
-              value={1}
-            />
-            <Tab
-              label="その他"
-              value={2}
-            />
+            <Tab label="アカウント情報" />
+            <Tab label="トーク" />
+            <Tab label="その他" />
           </Tabs>
         </Toolbar>
       </AppBar>
-      <Info value={value} index={0} />
-      <Chat value={value} index={1} />
+      <Info value={value} index={0} userId={id} />
+      <Chat value={value} index={1} userId={id} />
     </div>
   )
 }
