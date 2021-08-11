@@ -62,16 +62,6 @@ class Linepush < Apicommon
   end
 
   private
-    def getHeader
-      headers = {
-        'Authorization'=>"Bearer #{@token}",
-        'Content-Type' =>'application/json',
-        'Accept'=>'application/json'
-      }
-      return headers
-    end
-  
-
     def doPush(jsonParam)
       response = @http.post(@uri.path, jsonParam.to_json, getHeader())
     end

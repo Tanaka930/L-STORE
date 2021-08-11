@@ -15,4 +15,13 @@ class Apicommon
     @image = image
   end
 
+  protected
+  def getHeader
+    headers = {
+      'Authorization'=>"Bearer #{@token}",
+      'Content-Type' =>'application/json',
+      'Accept'=>'application/json'
+    }
+    return headers
+  end
 end

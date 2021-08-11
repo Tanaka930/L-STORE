@@ -30,15 +30,6 @@ class Lineprofile < Apicommon
   end
 
   private
-    def getHeader
-      headers = {
-        'Authorization'=>"Bearer #{@token}",
-        'Content-Type' =>'application/json',
-        'Accept'=>'application/json'
-      }
-      return headers
-    end
-
     def getResponse
       response = @http.get(@uri.path, getHeader())
       return response
