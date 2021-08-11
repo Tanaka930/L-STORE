@@ -8,13 +8,13 @@ import axios from 'axios';
 // ヘッダーに関してはケバブケースのままで良いので適用を無視するオプションを追加
 const options = {
   ignoreHeaders: true,
-};
+}
 
 const client = applyCaseMiddleware(
   axios.create({
-    baseURL: 'http://192.168.3.28:3001/api/v1',
+    baseURL: process.env.REACT_APP_API_URL,
   }),
   options
 );
 
-export default client;
+export default client
