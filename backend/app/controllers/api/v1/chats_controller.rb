@@ -27,8 +27,10 @@ class Api::V1::ChatsController < LineCommonsController
 
       line.setBody(message)
 
+      # 配列を宣言
       to = []
 
+      # 配列にIDを入れる
       to.push(trg_line_user.original_id)
 
       if params[:chat_image]
