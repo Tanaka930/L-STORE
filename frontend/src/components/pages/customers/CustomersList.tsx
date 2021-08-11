@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const Customers: React.FC = () => {
+const CustomersList: React.FC = () => {
   const classes = useStyles()
   const [customers, setCustomers] = useState<CustomerList[]>([])
   const { currentUser } = useContext(AuthContext)
@@ -70,4 +70,4 @@ const Customers: React.FC = () => {
   )
 }
 
-export default Customers
+export default CustomersList
