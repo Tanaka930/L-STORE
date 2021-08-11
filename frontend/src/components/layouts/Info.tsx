@@ -1,7 +1,7 @@
 type TabPanelProps = {
-  index: any
-  value: any
-  userId: any
+  index: number
+  value: number
+  userId: string
 }
 
 const Chat = (props: TabPanelProps) => {
