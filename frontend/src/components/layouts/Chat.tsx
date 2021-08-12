@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%"
     },
     icon: {
-      width: theme.spacing(3),
-      height: theme.spacing(3),
+      width: theme.spacing(4),
+      height: theme.spacing(4),
     }
   })
 )
@@ -123,7 +123,7 @@ const Chat = (props: TabPanelProps) => {
                 <Paper className={classes.msgBody}>
                   <p className={classes.msgContent}>{chat.body}</p>
                 </Paper>
-                <Avatar className={classes.icon}  />
+                <Avatar src={chat.image} className={classes.icon}  />
               </Box>
             ))}
             <form className={classes.wrapForm} noValidate onSubmit={handleMessagePost}>
