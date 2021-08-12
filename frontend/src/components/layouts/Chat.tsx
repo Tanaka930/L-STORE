@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Box, Paper, TextField, Button } from "@material-ui/core"
+import { Box, Paper, TextField, Button, Avatar } from "@material-ui/core"
 import SendIcon from "@material-ui/icons/Send"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 
@@ -24,12 +24,16 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       position: "relative"
     },
+    msgContainer: {
+      display: "flex",
+      alignItems: "center",
+    },
     msgBody: {
       margin: 10,
       overflowY: "scroll",
     },
     msgContent: {
-      padding: 0,
+      padding: 6,
       margin: 0
     },
     wrapForm : {
@@ -43,6 +47,10 @@ const useStyles = makeStyles((theme: Theme) =>
     wrapText: {
       width: "100%"
     },
+    icon: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+    }
   })
 )
 
@@ -86,9 +94,9 @@ const Chat = (props: TabPanelProps) => {
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
-      console.log(res)
       if(res.status === 200){
         console.log("ok")
+        setMessage("")
       } else {
         console.log(res.status + "error")
       }
@@ -110,11 +118,14 @@ const Chat = (props: TabPanelProps) => {
       {value === index && (
         <Box mx="auto" className={classes.container}>
           <Paper className={classes.paper} elevation={3}>
-            <Paper className={classes.msgBody}>
-              {chats.map((chat, index) => (
-                <p className={classes.msgContent} key={index}>{chat.body}</p>
-              ))}
-            </Paper>
+            {chats.map((chat, index) => (
+              <Box className={classes.msgContainer} key={index}>
+                <Paper className={classes.msgBody}>
+                  <p className={classes.msgContent}>{chat.body}</p>
+                </Paper>
+                <Avatar className={classes.icon}  />
+              </Box>
+            ))}
             <form className={classes.wrapForm} noValidate onSubmit={handleMessagePost}>
               <TextField
                 label="メッセージ"
