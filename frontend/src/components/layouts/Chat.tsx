@@ -14,8 +14,33 @@ type TabPanelProps = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
-      width: "500px"
-    }
+      width: "500px",
+      padding: 10
+    },
+    paper: {
+      height: "60vh",
+      display: "flex",
+      alignItems: "center",
+      flexDirection: "column",
+      position: "relative"
+    },
+    msgBody: {
+      margin: 10,
+      overflowY: "scroll",
+    },
+    msgContent: {
+      padding: 0,
+      margin: 0
+    },
+    wrapForm : {
+      display: "flex",
+      justifyContent: "center",
+      width: "95%",
+      margin: `${theme.spacing(0)} auto`
+    },
+    wrapText: {
+      width: "100%"
+    },
   })
 )
 
@@ -82,17 +107,17 @@ const Chat = (props: TabPanelProps) => {
     <>
       {value === index && (
         <Box mx="auto" className={classes.container}>
-          <Paper elevation={3}>
-            <Paper>
+          <Paper className={classes.paper} elevation={3}>
+            <Paper className={classes.msgBody}>
               {chats.map((chat, index) => (
-                <p key={index}>チャット文章：{chat.body}</p>
+                <p className={classes.msgContent} key={index}>{chat.body}</p>
               ))}
             </Paper>
-            <form noValidate onSubmit={handleMessagePost}>
+            <form className={classes.wrapForm} noValidate onSubmit={handleMessagePost}>
               <TextField
-                fullWidth
                 label="メッセージ"
                 value={message}
+                className={classes.wrapText}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setMessage(e.target.value)
                 }}
