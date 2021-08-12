@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_11_083134) do
+ActiveRecord::Schema.define(version: 2021_08_12_091036) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_08_11_083134) do
 
   create_table "chats", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "line_customer_id"
-    t.string "body"
+    t.text "body"
     t.string "chat_image"
     t.string "send_flg", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_08_11_083134) do
   create_table "messages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.string "title", null: false
-    t.string "body", null: false
+    t.text "body", null: false
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
