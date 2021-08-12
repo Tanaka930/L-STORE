@@ -1,38 +1,40 @@
 class LineCommonsController < ApplicationController
   require './app/commonclass/linepush'
   require './app/commonclass/lineprofile'
-  protected
 
+  protected
   # LINEからメッセージを受信した際
-  def resept_line_message(request)
+  def resept_line_message(request,token)
     # イベントタイプとラインのIDを取得
     event_type = params[:events][0][:message][:type]
     original_id = params[:events][0][:source][:userId]
     
-    # トークン情報を取得
-    token = Token.find_by(access_id: params[:token_access_id])
-
-    if !LineCustomer.exists?(user_id: token.user_id, original_id: original_id)
+    # ユーザーが存在するかを確認
+    if !LineCustomer.exists?(user_id: @token.user_id, original_id: original_id)
       # 以下プロフィール情報を取得
-      profile_hash = get_line_profile(original_id,token.messaging_token)
+      profile_hash = get_line_profile(original_id,@token.messaging_token)
       # 以上プロフィール情報を取得
       if profile_hash["response"] == "success"
-        insert_user(token.user_id, original_id,profile_hash["name"],profile_hash["image"],"0")
+        insert_user(@token.user_id, original_id,profile_hash["name"],profile_hash["image"],"0")
       end
     end
 
+    # メッセージタイプがtextの時
     if event_type == "text"
       # 対象のline登録ユーザーを取得
       trg_line_user = search_line_customer(original_id,params[:token_access_id])
       # インサートする
       insert(trg_line_user.id, params[:events][0][:message][:text],nil,"1")
+
+    # メッセージタイプがimageの時
     elsif event_type == "image"
       # 対象のline登録ユーザーを取得
       trg_line_user = search_line_customer(original_id,params[:token_access_id])
+
       # 以下画像の処理
       line = Linepush.new
-      line.setToken(token.messaging_token)
-      line.setSecret(token.chanel_secret)
+      line.setToken(@token.messaging_token)
+      line.setSecret(@token.chanel_secret)
       img_file = line.lineImgSave(request)
       # 以上画像の処理
 
@@ -48,8 +50,7 @@ class LineCommonsController < ApplicationController
 
   # 登録ユーザー検索
   def search_line_customer(original_id,token_access_id)
-    user_token = Token.find_by(access_id: token_access_id)
-    trg_line_user = LineCustomer.find_by(original_id: original_id, user_id: user_token.user_id)
+    trg_line_user = LineCustomer.find_by(original_id: original_id, user_id: @token.user_id)
     return trg_line_user
   end
 
@@ -78,23 +79,17 @@ class LineCommonsController < ApplicationController
     # lineのID取得
     original_id = params[:events][0][:source][:userId]
 
-    # トークン情報を取得
-    token = Token.find_by(access_id: params[:token_access_id])
-
-    # トークンに紐づくユーザーを取得
-    user = User.find(token.user_id)
-
     # ユーザーがいるかを確認
-    line_user = LineCustomer.find_by(user_id: user.id, original_id: original_id)
+    line_user = LineCustomer.find_by(user_id: @token.user_id, original_id: original_id)
     if line_user != nil and line_user.blockflg == "1"
       # 名前と写真が変わった際の処理をここに記入予定
       line_user.update(blockflg: "0")
     else
       # 以下プロフィール情報を取得
-      profile_hash = get_line_profile(original_id,token.messaging_token)
+      profile_hash = get_line_profile(original_id,@token.messaging_token)
 
       if profile_hash["response"] == "success"
-        insert_user(user.id, original_id,profile_hash["name"],profile_hash["image"],"0")
+        insert_user(@token.user_id, original_id,profile_hash["name"],profile_hash["image"],"0")
       end
     end
   end
@@ -105,14 +100,8 @@ class LineCommonsController < ApplicationController
     # LINE IDを取得
     original_id = params[:events][0][:source][:userId]
 
-    # トークン情報を取得
-    token = Token.find_by(access_id: params[:token_access_id])
-
     # トークンに紐づくユーザーを取得
-    user = User.find(token.user_id)
-
-    # トークンに紐づくユーザーを取得
-    line_user = LineCustomer.find_by(user_id: user.id, original_id: original_id)
+    line_user = LineCustomer.find_by(user_id: @token.user_id, original_id: original_id)
 
     begin
       if line_user.blockflg == "0"
@@ -135,5 +124,9 @@ class LineCommonsController < ApplicationController
     line_prifile.setToken(messaging_token)
 
     return line_prifile.getProfile()
+  end
+
+  def set_token(token)
+    @token = token
   end
 end
