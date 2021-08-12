@@ -129,10 +129,21 @@ const Chat = (props: TabPanelProps) => {
           <Paper className={classes.paper} elevation={2}>
             {chats.map((chat, index) => (
               <Box className={classes.msgContainer} key={index}>
-                <Avatar src={chat.image} className={classes.icon}  />
-                <Paper className={classes.msgBody}>
-                  <p className={classes.msgContent}>{chat.body}</p>
-                </Paper>
+                  {chat.send_flg == 0 && (
+                    <>
+                      <Paper className={classes.msgBody}>
+                        <p className={classes.msgContent}>{chat.body}</p>
+                      </Paper>
+                    </>
+                  )}
+                  {chat.send_flg == 1 && (
+                    <>
+                      <Avatar src={chat.image} className={classes.icon}  />
+                      <Paper className={classes.msgBody}>
+                        <p className={classes.msgContent}>{chat.body}</p>
+                      </Paper>
+                    </>
+                  )}
               </Box>
             ))}
             <div ref={scrollBottomRef}/>
