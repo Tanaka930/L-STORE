@@ -36,7 +36,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       width: "95%",
-      margin: `${theme.spacing(0)} auto`
+      margin: `${theme.spacing(0)} auto`,
+      position: "absolute",
+      bottom: 9
     },
     wrapText: {
       width: "100%"
