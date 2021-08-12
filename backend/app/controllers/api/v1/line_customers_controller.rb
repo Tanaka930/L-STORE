@@ -35,7 +35,10 @@ class Api::V1::LineCustomersController < LineCommonsController
   def create
     # ユーザーのトークン情報を取得
     token = Token.find_by(access_id: params[:token_access_id])
+
     if fromLine(request, token.chanel_secret)
+      # インスタンス変数に,トークン情報をセット
+      set_token(token)
       # フックの種類を取得
       event_type = params[:events][0][:type]
       if event_type == "follow"
@@ -43,7 +46,7 @@ class Api::V1::LineCustomersController < LineCommonsController
       elsif event_type == "unfollow"
         unfollow()
       elsif event_type == "message" or "image"
-        resept_line_message(request)
+        resept_line_message(request,token)
       end
     end
   end
