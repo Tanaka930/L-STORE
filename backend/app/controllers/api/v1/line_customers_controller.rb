@@ -33,12 +33,11 @@ class Api::V1::LineCustomersController < LineCommonsController
   end
 
   def create
-    @token = Token.find_by(access_id: params[:token_access_id])
-
-    if fromLine(request, @token.chanel_secret)
+    # ユーザーのトークン情報を取得
+    token = Token.find_by(access_id: params[:token_access_id])
+    if fromLine(request, token.chanel_secret)
+      # フックの種類を取得
       event_type = params[:events][0][:type]
-      # case event_type
-      # when "follow"
       if event_type == "follow"
         follow()
       elsif event_type == "unfollow"
