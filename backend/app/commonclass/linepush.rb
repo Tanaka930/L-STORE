@@ -1,8 +1,9 @@
 class Linepush < Apicommon
-  @@url = 'https://api.line.me/v2/bot/message/broadcast'
 
-  def initialize()
-    @uri = URI.parse(@@url)
+  @@url = 'https://api.line.me/v2/bot/message/'
+
+  def initialize(lsat_word)
+    @uri = URI.parse(@@url + lsat_word)
     @http = Net::HTTP.new(@uri.host,@uri.port)
     @http.use_ssl = true
   end
@@ -44,6 +45,7 @@ class Linepush < Apicommon
 
   def doPushImgTo(to)
     paramsImg = {"to" => to,"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
+    logger.debug(paramsImg)
     doPush(paramsImg)
   end
 

@@ -10,7 +10,7 @@ class Api::V1::MessagesController < ApplicationController
       # ユーザー情報をセット
       result = insert(current_api_v1_user.id,params[:title],params[:body],params[:image])
 
-      line = Linepush.new
+      line = Linepush.new('broadcast')
 
       if params[:image] 
         result2 = insert_img(current_api_v1_user.id,result,params[:image])

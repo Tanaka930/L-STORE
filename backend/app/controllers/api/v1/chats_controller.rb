@@ -1,6 +1,5 @@
 class Api::V1::ChatsController < LineCommonsController
   before_action :authenticate_api_v1_user!
-
   def index
     chats = LineCustomer.
             left_joins(:chats).
@@ -15,13 +14,13 @@ class Api::V1::ChatsController < LineCommonsController
       # params[:messate]は仮
       # params[:image]は仮
 
-      message = params[:message]
+      message = params[:body]
 
-      result = insert(trg_line_user.id, message, params[:chat_image], "0")
+      result = insert(trg_line_user.id, message, params[:chat_image])
 
-      token = Token.find_by(user_id: trg_line_user.id)
+      token = Token.find_by(user_id: current_api_v1_user.id)
 
-      line = Linepush.new
+      line = Linepush.new('multicast')
 
       line.setToken(token.messaging_token)
 
@@ -32,7 +31,7 @@ class Api::V1::ChatsController < LineCommonsController
 
       # 配列にIDを入れる
       to.push(trg_line_user.original_id)
-
+      # to = trg_line_user.original_id
       if params[:chat_image]
         insert_img(result.id, params[:chat_image])
         line.setImage(params[:chat_image])
@@ -47,6 +46,7 @@ class Api::V1::ChatsController < LineCommonsController
       msg = "success"
       render json: { is_login: true, data: msg }
     rescue => e
+      logger.debug(e)
       render json: { is_login: true, data: e }
     end    
   end
