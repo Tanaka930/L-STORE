@@ -22,17 +22,17 @@ class LineCommonsController < ApplicationController
     # メッセージタイプがtextの時
     if event_type == "text"
       # 対象のline登録ユーザーを取得
-      trg_line_user = search_line_customer(original_id,params[:token_access_id])
+      trg_line_user = search_line_customer(original_id)
       # インサートする
       insert(trg_line_user.id, params[:events][0][:message][:text],nil,"1")
 
     # メッセージタイプがimageの時
     elsif event_type == "image"
       # 対象のline登録ユーザーを取得
-      trg_line_user = search_line_customer(original_id,params[:token_access_id])
+      trg_line_user = search_line_customer(original_id)
 
       # 以下画像の処理
-      line = Linepush.new
+      line = Linepush.new(original_id)
       line.setToken(@token.messaging_token)
       line.setSecret(@token.chanel_secret)
       img_file = line.lineImgSave(request)
@@ -49,7 +49,7 @@ class LineCommonsController < ApplicationController
   end
 
   # 登録ユーザー検索
-  def search_line_customer(original_id,token_access_id)
+  def search_line_customer(original_id)
     trg_line_user = LineCustomer.find_by(original_id: original_id, user_id: @token.user_id)
     return trg_line_user
   end
