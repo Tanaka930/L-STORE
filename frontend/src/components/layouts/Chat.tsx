@@ -14,15 +14,18 @@ type TabPanelProps = {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
+      height: "60vh",
       width: "500px",
-      padding: 10
+      padding: 10,
+      margin: "20px auto",
+      position: "relative",
     },
     paper: {
-      height: "60vh",
+      height: "50vh",
       display: "flex",
       alignItems: "center",
       flexDirection: "column",
-      position: "relative"
+      overflowY: "scroll",
     },
     msgContainer: {
       display: "flex",
@@ -31,11 +34,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     msgBody: {
       margin: 10,
-      overflowY: "scroll",
     },
     msgContent: {
       padding: 6,
-      margin: 0
+      margin: 0,
+      background: "#F1F1F1"
     },
     wrapForm : {
       display: "flex",
@@ -117,35 +120,35 @@ const Chat = (props: TabPanelProps) => {
   return (
     <>
       {value === index && (
-        <Box mx="auto" className={classes.container}>
-          <Paper className={classes.paper} elevation={3}>
+        <Paper className={classes.container} elevation={3}>
+          <Paper className={classes.paper} elevation={2}>
             {chats.map((chat, index) => (
               <Box className={classes.msgContainer} key={index}>
+                <Avatar src={chat.image} className={classes.icon}  />
                 <Paper className={classes.msgBody}>
                   <p className={classes.msgContent}>{chat.body}</p>
                 </Paper>
-                <Avatar src={chat.image} className={classes.icon}  />
               </Box>
             ))}
-            <form className={classes.wrapForm} noValidate onSubmit={handleMessagePost}>
-              <TextField
-                label="メッセージ"
-                value={message}
-                className={classes.wrapText}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setMessage(e.target.value)
-                }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                <SendIcon />
-              </Button>
-            </form>
           </Paper>
-        </Box>
+          <form className={classes.wrapForm} noValidate onSubmit={handleMessagePost}>
+            <TextField
+              label="メッセージ"
+              value={message}
+              className={classes.wrapText}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setMessage(e.target.value)
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              <SendIcon />
+            </Button>
+          </form>
+        </Paper>
       )}
     </>
   )
