@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
 import { Box, Paper, TextField, Button, Avatar } from "@material-ui/core"
@@ -63,6 +63,7 @@ const Chat = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const [chats, setChats] = useState<any[]>([])
   const [message, setMessage] = useState<string>("")
+  const scrollBottomRef = useRef<HTMLDivElement>(null)
 
   const getChats = async () => {
     const config = {
@@ -117,6 +118,10 @@ const Chat = (props: TabPanelProps) => {
     return() => clearInterval(interval)
   }, [])
 
+  useLayoutEffect(() => {
+    scrollBottomRef?.current?.scrollIntoView()
+  })
+
   return (
     <>
       {value === index && (
@@ -130,6 +135,7 @@ const Chat = (props: TabPanelProps) => {
                 </Paper>
               </Box>
             ))}
+            <div ref={scrollBottomRef}/>
           </Paper>
           <form className={classes.wrapForm} noValidate onSubmit={handleMessagePost}>
             <TextField
