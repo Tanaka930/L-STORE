@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     msgContainer: {
       display: "flex",
       alignItems: "center",
+      margin: "0 6px"
     },
     msgBody: {
       margin: 10,
