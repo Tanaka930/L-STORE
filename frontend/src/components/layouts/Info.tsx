@@ -1,3 +1,6 @@
+import TextField from '@material-ui/core/TextField'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+
 type TabPanelProps = {
   index: number
   value: number
@@ -12,7 +15,13 @@ const Chat = (props: TabPanelProps) => {
       {value === index && (
         <>
           <h1>アカウント情報画面</h1>
-          <p>ユーザーID：{userId}</p>
+          <form noValidate autoComplete="off">
+            <TextField
+              label="アカウント情報"
+              variant="outlined"
+              fullWidth
+            />
+          </form>
         </>
       )}
     </>
