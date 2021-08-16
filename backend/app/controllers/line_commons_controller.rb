@@ -24,7 +24,7 @@ class LineCommonsController < ApplicationController
 
     # メッセージタイプがtextの時
     if event_type == "text"
-      
+
       # メッセージ内容
       text_message = params[:events][0][:message][:text]
 
@@ -42,6 +42,8 @@ class LineCommonsController < ApplicationController
         trg_line_user = search_line_customer(original_id)
         # インサートする
         insert(trg_line_user.id,text_message,nil,"1")
+
+        do_receive_push(trg_line_user.name,trg_line_user.id)
       end
 
 
@@ -162,8 +164,32 @@ class LineCommonsController < ApplicationController
     @token = token
   end
 
-  # プッシュ通知用のユーザー登録メソッド
+  # メッセージ受信通知用のユーザー登録メソッド
   def insert_push_user(user_id,push_line_id)
     PushUser.create(user_id: user_id, push_line_id: push_line_id)
+  end
+
+  # メッセージ受信通知実行メソッド
+  def do_receive_push(name,id)
+    line_push_users = PushUser.where(user_id: @token.user_id)
+    to = []
+    line_push_users.each{ |line_push_user|
+      to.push(line_push_user.push_line_id)
+    }
+    line = Linepush.new('multicast')
+    line.setToken(@token.messaging_token)
+    line.setBody(make_receive_push_message(name,id))
+    line.doPushMsgTo(to)
+  end
+
+  # メッセージ受信通知メソッド
+  def make_receive_push_message(name,id)
+    body = name + 
+          "さんからメッセージを受信しました。" + 
+          "\n" + 
+          "http://" +
+          ENV['FRONT_URL'] + 
+          "/customers/" + 
+          id.to_s
   end
 end
