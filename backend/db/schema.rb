@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_16_032014) do
+ActiveRecord::Schema.define(version: 2021_08_16_062643) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(version: 2021_08_16_032014) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "push_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "push_line_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_push_users_on_user_id"
+  end
+
   create_table "tokens", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -78,7 +86,6 @@ ActiveRecord::Schema.define(version: 2021_08_16_032014) do
     t.string "messaging_token", limit: 172, null: false
     t.string "login_token", limit: 172, null: false
     t.string "access_id", limit: 12, null: false
-    t.string "push_line_id"
     t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
@@ -114,5 +121,6 @@ ActiveRecord::Schema.define(version: 2021_08_16_032014) do
   add_foreign_key "line_customer_memos", "line_customers"
   add_foreign_key "line_customers", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "push_users", "users"
   add_foreign_key "tokens", "users"
 end

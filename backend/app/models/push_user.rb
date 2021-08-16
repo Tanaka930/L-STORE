@@ -1,0 +1,2 @@
+class PushUser < ApplicationRecord
+end

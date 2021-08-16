@@ -21,10 +21,12 @@ class LineCommonsController < ApplicationController
 
     # メッセージタイプがtextの時
     if event_type == "text"
+      # メッセージ
+      text_message = params[:events][0][:message][:text]
       # 対象のline登録ユーザーを取得
       trg_line_user = search_line_customer(original_id)
       # インサートする
-      insert(trg_line_user.id, params[:events][0][:message][:text],nil,"1")
+      insert(trg_line_user.id,text_message,nil,"1")
 
     # メッセージタイプがimageの時
     elsif event_type == "image"

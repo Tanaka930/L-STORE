@@ -1,4 +1,4 @@
-class Api::V1::TokensController < ApplicationController
+class Api::V1::TokensController < LineCommonsController
 
   before_action :authenticate_api_v1_user!
   # IDがあるかを確認する回数
