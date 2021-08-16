@@ -32,7 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     msgContainer: {
       display: "flex",
-      margin: "0 6px"
+      alignItems: "center",
+      margin: "0 6px",
     },
     msgBody: {
       margin: 10,
@@ -40,7 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
     msgContent: {
       padding: 6,
       margin: 0,
-      background: "#F1F1F1"
+      background: "#F1F1F1",
+      wordBreak: 'break-word'
     },
     wrapForm : {
       display: "flex",
@@ -140,7 +142,7 @@ const Chat = (props: TabPanelProps) => {
                 )}
                 {chat.send_flg === "1" && (
                   <>
-                    <Avatar src={chat.image} className={classes.icon}  />
+                    <Avatar src={chat.image} className={classes.icon} />
                     <Paper className={classes.msgBody}>
                       <p className={classes.msgContent}>{chat.body}</p>
                     </Paper>
