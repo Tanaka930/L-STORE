@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
-import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden } from "@material-ui/core"
+import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden, Grid } from "@material-ui/core"
 import { Send, RecentActors } from "@material-ui/icons"
 
 const drawerWidth = 240
@@ -59,6 +59,7 @@ const SideBar: React.FC<Props> = (props) => {
 
   return (
     <div className={classes.root}>
+
       <CssBaseline />
       <Hidden smUp implementation="css">
         <Drawer

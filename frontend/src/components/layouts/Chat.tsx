@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       height: "60vh",
-      width: "500px",
+      // width: "500px",
       padding: 10,
       margin: "20px auto",
       position: "relative",
