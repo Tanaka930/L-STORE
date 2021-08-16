@@ -22,17 +22,21 @@ const CommonLayout = ({ children }: CommonLayoutProps) => {
 
   return (
     <>
-      <Header />
-      <main>
-        <Container maxWidth="lg" className={classes.container}>
-          <div className={classes.toolbar} />
-          <Grid container justifyContent="center">
-            <Grid item xs={12}>
-              {children}
-            </Grid>
-          </Grid>
-        </Container>
-      </main>
+      <Grid container>
+        <Header />
+        <Grid item sm={9} xs={12}>
+          <main>
+            <Container maxWidth="lg" className={classes.container}>
+              <div className={classes.toolbar} />
+              <Grid container justifyContent="center">
+                <Grid item xs={12}>
+                  {children}
+                </Grid>
+              </Grid>
+            </Container>
+          </main>
+        </Grid>
+      </Grid>
     </>
   )
 }
