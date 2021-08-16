@@ -1,5 +1,7 @@
+# LINEのuserIDからプロフィール情報を取得するクラス
 class Lineprofile < Apicommon
 
+  # コンストラクタ 引数はLINEのuserId
   def initialize(original_id)
     url = "https://api.line.me/v2/bot/profile/#{original_id}"
     @uri = URI.parse(url)
@@ -10,6 +12,7 @@ class Lineprofile < Apicommon
     @original_id = original_id
   end
 
+  # ラインのプロファイル情報を取得するメソッド
   def getProfile
     response = getResponse()
     case response
@@ -29,7 +32,9 @@ class Lineprofile < Apicommon
     return profile_data
   end
 
+  # 以下privateメソッド
   private
+    # LINEにprofile情報を取得するメソッド
     def getResponse
       response = @http.get(@uri.path, getHeader())
       return response
