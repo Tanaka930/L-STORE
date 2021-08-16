@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: "center"
   },
   card: {
+    margin: "0 auto",
     padding: theme.spacing(2),
     maxWidth: 400,
     marginTop: 40

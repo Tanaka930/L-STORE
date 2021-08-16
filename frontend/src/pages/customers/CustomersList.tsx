@@ -4,20 +4,43 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { Link } from "react-router-dom"
 import { CustomerList } from "interfaces/index"
-import { makeStyles, Theme } from "@material-ui/core/styles"
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from "@material-ui/core"
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    minWidth: 800
-  },
-  subhead: {
-    display: "flex",
-  },
-  subheadTitle: {
-    flex: "1"
-  }
-}))
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%'
+    },
+    subhead: {
+      display: "flex",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%"
+      }
+    },
+    subheadName: {
+      width: "30%",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+      }
+    },
+    subheadInfo: {
+      width: "70%",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      }
+    },
+    accountName: {
+      width: "25%"
+    },
+    accountInfo: {
+      width: "70%",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      }
+    }
+  }),
+)
 
 const CustomersList: React.FC = () => {
   const classes = useStyles()
@@ -52,17 +75,29 @@ const CustomersList: React.FC = () => {
   return (
     <div className={classes.root}>
       <h1>お友達リスト</h1>
-      <List subheader={<ListSubheader className={classes.subhead}><span className={classes.subheadTitle}>アカウント名</span><span className={classes.subheadTitle}>アカウント情報</span></ListSubheader>}>
+      <List
+        subheader={
+          <ListSubheader className={classes.subhead}>
+            <span className={classes.subheadName}>アカウント名</span>
+            <span className={classes.subheadInfo}>アカウント情報</span>
+          </ListSubheader>
+        }
+      >
         {customers.map((customer, index) => (
-          <ListItem key={index} button component={Link} to={"/customers/" + customer.id}>
+          <ListItem
+            key={index}
+            button
+            component={Link}
+            to={"/customers/" + customer.id}
+          >
             <ListItemAvatar>
               {customer.image
                 ? <Avatar src={ customer.image }/>
                 : <Avatar />
               }
             </ListItemAvatar>
-            <ListItemText>{ customer.name }</ListItemText>
-            <ListItemText>ここにテキストが入ります。</ListItemText>
+            <ListItemText className={classes.accountName}>{customer.name}</ListItemText>
+            <ListItemText className={classes.accountInfo}>ここにテキストが入ります。</ListItemText>
           </ListItem>
         ))}
       </List>

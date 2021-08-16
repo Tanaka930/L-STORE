@@ -21,10 +21,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
     textTransform: "none"
   },
+  welcome: {
+    textAlign: "center"
+  },
   header: {
     textAlign: "center"
   },
   card: {
+    margin: "0 auto",
     padding: theme.spacing(2),
     maxWidth: 400
   },
@@ -99,7 +103,7 @@ const Home: React.FC = () => {
       {
         isSignedIn && currentUser ? (
           <>
-            <h2>ようこそ {currentUser?.name}さん</h2>
+            <h2 className={classes.welcome}>ようこそ {currentUser?.name}さん</h2>
             <form autoComplete="off" onSubmit={handleCreatePost}>
               <Card className={classes.card}>
                 <CardHeader className={classes.header} title="公式ライン投稿" />
