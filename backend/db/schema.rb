@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_12_091036) do
+ActiveRecord::Schema.define(version: 2021_08_16_032014) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_091036) do
     t.string "messaging_token", limit: 172, null: false
     t.string "login_token", limit: 172, null: false
     t.string "access_id", limit: 12, null: false
+    t.string "push_line_id"
     t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
