@@ -171,15 +171,22 @@ class LineCommonsController < ApplicationController
 
   # メッセージ受信通知実行メソッド
   def do_receive_push(name,id)
+    # 通知を受け取るユーザーを取得
     line_push_users = PushUser.where(user_id: @token.user_id)
+    # 空の配列を準備
     to = []
+    # 取得したユーザーのLINEIDをtoに格納
     line_push_users.each{ |line_push_user|
       to.push(line_push_user.push_line_id)
     }
+    # 以下pushメッセージのインスタンス作成
     line = Linepush.new('multicast')
     line.setToken(@token.messaging_token)
+    # make_receive_push_messageにてメッセージを作成
     line.setBody(make_receive_push_message(name,id))
     line.doPushMsgTo(to)
+    # 以上pushメッセージのインスタンス作成
+
   end
 
   # メッセージ受信通知メソッド
@@ -191,5 +198,6 @@ class LineCommonsController < ApplicationController
           ENV['FRONT_URL'] + 
           "/customers/" + 
           id.to_s
+    return body
   end
 end
