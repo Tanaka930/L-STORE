@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 10,
       margin: "20px auto",
       position: "relative",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%"
+      }
     },
     paper: {
       height: "50vh",

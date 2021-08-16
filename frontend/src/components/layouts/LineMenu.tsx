@@ -12,7 +12,6 @@ type UserId = {
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.paper,
-    width: 1000,
     marginTop: 30
   }
 }))

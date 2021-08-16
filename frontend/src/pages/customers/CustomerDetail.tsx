@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   account: {
     display: "flex",
     textAlign: "center",
-    marginTop: 50
   },
   large: {
     width: theme.spacing(20),
