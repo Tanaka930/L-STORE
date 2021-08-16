@@ -24,18 +24,26 @@ class LineCommonsController < ApplicationController
 
     # メッセージタイプがtextの時
     if event_type == "text"
+      
       # メッセージ内容
       text_message = params[:events][0][:message][:text]
-      # 対象のline登録ユーザーを取得
-      trg_line_user = search_line_customer(original_id)
-      # インサートする
-      insert(trg_line_user.id,text_message,nil,"1")
 
       # 送られてきたメッセージがトークン情報と一致している時
       if text_message == @token.messaging_token
-        # push_line_idテーブルにデータを追加
-        insert_push_user(@token.user_id, original_id)
+        # 既にpush_userにて登録されているかを確認
+        if !PushUser.exists?(push_line_id: original_id)
+          # push_line_idテーブルにデータを追加
+          insert_push_user(@token.user_id, original_id)
+        end
+
+      # トークン以外の時
+      else
+        # 対象のline登録ユーザーを取得
+        trg_line_user = search_line_customer(original_id)
+        # インサートする
+        insert(trg_line_user.id,text_message,nil,"1")
       end
+
 
     # メッセージタイプがimageの時
     elsif event_type == "image"
@@ -101,18 +109,19 @@ class LineCommonsController < ApplicationController
 
     # 上記以外(ユーザーがいないもしくはブロックフラグが0)
     else
+
+      # line_customerテーブルに対象のユーザーの公式ラインユーザーがいるかを確認
+      if !LineCustomer.exists?(user_id: @token.user_id)
+        # push_line_idテーブルにデータを追加
+        insert_push_user(@token.user_id, original_id)
+      end
+
       # 以下プロフィール情報を取得
       profile_hash = get_line_profile(original_id,@token.messaging_token)
 
       # プロフィール取得レスポンスがsuccessの時
       if profile_hash["response"] == "success"
         insert_user(@token.user_id, original_id,profile_hash["name"],profile_hash["image"],"0")
-      end
-
-      # line_customerテーブルに対象のユーザーの公式ラインユーザーがいるかを確認
-      if !LineCustomer.exists?(user_id: @token.user_id)
-        # push_line_idテーブルにデータを追加
-        insert_push_user(@token.user_id, original_id)
       end
     end
   end
