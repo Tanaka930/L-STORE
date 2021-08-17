@@ -75,13 +75,6 @@ class LineCommonsController < ApplicationController
     return trg_line_user
   end
 
-  # クライアント情報をセットメソッド
-  def set_client(client_src, access_token)
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = access_token
-      config.channel_token = client_src
-    }
-  end
 
   # ラインからのアクセスチェックメソッド
   def fromLine(request, secret_id)
