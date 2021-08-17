@@ -5,22 +5,20 @@ import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemTex
 import { Send, RecentActors } from "@material-ui/icons"
 import { AuthContext } from "App"
 
-const drawerWidth = 240
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
     },
     drawer: {
-      width: drawerWidth,
+      width: 240,
       flexShrink: 0,
       [theme.breakpoints.down("sm")]: {
         width: 200
       }
     },
     drawerPaper: {
-      width: drawerWidth,
+      width: 240,
       [theme.breakpoints.down("sm")]: {
         width: 200
       }
@@ -46,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
       //   display: "none"
       // }
     }
-  }),
+  })
 )
 
 type Props = {
