@@ -6,7 +6,7 @@ module DeleteMessage::DeleteMessage extend self
     d = Date.today
     # タイムスタンプの場合は、00:00:00が基準
     # ターゲットの日付+1日で考える
-    Message.where("created_at <= ?", d).find_each do |trg_datas|
+    Message.where("created_at <= ?", d-89).find_each do |trg_datas|
       # 対象データを削除
       trg_datas.destroy
     end
