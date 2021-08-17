@@ -33,7 +33,10 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerHeader: {
       backgroundColor: "#3f51b5",
       color: "white",
-      fontSize: 20
+      fontSize: 20,
+      [theme.breakpoints.up("sm")]: {
+        display: "none"
+      }
     }
   }),
 )

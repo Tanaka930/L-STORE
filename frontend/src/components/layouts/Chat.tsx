@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Box, Paper, TextField, Button, Avatar } from "@material-ui/core"
+import { Paper, TextField, Button } from "@material-ui/core"
 import SendIcon from "@material-ui/icons/Send"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { MessageLeft, MessageRight } from "./Message"
 
 type TabPanelProps = {
   index: number
@@ -13,40 +14,41 @@ type TabPanelProps = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
-      height: "60vh",
-      // width: "500px",
-      padding: 10,
-      margin: "20px auto",
-      position: "relative",
-      [theme.breakpoints.down("sm")]: {
-        width: "100%"
-      }
-    },
     paper: {
-      height: "50vh",
+      width: "80vw",
+      height: "80vh",
+      maxWidth: "500px",
+      maxHeight: "700px",
       display: "flex",
       alignItems: "center",
       flexDirection: "column",
-      overflowY: "scroll",
+      position: "relative"
     },
-    msgContainer: {
+    paper2: {
+      width: "80vw",
+      maxWidth: "500px",
       display: "flex",
       alignItems: "center",
-      margin: "0 6px",
+      flexDirection: "column",
+      position: "relative"
     },
-    msgBody: {
+    container: {
+      // width: "100vw",
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      // margin: "0 auto"
+    },
+    messagesBody: {
+      width: "calc( 100% - 20px )",
       margin: 10,
-    },
-    msgContent: {
-      padding: 6,
-      margin: 0,
-      background: "#F1F1F1",
-      wordBreak: 'break-word'
+      overflowY: "scroll",
+      height: "calc( 100% - 80px )"
     },
     wrapForm : {
       display: "flex",
-      justifyContent: "center",
+      // justifyContent: "center",
       width: "95%",
       margin: `${theme.spacing(0)} auto`,
       position: "absolute",
@@ -55,10 +57,6 @@ const useStyles = makeStyles((theme: Theme) =>
     wrapText: {
       width: "100%"
     },
-    icon: {
-      width: theme.spacing(4),
-      height: theme.spacing(4),
-    }
   })
 )
 
@@ -116,10 +114,10 @@ const Chat = (props: TabPanelProps) => {
 
   useEffect(() => {
     getChats()
-    const interval = setInterval(()=>{
-      getChats()
-    },1000)
-    return() => clearInterval(interval)
+    // const interval = setInterval(()=>{
+    //   getChats()
+    // },1000)
+    // return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {
@@ -129,34 +127,31 @@ const Chat = (props: TabPanelProps) => {
   return (
     <>
       { value === index && (
-        <Paper className={classes.container} elevation={3}>
-          <Paper className={classes.paper} elevation={2}>
-            {chats.map((chat, index) => (
-              <Box className={classes.msgContainer} key={index}>
-                {chat.send_flg === "0" && (
-                  <>
-                    <Paper className={classes.msgBody}>
-                      <p className={classes.msgContent}>{chat.body}</p>
-                    </Paper>
-                  </>
-                )}
-                {chat.send_flg === "1" && (
-                  <>
-                    <Avatar src={chat.image} className={classes.icon} />
-                    <Paper className={classes.msgBody}>
-                      <p className={classes.msgContent}>{chat.body}</p>
-                    </Paper>
-                  </>
-                )}
-              </Box>
-            ))}
-            <div ref={scrollBottomRef}/>
-          </Paper>
-          <form
-            noValidate
-            onSubmit={handleMessagePost}
-            className={classes.wrapForm}
-          >
+        <div className={classes.container}>
+          <Paper className={classes.paper}>
+            <Paper id="style-1" className={classes.messagesBody}>
+              {chats.map((chat, index) => (
+                <span key={index}>
+                  {chat.send_flg === "0" && (
+                    <MessageRight
+                      message={chat.body}
+                    />
+                  )}
+                  {chat.send_flg === "1" && (
+                    <MessageLeft
+                      message={chat.body}
+                      photoURL={chat.image}
+                    />
+                  )}
+                </span>
+              ))}
+             <div ref={scrollBottomRef}/>
+            </Paper>
+            <form
+              noValidate
+              onSubmit={handleMessagePost}
+              className={classes.wrapForm}
+            >
             <TextField
               label="メッセージ"
               value={message}
@@ -173,7 +168,8 @@ const Chat = (props: TabPanelProps) => {
               <SendIcon />
             </Button>
           </form>
-        </Paper>
+          </Paper>
+        </div>
       )}
     </>
   )
