@@ -1,6 +1,6 @@
-import React from 'react'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import React from "react"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles"
 import Header from "components/layouts/Header"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-  }),
+  })
 )
 
 interface Props {
@@ -27,8 +27,8 @@ interface Props {
 }
 
 const CommonLayout = (props: Props) => {
-  const { children } = props;
-  const classes = useStyles();
+  const { children } = props
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
@@ -39,7 +39,7 @@ const CommonLayout = (props: Props) => {
         {children}
       </main>
     </div>
-  );
+  )
 }
 
 export default CommonLayout

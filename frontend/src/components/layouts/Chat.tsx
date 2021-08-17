@@ -41,8 +41,10 @@ const useStyles = makeStyles((theme: Theme) =>
       // margin: "0 auto"
     },
     messagesBody: {
+      backgroundColor: "#7494C0",
       width: "calc( 100% - 20px )",
       margin: 10,
+      padding: 5,
       overflowY: "scroll",
       height: "calc( 100% - 80px )"
     },
