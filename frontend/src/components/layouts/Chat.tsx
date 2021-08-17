@@ -1,10 +1,15 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef, useLayoutEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Paper, TextField, Button } from "@material-ui/core"
+import { Paper, TextField, Button, IconButton, Box } from "@material-ui/core"
+import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import SendIcon from "@material-ui/icons/Send"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
 import { MessageLeft, MessageRight } from "./Message"
+
 
 type TabPanelProps = {
   index: number
@@ -57,6 +62,22 @@ const useStyles = makeStyles((theme: Theme) =>
     wrapText: {
       width: "100%"
     },
+    input: {
+      display: 'none',
+    },
+    uploadBtn: {
+      marginTop: theme.spacing(2),
+      textTransform: "none"
+    },
+    prevImgArea: {
+      textAlign: "center",
+      marginTop: 30
+    },
+    prevImg: {
+      width: 300,
+      height: 300,
+      objectFit: "contain"
+    }
   })
 )
 
@@ -65,7 +86,26 @@ const Chat = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const [chats, setChats] = useState<any[]>([])
   const [message, setMessage] = useState<string>("")
+  const [image, setImage] = useState<File>()
+  const [preview, setPreview] = useState("")
   const scrollBottomRef = useRef<HTMLDivElement>(null)
+
+  const uploadImage = useCallback((e) => {
+    const file = e.target.files[0]
+    setPreview(window.URL.createObjectURL(file))
+    setImage(file)
+  }, [])
+
+    // FormData形式でデータを作成
+    const createFormData = (): FormData => {
+      const formData = new FormData()
+  
+      formData.append("body", message)
+      if (image) formData.append("image", image)
+  
+      return formData
+    }
+
 
   const getChats = async () => {
     const config = {
@@ -87,9 +127,10 @@ const Chat = (props: TabPanelProps) => {
   const handleMessagePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const data = {
-      body : message
-    }
+    // const data = {
+    //   body : message
+    // }
+    const data = createFormData()
 
     const config = {
       headers: {
@@ -102,12 +143,15 @@ const Chat = (props: TabPanelProps) => {
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
       if(res.status === 200){
+        toast.success("送信されました")
         console.log("ok")
         setMessage("")
       } else {
+        toast.error("送信に失敗しました")
         console.log(res.status + "error")
       }
     } catch(err) {
+      toast.warn("通信に失敗しました")
       console.error(err)
     }
   }
@@ -152,6 +196,23 @@ const Chat = (props: TabPanelProps) => {
               onSubmit={handleMessagePost}
               className={classes.wrapForm}
             >
+              <input accept="image/*"
+                className={classes.input}
+                id="icon-button-file"
+                type="file"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  uploadImage(e)
+                }}
+              />
+              <label htmlFor="icon-button-file">
+                <IconButton className={classes.uploadBtn}
+                  color="primary"
+                  aria-label="upload picture"
+                  component="span">
+                  <PhotoLibraryIcon />
+                </IconButton>
+              </label>
+
               <TextField
                 label="メッセージ"
                 value={message}
@@ -167,8 +228,25 @@ const Chat = (props: TabPanelProps) => {
               >
                 <SendIcon />
               </Button>
-            </form>
-          </Paper>
+
+          </form>
+        </Paper>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
+          { preview &&
+            <Box className={classes.prevImgArea}>
+              <img className={classes.prevImg} src={preview} alt="プレビュー画像" />
+            </Box>
+          }
         </div>
       )}
     </>
