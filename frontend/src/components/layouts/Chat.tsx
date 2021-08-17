@@ -38,12 +38,10 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "relative"
     },
     container: {
-      // width: "100vw",
       height: "100vh",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      // margin: "0 auto"
     },
     messagesBody: {
       backgroundColor: "#7494C0",
@@ -55,7 +53,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     wrapForm : {
       display: "flex",
-      // justifyContent: "center",
       width: "95%",
       margin: `${theme.spacing(0)} auto`,
       // position: "absolute",
@@ -232,6 +229,7 @@ const Chat = (props: TabPanelProps) => {
                 color="primary"
                 type="submit"
                 // startIcon={<SendIcon />}
+                disabled={!message && true}
               >
                 <SendIcon />
               </IconButton>

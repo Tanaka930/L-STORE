@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_021714) do
+ActiveRecord::Schema.define(version: 2021_08_17_083800) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -38,6 +38,23 @@ ActiveRecord::Schema.define(version: 2021_08_17_021714) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["message_id"], name: "index_images_on_message_id"
     t.index ["user_id"], name: "index_images_on_user_id"
+  end
+
+  create_table "l_groups", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_l_groups_on_user_id"
+  end
+
+  create_table "line_customer_l_groups", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "l_group_id"
+    t.bigint "line_customer_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["l_group_id"], name: "index_line_customer_l_groups_on_l_group_id"
+    t.index ["line_customer_id"], name: "index_line_customer_l_groups_on_line_customer_id"
   end
 
   create_table "line_customer_memos", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -119,6 +136,9 @@ ActiveRecord::Schema.define(version: 2021_08_17_021714) do
   add_foreign_key "chats", "line_customers"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
+  add_foreign_key "l_groups", "users"
+  add_foreign_key "line_customer_l_groups", "l_groups"
+  add_foreign_key "line_customer_l_groups", "line_customers"
   add_foreign_key "line_customer_memos", "line_customers"
   add_foreign_key "line_customers", "users"
   add_foreign_key "messages", "users"
