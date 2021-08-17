@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       // justifyContent: "center",
       width: "95%",
       margin: `${theme.spacing(0)} auto`,
-      position: "absolute",
+      // position: "absolute",
       bottom: 9
     },
     wrapText: {
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'none',
     },
     uploadBtn: {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(1),
       textTransform: "none"
     },
     prevImgArea: {
@@ -79,7 +79,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 300,
       height: 300,
       objectFit: "contain"
-    }
+    },
+    sendBtn: {
+      marginTop: theme.spacing(1),
+    },
   })
 )
 
@@ -223,13 +226,15 @@ const Chat = (props: TabPanelProps) => {
                   setMessage(e.target.value)
                 }}
               />
-              <Button
-                variant="contained"
+              <IconButton
+                className={classes.sendBtn}
+                // variant="contained"
                 color="primary"
                 type="submit"
+                // startIcon={<SendIcon />}
               >
                 <SendIcon />
-              </Button>
+              </IconButton>
 
           </form>
         </Paper>
