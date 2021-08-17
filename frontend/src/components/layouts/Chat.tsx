@@ -166,6 +166,7 @@ const Chat = (props: TabPanelProps) => {
                 variant="contained"
                 color="primary"
                 type="submit"
+                disabled={!message && true}
               >
                 <SendIcon />
               </Button>
