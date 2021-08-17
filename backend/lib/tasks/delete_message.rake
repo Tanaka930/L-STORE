@@ -1,5 +1,5 @@
 namespace :delete_message do
-  desc "3ヶ月以上前のデータの削除"
+  desc "Delete message data more than 3 months ago"
   task delete_message: :environment do
     DeleteMessage::DeleteMessage.batch
   end

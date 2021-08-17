@@ -1,5 +1,5 @@
 namespace :delete_chat_message do
-  desc "3ヶ月以上前のチャットデータの削除"
+  desc "Delete chat data more than 3 months ago"
   task delete_chat_message: :environment do
     DeleteChat::DeleteChat.batch
   end
