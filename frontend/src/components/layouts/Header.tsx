@@ -3,7 +3,7 @@ import { useHistory, Link } from "react-router-dom"
 import Cookies from "js-cookie"
 import { AuthContext } from "App"
 import { signOut } from "lib/api/auth"
-import { AppBar, Toolbar, Typography, Button, IconButton, Grid } from "@material-ui/core"
+import { AppBar, Toolbar, Typography, Button, IconButton } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import SideBar from "./SideBar"
@@ -131,13 +131,11 @@ const Header: React.FC = () => {
         </Toolbar>
       </AppBar>
       { isSignedIn &&
-        <Grid xs={3}>
-          <SideBar
-            isOpen={mobileOpen}
-            handleSidebarToggle={handleSidebarToggle}
-            handleSidebarClose={handleSidebarClose}
-          />
-        </Grid>
+        <SideBar
+          isOpen={mobileOpen}
+          handleSidebarToggle={handleSidebarToggle}
+          handleSidebarClose={handleSidebarClose}
+        />
       }
     </>
   )

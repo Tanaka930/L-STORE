@@ -1,44 +1,45 @@
-import { Container, Grid } from "@material-ui/core"
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles"
+import React from 'react'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Header from "components/layouts/Header"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
+    root: {
+      display: 'flex',
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none',
+      },
+    },
+    toolbar: theme.mixins.toolbar,
+    content: {
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-    toolbar: theme.mixins.toolbar,
-  })
+  }),
 )
 
-interface CommonLayoutProps {
+interface Props {
   children: React.ReactElement
 }
 
-// 全てのページで共通となるレイアウト
-const CommonLayout = ({ children }: CommonLayoutProps) => {
-  const classes = useStyles()
+const CommonLayout = (props: Props) => {
+  const { children } = props;
+  const classes = useStyles();
 
   return (
-    <>
-      <Grid container>
-        <Header />
-        <Grid item sm={9} xs={12}>
-          <main>
-            <Container maxWidth="lg" className={classes.container}>
-              <div className={classes.toolbar} />
-              <Grid container justifyContent="center">
-                <Grid item xs={12}>
-                  {children}
-                </Grid>
-              </Grid>
-            </Container>
-          </main>
-        </Grid>
-      </Grid>
-    </>
-  )
+    <div className={classes.root}>
+      <CssBaseline />
+      <Header />
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        {children}
+      </main>
+    </div>
+  );
 }
 
 export default CommonLayout
