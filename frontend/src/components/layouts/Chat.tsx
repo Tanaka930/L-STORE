@@ -27,7 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       flexDirection: "column",
-      position: "relative"
+      position: "relative",
+      [theme.breakpoints.down("sm")]: {
+        width: "100%",
+        alignItems: "start",
+      }
     },
     paper2: {
       width: "80vw",
@@ -42,6 +46,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
+      [theme.breakpoints.down("sm")]: {
+        height: "60vh",
+        alignItems: "start",
+        marginTop: 20,
+      }
     },
     messagesBody: {
       backgroundColor: "#7494C0",
