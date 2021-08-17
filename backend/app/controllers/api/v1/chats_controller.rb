@@ -11,39 +11,48 @@ class Api::V1::ChatsController < LineCommonsController
   def create
     begin
       trg_line_user = LineCustomer.find(params[:line_customer_id])
-      # params[:messate]は仮
-      # params[:image]は仮
 
       message = params[:body]
+      image = params[:image]
 
-      result = insert(trg_line_user.id, message, params[:chat_image])
+      # 画像もしくはメッセージがある時
+      if message != nil or image != nil
 
-      token = Token.find_by(user_id: current_api_v1_user.id)
+        token = Token.find_by(user_id: current_api_v1_user.id)
 
-      line = Linepush.new('multicast')
+        result = insert(trg_line_user.id, message, image)
 
-      line.setToken(token.messaging_token)
+        line = Linepush.new('multicast')
 
-      line.setBody(message)
+        line.setToken(token.messaging_token)
 
-      # 配列を宣言
-      to = []
+        line.setBody(message)
 
-      # 配列にIDを入れる
-      to.push(trg_line_user.original_id)
-      # to = trg_line_user.original_id
-      if params[:chat_image]
-        insert_img(result.id, params[:chat_image])
-        line.setImage(params[:chat_image])
-        line.setThumbnail(params[:chat_image])
-        # 画像送信
-        line.doPushImgTo(to)
+        # 配列を宣言
+        to = []
+
+        # 配列にIDを入れる
+        to.push(trg_line_user.original_id)
+        
+        # 画像がある時の処理
+        if image != nil
+          img_result = insert_img(result, image)
+          # logger.debug(img_result)
+          line.setImage(Chatimage.find(img_result))
+          line.setThumbnail(Chat.find(result))
+          # 画像送信
+          line.doPushImgTo(to)
+        end
+
+        if message != nil
+          # メッセージ送信
+          line.doPushMsgTo(to)
+        end
+
+        msg = "success"
+      else
+        msg = "error"
       end
-
-      # メッセージ送信
-      line.doPushMsgTo(to)
-
-      msg = "success"
       render json: { is_login: true, data: msg }
     rescue => e
       logger.debug(e)
@@ -57,8 +66,8 @@ class Api::V1::ChatsController < LineCommonsController
     return result.id
   end
 
-  def insert_img(user_id,image)
-    result = Chatimage.create(chat_id: user_id, chat_image: image)
+  def insert_img(chat_id,image)
+    result = Chatimage.create(chat_id: chat_id, image: image)
     return result.id
   end
 end

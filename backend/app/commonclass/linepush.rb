@@ -55,8 +55,7 @@ class Linepush < Apicommon
 
   # 1対1もしくは1対多用の画像用プッシュメッセージ作成用メソッド
   def doPushImgTo(to)
-    paramsImg = {"to" => to,"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
-    logger.debug(paramsImg)
+    paramsImg = {"to" => to,"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.chat_image.to_s}]}
     doPush(paramsImg)
   end
 
@@ -80,6 +79,7 @@ class Linepush < Apicommon
     # プッシュメッセージ実行用のメソッド
     def doPush(jsonParam)
       response = @http.post(@uri.path, jsonParam.to_json, getHeader())
+      # logger.debug(response)
     end
 
     # クライアントのセッター
