@@ -122,7 +122,7 @@ const Chat = (props: TabPanelProps) => {
 
   useLayoutEffect(() => {
     scrollBottomRef?.current?.scrollIntoView()
-  })
+  }, [])
 
   return (
     <>
@@ -152,22 +152,22 @@ const Chat = (props: TabPanelProps) => {
               onSubmit={handleMessagePost}
               className={classes.wrapForm}
             >
-            <TextField
-              label="メッセージ"
-              value={message}
-              className={classes.wrapText}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setMessage(e.target.value)
-              }}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
-              <SendIcon />
-            </Button>
-          </form>
+              <TextField
+                label="メッセージ"
+                value={message}
+                className={classes.wrapText}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setMessage(e.target.value)
+                }}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+              >
+                <SendIcon />
+              </Button>
+            </form>
           </Paper>
         </div>
       )}
