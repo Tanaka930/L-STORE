@@ -18,3 +18,20 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+# 出力先のログファイルの指定
+set :output, 'log/cron_log.log'
+# ジョブの実行環境の指定
+set :environment, :production
+
+# 1日１回午前2時に実行
+every 1.day, :at => '2:00' do
+  # 90日以上前のチャットデータ削除
+  rake 'delete_chat_message:delete_chat_message'
+end
+
+# 1日１回午前3時に実行
+every 1.day, :at => '3:00' do
+  # 90日以上前の一斉送信データ削除
+  rake 'delete_message:delete_message'
+end
