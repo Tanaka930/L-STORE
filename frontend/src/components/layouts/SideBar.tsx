@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link } from "react-router-dom"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
 import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden, Divider } from "@material-ui/core"
 import { Send, RecentActors } from "@material-ui/icons"
+import { AuthContext } from "App"
 
 const drawerWidth = 240
 
@@ -37,6 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("sm")]: {
         display: "none"
       }
+    },
+    currentUser: {
+      justifyContent: "center",
+      fontSize: 20,
+      // [theme.breakpoints.up("sm")]: {
+      //   display: "none"
+      // }
     }
   }),
 )
@@ -48,6 +56,7 @@ type Props = {
 }
 
 const SideBar: React.FC<Props> = (props) => {
+  const { currentUser } = useContext(AuthContext)
   const classes = useStyles()
 
   const drawer = (
@@ -55,6 +64,12 @@ const SideBar: React.FC<Props> = (props) => {
       <Toolbar className={classes.drawerHeader}>
         L-store
       </Toolbar>
+      <Divider />
+      <List>
+        <ListItem className={classes.currentUser} >
+          {currentUser?.name}
+        </ListItem>
+      </List>
       <Divider />
       <List>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/" >

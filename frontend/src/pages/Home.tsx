@@ -103,7 +103,7 @@ const Home: React.FC = () => {
       {
         isSignedIn && currentUser ? (
           <>
-            <h2 className={classes.welcome}>ようこそ {currentUser?.name}さん</h2>
+            {/* <h2 className={classes.welcome}>ようこそ {currentUser?.name}さん</h2> */}
             <form autoComplete="off" onSubmit={handleCreatePost}>
               <Card className={classes.card}>
                 <CardHeader className={classes.header} title="公式ライン投稿" />
