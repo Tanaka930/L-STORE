@@ -21,7 +21,9 @@ class Api::V1::TokensController < LineCommonsController
       end
     else
       # 新規作成の場合
-      result = token_insert(params[:chanel_id], current_api_v1_user.id,params[:chanel_secret], params[:messaging_token], params[:login_token],make_random_id())
+      access_id = make_random_id()
+      web_hook_url = make_web_hook_url(access_id)
+      result = token_insert(params[:chanel_id], current_api_v1_user.id,params[:chanel_secret], params[:messaging_token], params[:login_token],access_id,web_hook_url)
       if result
         render json: { status: 'SUCCESS' }
       else
@@ -39,8 +41,14 @@ class Api::V1::TokensController < LineCommonsController
     params.require(:token).permit(:chanel_id, :chanel_secret, :messaging_token, :login_token)
   end
   # 2021-8-11バグ対応で追加
-  def token_insert(chanel_id, user_id, chanel_secret, messaging_token, login_token, access_id)
-    result = Token.create(chanel_id: chanel_id, user_id: user_id, chanel_secret: chanel_secret, messaging_token: messaging_token, login_token: login_token, access_id: access_id)    
+  def token_insert(chanel_id, user_id, chanel_secret, messaging_token, login_token, access_id, web_hook_url)
+    result = Token.create(chanel_id: chanel_id, 
+                          user_id: user_id, 
+                          chanel_secret: chanel_secret, 
+                          messaging_token: messaging_token, 
+                          login_token: login_token, 
+                          access_id: access_id, 
+                          web_hook_url: web_hook_url)    
     return result
   end
 
@@ -77,5 +85,16 @@ class Api::V1::TokensController < LineCommonsController
     else
       return 0
     end
+  end
+
+  # webhook作成用の関数
+  # urlのテキスト情報を返却
+  def make_web_hook_url(access_id)
+    url = 
+      ENV['BACK_URL'] + 
+      "/api/v1/tokens/" + 
+      access_id + 
+      "/line_customers"
+    return url
   end
 end
