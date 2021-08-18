@@ -99,6 +99,7 @@ const Chat = (props: TabPanelProps) => {
   const [message, setMessage] = useState<string>("")
   const [image, setImage] = useState<File>()
   const [preview, setPreview] = useState("")
+  const [postData, setPostData] = useState<any>({})
   const scrollBottomRef = useRef<HTMLDivElement>(null)
 
   const uploadImage = useCallback((e) => {
@@ -107,72 +108,56 @@ const Chat = (props: TabPanelProps) => {
     setImage(file)
   }, [])
 
-    // FormData形式でデータを作成
-    const createFormData = (): FormData => {
-      const formData = new FormData()
-  
-      formData.append("body", message)
-      if (image) formData.append("image", image)
-  
-      return formData
+  const config = {
+    headers: {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
     }
+  }
 
+    // FormData形式でデータを作成
+    // const createFormData = (): FormData => {
+    //   const formData = new FormData()
+    //   formData.append("body", message)
+    //   if (image) formData.append("image", image)
+    //     return formData
+    // }
 
   const getChats = async () => {
-    const config = {
-      headers: {
-        "access-token": Cookies.get("_access_token"),
-        "client": Cookies.get("_client"),
-        "uid": Cookies.get("_uid")
-      }
-    }
-
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
-      setChats(res.data)
-    } catch(err) {
-      console.error(err.message)
-    }
+    axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
+    .then(res => setChats(res.data))
+    .catch(err => console.error(err))
   }
 
   const handleMessagePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    // const data = {
-    //   body : message
-    // }
-    const data = createFormData()
-
-    const config = {
-      headers: {
-        "access-token": Cookies.get("_access_token"),
-        "client": Cookies.get("_client"),
-        "uid": Cookies.get("_uid")
-      }
+    const data = {
+      body : message,
+      image: image
     }
 
-    try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
-      if(res.status === 200){
-        toast.success("送信されました")
-        console.log("ok")
-        setMessage("")
-      } else {
-        toast.error("送信に失敗しました")
-        console.log(res.status + "error")
-      }
-    } catch(err) {
-      toast.warn("通信に失敗しました")
+    // const data = createFormData()
+
+    await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
+    .then(res => {
+      toast.success("送信されました")
+      setMessage("")
+      console.log(res.data.data) //これがレスポンスのデータ内容
+    })
+    .catch(err => {
+      toast.error("送信に失敗しました")
       console.error(err)
-    }
+    })
   }
 
   useEffect(() => {
     getChats()
-    // const interval = setInterval(()=>{
-    //   getChats()
-    // },1000)
-    // return() => clearInterval(interval)
+    const interval = setInterval(()=>{
+      getChats()
+    },1000)
+    return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {
@@ -223,7 +208,6 @@ const Chat = (props: TabPanelProps) => {
                   <PhotoLibraryIcon />
                 </IconButton>
               </label>
-
               <TextField
                 label="メッセージ"
                 value={message}
@@ -242,8 +226,7 @@ const Chat = (props: TabPanelProps) => {
               >
                 <SendIcon />
               </IconButton>
-
-          </form>
+            </form>
         </Paper>
         <ToastContainer
           position="top-right"
