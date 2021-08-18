@@ -49,13 +49,13 @@ class Linepush < Apicommon
 
   # 画像用のプッシュメッセージ作成用メソッド
   def doPushImg
-    paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.image.to_s}]}
+    paramsImg = {"messages" => [{"type" => "image", "originalContentUrl" => @image.to_s, 'previewImageUrl' => @thumbnail.to_s}]}
     doPush(paramsImg)
   end
 
   # 1対1もしくは1対多用の画像用プッシュメッセージ作成用メソッド
   def doPushImgTo(to)
-    paramsImg = {"to" => to,"messages" => [{"type" => "image", "originalContentUrl" => @image.image.to_s, 'previewImageUrl' => @thumbnail.chat_image.to_s}]}
+    paramsImg = {"to" => to,"messages" => [{"type" => "image", "originalContentUrl" => @image.to_s, 'previewImageUrl' => @thumbnail.to_s}]}
     doPush(paramsImg)
   end
 

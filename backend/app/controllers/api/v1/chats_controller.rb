@@ -36,10 +36,10 @@ class Api::V1::ChatsController < LineCommonsController
         
         # 画像がある時の処理
         if image != nil
-          img_result = insert_img(result, image)
+          img_result = insert_img(result.id, image)
           # logger.debug(img_result)
-          line.setImage(Chatimage.find(img_result))
-          line.setThumbnail(Chat.find(result))
+          line.setImage(img_result.image)
+          line.setThumbnail(result.chat_image)
           # 画像送信
           line.doPushImgTo(to)
         end
@@ -63,11 +63,11 @@ class Api::V1::ChatsController < LineCommonsController
   private
   def insert(line_id, body, image)
     result = Chat.create(line_customer_id: line_id, body: body, chat_image: image, send_flg: "0")
-    return result.id
+    return result
   end
 
   def insert_img(chat_id,image)
     result = Chatimage.create(chat_id: chat_id, image: image)
-    return result.id
+    return result
   end
 end
