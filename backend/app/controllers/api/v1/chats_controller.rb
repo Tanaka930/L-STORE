@@ -49,7 +49,11 @@ class Api::V1::ChatsController < LineCommonsController
           line.doPushMsgTo(to)
         end
 
-        msg = {message: message, image: image}
+        if image != nil
+          msg = {message: message, image: img_result.image}
+        else
+          msg = {message: message, image: nil}
+        end
       else
         msg = "error"
       end
