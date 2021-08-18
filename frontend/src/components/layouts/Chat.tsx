@@ -21,13 +21,16 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       width: "80vw",
-      height: "80vh",
+      height: "60vh",
       maxWidth: "500px",
       maxHeight: "700px",
       display: "flex",
       alignItems: "center",
       flexDirection: "column",
       position: "relative",
+      [theme.breakpoints.down("lg")]: {
+        height: "50vh",
+      },
       [theme.breakpoints.down("sm")]: {
         width: "100%",
         alignItems: "start",
@@ -42,10 +45,13 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "relative"
     },
     container: {
-      height: "100vh",
+      height: "50vh",
       display: "flex",
-      alignItems: "center",
       justifyContent: "center",
+      marginTop: 20,
+      [theme.breakpoints.down("lg")]: {
+        height: "40vh",
+      },
       [theme.breakpoints.down("sm")]: {
         height: "60vh",
         alignItems: "start",
@@ -99,7 +105,6 @@ const Chat = (props: TabPanelProps) => {
   const [message, setMessage] = useState<string>("")
   const [image, setImage] = useState<File>()
   const [preview, setPreview] = useState("")
-  const [postData, setPostData] = useState<any>({})
   const scrollBottomRef = useRef<HTMLDivElement>(null)
 
   const uploadImage = useCallback((e) => {
@@ -162,7 +167,7 @@ const Chat = (props: TabPanelProps) => {
 
   useLayoutEffect(() => {
     scrollBottomRef?.current?.scrollIntoView()
-  }, [])
+  })
 
   return (
     <>
