@@ -19,7 +19,6 @@ const Chat = (props: TabPanelProps) => {
             <TextField
               label="アカウント情報"
               variant="outlined"
-              fullWidth
             />
           </form>
         </>
