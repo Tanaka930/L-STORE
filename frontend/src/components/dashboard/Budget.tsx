@@ -9,11 +9,22 @@ import {
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
 import { red } from '@material-ui/core/colors';
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 
-const Budget = (props) => (
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    card: {
+      height: '100%';
+    }
+  })
+)
+
+export const Budget = () => {
+  const classes = useStyles();
+
   <Card
-    sx={{ height: '100%' }}
-    {...props}
+    // sx={{ height: '100%' }}
+    // {...props}
   >
     <CardContent>
       <Grid
@@ -74,6 +85,6 @@ const Budget = (props) => (
       </Box>
     </CardContent>
   </Card>
-);
+};
 
 export default Budget;
