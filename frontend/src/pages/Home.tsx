@@ -61,7 +61,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    {/* <TotalCustomers /> */}
+                    <TotalCustomers />
                   </Grid>
                   <Grid
                     item
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    {/* <TasksProgress /> */}
+                    <TasksProgress />
                   </Grid>
                   <Grid
                     item
@@ -79,7 +79,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    {/* <TotalProfit sx={{ height: '100%' }} /> */}
+                    <TotalProfit sx={{ height: '100%' }} />
                   </Grid>
                   <Grid
                     item
@@ -88,7 +88,7 @@ const Home: React.FC = () => {
                     xl={9}
                     xs={12}
                   >
-                    {/* <Sales /> */}
+                    <Sales />
                   </Grid>
                   <Grid
                     item
@@ -97,7 +97,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    {/* <TrafficByDevice sx={{ height: '100%' }} /> */}
+                    <TrafficByDevice sx={{ height: '100%' }} />
                   </Grid>
                   <Grid
                     item
@@ -106,7 +106,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    {/* <LatestProducts sx={{ height: '100%' }} /> */}
+                    <LatestProducts sx={{ height: '100%' }} />
                   </Grid>
                   <Grid
                     item
@@ -115,7 +115,7 @@ const Home: React.FC = () => {
                     xl={9}
                     xs={12}
                   >
-                    {/* <LatestOrders /> */}
+                    <LatestOrders />
                   </Grid>
                 </Grid>
               </Container>
