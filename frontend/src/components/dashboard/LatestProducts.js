@@ -73,7 +73,7 @@ const LatestProducts = (props) => (
           </ListItemAvatar>
           <ListItemText
             primary={product.name}
-            secondary={`Updated ${product.updatedAt.fromNow()}`}
+            // secondary={`Updated ${product.updatedAt.fromNow()}`}
           />
           <IconButton
             edge="end"
