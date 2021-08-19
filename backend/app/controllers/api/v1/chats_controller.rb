@@ -53,7 +53,7 @@ class Api::V1::ChatsController < LineCommonsController
           # msg = {message: message, image: img_result.image}
           msg = {
             body: result.body,
-            chat_image: result.chat_image.to_s,
+            "chat_image" => result.chat_image.to_s,
             created_at: result.created_at,
             id: result.id,
             image: trg_line_user.image,
@@ -64,7 +64,7 @@ class Api::V1::ChatsController < LineCommonsController
         else
           msg = {
             body: result.body,
-            chat_image: result.chat_image.to_s,
+            "chat_image" => result.chat_image.to_s,
             created_at: result.created_at,
             id: result.id,
             image: trg_line_user.image,
