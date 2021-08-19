@@ -3,11 +3,13 @@ import Avatar from "@material-ui/core/Avatar"
 
 type MsgLeftProps = {
   message: string
-  photoURL: string
+  image: string
+  icon: string
 }
 
 type MsgRightProps = {
   message: string
+  image: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -79,16 +81,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MessageLeft = (props: MsgLeftProps) => {
   const message = props.message ? props.message : "no message";
-  const photoURL = props.photoURL ? props.photoURL : "dummy.js";
+  const image = props.image && props.image
+  const icon = props.icon ? props.icon : "dummy.js";
   const classes = useStyles();
   return (
     <div className={classes.messageRow}>
       <Avatar
         className={classes.icon}
-        src={photoURL}
+        src={icon}
       ></Avatar>
       <div className={classes.messageWhite}>
         <p className={classes.messageContent}>{message}</p>
+      </div>
+      <div>
+        <img src={image} />
       </div>
     </div>
   )
@@ -97,10 +103,14 @@ export const MessageLeft = (props: MsgLeftProps) => {
 export const MessageRight = (props: MsgRightProps) => {
   const classes = useStyles()
   const message = props.message ? props.message : "no message";
+  const image = props.image && props.image
   return (
     <div className={classes.messageRowRight}>
       <div className={classes.messageGreen}>
         <p className={classes.messageContent}>{message}</p>
+      </div>
+      <div>
+        <img src={image} />
       </div>
     </div>
   )

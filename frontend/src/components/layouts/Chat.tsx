@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef, useLayoutEffect } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Paper, TextField, Button, IconButton, Box } from "@material-ui/core"
+import { Paper, TextField, IconButton, Box } from "@material-ui/core"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import SendIcon from "@material-ui/icons/Send"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       width: "95%",
       margin: `${theme.spacing(0)} auto`,
-      // position: "absolute",
       bottom: 9
     },
     wrapText: {
@@ -122,28 +121,26 @@ const Chat = (props: TabPanelProps) => {
   }
 
     // FormData形式でデータを作成
-    // const createFormData = (): FormData => {
-    //   const formData = new FormData()
-    //   formData.append("body", message)
-    //   if (image) formData.append("image", image)
-    //     return formData
-    // }
+  const createFormData = (): FormData => {
+    const formData = new FormData()
+    formData.append("body", message)
+    if (image) formData.append("image", image)
+      return formData
+  }
 
   const getChats = async () => {
     axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
-    .then(res => setChats(res.data))
+    .then(res => {
+      setChats(res.data)
+      console.log(res.data)
+    })
     .catch(err => console.error(err))
   }
 
   const handleMessagePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const data = {
-      body : message,
-      image: image
-    }
-
-    // const data = createFormData()
+    const data = createFormData()
 
     await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
     .then(res => {
@@ -180,17 +177,19 @@ const Chat = (props: TabPanelProps) => {
                   {chat.send_flg === "0" && (
                     <MessageRight
                       message={chat.body}
+                      image={chat.chat_image}
                     />
                   )}
                   {chat.send_flg === "1" && (
                     <MessageLeft
                       message={chat.body}
-                      photoURL={chat.image}
+                      image={chat.chat_image}
+                      icon={chat.image}
                     />
                   )}
                 </span>
               ))}
-             <div ref={scrollBottomRef}/>
+              <div ref={scrollBottomRef}/>
             </Paper>
             <form
               noValidate
@@ -223,27 +222,25 @@ const Chat = (props: TabPanelProps) => {
               />
               <IconButton
                 className={classes.sendBtn}
-                // variant="contained"
                 color="primary"
                 type="submit"
-                // startIcon={<SendIcon />}
                 disabled={!message && !image}
               >
                 <SendIcon />
               </IconButton>
             </form>
-        </Paper>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-        />
+          </Paper>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover={false}
+          />
           { preview &&
             <Box className={classes.prevImgArea}>
               <img className={classes.prevImg} src={preview} alt="プレビュー画像" />
