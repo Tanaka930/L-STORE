@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 // import { Helmet } from 'react-helmet';
-import Budget from 'components/dashboard//Budget';
+import Budget from 'components/dashboard/Budget';
 import LatestOrders from 'components/dashboard//LatestOrders';
 import LatestProducts from 'components/dashboard//LatestProducts';
 import Sales from 'components/dashboard//Sales';
