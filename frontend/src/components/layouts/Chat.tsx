@@ -1,13 +1,13 @@
-import React, { useCallback, useState, useEffect, useRef, useLayoutEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef, useLayoutEffect, useContext } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
+import { AuthContext } from "App"
 import { Paper, TextField, IconButton, Box } from "@material-ui/core"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import SendIcon from "@material-ui/icons/Send"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-
 import { MessageLeft, MessageRight } from "./Message"
 
 
@@ -104,7 +104,9 @@ const Chat = (props: TabPanelProps) => {
   const [message, setMessage] = useState<string>("")
   const [image, setImage] = useState<File>()
   const [preview, setPreview] = useState("")
+  const [customerIcon, setCustomerIcon] = useState("")
   const scrollBottomRef = useRef<HTMLDivElement>(null)
+  const { currentUser } = useContext(AuthContext)
 
   const uploadImage = useCallback((e) => {
     const file = e.target.files[0]
@@ -129,12 +131,22 @@ const Chat = (props: TabPanelProps) => {
   }
 
   const getChats = async () => {
-    axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
+    await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
     .then(res => {
       setChats(res.data)
       console.log(res.data)
     })
     .catch(err => console.error(err))
+  }
+
+  const getCustomerIcon = async () => {
+    await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, config)
+    .then(res => {
+      setCustomerIcon(res.data.image)
+    })
+    .catch(err => {
+      console.error(err.message)
+    })
   }
 
   const handleMessagePost = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -146,6 +158,8 @@ const Chat = (props: TabPanelProps) => {
     .then(res => {
       toast.success("送信されました")
       setMessage("")
+      // setImage("")  // 調査中…
+      setPreview("")
       console.log(res.data.data) //これがレスポンスのデータ内容
     })
     .catch(err => {
@@ -155,11 +169,12 @@ const Chat = (props: TabPanelProps) => {
   }
 
   useEffect(() => {
+    getCustomerIcon()
     getChats()
-    const interval = setInterval(()=>{
-      getChats()
-    },1000)
-    return() => clearInterval(interval)
+    // const interval = setInterval(()=>{
+    //   getChats()
+    // },1000)
+    // return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {
@@ -184,7 +199,7 @@ const Chat = (props: TabPanelProps) => {
                     <MessageLeft
                       message={chat.body}
                       image={chat.chat_image}
-                      icon={chat.image}
+                      icon={customerIcon}
                     />
                   )}
                 </span>
