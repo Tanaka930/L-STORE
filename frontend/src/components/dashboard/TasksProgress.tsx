@@ -1,3 +1,4 @@
+import React, { useCallback, useState, useContext } from "react"
 import {
   Avatar,
   Box,
@@ -9,24 +10,26 @@ import {
 } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
-import Home from 'pages/Home';
+import { makeStyles, Theme } from "@material-ui/core/styles"
+const useStyles = makeStyles((theme: Theme) => ({
 
-type Props = {
-  props: number
-}
+}))
+// type Props = {
+//   props: number
+// }
 
-export const TasksProgress: React.FC<Props> = (props) => {
+export const TasksProgress: React.FC = () => {
   return (
     <>
       <Card
-        sx={{ height: '100%' }}
-        {...props}
+        style={{ height: '100%' }}
+        // {...props}
       >
         <CardContent>
           <Grid
             container
             spacing={3}
-            sx={{ justifyContent: 'space-between' }}
+            style={{ justifyContent: 'space-between' }}
           >
             <Grid item>
               <Typography
@@ -45,7 +48,7 @@ export const TasksProgress: React.FC<Props> = (props) => {
             </Grid>
             <Grid item>
               <Avatar
-                sx={{
+                style={{
                   backgroundColor: orange[600],
                   height: 56,
                   width: 56
@@ -55,7 +58,7 @@ export const TasksProgress: React.FC<Props> = (props) => {
               </Avatar>
             </Grid>
           </Grid>
-          <Box sx={{ pt: 3 }}>
+          <Box style={{ paddingTop: 3 }}>
             <LinearProgress
               value={75.5}
               variant="determinate"

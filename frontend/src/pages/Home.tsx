@@ -25,9 +25,6 @@ const Home: React.FC = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
 
-
-
-
   return (
     <>
       {

@@ -51,7 +51,7 @@ export const TotalCustomers = () => {
             style={{
               alignItems: 'center',
               display: 'flex',
-              pt: 2
+              // pt: 2
             }}
           >
             <ArrowUpwardIcon style={{ color: green[900] }} />
@@ -59,7 +59,7 @@ export const TotalCustomers = () => {
               variant="body2"
               style={{
                 color: green[900],
-                mr: 1
+                // mr: 1
               }}
             >
               16%
