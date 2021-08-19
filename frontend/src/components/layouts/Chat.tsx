@@ -161,8 +161,8 @@ const Chat = (props: TabPanelProps) => {
     getChats()
     const interval = setInterval(()=>{
       getChats()
-    }
-    』_＊1return() => clearInterval(interval) 
+    },1000)
+    return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {
