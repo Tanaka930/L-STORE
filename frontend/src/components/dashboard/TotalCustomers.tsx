@@ -6,17 +6,14 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
-import { red } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-export const Budget = () => {
+export const TotalCustomers = () => {
   return (
     <>
-      <Card
-        style={{ height: '100%' }}
-        // {...props}
-      >
+      <Card>
         <CardContent>
           <Grid
             container
@@ -29,43 +26,43 @@ export const Budget = () => {
                 gutterBottom
                 variant="h6"
               >
-                BUDGET
+                TOTAL CUSTOMERS
               </Typography>
               <Typography
                 color="textPrimary"
                 variant="h3"
               >
-                $24,000
+                1,600
               </Typography>
             </Grid>
             <Grid item>
               <Avatar
                 style={{
-                  backgroundColor: red[600],
+                  backgroundColor: green[600],
                   height: 56,
                   width: 56
                 }}
               >
-                <MoneyIcon />
+                <PeopleIcon />
               </Avatar>
             </Grid>
           </Grid>
           <Box
             style={{
-              paddingTop: 2,
+              alignItems: 'center',
               display: 'flex',
-              alignItems: 'center'
+              pt: 2
             }}
           >
-            <ArrowDownwardIcon style={{ color: red[900] }} />
+            <ArrowUpwardIcon style={{ color: green[900] }} />
             <Typography
-              style={{
-                color: red[900],
-                marginRight: 1
-              }}
               variant="body2"
+              style={{
+                color: green[900],
+                mr: 1
+              }}
             >
-              12%
+              16%
             </Typography>
             <Typography
               color="textSecondary"
@@ -80,4 +77,4 @@ export const Budget = () => {
   )
 };
 
-export default Budget;
+export default TotalCustomers;
