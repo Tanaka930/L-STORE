@@ -51,9 +51,11 @@ class Api::V1::ChatsController < LineCommonsController
 
         if image != nil
           # msg = {message: message, image: img_result.image}
+          img_test = Chat.find(result.id)
+          img = img_test.chat_image
           msg = {
             body: result.body,
-            "chat_image" => result.chat_image.to_s,
+            "chat_image" => img.to_s,
             created_at: result.created_at,
             id: result.id,
             image: trg_line_user.image,
@@ -62,9 +64,11 @@ class Api::V1::ChatsController < LineCommonsController
             updated_at: result.updated_at
           }
         else
+          img_test = Chat.find(result.id)
+          img = img_test.chat_image
           msg = {
             body: result.body,
-            "chat_image" => result.chat_image.to_s,
+            "chat_image" => img.to_s,
             created_at: result.created_at,
             id: result.id,
             image: trg_line_user.image,
