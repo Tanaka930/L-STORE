@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
 import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden, Divider } from "@material-ui/core"
 import { Send, RecentActors } from "@material-ui/icons"
+import HomeIcon from '@material-ui/icons/Home';
 import { AuthContext } from "App"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -71,12 +72,16 @@ const SideBar: React.FC<Props> = (props) => {
       <Divider />
       <List>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/" >
-          <ListItemIcon><Send /></ListItemIcon>
-          <ListItemText primary="公式LINE投稿" />
+          <ListItemIcon><HomeIcon /></ListItemIcon>
+          <ListItemText primary="HOME" />
         </ListItem>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/customers" >
           <ListItemIcon><RecentActors /></ListItemIcon>
           <ListItemText primary="お友達リスト" />
+        </ListItem>
+        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/message" >
+          <ListItemIcon><Send /></ListItemIcon>
+          <ListItemText primary="公式LINE投稿" />
         </ListItem>
       </List>
     </div>
