@@ -161,8 +161,8 @@ const Chat = (props: TabPanelProps) => {
     getChats()
     const interval = setInterval(()=>{
       getChats()
-    },1000)
-    return() => clearInterval(interval)
+    }
+    』_＊1return() => clearInterval(interval) 
   }, [])
 
   useLayoutEffect(() => {
@@ -227,7 +227,7 @@ const Chat = (props: TabPanelProps) => {
                 color="primary"
                 type="submit"
                 // startIcon={<SendIcon />}
-                disabled={!message && true}
+                disabled={!message && !image}
               >
                 <SendIcon />
               </IconButton>

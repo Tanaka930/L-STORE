@@ -6,6 +6,7 @@ import Home from "pages/Home"
 import SignUp from "pages/SignUp"
 import SignIn from "pages/SignIn"
 import Token from "pages/Token"
+import Message from "pages/Message"
 import CustomersList from "pages/customers/CustomersList"
 import CustomerDetail from "pages/customers/CustomerDetail"
 import NotFound from "pages/404"
@@ -77,6 +78,7 @@ const App: React.FC = () => {
               <>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/tokens" component={Token} />
+                <Route exact path="/message" component={Message} />
                 <Route exact path="/customers" component={CustomersList} />
                 <Route exact path="/customers/:id" component={CustomerDetail} />
               </>
