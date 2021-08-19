@@ -50,9 +50,28 @@ class Api::V1::ChatsController < LineCommonsController
         end
 
         if image != nil
-          msg = {message: message, image: img_result.image}
+          # msg = {message: message, image: img_result.image}
+          msg = {
+            body: result.body,
+            chat_image: result.chat_image,
+            created_at: result.created_at,
+            id: result.id,
+            image: trg_line_user.image,
+            line_customer_id: result.line_customer_id,
+            send_flg: result.send_flg,
+            updated_at: result.updated_at
+          }
         else
-          msg = {message: message, image: nil}
+          msg = {
+            body: result.body,
+            chat_image: result.chat_image,
+            created_at: result.created_at,
+            id: result.id,
+            image: trg_line_user.image,
+            line_customer_id: result.line_customer_id,
+            send_flg: result.send_flg,
+            updated_at: result.updated_at
+          }
         end
       else
         msg = "error"
