@@ -13,6 +13,7 @@ import NotFound from "pages/404"
 
 import { getCurrentUser } from "lib/api/auth"
 import { User } from "interfaces/index"
+import Theme from "theme/typography";
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {
@@ -68,6 +69,7 @@ const App: React.FC = () => {
   }
 
   return (
+
     <Router>
       <AuthContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser}}>
         <CommonLayout>
@@ -88,6 +90,7 @@ const App: React.FC = () => {
         </CommonLayout>
       </AuthContext.Provider>
     </Router>
+
   )
 }
 
