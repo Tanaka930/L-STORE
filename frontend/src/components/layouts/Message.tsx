@@ -90,25 +90,33 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MessageLeft = (props: MsgLeftProps) => {
   const message = props.message && props.message
   const image = props.image && props.image
-  const icon = props.icon ? props.icon : "dummy.js";
-  const classes = useStyles();
+  const icon = props.icon && props.icon
+  const classes = useStyles()
   return (
-    <div className={classes.messageRow}>
-      <Avatar
-        className={classes.icon}
-        src={icon}
-      ></Avatar>
+    <>
       { message && (
-        <div className={classes.messageWhite}>
-          <p className={classes.messageContent}>{message}</p>
+        <div className={classes.messageRow}>
+          <Avatar
+            className={classes.icon}
+            src={icon}
+          ></Avatar>
+          <div className={classes.messageWhite}>
+            <p className={classes.messageContent}>{message}</p>
+          </div>
         </div>
       )}
       { image && (
-        <div className={classes.postImgLeft}>
-          <img src={image} alt="投稿画像" />
+        <div className={classes.messageRow}>
+          <Avatar
+            className={classes.icon}
+            src={icon}
+          ></Avatar>
+          <div className={classes.postImgLeft}>
+            <img src={image} alt="投稿画像" />
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -117,17 +125,21 @@ export const MessageRight = (props: MsgRightProps) => {
   const message = props.message && props.message
   const image = props.image && props.image
   return (
-    <div className={classes.messageRowRight}>
+    <>
       { message && (
-        <div className={classes.messageGreen}>
-          <p className={classes.messageContent}>{message}</p>
+        <div className={classes.messageRowRight}>
+          <div className={classes.messageGreen}>
+            <p className={classes.messageContent}>{message}</p>
+          </div>
         </div>
       )}
       { image && (
-        <div className={classes.postImgRight}>
-          <img src={image} alt="投稿画像" />
+        <div className={classes.messageRowRight}>
+          <div className={classes.postImgRight}>
+            <img src={image} alt="投稿画像" />
+          </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
