@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { useParams } from "react-router-dom"
 import Info from "components/layouts/Info"
 import Chat from "components/layouts/Chat"
+import Others from "components/layouts/Others"
 
 type UserId = {
   id: string
@@ -43,6 +44,7 @@ const LineMenu = () => {
       </AppBar>
       <Info value={value} index={0} userId={id} />
       <Chat value={value} index={1} userId={id} />
+      <Others value={value} index={2} userId={id} />
     </>
   )
 }
