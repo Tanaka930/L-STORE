@@ -27,7 +27,14 @@ class Api::V1::LineCustomersController < LineCommonsController
       "id" => trg_user.id,
       "user_id" => trg_user.user_id,
       "name" => trg_user.name,
-      "image" => trg_user.image
+      "image" => trg_user.image,
+      "full_name" => trg_user.image,
+      "birth_day" => trg_user.birth_day,
+      "age" => trg_user.age,
+      "sex" => trg_user.sex,
+      "address" => trg_user.address,
+      "tel_num" => trg_user.tel_num,
+      "mail" => trg_user.mail
     }
     render json: json_data
   end
@@ -49,5 +56,24 @@ class Api::V1::LineCustomersController < LineCommonsController
         resept_line_message(request,token)
       end
     end
+  end
+
+  def update
+    begin
+      # 対象のユーザーを指定
+      line_customer = LineCustomer.find_by(id: params[:id], user_id: current_api_v1_user.id)
+      line_customer.update(
+        name_full: params[:name_full],
+        birth_day: params[:birth_day], 
+        age: params[:age], 
+        sex: params[:sex], 
+        address: params[:address], 
+        tel_num: params[:tel_num], 
+        mail: params[:mail])
+      msg = "success"
+    rescue
+      msg = "error"
+    end
+    render json: msg
   end
 end
