@@ -102,7 +102,7 @@ const Chat = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const [chats, setChats] = useState<any[]>([])
   const [message, setMessage] = useState<string>("")
-  const [image, setImage] = useState<File>()
+  const [image, setImage] = useState<File | undefined>()
   const [preview, setPreview] = useState("")
   const [customerIcon, setCustomerIcon] = useState("")
   const scrollBottomRef = useRef<HTMLDivElement>(null)
@@ -156,11 +156,13 @@ const Chat = (props: TabPanelProps) => {
 
     await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
     .then(res => {
-      toast.success("送信されました")
-      setMessage("")
-      // setImage("")  // 調査中…
-      setPreview("")
       console.log(res.data.data) //これがレスポンスのデータ内容
+      const postData = res.data.data
+      setChats([...chats, postData])
+      setMessage("")
+      setImage(undefined)
+      setPreview("")
+      toast.success("送信されました")
     })
     .catch(err => {
       toast.error("送信に失敗しました")
@@ -171,10 +173,10 @@ const Chat = (props: TabPanelProps) => {
   useEffect(() => {
     getCustomerIcon()
     getChats()
-    // const interval = setInterval(()=>{
-    //   getChats()
-    // },1000)
-    // return() => clearInterval(interval)
+    const interval = setInterval(()=>{
+      getChats()
+    },1000)
+    return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {

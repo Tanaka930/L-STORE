@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_083800) do
+ActiveRecord::Schema.define(version: 2021_08_20_051622) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -73,6 +73,13 @@ ActiveRecord::Schema.define(version: 2021_08_17_083800) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "blockflg"
+    t.string "name_full"
+    t.string "birth_day"
+    t.string "age"
+    t.integer "sex"
+    t.string "address"
+    t.string "tel_num"
+    t.string "mail"
     t.index ["user_id"], name: "index_line_customers_on_user_id"
   end
 
