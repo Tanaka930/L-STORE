@@ -45,10 +45,10 @@ class Api::V1::ChatsController < LineCommonsController
           # メッセージ送信
           line.doPushMsgTo(to)
         end
-        
+
         msg = {
           body: result.body,
-          chat_image: result.chat_image.to_s,
+          chat_image: result.chat_image,
           created_at: result.created_at,
           id: result.id,
           image: trg_line_user.image,
