@@ -13,7 +13,7 @@ import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 import PhoneIcon from '@material-ui/icons/Phone';
 import TabletIcon from '@material-ui/icons/Tablet';
 
-const TrafficByDevice = (props) => {
+export const TrafficByDevice = () => {
   const theme = useTheme();
 
   const data = {
@@ -77,61 +77,63 @@ const TrafficByDevice = (props) => {
   ];
 
   return (
-    <Card {...props}>
-      <CardHeader title="Traffic by Device" />
-      <Divider />
-      <CardContent>
-        <Box
-          sx={{
-            height: 300,
-            position: 'relative'
-          }}
-        >
-          {/* <Doughnut
-            data={data}
-            options={options}
-          /> */}
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 2
-          }}
-        >
-          {devices.map(({
-            color,
-            icon: Icon,
-            title,
-            value
-          }) => (
-            <Box
-              key={title}
-              sx={{
-                p: 1,
-                textAlign: 'center'
-              }}
-            >
-              <Icon color="action" />
-              <Typography
-                color="textPrimary"
-                variant="body1"
+    <>
+      <Card>
+        <CardHeader title="Traffic by Device" />
+        <Divider />
+        <CardContent>
+          <Box
+            style={{
+              height: 300,
+              position: 'relative'
+            }}
+          >
+            {/* <Doughnut
+              data={data}
+              options={options}
+            /> */}
+          </Box>
+          <Box
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              paddingTop: 2
+            }}
+          >
+            {devices.map(({
+              color,
+              icon: Icon,
+              title,
+              value
+            }) => (
+              <Box
+                key={title}
+                style={{
+                  padding: 1,
+                  textAlign: 'center'
+                }}
               >
-                {title}
-              </Typography>
-              <Typography
-                style={{ color }}
-                variant="h2"
-              >
-                {value}
-                %
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-      </CardContent>
-    </Card>
-  );
+                <Icon color="action" />
+                <Typography
+                  color="textPrimary"
+                  variant="body1"
+                >
+                  {title}
+                </Typography>
+                <Typography
+                  style={{ color }}
+                  variant="h2"
+                >
+                  {value}
+                  %
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </CardContent>
+      </Card>
+    </>
+  )
 };
 
 export default TrafficByDevice;

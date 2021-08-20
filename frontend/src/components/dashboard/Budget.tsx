@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Avatar,
   Box,
@@ -10,7 +11,11 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
 import { red } from '@material-ui/core/colors';
 
-export const Budget = () => {
+// type Props = {
+//   props: any
+// }
+
+export const Budget: React.FC = () => {
   return (
     <>
       <Card
@@ -59,6 +64,7 @@ export const Budget = () => {
           >
             <ArrowDownwardIcon style={{ color: red[900] }} />
             <Typography
+              // mr={1}
               style={{
                 color: red[900],
                 marginRight: 1

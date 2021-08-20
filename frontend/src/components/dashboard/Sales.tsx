@@ -1,4 +1,4 @@
-// import { Bar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
   Box,
   Button,
@@ -12,7 +12,7 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-const Sales = (props) => {
+export const Sales = () => {
   const theme = useTheme();
 
   const data = {
@@ -87,51 +87,53 @@ const Sales = (props) => {
   };
 
   return (
-    <Card {...props}>
-      <CardHeader
-        action={(
+    <>
+      <Card>
+        <CardHeader
+          action={(
+            <Button
+              endIcon={<ArrowDropDownIcon />}
+              size="small"
+              variant="text"
+            >
+              Last 7 days
+            </Button>
+          )}
+          title="Latest Sales"
+        />
+        <Divider />
+        <CardContent>
+          <Box
+            sx={{
+              height: 400,
+              position: 'relative'
+            }}
+          >
+            <Bar
+              data={data}
+              options={options}
+            />
+          </Box>
+        </CardContent>
+        <Divider />
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            p: 2
+          }}
+        >
           <Button
-            endIcon={<ArrowDropDownIcon />}
+            color="primary"
+            endIcon={<ArrowRightIcon />}
             size="small"
             variant="text"
           >
-            Last 7 days
+            Overview
           </Button>
-        )}
-        title="Latest Sales"
-      />
-      <Divider />
-      <CardContent>
-        <Box
-          sx={{
-            height: 400,
-            position: 'relative'
-          }}
-        >
-          {/* <Bar
-            data={data}
-            options={options}
-          /> */}
         </Box>
-      </CardContent>
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 2
-        }}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
-        >
-          Overview
-        </Button>
-      </Box>
-    </Card>
+      </Card>
+    </>
   );
 };
 

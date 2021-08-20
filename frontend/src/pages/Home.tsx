@@ -5,6 +5,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { spacing } from '@material-ui/system';
 
 // import { Helmet } from 'react-helmet';
 import Budget from 'components/dashboard/Budget';
@@ -31,10 +32,11 @@ const Home: React.FC = () => {
         isSignedIn && currentUser ? (
           <>
             <Box
-              sx={{
+              py={3}
+              style={{
                 // backgroundColor: 'background.default',
                 minHeight: '100%',
-                py: 3
+                // py: 3
               }}
             >
               <Container maxWidth={false}>
@@ -76,7 +78,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    <TotalProfit sx={{ height: '100%' }} />
+                    <TotalProfit />
                   </Grid>
                   <Grid
                     item
@@ -94,7 +96,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    <TrafficByDevice sx={{ height: '100%' }} />
+                    <TrafficByDevice />
                   </Grid>
                   <Grid
                     item
@@ -103,7 +105,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    <LatestProducts sx={{ height: '100%' }} />
+                    <LatestProducts />
                   </Grid>
                   <Grid
                     item
