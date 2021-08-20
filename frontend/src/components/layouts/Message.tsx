@@ -76,11 +76,19 @@ const useStyles = makeStyles((theme: Theme) =>
       width: theme.spacing(5),
       height: theme.spacing(5)
     },
+    postImgLeft: {
+      marginLeft: 15,
+      marginBottom: 10,
+    },
+    postImgRight: {
+      marginRight: 15,
+      marginBottom: 10,
+    }
   })
 )
 
 export const MessageLeft = (props: MsgLeftProps) => {
-  const message = props.message ? props.message : "no message";
+  const message = props.message && props.message
   const image = props.image && props.image
   const icon = props.icon ? props.icon : "dummy.js";
   const classes = useStyles();
@@ -90,28 +98,36 @@ export const MessageLeft = (props: MsgLeftProps) => {
         className={classes.icon}
         src={icon}
       ></Avatar>
-      <div className={classes.messageWhite}>
-        <p className={classes.messageContent}>{message}</p>
-      </div>
-      <div>
-        <img src={image} />
-      </div>
+      { message && (
+        <div className={classes.messageWhite}>
+          <p className={classes.messageContent}>{message}</p>
+        </div>
+      )}
+      { image && (
+        <div className={classes.postImgLeft}>
+          <img src={image} alt="投稿画像" />
+        </div>
+      )}
     </div>
   )
 }
 
 export const MessageRight = (props: MsgRightProps) => {
   const classes = useStyles()
-  const message = props.message ? props.message : "no message";
+  const message = props.message && props.message
   const image = props.image && props.image
   return (
     <div className={classes.messageRowRight}>
-      <div className={classes.messageGreen}>
-        <p className={classes.messageContent}>{message}</p>
-      </div>
-      <div>
-        <img src={image} />
-      </div>
+      { message && (
+        <div className={classes.messageGreen}>
+          <p className={classes.messageContent}>{message}</p>
+        </div>
+      )}
+      { image && (
+        <div className={classes.postImgRight}>
+          <img src={image} alt="投稿画像" />
+        </div>
+      )}
     </div>
   )
 }

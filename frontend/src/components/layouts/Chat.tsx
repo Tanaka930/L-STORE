@@ -192,13 +192,13 @@ const Chat = (props: TabPanelProps) => {
                   {chat.send_flg === "0" && (
                     <MessageRight
                       message={chat.body}
-                      image={chat.chat_image}
+                      image={chat.chat_image.url}
                     />
                   )}
                   {chat.send_flg === "1" && (
                     <MessageLeft
                       message={chat.body}
-                      image={chat.chat_image}
+                      image={chat.chat_image.url}
                       icon={customerIcon}
                     />
                   )}
