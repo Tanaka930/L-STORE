@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_20_051622) do
+ActiveRecord::Schema.define(version: 2021_08_20_080733) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -105,12 +105,16 @@ ActiveRecord::Schema.define(version: 2021_08_20_051622) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
-    t.string "chanel_id", limit: 10, null: false
-    t.string "chanel_secret", limit: 32, null: false
-    t.string "messaging_token", limit: 172, null: false
-    t.string "login_token", limit: 172, null: false
     t.string "access_id", limit: 12, null: false
     t.string "web_hook_url"
+    t.string "encrypted_chanel_id"
+    t.string "encrypted_chanel_id_iv"
+    t.string "encrypted_chanel_secret"
+    t.string "encrypted_chanel_secret_iv"
+    t.text "encrypted_messaging_token"
+    t.string "encrypted_messaging_token_iv"
+    t.text "encrypted_login_token"
+    t.string "encrypted_login_token_iv"
     t.index ["user_id"], name: "index_tokens_on_user_id"
   end
 
