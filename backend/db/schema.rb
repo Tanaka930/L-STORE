@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_20_085115) do
+ActiveRecord::Schema.define(version: 2021_08_21_043016) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 2021_08_20_085115) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["line_customer_id"], name: "index_chats_on_line_customer_id"
+  end
+
+  create_table "follow_records", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "follow", null: false
+    t.integer "unfollow", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_follow_records_on_user_id"
   end
 
   create_table "images", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -147,6 +156,7 @@ ActiveRecord::Schema.define(version: 2021_08_20_085115) do
 
   add_foreign_key "chatimages", "chats"
   add_foreign_key "chats", "line_customers"
+  add_foreign_key "follow_records", "users"
   add_foreign_key "images", "messages"
   add_foreign_key "images", "users"
   add_foreign_key "l_groups", "users"
