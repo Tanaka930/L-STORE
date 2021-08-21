@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Box, Container, Grid, TextField, Button } from "@material-ui/core"
+import { Box, Paper, TextField, Button } from "@material-ui/core"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 
 type TabPanelProps = {
@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     textContainer: {
-      height: 250,
+      height: 200,
       width: 600,
+      margin: 10,
     }
   }),
 )
@@ -58,7 +59,7 @@ const Others = (props: TabPanelProps) => {
                 </form>
               ) : (
                 <Box sx={{p: 3}}>
-                  <p className={classes.textContainer}>ここに備考メモが入ります。</p>
+                  <Paper className={classes.textContainer}>ここに備考メモが入ります。</Paper>
                   <Button
                     variant="contained"
                     color="primary"
