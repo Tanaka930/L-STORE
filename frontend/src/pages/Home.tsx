@@ -1,11 +1,8 @@
-import React, { useCallback, useState, useContext } from "react"
+import React, { useContext } from "react"
 import { AuthContext } from "App"
-import { TextField, Card, CardContent, CardHeader, Button, Box, IconButton, Container, Grid } from "@material-ui/core"
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
-import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { spacing } from '@material-ui/system';
+import { Container, Box, Grid } from "@material-ui/core"
+// import { Theme } from "@material-ui/core/styles"
+
 
 // import { Helmet } from 'react-helmet';
 import Budget from 'components/dashboard/Budget';
@@ -17,14 +14,10 @@ import TotalCustomers from 'components/dashboard//TotalCustomers';
 import TotalProfit from 'components/dashboard//TotalProfit';
 import TrafficByDevice from 'components/dashboard//TrafficByDevice';
 
-const useStyles = makeStyles((theme: Theme) => ({
-
-}))
-
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Home: React.FC = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
-  const classes = useStyles()
+
 
   return (
     <>
@@ -32,11 +25,10 @@ const Home: React.FC = () => {
         isSignedIn && currentUser ? (
           <>
             <Box
-              py={3}
-              style={{
-                // backgroundColor: 'background.default',
+              style={{backgroundColor:'background.default'}}
+              sx={{
                 minHeight: '100%',
-                // py: 3
+                py: 3
               }}
             >
               <Container maxWidth={false}>
@@ -78,7 +70,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    <TotalProfit />
+                    <TotalProfit  />
                   </Grid>
                   <Grid
                     item
@@ -96,7 +88,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    <TrafficByDevice />
+                    <TrafficByDevice  />
                   </Grid>
                   <Grid
                     item
@@ -105,7 +97,7 @@ const Home: React.FC = () => {
                     xl={3}
                     xs={12}
                   >
-                    <LatestProducts />
+                    <LatestProducts  />
                   </Grid>
                   <Grid
                     item

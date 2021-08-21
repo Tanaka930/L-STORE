@@ -6,6 +6,8 @@ import { signOut } from "lib/api/auth"
 import { AppBar, Toolbar, Typography, Button, IconButton } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, Theme } from "@material-ui/core/styles"
+import { green } from '@material-ui/core/colors';
+
 import SideBar from "./SideBar"
 
 const useStyles = makeStyles((theme: Theme) => ({

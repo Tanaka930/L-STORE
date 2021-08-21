@@ -1,4 +1,4 @@
-// import { Doughnut } from 'react-chartjs-2';
+import { Doughnut } from 'react-chartjs-2';
 import {
   Box,
   Card,
@@ -88,10 +88,10 @@ export const TrafficByDevice = () => {
               position: 'relative'
             }}
           >
-            {/* <Doughnut
+            <Doughnut
               data={data}
               options={options}
-            /> */}
+            />
           </Box>
           <Box
             style={{

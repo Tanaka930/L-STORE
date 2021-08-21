@@ -1,4 +1,3 @@
-import React, { useCallback, useState, useContext } from "react"
 import {
   Avatar,
   Box,
@@ -10,13 +9,6 @@ import {
 } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
-import { makeStyles, Theme } from "@material-ui/core/styles"
-const useStyles = makeStyles((theme: Theme) => ({
-
-}))
-// type Props = {
-//   props: number
-// }
 
 export const TasksProgress: React.FC = () => {
   return (
