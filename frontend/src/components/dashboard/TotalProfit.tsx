@@ -9,6 +9,8 @@ import {
 import { indigo } from '@material-ui/core/colors';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
+
+
 // export const TotalProfit: React.FC<Props> = (props) => {
 export const TotalProfit = () => {
   return (
@@ -17,7 +19,7 @@ export const TotalProfit = () => {
         <CardContent>
           <Grid
             container
-            // spacing={3}
+            spacing={3}
             style={{ justifyContent: 'space-between' }}
           >
             <Grid item>

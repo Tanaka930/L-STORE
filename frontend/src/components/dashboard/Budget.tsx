@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Avatar,
   Box,
@@ -15,12 +14,13 @@ import { red } from '@material-ui/core/colors';
 //   props: any
 // }
 
-export const Budget: React.FC = () => {
+
+export const Budget: React.FC = (props) => {
   return (
     <>
       <Card
         style={{ height: '100%' }}
-        // {...props}
+        {...props}
       >
         <CardContent>
           <Grid

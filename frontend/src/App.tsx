@@ -1,6 +1,15 @@
 import React, { useState, useEffect, createContext } from "react"
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { getCurrentUser } from "lib/api/auth"
+import { User } from "interfaces/index"
+import theme from "./theme"
+import { ThemeProvider } from '@material-ui/core'
+import { alpha } from '@material-ui/core/styles';
 
+
+// import { spacing } from '@material-ui/system'
+
+import GlobalStyles from 'components/GlobalStyles';
 import CommonLayout from "components/layouts/CommonLayout"
 import Home from "pages/Home"
 import SignUp from "pages/SignUp"
@@ -11,9 +20,6 @@ import CustomersList from "pages/customers/CustomersList"
 import CustomerDetail from "pages/customers/CustomerDetail"
 import NotFound from "pages/404"
 
-import { getCurrentUser } from "lib/api/auth"
-import { User } from "interfaces/index"
-import Theme from "theme/typography";
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {
@@ -69,28 +75,29 @@ const App: React.FC = () => {
   }
 
   return (
-
     <Router>
       <AuthContext.Provider value={{ loading, setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser}}>
-        <CommonLayout>
-          <Switch>
-            <Route exact path="/signup" component={SignUp} />
-            <Route exact path="/signin" component={SignIn} />
-            <Private>
-              <>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/tokens" component={Token} />
-                <Route exact path="/message" component={Message} />
-                <Route exact path="/customers" component={CustomersList} />
-                <Route exact path="/customers/:id" component={CustomerDetail} />
-              </>
-            </Private>
-            <Route component={NotFound} />
-          </Switch>
-        </CommonLayout>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <CommonLayout>
+            <Switch>
+              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/signin" component={SignIn} />
+              <Private>
+                <>
+                  <Route exact path="/" component={Home} />
+                  <Route exact path="/tokens" component={Token} />
+                  <Route exact path="/message" component={Message} />
+                  <Route exact path="/customers" component={CustomersList} />
+                  <Route exact path="/customers/:id" component={CustomerDetail} />
+                </>
+              </Private>
+              <Route component={NotFound} />
+            </Switch>
+          </CommonLayout>
+        </ThemeProvider>
       </AuthContext.Provider>
     </Router>
-
   )
 }
 
