@@ -28,7 +28,7 @@ class Api::V1::LineCustomersController < LineCommonsController
     year = trg_user.birth_day.year
 
     # 月取得
-    manth = trg_user.birth_day.manth
+    month = trg_user.birth_day.month
 
     # 日取得
     day = trg_user.birth_day.day
@@ -42,7 +42,7 @@ class Api::V1::LineCustomersController < LineCommonsController
       "last_name" => trg_user.last_name,
       "first_name" => trg_user.first_name,
       "year" => year,
-      "manth" => manth,
+      "month" => month,
       "day" => day,
       "age" => trg_user.age,
       "sex" => trg_user.sex,
@@ -78,7 +78,7 @@ class Api::V1::LineCustomersController < LineCommonsController
       line_customer = LineCustomer.find_by(id: params[:id], user_id: current_api_v1_user.id)
 
       # 受け取った年月日をdate型に変換
-      birth_day = make_day(params[:year],params[:manth],params[:day])
+      birth_day = make_day(params[:year],params[:month],params[:day])
 
       line_customer.update(
         last_name: params[:last_name],
@@ -99,9 +99,9 @@ class Api::V1::LineCustomersController < LineCommonsController
   private
 
   # 受け取ったテキスト情報から日付に変換するメソッド
-  def make_day(year,manth,day)
+  def make_day(year,month,day)
 
-    date = Date.pase(year + "/" + manth + "/" + day)
+    date = Date.pase(year + "/" + month + "/" + day)
 
     return date
   end
