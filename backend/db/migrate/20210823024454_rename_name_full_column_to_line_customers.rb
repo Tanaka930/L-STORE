@@ -5,5 +5,8 @@ class RenameNameFullColumnToLineCustomers < ActiveRecord::Migration[6.1]
 
     # カラム追加
     add_column :line_customers, :first_name, :string
+
+    # カラムの方を変更
+    change_column :line_customers, :birth_day, :date
   end
 end

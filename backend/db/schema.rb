@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(version: 2021_08_23_024454) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "blockflg"
     t.string "last_name"
-    t.string "birth_day"
+    t.date "birth_day"
     t.string "age"
     t.integer "sex"
     t.string "mail"

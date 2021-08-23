@@ -63,7 +63,8 @@ class Api::V1::LineCustomersController < LineCommonsController
       # 対象のユーザーを指定
       line_customer = LineCustomer.find_by(id: params[:id], user_id: current_api_v1_user.id)
       line_customer.update(
-        name_full: params[:name_full],
+        last_name: params[:last_name],
+        first_name: params[:first_name],
         birth_day: params[:birth_day], 
         age: params[:age], 
         sex: params[:sex], 
