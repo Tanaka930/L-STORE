@@ -23,13 +23,27 @@ class Api::V1::LineCustomersController < LineCommonsController
 
   def show
     trg_user = LineCustomer.find(params[:id])
+
+    # 年取得
+    year = trg_user.birth_day.year
+
+    # 月取得
+    manth = trg_user.birth_day.manth
+
+    # 日取得
+    day = trg_user.birth_day.day
+
+
     json_data = {
       "id" => trg_user.id,
       "user_id" => trg_user.user_id,
       "name" => trg_user.name,
       "image" => trg_user.image,
-      "full_name" => trg_user.image,
-      "birth_day" => trg_user.birth_day,
+      "last_name" => trg_user.last_name,
+      "first_name" => trg_user.first_name,
+      "year" => year,
+      "manth" => manth,
+      "day" => day,
       "age" => trg_user.age,
       "sex" => trg_user.sex,
       "address" => trg_user.address,
