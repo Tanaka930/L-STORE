@@ -62,19 +62,33 @@ class Api::V1::LineCustomersController < LineCommonsController
     begin
       # 対象のユーザーを指定
       line_customer = LineCustomer.find_by(id: params[:id], user_id: current_api_v1_user.id)
+
+      # 受け取った年月日をdate型に変換
+      birth_day = make_day(params[:year],params[:manth],params[:day])
+
       line_customer.update(
         last_name: params[:last_name],
         first_name: params[:first_name],
-        birth_day: params[:birth_day], 
+        birth_day: birth_day, 
         age: params[:age], 
         sex: params[:sex], 
         address: params[:address], 
         tel_num: params[:tel_num], 
         mail: params[:mail])
       msg = "success"
-    rescue
-      msg = "error"
+    rescue => e
+      msg = e
     end
     render json: msg
+  end
+
+  private
+
+  # 受け取ったテキスト情報から日付に変換するメソッド
+  def make_day(year,manth,day)
+
+    date = Date.pase(year + "/" + manth + "/" + day)
+
+    return date
   end
 end
