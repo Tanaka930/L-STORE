@@ -134,7 +134,7 @@ const Chat = (props: TabPanelProps) => {
     await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
     .then(res => {
       setChats(res.data)
-      console.log(res.data)
+      // console.log(res.data)
     })
     .catch(err => console.error(err))
   }
@@ -151,23 +151,22 @@ const Chat = (props: TabPanelProps) => {
 
   const handleMessagePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
     const data = createFormData()
-
-    await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
-    .then(res => {
-      console.log(res.data.data) //これがレスポンスのデータ内容
-      const postData = res.data.data
-      setChats([...chats, postData])
-      setMessage("")
-      setImage(undefined)
-      setPreview("")
-      toast.success("送信されました")
-    })
-    .catch(err => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
+      if(response.status === 200) {
+        console.log(response.data.data) //これがレスポンスのデータ内容
+        const postData = response.data.data
+        setChats([...chats, postData])
+        setMessage("")
+        setImage(undefined)
+        setPreview("")
+        toast.success("送信されました")
+      }
+    } catch(err) {
       toast.error("送信に失敗しました")
       console.error(err)
-    })
+    }
   }
 
   useEffect(() => {
