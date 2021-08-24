@@ -10,7 +10,13 @@ import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-export const TotalCustomers = () => {
+type Total = {
+  total: number;
+}
+
+export const TotalCustomers = (props: Total) => {
+  const { total } = props;
+
   return (
     <>
       <Card>
@@ -32,7 +38,7 @@ export const TotalCustomers = () => {
                 color="textPrimary"
                 variant="h3"
               >
-                1,600
+                {total}
               </Typography>
             </Grid>
             <Grid item>

@@ -8,19 +8,28 @@ import {
 } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import MoneyIcon from '@material-ui/icons/Money';
+import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 import { red } from '@material-ui/core/colors';
 
+import { CustomerList } from "interfaces/index"
+// import { Length } from "interfaces/index"
 // type Props = {
 //   props: any
 // }
 
+type Total = {
+  total: number;
+}
 
-export const Budget: React.FC = (props) => {
+
+export const BlockCustomers = (props: Total) => {
+  const { total } = props;
+  // const totalAnswer = total == 0 ? "" | total
   return (
     <>
       <Card
         style={{ height: '100%' }}
-        {...props}
+
       >
         <CardContent>
           <Grid
@@ -34,13 +43,14 @@ export const Budget: React.FC = (props) => {
                 gutterBottom
                 variant="h6"
               >
-                BUDGET
+                BLOCK CUSTOMERS
               </Typography>
               <Typography
                 color="textPrimary"
                 variant="h3"
               >
-                $24,000
+                
+                {total}
               </Typography>
             </Grid>
             <Grid item>
@@ -51,7 +61,7 @@ export const Budget: React.FC = (props) => {
                   width: 56
                 }}
               >
-                <MoneyIcon />
+                <PeopleIcon />
               </Avatar>
             </Grid>
           </Grid>
@@ -86,4 +96,4 @@ export const Budget: React.FC = (props) => {
   )
 };
 
-export default Budget;
+export default BlockCustomers;
