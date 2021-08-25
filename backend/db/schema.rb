@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_23_024454) do
+ActiveRecord::Schema.define(version: 2021_08_25_020836) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 2021_08_23_024454) do
     t.string "encrypted_address"
     t.string "encrypted_address_iv"
     t.string "encrypted_tel_num"
-    t.string "encrypted_tel_num_vi"
+    t.string "encrypted_tel_num_iv"
     t.string "first_name"
     t.index ["user_id"], name: "index_line_customers_on_user_id"
   end
