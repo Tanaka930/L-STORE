@@ -78,7 +78,9 @@ export const TrafficByDevice = () => {
 
   return (
     <>
-      <Card>
+      <Card
+        style={{ height: '100%' }}
+      >
         <CardHeader title="Traffic by Device" />
         <Divider />
         <CardContent>

@@ -124,7 +124,7 @@ const Header: React.FC = () => {
           <Typography
             component={Link}
             to="/"
-            variant="h6"
+            variant="h4"
             className={classes.title}
           >
             L-store
