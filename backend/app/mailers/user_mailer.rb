@@ -1,11 +1,12 @@
-# class UserMailer < ApplicationMailer
-class UserMailer
+class UserMailer < ApplicationMailer
   require 'sendgrid-ruby'
   include SendGrid
   def self.send_signup_email
-    from_address = "test@example.com"
+    # 運営ようにアドレスが欲しい
+    from_address = ENV['FROM_ADDRESS']
 
-    trg_address = "kaito.hasegawa@openstore-japan.com"
+    # 以下はユーザーによって変わる
+    trg_address = ""
 
     subject = "テスト送信"
 
