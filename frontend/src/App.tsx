@@ -5,6 +5,7 @@ import { getCurrentUser } from "lib/api/auth"
 import { User } from "interfaces/index"
 import theme from "./theme"
 import { ThemeProvider } from '@material-ui/core'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 // import { alpha } from '@material-ui/core/styles';
 

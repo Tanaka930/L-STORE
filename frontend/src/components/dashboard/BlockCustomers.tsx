@@ -43,7 +43,7 @@ export const BlockCustomers = (props: Total) => {
                 gutterBottom
                 variant="h6"
               >
-                BLOCK CUSTOMERS
+                ブロック数
               </Typography>
               <Typography
                 color="textPrimary"
