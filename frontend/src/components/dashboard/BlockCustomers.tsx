@@ -67,7 +67,7 @@ export const BlockCustomers = (props: Total) => {
           </Grid>
           <Box
             style={{
-              paddingTop: 2,
+              paddingTop: 16,
               display: 'flex',
               alignItems: 'center'
             }}
@@ -77,7 +77,7 @@ export const BlockCustomers = (props: Total) => {
               // mr={1}
               style={{
                 color: red[900],
-                marginRight: 1
+                marginRight: 8
               }}
               variant="body2"
             >

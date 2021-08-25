@@ -31,23 +31,23 @@ const Home = () => {
     }
   }
 
-    const getCustomers = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
-      console.log(res.data)
-      setCustomers(res.data)
-    } catch(err) {
-      console.error(err.message)
-    }
-  }
+  //   const getCustomers = async () => {
+  //   try {
+  //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
+  //     console.log(res.data)
+  //     setCustomers(res.data)
+  //   } catch(err) {
+  //     console.error(err.message)
+  //   }
+  // }
 
-  useEffect(() => {
-    getCustomers()
-    const interval = setInterval(()=>{
-      getCustomers()
-    },100000)
-    return() => clearInterval(interval)
-  }, [])
+  // useEffect(() => {
+  //   getCustomers()
+  //   const interval = setInterval(()=>{
+  //     getCustomers()
+  //   },100000)
+  //   return() => clearInterval(interval)
+  // }, [])
 
   const [total, setTotal] = useState()
   const [blockTotal, setblockTotal] = useState()
@@ -84,7 +84,8 @@ customers.forEach(customer => {
                     xl={3}
                     xs={12}
                   >
-                    <TotalCustomers total={customers.length} />
+                    {/* <TotalCustomers total={customers.length} /> */}
+                    <TotalCustomers total={1280} />
                   </Grid>
                   <Grid
                     item
@@ -93,7 +94,8 @@ customers.forEach(customer => {
                     xl={3}
                     xs={12}
                   >
-                    <BlockCustomers total={customers.length} />
+                    {/* <BlockCustomers total={customers.length} /> */}
+                    <BlockCustomers total={54} />
                   </Grid>
                   <Grid
                     item

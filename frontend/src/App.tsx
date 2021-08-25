@@ -1,10 +1,12 @@
 import React, { useState, useEffect, createContext } from "react"
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+
 import { getCurrentUser } from "lib/api/auth"
 import { User } from "interfaces/index"
 import theme from "./theme"
 import { ThemeProvider } from '@material-ui/core'
-import { alpha } from '@material-ui/core/styles';
+
+// import { alpha } from '@material-ui/core/styles';
 
 
 // import { spacing } from '@material-ui/system'
@@ -19,6 +21,7 @@ import Message from "pages/Message"
 import CustomersList from "pages/customers/CustomersList"
 import CustomerDetail from "pages/customers/CustomerDetail"
 import NotFound from "pages/404"
+
 
 
 // グローバルで扱う変数・関数

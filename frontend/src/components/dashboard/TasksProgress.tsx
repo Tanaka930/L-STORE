@@ -50,7 +50,7 @@ export const TasksProgress: React.FC = () => {
               </Avatar>
             </Grid>
           </Grid>
-          <Box style={{ paddingTop: 3 }}>
+          <Box style={{ paddingTop: '24px' }}>
             <LinearProgress
               value={75.5}
               variant="determinate"

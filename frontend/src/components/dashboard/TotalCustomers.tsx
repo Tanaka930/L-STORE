@@ -14,6 +14,8 @@ type Total = {
   total: number;
 }
 
+
+
 export const TotalCustomers = (props: Total) => {
   const { total } = props;
 
@@ -57,7 +59,7 @@ export const TotalCustomers = (props: Total) => {
             style={{
               alignItems: 'center',
               display: 'flex',
-              // pt: 2
+              paddingTop: 16
             }}
           >
             <ArrowUpwardIcon style={{ color: green[900] }} />
@@ -65,7 +67,7 @@ export const TotalCustomers = (props: Total) => {
               variant="body2"
               style={{
                 color: green[900],
-                // mr: 1
+                marginRight: 8
               }}
             >
               16%
