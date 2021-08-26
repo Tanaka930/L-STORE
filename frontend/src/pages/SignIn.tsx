@@ -66,8 +66,6 @@ const SignIn: React.FC = () => {
         setCurrentUser(res.data.data)
 
         history.push("/")
-
-        console.log("Signed in successfully!")
       } else {
         setAlertMessageOpen(true)
       }
@@ -131,7 +129,7 @@ const SignIn: React.FC = () => {
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
-        message="Invalid emai or password"
+        message="メールアドレスまたはパスワードが異なります。"
       />
     </>
   )
