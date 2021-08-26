@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import { AuthContext } from "App"
 import axios from 'axios'
 import Cookies from "js-cookie"
+import applyCaseMiddleware from 'axios-case-converter';
 import { Box, Container, Grid, Card, CardContent, CardHeader, TextField, MenuItem, InputLabel, Button, Divider, IconButton, Typography } from "@material-ui/core"
 import SettingsIcon from '@material-ui/icons/Settings'
 import CloseIcon from '@material-ui/icons/Close'
@@ -13,10 +14,10 @@ type TabPanelProps = {
   userId: string
 }
 
-type Info = {
-  lastName: string
-  firstName: string
-}
+// type CusInfo = {
+//   lastName: string
+//   firstName: string
+// }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,7 +53,7 @@ const Info = (props: TabPanelProps) => {
   const [address, setAddress] = useState("")
   const [tel, setTel] = useState("")
   const [email, setEmail] = useState("")
-  const [customerInfo, setCustomerInfo] = useState<Info[]>([])
+  const [customerInfo, setCustomerInfo] = useState<any>({})
   const [edit, setEdit] = useState(false)
 
   const createFormData = (): FormData => {
@@ -100,7 +101,7 @@ const Info = (props: TabPanelProps) => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, config)
       if (response.status === 200) {
         setCustomerInfo(response.data)
-        console.log(response.data)
+        // console.log(response.data)
       }
     } catch(err) {
       console.error(err)
@@ -114,7 +115,7 @@ const Info = (props: TabPanelProps) => {
       const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, data, config)
       if (response.status === 200) {
         console.log("送信成功")
-        console.log(response.data)
+        // console.log(response.data)
       }
     } catch(err) {
       console.error(err)
@@ -272,8 +273,8 @@ const Info = (props: TabPanelProps) => {
                               setSex(e.target.value)
                             }}
                           >
-                            <MenuItem value="men">男</MenuItem>
-                            <MenuItem value="women">女</MenuItem>
+                            <MenuItem value={0}>男</MenuItem>
+                            <MenuItem value={1}>女</MenuItem>
                           </TextField>
                         </Grid>
                         <Grid item xs={12}>
@@ -327,14 +328,92 @@ const Info = (props: TabPanelProps) => {
               ) : (
                 <CardContent>
                   <Box sx={{p: 1}}>
-                    {/* {customerInfo.map((info, index) => (
-                      <Typography
-                        key={index}
-                        color="textPrimary"
-                      >
-                        {info.lastName}
-                      </Typography>
-                    ))} */}
+                    <Grid container spacing={3}>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            名前
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography color="textPrimary">
+                            {customerInfo.last_name} {customerInfo.first_name}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            生年月日
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography color="textPrimary">
+                            {customerInfo.year}年 {customerInfo.month}月 {customerInfo.day}日
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            年齢
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            {customerInfo.age}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            性別
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            {customerInfo.sex === "0" ? "男" : "女"}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            住所
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            {customerInfo.address}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            電話番号
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            {customerInfo.tel_num}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                      <Grid container item spacing={1}>
+                        <Grid item xs={12}>
+                          <Typography color="textSecondary">
+                            メールアドレス
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            {customerInfo.mail}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </CardContent>
               )}

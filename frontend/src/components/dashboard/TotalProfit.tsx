@@ -9,13 +9,13 @@ import {
 import { indigo } from '@material-ui/core/colors';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
-
-
-// export const TotalProfit: React.FC<Props> = (props) => {
 export const TotalProfit = () => {
+
   return (
     <>
-      <Card>
+      <Card
+        style={{ height: '100%' }}
+      >
         <CardContent>
           <Grid
             container

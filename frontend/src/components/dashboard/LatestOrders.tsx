@@ -1,6 +1,6 @@
-// import moment from 'moment';
+import moment from 'moment';
 import { v4 as uuid } from 'uuid';
-// import PerfectScrollbar from 'react-perfect-scrollbar';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Button,
@@ -87,7 +87,7 @@ export const LatestOrders = () => {
       <Card>
         <CardHeader title="Latest Orders" />
         <Divider />
-        {/* <PerfectScrollbar> */}
+        <PerfectScrollbar>
           <Box sx={{ minWidth: 800 }}>
             <Table>
               <TableHead>
@@ -129,7 +129,7 @@ export const LatestOrders = () => {
                       {order.customer.name}
                     </TableCell>
                     <TableCell>
-                      {/* {moment(order.createdAt).format('DD/MM/YYYY')} */}
+                      {moment(order.createdAt).format('DD/MM/YYYY')}
                     </TableCell>
                     <TableCell>
                       <Chip
@@ -143,12 +143,12 @@ export const LatestOrders = () => {
               </TableBody>
             </Table>
           </Box>
-        {/* </PerfectScrollbar> */}
+        </PerfectScrollbar>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
-            p: 2
+            padding: 16
           }}
         >
           <Button

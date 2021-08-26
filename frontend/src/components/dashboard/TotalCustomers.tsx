@@ -10,7 +10,15 @@ import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-export const TotalCustomers = () => {
+type Total = {
+  total: number;
+}
+
+
+
+export const TotalCustomers = (props: Total) => {
+  const { total } = props;
+
   return (
     <>
       <Card>
@@ -26,13 +34,13 @@ export const TotalCustomers = () => {
                 gutterBottom
                 variant="h6"
               >
-                TOTAL CUSTOMERS
+                お友達数
               </Typography>
               <Typography
                 color="textPrimary"
                 variant="h3"
               >
-                1,600
+                {total}
               </Typography>
             </Grid>
             <Grid item>
@@ -51,7 +59,7 @@ export const TotalCustomers = () => {
             style={{
               alignItems: 'center',
               display: 'flex',
-              // pt: 2
+              paddingTop: 16
             }}
           >
             <ArrowUpwardIcon style={{ color: green[900] }} />
@@ -59,7 +67,7 @@ export const TotalCustomers = () => {
               variant="body2"
               style={{
                 color: green[900],
-                // mr: 1
+                marginRight: 8
               }}
             >
               16%
