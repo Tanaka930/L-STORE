@@ -28,17 +28,17 @@ class Api::V1::LineCustomersController < LineCommonsController
 
     begin
       # 年取得
-      year = trg_user.birth_day.year
+      year = trg_user.birth_day.year.to_i
 
       # 月取得
-      month = trg_user.birth_day.month
+      month = trg_user.birth_day.month.to_i
 
       # 日取得
-      day = trg_user.birth_day.day
+      day = trg_user.birth_day.day.to_i
     rescue
-      year =""
-      month = ""
-      day = ""
+      year = nil
+      month = nil
+      day = nil
     end
 
 
@@ -52,8 +52,8 @@ class Api::V1::LineCustomersController < LineCommonsController
       "year" => year,
       "month" => month,
       "day" => day,
-      "age" => trg_user.age,
-      "sex" => trg_user.sex,
+      "age" => trg_user.age.to_i,
+      "sex" => trg_user.sex.to_i,
       "address" => trg_user.address,
       "tel_num" => trg_user.tel_num,
       "mail" => trg_user.mail
@@ -109,7 +109,7 @@ class Api::V1::LineCustomersController < LineCommonsController
   # 受け取ったテキスト情報から日付に変換するメソッド
   def make_day(year,month,day)
 
-    date = Date.parse(year + "/" + month + "/" + day)
+    date = Date.parse(year.to_s + "/" + month.to_s + "/" + day.to_s)
 
     return date
   end
