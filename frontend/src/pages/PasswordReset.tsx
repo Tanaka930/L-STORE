@@ -1,8 +1,5 @@
 import React, { useState } from "react"
-import { 
-  useHistory, 
-  useLocation } 
-  from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import AlertMessage from "components/utils/AlertMessage"
 import { passReset } from "lib/api/auth"
 import { PassResetParams } from "interfaces/index"
