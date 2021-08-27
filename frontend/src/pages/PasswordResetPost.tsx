@@ -1,10 +1,13 @@
 import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useHistory , useLocation} from "react-router-dom"
 import AlertMessage from "components/utils/AlertMessage"
-import { passReset } from "lib/api/auth"
-import { PassResetParams } from "interfaces/index"
+// import { passReset } from "lib/api/auth"
+import { PassResetPostParams } from "interfaces/index"
 import {  TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
+
+import client from "lib/api/client"
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -32,27 +35,52 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-// パスワード再設定用ページ
-const PassReset: React.FC = () => {
+
+
+
+// パスワード再設定登録用ページ
+const PassResetPost: React.FC = () => {
   const classes = useStyles()
   const history = useHistory()
-  const [email, setEmail] = useState<string>("")
+  const searchResult = useLocation()
+  const [password, setPassword] = useState<string>("")
+  const [passwordConfirmation, setPasswordConfirmation] = useState<string>("")
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    // メールのリンクを踏んだ後のリダイレクト先を指定
-    const location = "http://localhost:3000";
+    // urlに付与されたパラメータを取得
+    const query = new URLSearchParams(searchResult.search);
 
-    // パラメータ定義
-    const params: PassResetParams = {
-      email: email,
-      redirect_url: location
+    // url情報からaccess-tokenとclientとuidを取得しheaderに追加
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'access-token': query.get('access-token'),
+        'client': query.get('client'),
+        'uid': query.get('uid'),
+      }
     }
 
+    // パラメータ定義
+    const params: PassResetPostParams = {
+      password: password,
+      passwordConfirmation: passwordConfirmation
+    }
+
+    // FormData形式でデータを作成
+    const createFormData = (): FormData => {
+      const formData = new FormData()
+
+      formData.append("password", password)
+      formData.append("passwordConfirmation", passwordConfirmation)
+
+      return formData
+    }
+
+
     try {
-      const res = await passReset(params)
-      console.log(res)
+      const res = await client.patch("auth/password", createFormData(), config)
 
       if (res.status === 200) {
 
@@ -72,16 +100,29 @@ const PassReset: React.FC = () => {
     <>
       <form noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="パスワード再設定" />
+          <CardHeader className={classes.header} title="新しいパスワードを入力してください" />
           <CardContent>
+          <TextField
+              variant="outlined"
+              required
+              fullWidth
+              label="パスワード"
+              type="password"
+              value={password}
+              margin="dense"
+              autoComplete="current-password"
+              onChange={event => setPassword(event.target.value)}
+            />
             <TextField
               variant="outlined"
               required
               fullWidth
-              label="メールアドレス"
-              value={email}
+              label="パスワード(確認用)"
+              type="password"
+              value={passwordConfirmation}
               margin="dense"
-              onChange={event => setEmail(event.target.value)}
+              autoComplete="current-password"
+              onChange={event => setPasswordConfirmation(event.target.value)}
             />
             <Button
               type="submit"
@@ -107,4 +148,4 @@ const PassReset: React.FC = () => {
   )
 }
 
-export default PassReset
+export default PassResetPost

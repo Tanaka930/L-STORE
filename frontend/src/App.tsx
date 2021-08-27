@@ -22,6 +22,7 @@ import Message from "pages/Message"
 import CustomersList from "pages/customers/CustomersList"
 import CustomerDetail from "pages/customers/CustomerDetail"
 import PasswordReset from "pages/PasswordReset"
+import PasswordResetPost from "pages/PasswordResetPost"
 import NotFound from "pages/404"
 
 
@@ -89,6 +90,7 @@ const App: React.FC = () => {
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/password" component={PasswordReset} />
+              <Route exact path="/reset_pass" component={PasswordResetPost} />
               <Private>
                 <>
                   <Route exact path="/" component={Home} />

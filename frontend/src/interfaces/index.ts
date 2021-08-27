@@ -12,10 +12,16 @@ export interface SignInParams {
   password: string;
 }
 
-// パスワード再設定用パラメータ
+// パスワード再設定申請用パラメータ
 export interface PassResetParams {
   email: string;
   redirect_url: string;
+}
+
+// パスワード再設定用パラメータ
+export interface PassResetPostParams {
+  password: string;
+  passwordConfirmation: string;
 }
 
 // ユーザー
