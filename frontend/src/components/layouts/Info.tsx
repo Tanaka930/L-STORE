@@ -9,6 +9,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import AlertMessage from "components/utils/AlertMessage"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +43,7 @@ const Info = (props: TabPanelProps) => {
   const { handleSubmit, control } = useForm()
   const [customerInfo, setCustomerInfo] = useState<any>({})
   const [edit, setEdit] = useState<boolean>(false)
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   
   const forRange = (a: number, z: number) => {
     const list = []
@@ -84,7 +86,7 @@ const Info = (props: TabPanelProps) => {
       const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, values, config)
       if (response.status === 200) {
         getCustomerInfo()
-        toast.success("更新しました。")
+        setAlertMessageOpen(true)
         setEdit(false)
       } else {
         toast.error("更新に失敗しました")
@@ -449,6 +451,14 @@ const Info = (props: TabPanelProps) => {
                       </Grid>
                     </Box>
                   </CardContent>
+                  <AlertMessage
+                    open={alertMessageOpen}
+                    setOpen={setAlertMessageOpen}
+                    severity="success"
+                    message="アカウント情報を更新しました。"
+                    vertical="bottom"
+                    horizontal="right"
+                  />
                   <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
