@@ -148,6 +148,8 @@ const Token: React.FC = () => {
         setOpen={setAlertMessageOpen}
         severity="error"
         message="Invalid id or tokens"
+        vertical="top"
+        horizontal="center"
       />
     </>
   )

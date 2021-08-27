@@ -9,6 +9,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import AlertMessage from "components/utils/AlertMessage"
 
 type TabPanelProps = {
   index: number
@@ -38,6 +39,7 @@ const Others = (props: TabPanelProps) => {
   const [memos, setMemos] =useState<any[]>([])
   const { handleSubmit, control, reset } = useForm()
   const classes = useStyles()
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
 
 
   const config = {
@@ -68,7 +70,7 @@ const Others = (props: TabPanelProps) => {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, values, config)
       if (response.status === 200) {
         getMemos()
-        toast.success("更新しました。")
+        setAlertMessageOpen(true)
         setEdit(false)
         reset()
       } else {
@@ -151,8 +153,11 @@ const Others = (props: TabPanelProps) => {
                     <CardContent>
                       <Box sx={{p: 1}}>
                         {memos.map((memo, index) => (
-                          <Paper key={index} elevation={3}>
-                            <Box sx={{p: 1, m: 1}}>
+                          <Paper
+                            key={index}
+                            elevation={2}
+                          >
+                            <Box sx={{p: 2, my: 2}}>
                               <Typography
                                 color="textPrimary"
                               >
@@ -169,6 +174,14 @@ const Others = (props: TabPanelProps) => {
                         ))}
                       </Box>
                     </CardContent>
+                    <AlertMessage
+                      open={alertMessageOpen}
+                      setOpen={setAlertMessageOpen}
+                      severity="success"
+                      message="メモを投稿しました。"
+                      vertical="bottom"
+                      horizontal="right"
+                    />
                     <ToastContainer
                       position="bottom-right"
                       autoClose={5000}
