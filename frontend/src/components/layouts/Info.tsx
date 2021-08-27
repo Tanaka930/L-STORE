@@ -10,12 +10,6 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-type TabPanelProps = {
-  index: number
-  value: number
-  userId: string
-}
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -35,6 +29,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
+type TabPanelProps = {
+  index: number
+  value: number
+  userId: string
+}
+
 const Info = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
@@ -44,11 +44,11 @@ const Info = (props: TabPanelProps) => {
   const [edit, setEdit] = useState<boolean>(false)
   
   const forRange = (a: number, z: number) => {
-    const lst = []
+    const list = []
     for (let i = a; i <= z; i++) {
-      lst.push(i)
+      list.push(i)
     }
-    return lst
+    return list
   }
   
   const years = forRange(1920, 2021)
