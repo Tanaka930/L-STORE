@@ -1,7 +1,7 @@
 import client from "lib/api/client"
 import Cookies from "js-cookie"
 
-import { SignUpParams, SignInParams } from "interfaces/index"
+import { SignUpParams, SignInParams ,PassResetParams} from "interfaces/index"
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
@@ -20,6 +20,11 @@ export const signOut = () => {
     "client": Cookies.get("_client"),
     "uid": Cookies.get("_uid")
   }})  
+}
+
+// パスワードリセット
+export const passReset = (params: PassResetParams) => {
+  return client.post("auth/password", params)
 }
 
 // 認証済みのユーザーを取得
