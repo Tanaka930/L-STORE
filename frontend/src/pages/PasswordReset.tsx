@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import AlertMessage from "components/utils/AlertMessage"
 import { passReset } from "lib/api/auth"
 import { PassResetParams } from "interfaces/index"
-import {  TextField, Card, CardContent, CardHeader, Button, Box } from "@material-ui/core"
+import {  TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme: Theme) => ({
