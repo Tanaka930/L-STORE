@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { useHistory , useLocation} from "react-router-dom"
 import AlertMessage from "components/utils/AlertMessage"
-// import { passReset } from "lib/api/auth"
 import { PassResetPostParams } from "interfaces/index"
 import {  TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
@@ -62,27 +61,20 @@ const PassResetPost: React.FC = () => {
       }
     }
 
-    // パラメータ定義
-    const params: PassResetPostParams = {
-      password: password,
-      passwordConfirmation: passwordConfirmation
-    }
-
-    // FormData形式でデータを作成
+    // FormData形式でフォームデータを取得
     const createFormData = (): FormData => {
       const formData = new FormData()
-
       formData.append("password", password)
       formData.append("passwordConfirmation", passwordConfirmation)
-
       return formData
     }
-
 
     try {
       const res = await client.patch("auth/password", createFormData(), config)
 
       if (res.status === 200) {
+
+        alert("パスワードの再設定が完了いたしました。ログイン画面からログインしてください。")
 
         history.push("/")
 

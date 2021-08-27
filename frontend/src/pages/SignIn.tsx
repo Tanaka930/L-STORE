@@ -120,6 +120,11 @@ const SignIn: React.FC = () => {
                 <Link to="/signup" className={classes.link}>
                   新規登録
                 </Link>
+                <br />
+                パスワードを忘れた方はこちら &nbsp;
+                <Link to="/password" className={classes.link}>
+                  再設定
+                </Link>
               </Typography>
             </Box>
           </CardContent>

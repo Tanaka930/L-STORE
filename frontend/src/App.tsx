@@ -90,7 +90,7 @@ const App: React.FC = () => {
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/password" component={PasswordReset} />
-              <Route exact path="/reset_pass" component={PasswordResetPost} />
+              <Route exact path="/reset_password_post" component={PasswordResetPost} />
               <Private>
                 <>
                   <Route exact path="/" component={Home} />

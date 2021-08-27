@@ -42,12 +42,12 @@ const PassReset: React.FC = () => {
     e.preventDefault()
 
     // メールのリンクを踏んだ後のリダイレクト先を指定
-    const location = "http://localhost:3000";
+    const redirectUrl = window.location.hostname;
 
     // パラメータ定義
     const params: PassResetParams = {
       email: email,
-      redirect_url: location
+      redirect_url: redirectUrl
     }
 
     try {
@@ -55,6 +55,8 @@ const PassReset: React.FC = () => {
       console.log(res)
 
       if (res.status === 200) {
+
+        alert("入力されたメールアドレスにパスワード再設定のご案内をお送りいたしました。")
 
         history.push("/")
 
