@@ -7,8 +7,28 @@ class Api::V1::MemosController < ApplicationController
   end
 
   def create
-    memos = LineCustomerMemo.create(line_customer_id: params[:line_customer_id], body: params[:body])
+    memo = LineCustomerMemo.create(line_customer_id: params[:line_customer_id], body: params[:body])
 
-    render json: memos
+    render json: memo
+  end
+
+  def update
+    # 対象のデータ取得
+    trg_memo = LineCustomerMemo.find(params[:id])
+
+    # 対象を更新
+    memo = trg_memo.update(body: params[:body])
+
+    render json: memo
+  end
+
+  def delete
+    # 対象のデータ取得
+    trg_memo = LineCustomerMemo.find(params[:id])
+
+    # 対象を削除
+    memo = trg_memo.destroy
+
+    render json: memo
   end
 end
