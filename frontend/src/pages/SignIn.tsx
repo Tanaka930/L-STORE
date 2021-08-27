@@ -130,6 +130,8 @@ const SignIn: React.FC = () => {
         setOpen={setAlertMessageOpen}
         severity="error"
         message="メールアドレスまたはパスワードが異なります。"
+        vertical="top"
+        horizontal="center"
       />
     </>
   )
