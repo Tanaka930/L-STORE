@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
+import moment from 'moment'
 import Cookies from "js-cookie"
-import { Box, Container, Card, CardContent, CardHeader, TextField, Button, Divider, Typography, IconButton } from "@material-ui/core"
-import SettingsIcon from '@material-ui/icons/Settings'
+import { Box, Container, Card, CardContent, CardHeader, Paper, TextField, Button, Divider, Typography, IconButton } from "@material-ui/core"
+import PostAddIcon from '@material-ui/icons/PostAdd';
 import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
@@ -53,7 +54,7 @@ const Others = (props: TabPanelProps) => {
 
   const getMemos = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, config)
       if (response.status === 200) {
         setMemos(response.data)
       }
@@ -64,7 +65,7 @@ const Others = (props: TabPanelProps) => {
 
   const onSubmit = async (values: any) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, values, config)
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, values, config)
       if (response.status === 200) {
         getMemos()
         toast.success("更新しました。")
@@ -97,7 +98,7 @@ const Others = (props: TabPanelProps) => {
                 }}
               >
                 <IconButton onClick={handleToggleButton}>
-                  { edit ? <CloseIcon /> : <SettingsIcon /> }
+                  { edit ? <CloseIcon /> : <PostAddIcon /> }
                 </IconButton>
               </Box>
               <CardHeader
@@ -148,15 +149,25 @@ const Others = (props: TabPanelProps) => {
                 ) : (
                   <>
                     <CardContent>
-                      {memos.map((memo, index) => (
-                        <Box key={index} sx={{p: 1}}>
-                          <Typography
-                            color="textPrimary"
-                          >
-                            {memo.body}
-                          </Typography>
-                        </Box>
-                      ))}
+                      <Box sx={{p: 1}}>
+                        {memos.map((memo, index) => (
+                          <Paper key={index} elevation={3}>
+                            <Box sx={{p: 1, m: 1}}>
+                              <Typography
+                                color="textPrimary"
+                              >
+                                {memo.body}
+                              </Typography>
+                              <Typography
+                                color="textSecondary"
+                                align="right"
+                              >
+                                {moment(memo.updated_at).format('YYYY/MM/DD')}
+                              </Typography>
+                            </Box>
+                          </Paper>
+                        ))}
+                      </Box>
                     </CardContent>
                     <ToastContainer
                       position="bottom-right"
