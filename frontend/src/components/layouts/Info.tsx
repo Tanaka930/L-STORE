@@ -1,23 +1,20 @@
 import { useState, useEffect, useContext } from "react"
+import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
 import axios from 'axios'
 import Cookies from "js-cookie"
-import applyCaseMiddleware from 'axios-case-converter';
 import { Box, Container, Grid, Card, CardContent, CardHeader, TextField, MenuItem, InputLabel, Button, Divider, IconButton, Typography } from "@material-ui/core"
 import SettingsIcon from '@material-ui/icons/Settings'
 import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 type TabPanelProps = {
   index: number
   value: number
   userId: string
 }
-
-// type CusInfo = {
-//   lastName: string
-//   firstName: string
-// }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,34 +39,9 @@ const Info = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-
-  const [lastName, setLastName] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [year, setYear] = useState("")
-  const [month, setMonth] = useState("")
-  const [day, setDay] = useState("")
-  const [age, setAge] = useState("")
-  const [sex, setSex] = useState("")
-  const [address, setAddress] = useState("")
-  const [tel, setTel] = useState("")
-  const [email, setEmail] = useState("")
+  const { handleSubmit, control } = useForm()
   const [customerInfo, setCustomerInfo] = useState<any>({})
-  const [edit, setEdit] = useState(false)
-
-  const createFormData = (): FormData => {
-    const formData = new FormData()
-    formData.append("last_name", lastName)
-    formData.append("first_name", firstName)
-    formData.append("year", year)
-    formData.append("month", month)
-    formData.append("day", day)
-    formData.append("age", age)
-    formData.append("sex", sex)
-    formData.append("address", address)
-    formData.append("tel_num", tel)
-    formData.append("mail", email)
-    return formData
-  }
+  const [edit, setEdit] = useState<boolean>(false)
   
   const forRange = (a: number, z: number) => {
     const lst = []
@@ -101,23 +73,24 @@ const Info = (props: TabPanelProps) => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, config)
       if (response.status === 200) {
         setCustomerInfo(response.data)
-        // console.log(response.data)
       }
     } catch(err) {
       console.error(err)
     }
   }
-  
-  const handleInfoPost = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const data = createFormData()
+
+  const onSubmit = async (values: any) => {
     try {
-      const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, data, config)
+      const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, values, config)
       if (response.status === 200) {
-        console.log("送信成功")
-        // console.log(response.data)
+        getCustomerInfo()
+        toast.success("更新しました。")
+        setEdit(false)
+      } else {
+        toast.error("更新に失敗しました")
       }
     } catch(err) {
+      toast.warn("通信に失敗しました")
       console.error(err)
     }
   }
@@ -154,7 +127,7 @@ const Info = (props: TabPanelProps) => {
                     <form
                       noValidate
                       autoComplete="off"
-                      onSubmit={handleInfoPost}
+                      onSubmit={handleSubmit(onSubmit)}
                     >
                       <Grid container spacing={3}>
                         <Grid container item spacing={1}>
@@ -162,25 +135,37 @@ const Info = (props: TabPanelProps) => {
                             <InputLabel>名前</InputLabel>
                           </Grid>
                           <Grid item md={6} xs={12}>
-                            <TextField
-                              label="姓"
-                              variant="outlined"
-                              fullWidth
-                              value={lastName}
-                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setLastName(e.target.value)
-                              }}
+                            <Controller
+                              name="lastName"
+                              control={control}
+                              defaultValue={customerInfo.lastName}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  name="lastName"
+                                  label="姓"
+                                  variant="outlined"
+                                  fullWidth
+                                  value={value}
+                                  onChange={onChange}
+                                />
+                              )}
                             />
                           </Grid>
                           <Grid item md={6} xs={12}>
-                            <TextField
-                              label="名"
-                              variant="outlined"
-                              fullWidth
-                              value={firstName}
-                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setFirstName(e.target.value)
-                              }}
+                            <Controller
+                              name="firstName"
+                              control={control}
+                              defaultValue={customerInfo.firstName}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  name="firstName"
+                                  label="名"
+                                  variant="outlined"
+                                  fullWidth
+                                  value={value}
+                                  onChange={onChange}
+                                />
+                              )}
                             />
                           </Grid>
                         </Grid>
@@ -189,125 +174,172 @@ const Info = (props: TabPanelProps) => {
                             <InputLabel>生年月日</InputLabel>
                           </Grid>
                           <Grid item xs={4}>
-                            <TextField
-                              label="年"
-                              variant="outlined"
-                              fullWidth
-                              select
-                              value={year}
-                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setYear(e.target.value)
-                              }}
-                            >
-                              { years.map((year, index) => (
-                                <MenuItem key={index} value={year}>
-                                  {year}
-                                </MenuItem>
-                              ))}
-                            </TextField>
+                            <Controller
+                              name="year"
+                              control={control}
+                              defaultValue={customerInfo.year}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  name="year"
+                                  label="年"
+                                  variant="outlined"
+                                  fullWidth
+                                  select
+                                  value={value}
+                                  onChange={onChange}
+                                >
+                                  {years.map((year, index) => (
+                                    <MenuItem key={index} value={year}>
+                                      {year}
+                                    </MenuItem>
+                                  ))}
+                                </TextField>
+                              )}
+                            />
                           </Grid>
                           <Grid item xs={4}>
-                            <TextField
-                              id="month"
-                              label="月"
-                              variant="outlined"
-                              fullWidth
-                              select
-                              value={month}
-                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setMonth(e.target.value)
-                              }}
-                            >
-                              { months.map((month, index) => (
-                                <MenuItem key={index} value={month}>
-                                  {month}
-                                </MenuItem>
-                              ))}
-                            </TextField>
+                            <Controller
+                              name="month"
+                              control={control}
+                              defaultValue={customerInfo.month}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  name="month"
+                                  label="月"
+                                  variant="outlined"
+                                  fullWidth
+                                  select
+                                  value={value}
+                                  onChange={onChange}
+                                >
+                                  {months.map((month, index) => (
+                                    <MenuItem key={index} value={month}>
+                                      {month}
+                                    </MenuItem>
+                                  ))}
+                                </TextField>
+                              )}
+                            />
                           </Grid>
                           <Grid item xs={4}>
-                            <TextField
-                              label="日"
-                              variant="outlined"
-                              fullWidth
-                              select
-                              value={day}
-                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setDay(e.target.value)
-                              }}
-                            >
-                              { days.map((day, index) => (
-                                <MenuItem key={index} value={day}>
-                                  {day}
-                                </MenuItem>
-                              ))}
-                            </TextField>
+                            <Controller
+                              name="day"
+                              control={control}
+                              defaultValue={customerInfo.day}
+                              render={({ field: { onChange, value } }) => (
+                                <TextField
+                                  name="day"
+                                  label="日"
+                                  variant="outlined"
+                                  fullWidth
+                                  select
+                                  value={value}
+                                  onChange={onChange}
+                                >
+                                  {days.map((day, index) => (
+                                    <MenuItem key={index} value={day}>
+                                      {day}
+                                    </MenuItem>
+                                  ))}
+                                </TextField>
+                              )}
+                            />
                           </Grid>
                         </Grid>
                         <Grid item xs={6}>
-                          <TextField
-                            label="年齢"
-                            variant="outlined"
-                            fullWidth
-                            select
-                            value={age}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              setAge(e.target.value)
-                            }}
-                          >
-                            { ages.map((age, index) => (
-                              <MenuItem key={index} value={age}>
-                                {age}
-                              </MenuItem>
-                            ))}
-                          </TextField>
+                          <Controller
+                            name="age"
+                            control={control}
+                            defaultValue={customerInfo.age}
+                            render={({ field: { onChange, value } }) => (
+                              <TextField
+                                name="age"
+                                label="年齢"
+                                variant="outlined"
+                                fullWidth
+                                select
+                                value={value}
+                                onChange={onChange}
+                              >
+                                { ages.map((age, index) => (
+                                  <MenuItem key={index} value={age}>
+                                    {age}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            )}
+                          />
                         </Grid>
                         <Grid item xs={6}>
-                          <TextField
-                            label="性別"
-                            variant="outlined"
-                            fullWidth
-                            select
-                            value={sex}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              setSex(e.target.value)
-                            }}
-                          >
-                            <MenuItem value={0}>男</MenuItem>
-                            <MenuItem value={1}>女</MenuItem>
-                          </TextField>
+                          <Controller
+                            name="sex"
+                            control={control}
+                            defaultValue={customerInfo.sex}
+                            render={({ field: { onChange, value } }) => (
+                              <TextField
+                                name="sex"
+                                label="性別"
+                                variant="outlined"
+                                fullWidth
+                                select
+                                value={value}
+                                onChange={onChange}
+                              >
+                                <MenuItem value={0}>男</MenuItem>
+                                <MenuItem value={1}>女</MenuItem>
+                              </TextField>
+                            )}
+                          />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField
-                            label="住所"
-                            variant="outlined"
-                            fullWidth
-                            value={address}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              setAddress(e.target.value)
-                            }}
+                          <Controller
+                            name="address"
+                            control={control}
+                            defaultValue={customerInfo.address}
+                            render={({ field: { onChange, value } }) => (
+                              <TextField
+                                name="address"
+                                label="住所"
+                                variant="outlined"
+                                fullWidth
+                                value={value}
+                                onChange={onChange}
+                              />
+                            )}
                           />
                         </Grid>
                         <Grid item md={6} xs={12}>
-                          <TextField
-                            label="電話番号"
-                            variant="outlined"
-                            helperText="ハイフン無しで入力してください"
-                            value={tel}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              setTel(e.target.value)
-                            }}
+                          <Controller
+                            name="tel"
+                            control={control}
+                            defaultValue={customerInfo.tel}
+                            render={({ field: { onChange, value } }) => (
+                              <TextField
+                                name="tel"
+                                label="電話番号"
+                                variant="outlined"
+                                helperText="ハイフン無しで入力してください"
+                                value={value}
+                                onChange={onChange}
+                              />
+                            )}
                           />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField
-                            label="メールアドレス"
-                            variant="outlined"
-                            fullWidth
-                            value={email}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              setEmail(e.target.value)
-                            }}
+                          <Controller
+                            name="email"
+                            control={control}
+                            defaultValue={customerInfo.email}
+                            render={({ field: { onChange, value } }) => (
+                              <TextField
+                                name="email"
+                                label="メールアドレス"
+                                variant="outlined"
+                                fullWidth
+                                value={value}
+                                onChange={onChange}
+                              />
+                            )}
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -326,96 +358,109 @@ const Info = (props: TabPanelProps) => {
                   </CardContent>
                 </>
               ) : (
-                <CardContent>
-                  <Box sx={{p: 1}}>
-                    <Grid container spacing={3}>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            名前
-                          </Typography>
+                <>
+                  <CardContent>
+                    <Box sx={{p: 1}}>
+                      <Grid container spacing={3}>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              名前
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography color="textPrimary">
+                              {customerInfo.lastName} {customerInfo.firstName}
+                            </Typography>
+                          </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                          <Typography color="textPrimary">
-                            {customerInfo.last_name} {customerInfo.first_name}
-                          </Typography>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              生年月日
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography color="textPrimary">
+                              {customerInfo.year}年 {customerInfo.month}月 {customerInfo.day}日
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              年齢
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              {customerInfo.age}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              性別
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              {customerInfo.sex === 0 ? "男" : "女"}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              住所
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              {customerInfo.address}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              電話番号
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              {customerInfo.tel}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                        <Grid container item spacing={1}>
+                          <Grid item xs={12}>
+                            <Typography color="textSecondary">
+                              メールアドレス
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <Typography>
+                              {customerInfo.email}
+                            </Typography>
+                          </Grid>
                         </Grid>
                       </Grid>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            生年月日
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography color="textPrimary">
-                            {customerInfo.year}年 {customerInfo.month}月 {customerInfo.day}日
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            年齢
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography>
-                            {customerInfo.age}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            性別
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography>
-                            {customerInfo.sex === "0" ? "男" : "女"}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            住所
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography>
-                            {customerInfo.address}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            電話番号
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography>
-                            {customerInfo.tel_num}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                      <Grid container item spacing={1}>
-                        <Grid item xs={12}>
-                          <Typography color="textSecondary">
-                            メールアドレス
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography>
-                            {customerInfo.mail}
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Box>
-                </CardContent>
+                    </Box>
+                  </CardContent>
+                  <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover={false}
+                  />
+                </>
               )}
             </Card>
           </Container>
