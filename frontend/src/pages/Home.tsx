@@ -2,8 +2,6 @@ import React, { useContext, useState, useEffect } from "react"
 import { AuthContext } from "App"
 import { Container, Box, Grid } from "@material-ui/core"
 // import { Theme } from "@material-ui/core/styles"
-import { microClient } from "../lib/api/microClient";
-// import { axiosInstance } from '../lib/api/microClient';
 
 // import { Helmet } from 'react-helmet';
 import BlockCustomers from 'components/dashboard/BlockCustomers';
@@ -15,8 +13,7 @@ import TotalCustomers from 'components/dashboard//TotalCustomers';
 import TotalProfit from 'components/dashboard//TotalProfit';
 import TrafficByDevice from 'components/dashboard//TrafficByDevice';
 
-// import { CustomerList } from "interfaces/index"
-import { CustomerList, News, Contents } from "interfaces/index"
+import { CustomerList } from "interfaces/index"
 // import { Length } from "interfaces/index"
 import Cookies from "js-cookie"
 import axios from "axios"
@@ -24,7 +21,6 @@ import axios from "axios"
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 // const Home = () => {
 const Home = () => {
-  const [news, setNews] = useState<News[]>([])
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const [customers, setCustomers] = useState<CustomerList[]>([])
   const config = {
@@ -52,24 +48,6 @@ const Home = () => {
   //   },100000)
   //   return() => clearInterval(interval)
   // }, [])
-
-  const getNews = async () => {
-  try {
-    const data: Contents = await microClient.get({ endpoint: 'news' });
-    console.log(data.contents)
-    setNews(data.contents)
-  } catch(err) {
-    console.error(err.message)
-  }
-}
-
-useEffect(() => {
-  getNews()
-  const interval = setInterval(()=>{
-    getNews()
-  },10000)
-  return() => clearInterval(interval)
-}, [])
 
   const [total, setTotal] = useState()
   const [blockTotal, setblockTotal] = useState()
@@ -173,16 +151,6 @@ customers.forEach(customer => {
                   >
                     <LatestOrders />
                   </Grid>
-
-                  <div>
-                    <ul>
-                      {news.map((news) => (
-                        <li key={news.id}>
-                          <p>{news.title}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
                 </Grid>
               </Container>
             </Box>
