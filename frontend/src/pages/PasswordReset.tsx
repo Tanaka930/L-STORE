@@ -32,17 +32,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-// サインイン用ページ
+// パスワード再設定用ページ
 const PassReset: React.FC = () => {
   const classes = useStyles()
   const history = useHistory()
   const [email, setEmail] = useState<string>("")
-  const [redirect, setRedirect] = useState<string>("")
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-
-
-
-
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
