@@ -10,6 +10,14 @@ const options = {
   ignoreHeaders: true,
 }
 
+// export const axiosInstance = axios.create({
+//   method: 'get',
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'X-API-KEY': process.env.api_key,
+//   },
+// });
+
 const client = applyCaseMiddleware(
   axios.create({
     baseURL: process.env.REACT_APP_API_URL,

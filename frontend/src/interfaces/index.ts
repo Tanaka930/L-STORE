@@ -72,3 +72,17 @@ export interface UserInfo {
   name: string;
   user_id: number;
 }
+
+export interface News {
+  id: string;
+  // createdAt: 2021-08-26T01:17:17.174Z,
+  // updatedAt: 2021-08-26T01:17:17.174Z,
+  publishedAt: any;
+  // revisedAt: 2021-08-26T01:17:17.174Z,
+  title: string;
+  body: string;
+}
+
+export interface Contents {
+  contents: News[];
+}

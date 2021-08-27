@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react"
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -17,6 +18,9 @@ import {
   Tooltip
 } from '@material-ui/core';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { News, Contents } from "../../interfaces/index"
+import { microClient } from "../../lib/api/microClient";
+
 
 const orders = [
   {
@@ -81,7 +85,29 @@ const orders = [
   }
 ];
 
+
+
 export const LatestOrders = () => {
+  const [news, setNews] = useState<News[]>([])
+
+  const getNews = async () => {
+    try {
+      const data: Contents = await microClient.get({ endpoint: 'news' });
+      console.log(data.contents)
+      setNews(data.contents)
+    } catch(err) {
+      console.error(err.message)
+    }
+  }
+  
+  useEffect(() => {
+    getNews()
+    const interval = setInterval(()=>{
+      getNews()
+    },10000)
+    return() => clearInterval(interval)
+  }, [])
+
   return (
     <>
       <Card>
@@ -117,26 +143,26 @@ export const LatestOrders = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orders.map((order) => (
+                {news.map((news) => (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={news.id}
                   >
                     <TableCell>
-                      {order.ref}
+                      {news.title}
                     </TableCell>
                     <TableCell>
-                      {order.customer.name}
+                      {/* {news.body} */}
                     </TableCell>
                     <TableCell>
-                      {moment(order.createdAt).format('DD/MM/YYYY')}
+                      {moment(news.publishedAt).format('YYYY/MM/DD')}
                     </TableCell>
                     <TableCell>
-                      <Chip
+                      {/* <Chip
                         color="primary"
-                        label={order.status}
+                        label={news.status}
                         size="small"
-                      />
+                      /> */}
                     </TableCell>
                   </TableRow>
                 ))}

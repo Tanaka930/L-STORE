@@ -58,6 +58,7 @@ const CustomersList: React.FC = () => {
   const getCustomers = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
+      console.log(res.data)
       setCustomers(res.data)
     } catch(err) {
       console.error(err.message)
