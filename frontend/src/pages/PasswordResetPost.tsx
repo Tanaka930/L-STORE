@@ -135,6 +135,8 @@ const PassResetPost: React.FC = () => {
         setOpen={setAlertMessageOpen}
         severity="error"
         message="このメールアドレスは登録されておりません"
+        vertical="top"
+        horizontal="center"
       />
     </>
   )
