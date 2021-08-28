@@ -66,6 +66,8 @@ export interface CustomerList {
   image?: string;
   user_id: number;
   blockflg: number;
+  full_name: string;
+  mail: string;
 }
 
 // チャット
