@@ -3,9 +3,11 @@ import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
 import Cookies from "js-cookie"
-import { Box, Container, Card, CardContent, CardHeader, Paper, TextField, Button, Divider, Typography, IconButton } from "@material-ui/core"
+import { Box, Container, Card, CardContent, CardHeader, Paper, TextField, Button, Divider, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core"
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import CloseIcon from '@material-ui/icons/Close'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import EditIcon from '@material-ui/icons/Edit'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: 0,
         paddingBottom: 9
       },
+      '& .MuiPaper-root': {
+        marginBottom: 24
+      }
     },
   }),
 )
@@ -40,7 +45,7 @@ const Others = (props: TabPanelProps) => {
   const { handleSubmit, control, reset } = useForm()
   const classes = useStyles()
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-
+  const [openDialog, setOpenDialog] = useState(false);
 
   const config = {
     headers: {
@@ -54,11 +59,25 @@ const Others = (props: TabPanelProps) => {
     setEdit(prevState => !prevState)
   }
 
+  const handleEditButton = (id: number) => {
+    setEdit(true)
+  }
+
+  const handleDeleteButton = (id: number) => {
+    console.log(`${id}delete ok`)
+    setOpenDialog(true)
+  }
+
+  const handleDialogClose = () => {
+    setOpenDialog(false)
+  }
+
   const getMemos = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, config)
       if (response.status === 200) {
         setMemos(response.data)
+        console.log(response.data)
       }
     } catch(err) {
       console.error(err)
@@ -151,29 +170,61 @@ const Others = (props: TabPanelProps) => {
                 ) : (
                   <>
                     <CardContent>
-                      <Box sx={{p: 1}}>
-                        {memos.map((memo, index) => (
-                          <Paper
-                            key={index}
-                            elevation={2}
+                      {memos.map((memo, index) => (
+                        <Paper
+                          key={index}
+                          elevation={2}
+                        >
+                          <Box sx={{pt: 2, px:2}}>
+                            <Typography
+                              color="textPrimary"
+                            >
+                              {memo.body}
+                            </Typography>
+                            <Typography
+                              color="textSecondary"
+                              variant="caption"
+                              display="block"
+                              align="right"
+                            >
+                              {moment(memo.updated_at).format('YYYY/MM/DD')}
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                            }}
                           >
-                            <Box sx={{p: 2, my: 2}}>
-                              <Typography
-                                color="textPrimary"
-                              >
-                                {memo.body}
-                              </Typography>
-                              <Typography
-                                color="textSecondary"
-                                align="right"
-                              >
-                                {moment(memo.updated_at).format('YYYY/MM/DD')}
-                              </Typography>
-                            </Box>
-                          </Paper>
-                        ))}
-                      </Box>
+                            <IconButton onClick={() => handleEditButton(memo.id)}>
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton onClick={() => handleDeleteButton(memo.id)}>
+                              <DeleteForeverIcon />
+                            </IconButton>
+                          </Box>
+                        </Paper>
+                      ))}
                     </CardContent>
+                    <Dialog
+                      open={openDialog}
+                      onClose={handleDialogClose}
+                    >
+                      <DialogTitle>削除します</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          削除してもよろしいでしょうか？
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleDialogClose} color="inherit">
+                          キャンセル
+                        </Button>
+                        <Button onClick={handleDialogClose} color="secondary">
+                          削除
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                     <AlertMessage
                       open={alertMessageOpen}
                       setOpen={setAlertMessageOpen}
