@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
 import Cookies from "js-cookie"
-import { Box, Container, Card, CardContent, CardHeader, Paper, TextField, Button, Divider, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from "@material-ui/core"
+import { Box, Container, Card, CardContent, CardHeader, Paper, TextField, Button, Divider, Typography, IconButton} from "@material-ui/core"
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import CloseIcon from '@material-ui/icons/Close'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
@@ -45,7 +45,8 @@ const Others = (props: TabPanelProps) => {
   const { handleSubmit, control, reset } = useForm()
   const classes = useStyles()
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [openDialog, setOpenDialog] = useState(false);
+  const [messageText, setMessageText] = useState<string>("")
+
 
   const config = {
     headers: {
@@ -64,12 +65,20 @@ const Others = (props: TabPanelProps) => {
   }
 
   const handleDeleteButton = (id: number) => {
-    console.log(`${id}delete ok`)
-    setOpenDialog(true)
-  }
-
-  const handleDialogClose = () => {
-    setOpenDialog(false)
+    if (window.confirm("削除してもよろしいでしょうか？")) {
+      console.log("削除完了")
+      try {
+        axios.delete(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos/${id}`, config)
+        .then(() => {
+          getMemos()
+          setMessageText("メモを削除しました。")
+          setAlertMessageOpen(true)
+        })
+        .catch(error => console.error(error))
+      } catch(err) {
+        console.error(err)
+      }
+    }
   }
 
   const getMemos = async () => {
@@ -77,7 +86,6 @@ const Others = (props: TabPanelProps) => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, config)
       if (response.status === 200) {
         setMemos(response.data)
-        console.log(response.data)
       }
     } catch(err) {
       console.error(err)
@@ -89,6 +97,7 @@ const Others = (props: TabPanelProps) => {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, values, config)
       if (response.status === 200) {
         getMemos()
+        setMessageText("メモを投稿しました。")
         setAlertMessageOpen(true)
         setEdit(false)
         reset()
@@ -206,30 +215,11 @@ const Others = (props: TabPanelProps) => {
                         </Paper>
                       ))}
                     </CardContent>
-                    <Dialog
-                      open={openDialog}
-                      onClose={handleDialogClose}
-                    >
-                      <DialogTitle>削除します</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          削除してもよろしいでしょうか？
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleDialogClose} color="inherit">
-                          キャンセル
-                        </Button>
-                        <Button onClick={handleDialogClose} color="secondary">
-                          削除
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
                     <AlertMessage
                       open={alertMessageOpen}
                       setOpen={setAlertMessageOpen}
                       severity="success"
-                      message="メモを投稿しました。"
+                      message={messageText}
                       vertical="bottom"
                       horizontal="right"
                     />
