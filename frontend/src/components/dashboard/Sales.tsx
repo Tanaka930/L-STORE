@@ -1,4 +1,4 @@
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import {
   Box,
   Button,
@@ -12,29 +12,51 @@ import {
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-
+// import React, { useState ,useEffect, useContext } from "react"
+// import { AuthContext } from "App"
+// import axios from "axios"
 
 export const Sales = () => {
   const theme = useTheme();
+  // const [friends, setFriends] = useState<FriendList[]>([])
+  // const { currentUser } = useContext(AuthContext)
+
+  // const getCustomers = async () => {
+  //   try {
+  //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
+  //     console.log(res.data)
+  //     setCustomers(res.data)
+  //   } catch(err) {
+  //     console.error(err.message)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getCustomers()
+  //   const interval = setInterval(()=>{
+  //     getCustomers()
+  //   },10000)
+  //   return() => clearInterval(interval)
+  // }, [])
 
   const data = {
     datasets: [
       {
-        backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year'
+        backgroundColor: colors.lightGreen[100],
+        data: [100, 105, 111, 130, 135, 140, 144],
+        label: '登録者数'
       },
       {
         backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year'
+        data: [11, 15, 20, 29, 30, 44, 44],
+        label: 'ブロックアカウント数'
       }
     ],
     labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
   };
 
   const options = {
-    animation: false,
+    animation: true,
     cornerRadius: 20,
     layout: { padding: 0 },
     legend: { display: false },
@@ -111,7 +133,7 @@ export const Sales = () => {
               position: 'relative'
             }}
           >
-            <Bar
+            <Line
               data={data}
               options={options}
             />
@@ -122,7 +144,7 @@ export const Sales = () => {
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
-            p: 2
+            padding: 16
           }}
         >
           <Button
