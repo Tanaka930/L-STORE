@@ -5,7 +5,12 @@ import Cookies from "js-cookie"
 import { Link } from "react-router-dom"
 import { CustomerList } from "interfaces/index"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar } from "@material-ui/core"
+import { List, ListSubheader, ListItem, ListItemText, ListItemAvatar ,Avatar,TextField } from "@material-ui/core"
+
+
+
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +30,13 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     subheadInfo: {
-      width: "70%",
+      width: "25%",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      }
+    },
+    subheadEmail: {
+      width: "50%",
       [theme.breakpoints.down("sm")]: {
         display: "none",
       }
@@ -34,10 +45,19 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "25%"
     },
     accountInfo: {
-      width: "70%",
+      width: "25%",
       [theme.breakpoints.down("sm")]: {
         display: "none",
       }
+    },
+    accountEmail: {
+      width: "50%",
+      [theme.breakpoints.down("sm")]: {
+        display: "none",
+      }
+    },
+    flex: {
+      flexGrow: 1,
     }
   }),
 )
@@ -74,13 +94,18 @@ const CustomersList: React.FC = () => {
   }, [])
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root}>  
       <h1>お友達リスト</h1>
+      <TextField
+                label="メールで検索"
+              />
+      
       <List
         subheader={
           <ListSubheader className={classes.subhead}>
             <span className={classes.subheadName}>アカウント名</span>
-            <span className={classes.subheadInfo}>アカウント情報</span>
+            <span className={classes.subheadInfo}>お名前</span>
+            <span className={classes.subheadEmail}>メールアドレス</span>
           </ListSubheader>
         }
       >
@@ -98,7 +123,8 @@ const CustomersList: React.FC = () => {
               }
             </ListItemAvatar>
             <ListItemText className={classes.accountName}>{customer.name}</ListItemText>
-            <ListItemText className={classes.accountInfo}>ここにテキストが入ります。</ListItemText>
+            <ListItemText className={classes.accountInfo}>{customer.full_name}</ListItemText>
+            <ListItemText className={classes.accountEmail}>{customer.mail}</ListItemText>
           </ListItem>
         ))}
       </List>
