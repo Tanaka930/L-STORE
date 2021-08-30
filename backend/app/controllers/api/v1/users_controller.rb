@@ -31,12 +31,12 @@ class Api::V1::UsersController < ApplicationController
           {
             "backgroundColor" => "#3f51b5",
             "data" => follow_record_histories,
-            "label" "フォロー数"
+            "label" => "フォロー数"
           },
           {
             "backgroundColor" => "#3f51b5",
             "data" => follow_record_histories,
-            "label" "有効フォロー数"      
+            "label" => "有効フォロー数"      
           }
         ],
         "labels" => follow_record_days
