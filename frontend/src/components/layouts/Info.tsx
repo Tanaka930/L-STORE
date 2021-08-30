@@ -85,14 +85,22 @@ const Info = (props: TabPanelProps) => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, values, config)
       if (response.status === 200) {
-        getCustomerInfo()
-        setAlertMessageOpen(true)
-        setEdit(false)
+        if(response.data == "success"){
+          // 更新に成功した際の処理
+          getCustomerInfo()
+          setAlertMessageOpen(true)
+          setEdit(false)
+        }else{
+          // 更新に失敗した際の処理
+          toast.error(response.data)
+          setAlertMessageOpen(false)
+          setEdit(false)
+        }
       } else {
-        toast.error("更新に失敗しました")
+        toast.error("An error has occurred on the server side")
       }
     } catch(err) {
-      toast.warn("通信に失敗しました")
+      toast.warn("Communication failed")
       console.error(err)
     }
   }
