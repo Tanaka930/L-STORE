@@ -42,7 +42,7 @@ const Others = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const [edit, setEdit] = useState(false)
   const [memos, setMemos] =useState<any[]>([])
-  const { handleSubmit, control, reset } = useForm()
+  const { handleSubmit, control, reset, setValue } = useForm()
   const classes = useStyles()
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const [messageText, setMessageText] = useState<string>("")
@@ -56,12 +56,14 @@ const Others = (props: TabPanelProps) => {
     }
   }
 
-  const handleToggleButton = () => {
+  const handleNewPostButton = () => {
     setEdit(prevState => !prevState)
+    reset()
   }
 
-  const handleEditButton = (id: number) => {
+  const handleEditButton = (body: string) => {
     setEdit(true)
+    setValue("body", body)
   }
 
   const handleDeleteButton = (id: number) => {
@@ -127,7 +129,7 @@ const Others = (props: TabPanelProps) => {
                   px: 1
                 }}
               >
-                <IconButton onClick={handleToggleButton}>
+                <IconButton onClick={handleNewPostButton}>
                   { edit ? <CloseIcon /> : <PostAddIcon /> }
                 </IconButton>
               </Box>
@@ -181,7 +183,7 @@ const Others = (props: TabPanelProps) => {
                     <CardContent>
                       {memos.map((memo, index) => (
                         <Paper
-                          key={index}
+                          key={memo.id}
                           elevation={2}
                         >
                           <Box sx={{pt: 2, px:2}}>
@@ -205,7 +207,7 @@ const Others = (props: TabPanelProps) => {
                               justifyContent: 'flex-end',
                             }}
                           >
-                            <IconButton onClick={() => handleEditButton(memo.id)}>
+                            <IconButton onClick={() => handleEditButton(memo.body)}>
                               <EditIcon />
                             </IconButton>
                             <IconButton onClick={() => handleDeleteButton(memo.id)}>
