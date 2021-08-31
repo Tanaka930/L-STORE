@@ -25,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
 
       json_data = {
         "message" => "success",
-        "datasets" => [
+        "detail" => [
           {
             "backgroundColor" => "#3f51b5",
             "data" => follow_record_histories,
