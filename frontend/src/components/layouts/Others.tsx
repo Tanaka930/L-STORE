@@ -58,7 +58,7 @@ const Others = (props: TabPanelProps) => {
 
   const handleNewPostButton = () => {
     setEdit(prevState => !prevState)
-    setValue("body", "")
+    reset()
   }
 
   const handleEditButton = (body: string) => {
