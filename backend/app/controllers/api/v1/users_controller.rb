@@ -9,6 +9,7 @@ class Api::V1::UsersController < ApplicationController
       follow_record_histories = []
       follow_sum_record_histories = []
       follow_record_days = []
+      unfollow_record_histories = []
 
 
       # 取得したデータをもとに配列データを作成
@@ -19,7 +20,11 @@ class Api::V1::UsersController < ApplicationController
 
         # 配列に追加
         follow_record_histories.push(follow_record.follow)
+
         follow_sum_record_histories.push(follow_sum)
+
+        unfollow_record_histories.push(follow_record.unfollow)
+
         follow_record_days.push(follow_record.created_at.strftime("%m月%d日"))
       end
 
@@ -27,14 +32,14 @@ class Api::V1::UsersController < ApplicationController
         "message" => "success",
         "detail" => [
           {
-            "backgroundColor" => "#3f51b5",
+            "backgroundColor" => "colors.green[600]",
             "data" => follow_record_histories,
             "label" => "フォロー数"
           },
           {
-            "backgroundColor" => "#3f51b5",
-            "data" => follow_sum_record_histories,
-            "label" => "有効フォロー数"      
+            "backgroundColor" => "colors.red[900]",
+            "data" => unfollow_record_histories,
+            "label" => "ブロック数"      
           }
         ],
         "labels" => follow_record_days
