@@ -46,7 +46,7 @@ export const TotalCustomers = (props: Total) => {
             <Grid item>
               <Avatar
                 style={{
-                  backgroundColor: green[600],
+                  backgroundColor: '#06c755',
                   height: 56,
                   width: 56
                 }}

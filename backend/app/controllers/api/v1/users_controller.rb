@@ -32,8 +32,8 @@ class Api::V1::UsersController < ApplicationController
         # "message" => "success",
         "datasets" => [
           {
-            "backgroundColor" => "#43a047",
-            "borderColor" => "#43a047",
+            "backgroundColor" => "#06c755",
+            "borderColor" => "#06c755",
             "data" => follow_record_histories,
             "label" => "フォロー数"
           },
