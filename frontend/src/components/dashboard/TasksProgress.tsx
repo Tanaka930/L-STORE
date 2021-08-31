@@ -8,9 +8,12 @@ import {
   Typography
 } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
-import InsertChartIcon from '@material-ui/icons/InsertChartOutlined';
+import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-export const TasksProgress: React.FC = () => {
+import { Total } from "interfaces/index"
+
+export const TasksProgress = (props: Total) => {
+  const { total } = props;
   return (
     <>
       <Card
@@ -29,13 +32,13 @@ export const TasksProgress: React.FC = () => {
                 gutterBottom
                 variant="h6"
               >
-                TASKS PROGRESS
+                有効アカウント
               </Typography>
               <Typography
                 color="textPrimary"
                 variant="h3"
               >
-                75.5%
+                {total}
               </Typography>
             </Grid>
             <Grid item>
@@ -46,7 +49,7 @@ export const TasksProgress: React.FC = () => {
                   width: 56
                 }}
               >
-                <InsertChartIcon />
+                <PeopleIcon />
               </Avatar>
             </Grid>
           </Grid>

@@ -34,7 +34,7 @@ export const TotalCustomers = (props: Total) => {
                 gutterBottom
                 variant="h6"
               >
-                お友達数
+                お友達アカウント
               </Typography>
               <Typography
                 color="textPrimary"
