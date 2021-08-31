@@ -256,7 +256,7 @@ const Info = (props: TabPanelProps) => {
                             />
                           </Grid>
                         </Grid>
-                        <Grid item xs={6}>
+                        {/* <Grid item xs={6}>
                           <Controller
                             name="age"
                             control={control}
@@ -279,7 +279,7 @@ const Info = (props: TabPanelProps) => {
                               </TextField>
                             )}
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={6}>
                           <Controller
                             name="sex"
