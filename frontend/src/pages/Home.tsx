@@ -104,7 +104,7 @@ customers.forEach(customer => {
                     xl={3}
                     xs={12}
                   >
-                    <TasksProgress />
+                    <TasksProgress total={1226}/>
                   </Grid>
                   <Grid
                     item
@@ -113,6 +113,7 @@ customers.forEach(customer => {
                     xl={3}
                     xs={12}
                   >
+                    {/* <LatestOrders /> */}
                     <TotalProfit />
                   </Grid>
                   <Grid
@@ -149,7 +150,7 @@ customers.forEach(customer => {
                     xl={9}
                     xs={12}
                   >
-                    {/* <LatestOrders /> */}
+                    <LatestOrders />
                   </Grid>
                 </Grid>
               </Container>

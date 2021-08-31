@@ -43,7 +43,7 @@ export const BlockCustomers = (props: Total) => {
                 gutterBottom
                 variant="h6"
               >
-                ブロック数
+                ブロックアカウント
               </Typography>
               <Typography
                 color="textPrimary"
@@ -74,7 +74,6 @@ export const BlockCustomers = (props: Total) => {
           >
             <ArrowDownwardIcon style={{ color: red[900] }} />
             <Typography
-              // mr={1}
               style={{
                 color: red[900],
                 marginRight: 8

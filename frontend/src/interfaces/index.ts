@@ -100,3 +100,7 @@ export interface News {
 export interface Contents {
   contents: News[];
 }
+
+export type Total = {
+  total: number;
+}
