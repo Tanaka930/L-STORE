@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   def show
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
-      follow_records = FollowRecord.where(user_id: 1).order(created_at: "ASC")
+      follow_records = FollowRecord.where(user_id: 1).order(created_at: "ASC").limit(7)
 
       # からの配列を用意
       follow_record_histories = []
