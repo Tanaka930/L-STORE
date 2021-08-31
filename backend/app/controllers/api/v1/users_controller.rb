@@ -32,12 +32,12 @@ class Api::V1::UsersController < ApplicationController
         "message" => "success",
         "detail" => [
           {
-            "backgroundColor" => "colors.green[600]",
+            "backgroundColor" => colors.green[600],
             "data" => follow_record_histories,
             "label" => "フォロー数"
           },
           {
-            "backgroundColor" => "colors.red[900]",
+            "backgroundColor" => colors.red[900],
             "data" => unfollow_record_histories,
             "label" => "ブロック数"      
           }
