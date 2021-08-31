@@ -25,19 +25,21 @@ class Api::V1::UsersController < ApplicationController
 
         unfollow_record_histories.push(follow_record.unfollow)
 
-        follow_record_days.push(follow_record.created_at.strftime("%m月%d日"))
+        follow_record_days.push(follow_record.created_at.strftime("%m/%d"))
       end
 
       json_data = {
-        "message" => "success",
-        "detail" => [
+        # "message" => "success",
+        "datasets" => [
           {
-            "backgroundColor" => "#43A047",
+            "backgroundColor" => "#43a047",
+            "borderColor" => "#43a047",
             "data" => follow_record_histories,
             "label" => "フォロー数"
           },
           {
-            "backgroundColor" => "#E53935",
+            "backgroundColor" => "#e53935",
+            "borderColor" => "#e53935",
             "data" => unfollow_record_histories,
             "label" => "ブロック数"      
           }
@@ -46,7 +48,7 @@ class Api::V1::UsersController < ApplicationController
       }
     rescue => e
       json_data = {
-        "message" => "error",
+        # "message" => "error",
         "detail" => e
       }
     end

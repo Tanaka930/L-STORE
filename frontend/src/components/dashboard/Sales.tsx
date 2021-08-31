@@ -17,8 +17,14 @@ import { AuthContext } from "App"
 import axios from "axios"
 
 type FriendList = {
-  data: { labels: string[]
-          datasets: { label: string; data: number[]; backgroundColor: string[]; borderColor: string[]; borderWidth: number; }[];
+  data: { 
+          labels: string[]
+          datasets: { label: string
+                      data: number[]
+                      backgroundColor: string
+                      borderColor: string
+                      // borderWidth: number
+                    }[];
         }
 }
 
@@ -30,7 +36,7 @@ export const Sales = () => {
   const getFriends = async () => {
     try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}`)
-      console.log(res.data)
+      // console.log(res.data)
       setFriends(res.data)
     } catch(err) {
       console.error(err.message)
@@ -45,7 +51,7 @@ export const Sales = () => {
     return() => clearInterval(interval)
   }, [])
 
-  // const data: {
+  // const data = {
   //   datasets: [
   //     {
   //       backgroundColor: colors.lightGreen[100],
@@ -61,10 +67,13 @@ export const Sales = () => {
   //   labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
   // };
 
-  // console.log(friends)
+  // console.log(data)
+
+
+  console.log(friends)
 
   const options = {
-    animation: true,
+    animation: false,
     cornerRadius: 20,
     layout: { padding: 0 },
     legend: { display: false },

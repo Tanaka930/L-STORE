@@ -150,7 +150,7 @@ customers.forEach(customer => {
                     xl={9}
                     xs={12}
                   >
-                    <LatestOrders />
+                    {/* <LatestOrders /> */}
                   </Grid>
                 </Grid>
               </Container>
