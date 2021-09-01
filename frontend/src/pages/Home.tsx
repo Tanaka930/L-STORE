@@ -120,7 +120,7 @@ const Home = () => {
                   <Grid
                     item
                     lg={4}
-                    sm={6}
+                    sm={12}
                     xl={4}
                     xs={12}
                   >

@@ -109,6 +109,7 @@ export const Sales = () => {
               variant="text"
             >
               Last 7 days
+              {/* Last 7 weeks */}
             </Button>
           )}
           title="Customers Transition"

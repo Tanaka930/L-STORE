@@ -80,7 +80,7 @@ export const BlockCustomers = (props: Total) => {
               }}
               variant="body2"
             >
-              12%
+              12
             </Typography>
             <Typography
               color="textSecondary"
