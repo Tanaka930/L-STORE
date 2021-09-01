@@ -59,17 +59,34 @@ class Api::V1::UsersController < ApplicationController
   def get_follow_data
     # 最新のユーザーを1件取得
     # ここは後ほど修正
-    follow_records = FollowRecord.where(user_id: 1).order(created_at: :desc).limit(1)
+    follow_records = FollowRecord.where(user_id: 1).order(created_at: :desc).limit(2)
+
+    # 返却用の配列を用意
     follow_count = 0
     unfollow_count = 0
+    pre_follow_count = 0
+    pre_unfollow_count = 0
+
+    # ループ制御用の変数
+    i = 0
+
     follow_records.each do |follow_record|
-      follow_count = follow_record.follow
-      unfollow_count = follow_record.unfollow
+      if i == 0
+        follow_count = follow_record.follow
+        unfollow_count = follow_record.unfollow
+      else
+        pre_follow_count = follow_record.follow
+        pre_unfollow_count = follow_record.unfollow
+      end
+      # iをインクリメント
+      i = i + 1
     end
 
     json_data = {
       "follow_count" => follow_count,
-      "unfollow_count" => unfollow_count
+      "unfollow_count" => unfollow_count,
+      "pre_follow_count" => pre_follow_count,
+      "pre_unfollow_count" => pre_unfollow_count
     }
 
     render json: json_data
