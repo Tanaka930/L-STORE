@@ -104,3 +104,15 @@ export interface Contents {
 export type Total = {
   total: number;
 }
+
+export type FriendList = {
+  data: { 
+          labels: string[]
+          datasets: { label: string
+                      data: number[]
+                      backgroundColor: string
+                      borderColor: string
+                      // borderWidth: number
+                    }[];
+        }
+}

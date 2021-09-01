@@ -86,7 +86,7 @@ export const BlockCustomers = (props: Total) => {
               color="textSecondary"
               variant="caption"
             >
-              Since last month
+              Since last day
             </Typography>
           </Box>
         </CardContent>

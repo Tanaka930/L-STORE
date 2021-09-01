@@ -44,7 +44,7 @@ export const LatestOrders = () => {
   return (
     <>
       <Card>
-        <CardHeader title="新着お知らせ" />
+        <CardHeader title="NEWS" />
         <Divider />
         {/* <PerfectScrollbar> */}
           <Box>

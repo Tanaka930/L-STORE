@@ -13,30 +13,20 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import React, { useState, useEffect, useContext } from "react"
+import { FriendList } from "interfaces/index"
 import { AuthContext } from "App"
 import axios from "axios"
 
-type FriendList = {
-  data: { 
-          labels: string[]
-          datasets: { label: string
-                      data: number[]
-                      backgroundColor: string
-                      borderColor: string
-                      // borderWidth: number
-                    }[];
-        }
-}
 
 export const Sales = () => {
+  // const { data } = props;
   const theme = useTheme();
-  const [friends, setFriends] = useState<FriendList[]>([])
   const { currentUser } = useContext(AuthContext)
+  const [friends, setFriends] = useState<FriendList[]>([])
 
   const getFriends = async () => {
     try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}`)
-      // console.log(res.data)
       setFriends(res.data)
     } catch(err) {
       console.error(err.message)
@@ -47,28 +37,9 @@ export const Sales = () => {
     getFriends()
     const interval = setInterval(()=>{
       getFriends()
-    },10000)
+    },100000)
     return() => clearInterval(interval)
   }, [])
-
-  // const data = {
-  //   datasets: [
-  //     {
-  //       backgroundColor: colors.lightGreen[100],
-  //       data: [100, 105, 111, 130, 135, 140, 144],
-  //       label: '登録者数'
-  //     },
-  //     {
-  //       backgroundColor: colors.grey[200],
-  //       data: [11, 15, 20, 29, 30, 44, 44],
-  //       label: 'ブロックアカウント数'
-  //     }
-  //   ],
-  //   labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
-  // };
-
-  // console.log(data)
-
 
   console.log(friends)
 
@@ -140,7 +111,7 @@ export const Sales = () => {
               Last 7 days
             </Button>
           )}
-          title="Latest Sales"
+          title="Customers Transition"
         />
         <Divider />
         <CardContent>

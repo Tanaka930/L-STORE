@@ -38,7 +38,7 @@ export const TasksProgress = (props: Total) => {
                 color="textPrimary"
                 variant="h3"
               >
-                {total}
+                {total + '%'}
               </Typography>
             </Grid>
             <Grid item>
