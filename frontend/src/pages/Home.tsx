@@ -14,69 +14,33 @@ import TotalCustomers from 'components/dashboard//TotalCustomers';
 // import TrafficByDevice from 'components/dashboard//TrafficByDevice';
 
 
-import { CustomerList, FriendList } from "interfaces/index"
-import Cookies from "js-cookie"
+import { Follower } from "interfaces/index"
+// import Cookies from "js-cookie"
 import axios from "axios"
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 
 const Home = () => {
-  // const [customers, setCustomers] = useState<CustomerList[]>([])
   const {isSignedIn, currentUser } = useContext(AuthContext)
-  // const config = {
-  //   headers: {
-  //     "access-token": Cookies.get("_access_token"),
-  //     "client": Cookies.get("_client"),
-  //     "uid": Cookies.get("_uid")
-  //   }
-  // }
+  // const [follower, setFollower] = useState<Follower>()
 
-  //   const getCustomers = async () => {
+  // const getFollower = async () => {
   //   try {
-  //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
-  //     // console.log(res.data)
-  //     setCustomers(res.data)
+  //   const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
+  //     setFollower(res.data)
+  //     console.log(res.data.follow_count)
   //   } catch(err) {
   //     console.error(err.message)
   //   }
   // }
 
   // useEffect(() => {
-  //   getCustomers()
+  //   getFollower()
   //   const interval = setInterval(()=>{
-  //     getCustomers()
+  //     getFollower()
   //   },100000)
   //   return() => clearInterval(interval)
   // }, [])
-
-
-  // const [friends, setFriends] = useState<FriendList[]>([])
-
-  // const getFriends = async () => {
-  //   try {
-  //   const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}`)
-  //     setFriends(res.data)
-  //     // console.log(res.data.datasets[0].data)
-  //   } catch(err) {
-  //     console.error(err.message)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   getFriends()
-  //   const interval = setInterval(()=>{
-  //     getFriends()
-  //   },100000)
-  //   return() => clearInterval(interval)
-  // }, [])
-
-  // // // friends.index.map(item => (
-  //   console.log(friends)
-  // ))
-
-  // const animalsList3 = customers.slice(blockflg.value == 1);
-  // console.log(animalsList3)
-  // const blockTotal = customers.blockflg == 0
 
   return (
     <>
@@ -105,7 +69,7 @@ const Home = () => {
                     xs={12}
                   >
                     {/* <TotalCustomers total={customers.length} /> */}
-                    <TotalCustomers total={1280} />
+                    <TotalCustomers />
                   </Grid>
                   <Grid
                     item
@@ -115,7 +79,7 @@ const Home = () => {
                     xs={12}
                   >
                     {/* <BlockCustomers total={customers.length} /> */}
-                    <BlockCustomers total={54} />
+                    <BlockCustomers />
                   </Grid>
                   <Grid
                     item

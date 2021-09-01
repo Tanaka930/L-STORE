@@ -11,20 +11,38 @@ import MoneyIcon from '@material-ui/icons/Money';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 import { red } from '@material-ui/core/colors';
 
-import { CustomerList } from "interfaces/index"
-// import { Length } from "interfaces/index"
-// type Props = {
-//   props: any
-// }
+import React, { useState, useEffect, useContext } from "react"
+import { Follower } from "interfaces/index"
+import { AuthContext } from "App"
+import axios from "axios"
 
 type Total = {
   total: number;
 }
 
 
-export const BlockCustomers = (props: Total) => {
-  const { total } = props;
-  // const totalAnswer = total == 0 ? "" | total
+export const BlockCustomers = () => {
+  const { currentUser } = useContext(AuthContext)
+  const [follower, setFollower] = useState<any>([])
+
+  const getFollower = async () => {
+    try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
+      setFollower(res.data)
+      console.log(res.data)
+    } catch(err) {
+      console.error(err.message)
+    }
+  }
+
+  useEffect(() => {
+    getFollower()
+    const interval = setInterval(()=>{
+      getFollower()
+    },100000)
+    return() => clearInterval(interval)
+  }, [])
+
   return (
     <>
       <Card
@@ -50,7 +68,7 @@ export const BlockCustomers = (props: Total) => {
                 variant="h3"
               >
                 
-                {total}
+                {follower.unfollow_count}
               </Typography>
             </Grid>
             <Grid item>
@@ -80,7 +98,7 @@ export const BlockCustomers = (props: Total) => {
               }}
               variant="body2"
             >
-              12
+              {follower.gain_unfollow}
             </Typography>
             <Typography
               color="textSecondary"

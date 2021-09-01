@@ -25,8 +25,6 @@ import PasswordReset from "pages/PasswordReset"
 import PasswordResetPost from "pages/PasswordResetPost"
 import NotFound from "pages/404"
 
-
-
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {
   loading: boolean
