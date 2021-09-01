@@ -100,7 +100,7 @@ export const Sales = () => {
 
   return (
     <>
-      <Card>
+      <Card style={{height: '100%'}}>
         <CardHeader
           action={(
             <Button
@@ -115,10 +115,10 @@ export const Sales = () => {
           title="Customers Transition"
         />
         <Divider />
-        <CardContent>
+        <CardContent >
           <Box
             sx={{
-              height: 400,
+              height: 450,
               position: 'relative'
             }}
           >
@@ -128,8 +128,8 @@ export const Sales = () => {
             />
           </Box>
         </CardContent>
-        <Divider />
-        <Box
+        {/* <Divider /> */}
+        {/* <Box
           sx={{
             display: 'flex',
             justifyContent: 'flex-end',
@@ -144,7 +144,7 @@ export const Sales = () => {
           >
             Overview
           </Button>
-        </Box>
+        </Box> */}
       </Card>
     </>
   );

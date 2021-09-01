@@ -16,7 +16,6 @@ class Api::V1::UsersController < ApplicationController
 
       # 取得したデータをもとに配列データを作成
       follow_records.each do |follow_record|
-
         # そうフォロワー数を取得
         follow_sum = follow_record.follow + follow_record.unfollow
 
