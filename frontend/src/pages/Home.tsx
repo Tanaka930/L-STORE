@@ -6,35 +6,35 @@ import { Container, Box, Grid } from "@material-ui/core"
 // import { Helmet } from 'react-helmet';
 import BlockCustomers from 'components/dashboard/BlockCustomers';
 import LatestOrders from 'components/dashboard//LatestOrders';
-import LatestProducts from 'components/dashboard//LatestProducts';
+// import LatestProducts from 'components/dashboard//LatestProducts';
 import Sales from 'components/dashboard//Sales';
 import TasksProgress from 'components/dashboard//TasksProgress';
 import TotalCustomers from 'components/dashboard//TotalCustomers';
-import TotalProfit from 'components/dashboard//TotalProfit';
-import TrafficByDevice from 'components/dashboard//TrafficByDevice';
+// import TotalProfit from 'components/dashboard//TotalProfit';
+// import TrafficByDevice from 'components/dashboard//TrafficByDevice';
 
-import { CustomerList } from "interfaces/index"
-// import { Length } from "interfaces/index"
+
+import { CustomerList, FriendList } from "interfaces/index"
 import Cookies from "js-cookie"
 import axios from "axios"
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
-// const Home = () => {
+
 const Home = () => {
+  // const [customers, setCustomers] = useState<CustomerList[]>([])
   const {isSignedIn, currentUser } = useContext(AuthContext)
-  const [customers, setCustomers] = useState<CustomerList[]>([])
-  const config = {
-    headers: {
-      "access-token": Cookies.get("_access_token"),
-      "client": Cookies.get("_client"),
-      "uid": Cookies.get("_uid")
-    }
-  }
+  // const config = {
+  //   headers: {
+  //     "access-token": Cookies.get("_access_token"),
+  //     "client": Cookies.get("_client"),
+  //     "uid": Cookies.get("_uid")
+  //   }
+  // }
 
   //   const getCustomers = async () => {
   //   try {
   //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
-  //     console.log(res.data)
+  //     // console.log(res.data)
   //     setCustomers(res.data)
   //   } catch(err) {
   //     console.error(err.message)
@@ -49,12 +49,30 @@ const Home = () => {
   //   return() => clearInterval(interval)
   // }, [])
 
-  const [total, setTotal] = useState()
-  const [blockTotal, setblockTotal] = useState()
 
-customers.forEach(customer => {
-  console.log(customer)
-})
+  // const [friends, setFriends] = useState<FriendList[]>([])
+
+  // const getFriends = async () => {
+  //   try {
+  //   const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}`)
+  //     setFriends(res.data)
+  //     // console.log(res.data.datasets[0].data)
+  //   } catch(err) {
+  //     console.error(err.message)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getFriends()
+  //   const interval = setInterval(()=>{
+  //     getFriends()
+  //   },100000)
+  //   return() => clearInterval(interval)
+  // }, [])
+
+  // // // friends.index.map(item => (
+  //   console.log(friends)
+  // ))
 
   // const animalsList3 = customers.slice(blockflg.value == 1);
   // console.log(animalsList3)
@@ -65,11 +83,13 @@ customers.forEach(customer => {
       {
         isSignedIn && currentUser ? (
           <>
+
             <Box
-              style={{backgroundColor:'background.default'}}
+              style={{
+                backgroundColor:'background.default',
+              }}
               sx={{
                 minHeight: '100%',
-                py: 3
               }}
             >
               <Container maxWidth={false}>
@@ -79,9 +99,9 @@ customers.forEach(customer => {
                 >
                   <Grid
                     item
-                    lg={3}
+                    lg={4}
                     sm={6}
-                    xl={3}
+                    xl={4}
                     xs={12}
                   >
                     {/* <TotalCustomers total={customers.length} /> */}
@@ -89,9 +109,9 @@ customers.forEach(customer => {
                   </Grid>
                   <Grid
                     item
-                    lg={3}
+                    lg={4}
                     sm={6}
-                    xl={3}
+                    xl={4}
                     xs={12}
                   >
                     {/* <BlockCustomers total={customers.length} /> */}
@@ -99,23 +119,23 @@ customers.forEach(customer => {
                   </Grid>
                   <Grid
                     item
-                    lg={3}
+                    lg={4}
                     sm={6}
-                    xl={3}
+                    xl={4}
                     xs={12}
                   >
-                    <TasksProgress total={1226}/>
+                    <TasksProgress total={75.5}/>
                   </Grid>
-                  <Grid
+                  {/* <Grid
                     item
                     lg={3}
                     sm={6}
                     xl={3}
                     xs={12}
-                  >
+                  > */}
                     {/* <LatestOrders /> */}
-                    <TotalProfit />
-                  </Grid>
+                    {/* <TotalProfit />
+                  </Grid> */}
                   <Grid
                     item
                     lg={8}
@@ -128,14 +148,14 @@ customers.forEach(customer => {
                   <Grid
                     item
                     lg={4}
-                    md={6}
+                    md={12}
                     xl={3}
                     xs={12}
                   >
                     <LatestOrders />
                     {/* <TrafficByDevice  /> */}
                   </Grid>
-                  <Grid
+                  {/* <Grid
                     item
                     lg={4}
                     md={6}
@@ -150,9 +170,9 @@ customers.forEach(customer => {
                     md={12}
                     xl={9}
                     xs={12}
-                  >
+                  > */}
                     {/* <LatestOrders /> */}
-                  </Grid>
+                  {/* </Grid> */}
                 </Grid>
               </Container>
             </Box>

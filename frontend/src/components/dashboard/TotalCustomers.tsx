@@ -9,6 +9,7 @@ import {
 import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
+// import { FriendList } from "interfaces/index"
 
 type Total = {
   total: number;
@@ -70,13 +71,13 @@ export const TotalCustomers = (props: Total) => {
                 marginRight: 8
               }}
             >
-              16%
+              18%
             </Typography>
             <Typography
               color="textSecondary"
               variant="caption"
             >
-              Since last month
+              Since last day
             </Typography>
           </Box>
         </CardContent>
