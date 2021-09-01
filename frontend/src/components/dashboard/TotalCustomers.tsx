@@ -71,7 +71,7 @@ export const TotalCustomers = (props: Total) => {
                 marginRight: 8
               }}
             >
-              18%
+              18
             </Typography>
             <Typography
               color="textSecondary"
