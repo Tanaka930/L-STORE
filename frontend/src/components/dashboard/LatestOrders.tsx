@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import moment from 'moment';
 // import { v4 as uuid } from 'uuid';
-import PerfectScrollbar from 'react-perfect-scrollbar';
+// import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Button,
@@ -44,20 +44,20 @@ export const LatestOrders = () => {
   return (
     <>
       <Card>
-        <CardHeader title="Latest Orders" />
+        <CardHeader title="新着お知らせ" />
         <Divider />
-        <PerfectScrollbar>
-          <Box sx={{ minWidth: 800 }}>
+        {/* <PerfectScrollbar> */}
+          <Box>
             <Table>
-              <TableHead>
-                <TableRow>
+              {/* <TableHead> */}
+                {/* <TableRow>
                   <TableCell>
                     Order Ref
-                  </TableCell>
-                  <TableCell>
+                  </TableCell> */}
+                  {/* <TableCell>
                     Customer
-                  </TableCell>
-                  <TableCell sortDirection="desc">
+                  </TableCell> */}
+                  {/* <TableCell sortDirection="desc">
                     <Tooltip
                       enterDelay={300}
                       title="Sort"
@@ -69,12 +69,12 @@ export const LatestOrders = () => {
                         Date
                       </TableSortLabel>
                     </Tooltip>
-                  </TableCell>
-                  <TableCell>
+                  </TableCell> */}
+                  {/* <TableCell>
                     Status
-                  </TableCell>
-                </TableRow>
-              </TableHead>
+                  </TableCell> */}
+                {/* </TableRow> */}
+              {/* </TableHead> */}
               <TableBody>
                 {news.map((news) => (
                   <TableRow
@@ -82,14 +82,16 @@ export const LatestOrders = () => {
                     key={news.id}
                   >
                     <TableCell>
+                    {moment(news.publishedAt).format('YYYY/MM/DD')}
+                    <br />
                       {news.title}
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell> */}
                       {/* {news.body} */}
-                    </TableCell>
-                    <TableCell>
+                    {/* </TableCell> */}
+                    {/* <TableCell>
                       {moment(news.publishedAt).format('YYYY/MM/DD')}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       {/* <Chip
                         color="primary"
@@ -102,7 +104,7 @@ export const LatestOrders = () => {
               </TableBody>
             </Table>
           </Box>
-        </PerfectScrollbar>
+        {/* </PerfectScrollbar> */}
         <Box
           sx={{
             display: 'flex',

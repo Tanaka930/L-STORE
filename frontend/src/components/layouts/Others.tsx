@@ -42,11 +42,11 @@ const Others = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const [edit, setEdit] = useState(false)
   const [memos, setMemos] =useState<any[]>([])
-  const { handleSubmit, control, reset } = useForm()
+  const [memoId, setMemoId] = useState<number | undefined>()
+  const { handleSubmit, control, reset, setValue } = useForm()
   const classes = useStyles()
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const [messageText, setMessageText] = useState<string>("")
-
 
   const config = {
     headers: {
@@ -56,17 +56,19 @@ const Others = (props: TabPanelProps) => {
     }
   }
 
-  const handleToggleButton = () => {
+  const handleNewPostButton = () => {
     setEdit(prevState => !prevState)
+    reset()
   }
 
-  const handleEditButton = (id: number) => {
+  const handleEditButton = (id: number, body: string) => {
     setEdit(true)
+    setMemoId(id)
+    setValue("body", body)
   }
 
   const handleDeleteButton = (id: number) => {
     if (window.confirm("削除してもよろしいでしょうか？")) {
-      console.log("削除完了")
       try {
         axios.delete(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos/${id}`, config)
         .then(() => {
@@ -93,20 +95,43 @@ const Others = (props: TabPanelProps) => {
   }
 
   const onSubmit = async (values: any) => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, values, config)
-      if (response.status === 200) {
-        getMemos()
-        setMessageText("メモを投稿しました。")
-        setAlertMessageOpen(true)
-        setEdit(false)
-        reset()
-      } else {
-        toast.error("更新に失敗しました")
+    if (!memoId) {
+      // ↓↓↓↓↓↓↓↓↓ 新規投稿処理 ↓↓↓↓↓↓↓↓↓
+      try {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, values, config)
+        if (response.status === 200) {
+          getMemos()
+          setMessageText("メモを投稿しました。")
+          setAlertMessageOpen(true)
+          setEdit(false)
+          reset()
+        } else {
+          toast.error("投稿に失敗しました")
+        }
+      } catch(err) {
+        toast.warn("通信に失敗しました")
+        console.error(err)
       }
-    } catch(err) {
-      toast.warn("通信に失敗しました")
-      console.error(err)
+      // ↑↑↑↑↑↑↑↑↑ 新規投稿処理 ↑↑↑↑↑↑↑↑↑
+    } else {
+      // ↓↓↓↓↓↓↓↓↓ 更新処理 ↓↓↓↓↓↓↓↓↓
+      try {
+        const response = await axios.patch(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos/${memoId}`, values, config)
+        if (response.status === 200) {
+          getMemos()
+          setMessageText("メモを更新しました。")
+          setAlertMessageOpen(true)
+          setEdit(false)
+          setMemoId(undefined)
+          reset()
+        } else {
+          toast.error("更新に失敗しました")
+        }
+      } catch(err) {
+        toast.warn("通信に失敗しました")
+        console.error(err)
+      }
+      // ↑↑↑↑↑↑↑↑↑ 更新処理 ↑↑↑↑↑↑↑↑↑
     }
   }
 
@@ -127,7 +152,7 @@ const Others = (props: TabPanelProps) => {
                   px: 1
                 }}
               >
-                <IconButton onClick={handleToggleButton}>
+                <IconButton onClick={handleNewPostButton}>
                   { edit ? <CloseIcon /> : <PostAddIcon /> }
                 </IconButton>
               </Box>
@@ -181,7 +206,7 @@ const Others = (props: TabPanelProps) => {
                     <CardContent>
                       {memos.map((memo, index) => (
                         <Paper
-                          key={index}
+                          key={memo.id}
                           elevation={2}
                         >
                           <Box sx={{pt: 2, px:2}}>
@@ -205,7 +230,7 @@ const Others = (props: TabPanelProps) => {
                               justifyContent: 'flex-end',
                             }}
                           >
-                            <IconButton onClick={() => handleEditButton(memo.id)}>
+                            <IconButton onClick={() => handleEditButton(memo.id ,memo.body)}>
                               <EditIcon />
                             </IconButton>
                             <IconButton onClick={() => handleDeleteButton(memo.id)}>

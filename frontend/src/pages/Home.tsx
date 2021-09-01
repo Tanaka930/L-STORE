@@ -132,7 +132,8 @@ customers.forEach(customer => {
                     xl={3}
                     xs={12}
                   >
-                    <TrafficByDevice  />
+                    <LatestOrders />
+                    {/* <TrafficByDevice  /> */}
                   </Grid>
                   <Grid
                     item
