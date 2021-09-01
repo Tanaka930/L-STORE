@@ -134,7 +134,6 @@ const Chat = (props: TabPanelProps) => {
     await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
     .then(res => {
       setChats(res.data)
-      // console.log(res.data)
     })
     .catch(err => console.error(err))
   }
@@ -155,7 +154,6 @@ const Chat = (props: TabPanelProps) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, data, config)
       if(response.status === 200) {
-        console.log(response.data.data) //これがレスポンスのデータ内容
         const postData = response.data.data
         setChats([...chats, postData])
         setMessage("")
