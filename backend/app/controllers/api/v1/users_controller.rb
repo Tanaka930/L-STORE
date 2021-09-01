@@ -90,7 +90,7 @@ class Api::V1::UsersController < ApplicationController
 
 
     json_data = {
-      "follow_count" => follow_count,
+      "follow_count" => follow_count + unfollow_count,
       "unfollow_count" => unfollow_count,
       "pre_follow_count" => pre_follow_count,
       "pre_unfollow_count" => pre_unfollow_count,
