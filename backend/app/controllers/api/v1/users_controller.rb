@@ -1,8 +1,10 @@
 class Api::V1::UsersController < ApplicationController
+  # ここは後ほど修正
   # before_action :authenticate_api_v1_user!
   def show
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
+    # ここは後ほど修正
       follow_records = FollowRecord.where(user_id: 1).order(created_at: "ASC").limit(7)
 
       # からの配列を用意
@@ -49,9 +51,27 @@ class Api::V1::UsersController < ApplicationController
     rescue => e
       json_data = {
         # "message" => "error",
-        "detail" => e
+        "datasets" => e
       }
     end
+    render json: json_data
+  end
+  def get_follow_data
+    # 最新のユーザーを1件取得
+    # ここは後ほど修正
+    follow_records = FollowRecord.where(user_id: 1).order(created_at: :desc).limit(1)
+    follow_count = 0
+    unfollow_count = 0
+    follow_records.each do |follow_record|
+      follow_count = follow_record.follow
+      unfollow_count = follow_record.unfollow
+    end
+
+    json_data = {
+      "follow_count" => follow_count,
+      "unfollow_count" => unfollow_count
+    }
+
     render json: json_data
   end
 end
