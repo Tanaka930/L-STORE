@@ -36,7 +36,7 @@ class Api::V1::UsersController < ApplicationController
           {
             "backgroundColor" => "#06c755",
             "borderColor" => "#06c755",
-            "data" => follow_record_histories,
+            "data" => follow_sum_record_histories,
             "label" => "フォロー数"
           },
           {
