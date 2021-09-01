@@ -82,11 +82,21 @@ class Api::V1::UsersController < ApplicationController
       i = i + 1
     end
 
+    # 増加量を計算
+    gain_follow = follow_count - pre_follow_count
+    gain_unfollow = unfollow_count - pre_unfollow_count
+
+    valid_account = (follow_count.to_f / (follow_count.to_f + unfollow_count.to_f)) * 100
+
+
     json_data = {
       "follow_count" => follow_count,
       "unfollow_count" => unfollow_count,
       "pre_follow_count" => pre_follow_count,
-      "pre_unfollow_count" => pre_unfollow_count
+      "pre_unfollow_count" => pre_unfollow_count,
+      "gain_follow" => gain_follow,
+      "gain_unfollow" => gain_unfollow,
+      "valid_account" => valid_account.ceil(1)
     }
 
     render json: json_data
