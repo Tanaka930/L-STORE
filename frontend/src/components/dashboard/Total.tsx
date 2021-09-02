@@ -6,44 +6,17 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
+import { green } from '@material-ui/core/colors';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
-import { red } from '@material-ui/core/colors';
 
-import React, { useState, useEffect, useContext } from "react"
-import { Follower } from "interfaces/index"
-import { AuthContext } from "App"
-import axios from "axios"
-
-export const BlockCustomers = () => {
-  const { currentUser } = useContext(AuthContext)
-  const [follower, setFollower] = useState<any>([])
-
-  const getFollower = async () => {
-    try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
-      setFollower(res.data)
-      // console.log(res.data)
-    } catch(err) {
-      console.error(err.message)
-    }
-  }
-
-  useEffect(() => {
-    getFollower()
-    const interval = setInterval(()=>{
-      getFollower()
-    },100000)
-    return() => clearInterval(interval)
-  }, [])
+export const TotalCustomers = (props: { followCount:  number; gainFollow: number; }) => {
+  const followCount = props.followCount;
+  const gainFollow = props.gainFollow;
 
   return (
     <>
-      <Card
-        style={{ height: '100%' }}
-
-      >
+      <Card>
         <CardContent>
           <Grid
             container
@@ -56,20 +29,19 @@ export const BlockCustomers = () => {
                 gutterBottom
                 variant="h6"
               >
-                ブロックアカウント
+                お友達アカウント
               </Typography>
               <Typography
                 color="textPrimary"
                 variant="h3"
               >
-                
-                {follower.unfollow_count}
+                {followCount}
               </Typography>
             </Grid>
             <Grid item>
               <Avatar
                 style={{
-                  backgroundColor: red[600],
+                  backgroundColor: '#06c755',
                   height: 56,
                   width: 56
                 }}
@@ -80,20 +52,20 @@ export const BlockCustomers = () => {
           </Grid>
           <Box
             style={{
-              paddingTop: 16,
+              alignItems: 'center',
               display: 'flex',
-              alignItems: 'center'
+              paddingTop: 16
             }}
           >
-            <ArrowDownwardIcon style={{ color: red[900] }} />
+            <ArrowUpwardIcon style={{ color: green[900] }} />
             <Typography
+              variant="body2"
               style={{
-                color: red[900],
+                color: green[900],
                 marginRight: 8
               }}
-              variant="body2"
             >
-              {follower.gain_unfollow}
+              {gainFollow}
             </Typography>
             <Typography
               color="textSecondary"
@@ -108,4 +80,4 @@ export const BlockCustomers = () => {
   )
 };
 
-export default BlockCustomers;
+export default TotalCustomers;

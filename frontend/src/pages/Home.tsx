@@ -4,12 +4,12 @@ import { Container, Box, Grid } from "@material-ui/core"
 // import { Theme } from "@material-ui/core/styles"
 
 // import { Helmet } from 'react-helmet';
-import BlockCustomers from 'components/dashboard/BlockCustomers';
+import BlockCustomers from 'components/dashboard/Block';
 import LatestOrders from 'components/dashboard/TopNews';
 // import LatestProducts from 'components/dashboard//LatestProducts';
 import Sales from 'components/dashboard//Sales';
-import TasksProgress from 'components/dashboard/CustomersProgress';
-import TotalCustomers from 'components/dashboard//TotalCustomers';
+import TasksProgress from 'components/dashboard/Progress';
+import TotalCustomers from 'components/dashboard/Total';
 // import TotalProfit from 'components/dashboard//TotalProfit';
 // import TrafficByDevice from 'components/dashboard//TrafficByDevice';
 
@@ -22,25 +22,33 @@ import axios from "axios"
 
 const Home = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
-  // const [follower, setFollower] = useState<Follower>()
+  const [follower, setFollower] = useState<Follower>({
+    follow_count: 0,
+    gain_follow: 0,
+    gain_unfollow: 0,
+    pre_follow_count: 0,
+    pre_unfollow_count: 0,
+    unfollow_count: 0,
+    valid_account: 0
+  })
 
-  // const getFollower = async () => {
-  //   try {
-  //   const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
-  //     setFollower(res.data)
-  //     console.log(res.data.follow_count)
-  //   } catch(err) {
-  //     console.error(err.message)
-  //   }
-  // }
+  const getFollower = async () => {
+    try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
+      setFollower(res.data)
+      // console.log(res.data)
+    } catch(err) {
+      console.error(err.message)
+    }
+  }
 
-  // useEffect(() => {
-  //   getFollower()
-  //   const interval = setInterval(()=>{
-  //     getFollower()
-  //   },100000)
-  //   return() => clearInterval(interval)
-  // }, [])
+  useEffect(() => {
+    getFollower()
+    // const interval = setInterval(()=>{
+    //   getFollower()
+    // },100000)
+    // return() => clearInterval(interval)
+  }, [])
 
   return (
     <>
@@ -68,8 +76,7 @@ const Home = () => {
                     xl={4}
                     xs={12}
                   >
-                    {/* <TotalCustomers total={customers.length} /> */}
-                    <TotalCustomers />
+                    <TotalCustomers followCount={follower.follow_count} gainFollow={follower.gain_follow} />
                   </Grid>
                   <Grid
                     item
@@ -78,8 +85,7 @@ const Home = () => {
                     xl={4}
                     xs={12}
                   >
-                    {/* <BlockCustomers total={customers.length} /> */}
-                    <BlockCustomers />
+                    <BlockCustomers unfollowCount={follower.unfollow_count} gainUnfollow={follower.gain_unfollow} />
                   </Grid>
                   <Grid
                     item
@@ -88,7 +94,7 @@ const Home = () => {
                     xl={4}
                     xs={12}
                   >
-                    <TasksProgress total={75.5}/>
+                    <TasksProgress validAccount={follower.valid_account}/>
                   </Grid>
                   {/* <Grid
                     item
