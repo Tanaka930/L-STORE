@@ -27,7 +27,12 @@ export const LatestOrders = () => {
   const getNews = async () => {
     try {
       const data: Contents = await microClient.get({ endpoint: 'news' });
-      setNews(data.contents)
+      // if(data.contents.length > 6){
+      //     data.contents.pop(); //3件を超えたら配列の先頭の値を削除
+      // }
+      const topNews = data.contents.slice(0, 6)
+      setNews(topNews)
+      console.log(topNews)
     } catch(err) {
       console.error(err.message)
     }

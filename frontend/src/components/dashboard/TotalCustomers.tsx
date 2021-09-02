@@ -24,7 +24,7 @@ export const TotalCustomers = () => {
     try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
       setFollower(res.data)
-      console.log(res.data)
+      // console.log(res.data)
     } catch(err) {
       console.error(err.message)
     }

@@ -10,7 +10,6 @@ import {
   colors
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import React, { useState, useEffect, useContext } from "react"
 import { FriendList } from "interfaces/index"
@@ -23,6 +22,7 @@ export const Sales = () => {
   const theme = useTheme();
   const { currentUser } = useContext(AuthContext)
   const [friends, setFriends] = useState<FriendList[]>([])
+
 
   const getFriends = async () => {
     try {
@@ -41,7 +41,13 @@ export const Sales = () => {
     return() => clearInterval(interval)
   }, [])
 
-  console.log(friends)
+  // console.log(friends)
+
+  const [button, setButton] = useState(0)
+
+  const chartChange = () => {
+
+  }
 
   const options = {
     animation: false,
@@ -104,8 +110,10 @@ export const Sales = () => {
         <CardHeader
           action={(
             <Button
+              onClick={chartChange}
               endIcon={<ArrowDropDownIcon />}
               size="small"
+              color="primary"
               variant="text"
             >
               Last 7 days

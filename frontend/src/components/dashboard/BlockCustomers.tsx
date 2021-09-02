@@ -16,11 +16,6 @@ import { Follower } from "interfaces/index"
 import { AuthContext } from "App"
 import axios from "axios"
 
-type Total = {
-  total: number;
-}
-
-
 export const BlockCustomers = () => {
   const { currentUser } = useContext(AuthContext)
   const [follower, setFollower] = useState<any>([])
@@ -29,7 +24,7 @@ export const BlockCustomers = () => {
     try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
       setFollower(res.data)
-      console.log(res.data)
+      // console.log(res.data)
     } catch(err) {
       console.error(err.message)
     }
