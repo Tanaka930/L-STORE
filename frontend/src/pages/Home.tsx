@@ -5,10 +5,10 @@ import { Container, Box, Grid } from "@material-ui/core"
 
 // import { Helmet } from 'react-helmet';
 import BlockCustomers from 'components/dashboard/BlockCustomers';
-import LatestOrders from 'components/dashboard//LatestOrders';
+import LatestOrders from 'components/dashboard/TopNews';
 // import LatestProducts from 'components/dashboard//LatestProducts';
 import Sales from 'components/dashboard//Sales';
-import TasksProgress from 'components/dashboard//TasksProgress';
+import TasksProgress from 'components/dashboard/CustomersProgress';
 import TotalCustomers from 'components/dashboard//TotalCustomers';
 // import TotalProfit from 'components/dashboard//TotalProfit';
 // import TrafficByDevice from 'components/dashboard//TrafficByDevice';

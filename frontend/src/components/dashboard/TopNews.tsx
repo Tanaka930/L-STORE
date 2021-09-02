@@ -32,7 +32,7 @@ export const LatestOrders = () => {
       // }
       const topNews = data.contents.slice(0, 6)
       setNews(topNews)
-      console.log(topNews)
+      // console.log(topNews)
     } catch(err) {
       console.error(err.message)
     }

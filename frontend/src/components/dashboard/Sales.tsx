@@ -7,7 +7,9 @@ import {
   CardHeader,
   Divider,
   useTheme,
-  colors
+  colors,
+  Select,
+  MenuItem 
 } from '@material-ui/core';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
@@ -43,11 +45,11 @@ export const Sales = () => {
 
   // console.log(friends)
 
-  const [button, setButton] = useState(0)
+  // const [button, setButton] = useState('Last 7 days')
 
-  const chartChange = () => {
-
-  }
+  // const chartChange = () => {
+  //   setButton('Last weeks')
+  // }
 
   const options = {
     animation: false,
@@ -109,16 +111,29 @@ export const Sales = () => {
       <Card style={{height: '100%'}}>
         <CardHeader
           action={(
-            <Button
-              onClick={chartChange}
-              endIcon={<ArrowDropDownIcon />}
-              size="small"
+            // <Button
+            //   onClick={chartChange}
+            //   endIcon={<ArrowDropDownIcon />}
+            //   size="small"
+            //   color="primary"
+            //   variant="text"
+            // >
+            //   {button}
+            //   {/* Last 7 weeks */}
+            // </Button>
+            <Select
+              labelId="demo-customized-select-label"
+              id="demo-customized-select"
+              defaultValue={10}
               color="primary"
-              variant="text"
+              // value={age}
+              // onChange={handleChange}
+              // input={<BootstrapInput />}
             >
-              Last 7 days
-              {/* Last 7 weeks */}
-            </Button>
+              <MenuItem value={10}>Last 7 days</MenuItem>
+              <MenuItem value={20}>Last week</MenuItem>
+              <MenuItem value={30}>Last month</MenuItem>
+            </Select>
           )}
           title="Customers Transition"
         />
