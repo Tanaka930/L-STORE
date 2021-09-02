@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
       resources :users, only: [:show]
 
+      get '/users/:id/last_seven_day', to: 'users#last_seven'
+
+      get '/users/:id/last_seven_month', to: 'users#last_seven_month'
+
       get '/users/:id/follow_data', to: 'users#get_follow_data'
 
       post '/users/:id/create_subscription', to: 'users#create_subscription'
