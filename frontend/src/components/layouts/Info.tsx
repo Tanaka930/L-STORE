@@ -9,7 +9,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import AlertMessage from "components/utils/AlertMessage"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingBottom: 9
       },
     },
+    age: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: 18
+    },
   }),
 )
 
@@ -40,13 +45,11 @@ const Info = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-  const { handleSubmit, control, watch } = useForm()
+  const { handleSubmit, control, watch, reset } = useForm()
   const [customerInfo, setCustomerInfo] = useState<any>({})
   const [edit, setEdit] = useState<boolean>(false)
-  // const [ageData, setAgeData] = useState<number | undefined>()
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [y, m, d] = watch(["year", "month", "day"])
-  
+  let [y, m, d] = watch(["year", "month", "day"])
+
   const forRange = (a: number, z: number) => {
     const list = []
     for (let i = a; i <= z; i++) {
@@ -88,6 +91,7 @@ const Info = (props: TabPanelProps) => {
 
   const handleToggleButton = () => {
     setEdit(prevState => !prevState)
+    reset()
   }
 
   const getCustomerInfo = async () => {
@@ -105,22 +109,21 @@ const Info = (props: TabPanelProps) => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, values, config)
       if (response.status === 200) {
-        if(response.data == "success"){
+        if(response.data === "success") {
           // 更新に成功した際の処理
           getCustomerInfo()
-          setAlertMessageOpen(true)
           setEdit(false)
-        }else{
+          toast.success("アカウント情報を更新しました")
+        } else {
           // 更新に失敗した際の処理
-          toast.error(response.data)
-          setAlertMessageOpen(false)
           setEdit(false)
+          toast.error(response.data)
         }
       } else {
-        toast.error("An error has occurred on the server side")
+        toast.error("更新に失敗しました")
       }
     } catch(err) {
-      toast.warn("Communication failed")
+      toast.warn("通信に失敗しました")
       console.error(err)
     }
   }
@@ -227,7 +230,7 @@ const Info = (props: TabPanelProps) => {
                               )}
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <Controller
                               name="month"
                               control={control}
@@ -251,7 +254,7 @@ const Info = (props: TabPanelProps) => {
                               )}
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <Controller
                               name="day"
                               control={control}
@@ -275,10 +278,16 @@ const Info = (props: TabPanelProps) => {
                               )}
                             />
                           </Grid>
+                          <Grid item xs={2} className={classes.age}>
+                            {isNaN(ageData) ?
+                              (`/ ${customerInfo.age}歳`)
+                            :
+                              (`/ ${ageData}歳`)
+                            }
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          {isNaN(ageData) ? "" : ageData}
-                          {/* <Controller
+                        {/* <Grid item xs={6}>
+                          <Controller
                             name="age"
                             control={control}
                             defaultValue={customerInfo.age}
@@ -299,8 +308,8 @@ const Info = (props: TabPanelProps) => {
                                 ))}
                               </TextField>
                             )}
-                          /> */}
-                        </Grid>
+                          />
+                        </Grid> */}
                         <Grid item xs={6}>
                           <Controller
                             name="sex"
@@ -480,14 +489,6 @@ const Info = (props: TabPanelProps) => {
                       </Grid>
                     </Box>
                   </CardContent>
-                  <AlertMessage
-                    open={alertMessageOpen}
-                    setOpen={setAlertMessageOpen}
-                    severity="success"
-                    message="アカウント情報を更新しました。"
-                    vertical="bottom"
-                    horizontal="right"
-                  />
                   <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
