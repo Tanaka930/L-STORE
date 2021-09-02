@@ -10,10 +10,9 @@ import {
 import { orange } from '@material-ui/core/colors';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-import { Total } from "interfaces/index"
+export const TasksProgress = (props: { validAccount:  number; }) => {
+  const { validAccount } = props;
 
-export const TasksProgress = (props: Total) => {
-  const { total } = props;
   return (
     <>
       <Card
@@ -38,7 +37,7 @@ export const TasksProgress = (props: Total) => {
                 color="textPrimary"
                 variant="h3"
               >
-                {total + '%'}
+                {validAccount + '%'}
               </Typography>
             </Grid>
             <Grid item>
@@ -55,7 +54,7 @@ export const TasksProgress = (props: Total) => {
           </Grid>
           <Box style={{ paddingTop: '24px' }}>
             <LinearProgress
-              value={75.5}
+              value={validAccount}
               variant="determinate"
             />
           </Box>

@@ -119,10 +119,10 @@ export type FriendList = {
 
 export type Follower = {
   follow_count: number;
-  unfollow_count: number;
-  pre_follow_count: number;
-  pre_unfollow_count: number;
   gain_follow: number;
   gain_unfollow: number;
+  pre_follow_count: number;
+  pre_unfollow_count: number;
+  unfollow_count: number;
   valid_account: number;
 }

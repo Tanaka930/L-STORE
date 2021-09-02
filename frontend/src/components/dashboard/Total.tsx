@@ -10,33 +10,9 @@ import { green } from '@material-ui/core/colors';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 
-import React, { useState, useEffect, useContext } from "react"
-import { Follower } from "interfaces/index"
-import { AuthContext } from "App"
-import axios from "axios"
-
-export const TotalCustomers = () => {
-
-  const { currentUser } = useContext(AuthContext)
-  const [follower, setFollower] = useState<any>([])
-
-  const getFollower = async () => {
-    try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
-      setFollower(res.data)
-      // console.log(res.data)
-    } catch(err) {
-      console.error(err.message)
-    }
-  }
-
-  useEffect(() => {
-    getFollower()
-    const interval = setInterval(()=>{
-      getFollower()
-    },100000)
-    return() => clearInterval(interval)
-  }, [])
+export const TotalCustomers = (props: { followCount:  number; gainFollow: number; }) => {
+  const followCount = props.followCount;
+  const gainFollow = props.gainFollow;
 
   return (
     <>
@@ -59,7 +35,7 @@ export const TotalCustomers = () => {
                 color="textPrimary"
                 variant="h3"
               >
-                {follower.follow_count}
+                {followCount}
               </Typography>
             </Grid>
             <Grid item>
@@ -89,7 +65,7 @@ export const TotalCustomers = () => {
                 marginRight: 8
               }}
             >
-              {follower.gain_follow}
+              {gainFollow}
             </Typography>
             <Typography
               color="textSecondary"

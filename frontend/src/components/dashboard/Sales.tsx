@@ -2,17 +2,16 @@ import { Line } from 'react-chartjs-2';
 
 import {
   Box,
-  Button,
+  // Button,
   Card,
   CardContent,
   CardHeader,
   Divider,
   useTheme,
-  colors,
+  // colors,
   Select,
   MenuItem 
 } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 import React, { useState, useEffect, useContext } from "react"
 import { FriendList } from "interfaces/index"
@@ -24,7 +23,7 @@ export const Sales = () => {
   // const { data } = props;
   const theme = useTheme();
   const { currentUser } = useContext(AuthContext)
-  const [friends, setFriends] = useState<FriendList[]>([])
+  const [friends, setFriends] = useState<FriendList>()
 
 
   const getFriends = async () => {
@@ -38,13 +37,13 @@ export const Sales = () => {
 
   useEffect(() => {
     getFriends()
-    const interval = setInterval(()=>{
-      getFriends()
-    },100000)
-    return() => clearInterval(interval)
+    // const interval = setInterval(()=>{
+    //   getFriends()
+    // },100000)
+    // return() => clearInterval(interval)
   }, [])
 
-  // console.log(friends)
+  console.log(friends)
 
   // const [button, setButton] = useState('Last 7 days')
 

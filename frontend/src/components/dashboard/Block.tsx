@@ -7,36 +7,14 @@ import {
   Typography
 } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import MoneyIcon from '@material-ui/icons/Money';
 import PeopleIcon from '@material-ui/icons/PeopleOutlined';
 import { red } from '@material-ui/core/colors';
 
-import React, { useState, useEffect, useContext } from "react"
-import { Follower } from "interfaces/index"
-import { AuthContext } from "App"
-import axios from "axios"
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-export const BlockCustomers = () => {
-  const { currentUser } = useContext(AuthContext)
-  const [follower, setFollower] = useState<any>([])
-
-  const getFollower = async () => {
-    try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
-      setFollower(res.data)
-      // console.log(res.data)
-    } catch(err) {
-      console.error(err.message)
-    }
-  }
-
-  useEffect(() => {
-    getFollower()
-    const interval = setInterval(()=>{
-      getFollower()
-    },100000)
-    return() => clearInterval(interval)
-  }, [])
+export const BlockCustomers = (props: { unfollowCount:  number; gainUnfollow: number; }) => {
+  const unfollowCount = props.unfollowCount;
+  const gainUnfollow = props.gainUnfollow;
 
   return (
     <>
@@ -63,7 +41,7 @@ export const BlockCustomers = () => {
                 variant="h3"
               >
                 
-                {follower.unfollow_count}
+                {unfollowCount}
               </Typography>
             </Grid>
             <Grid item>
@@ -85,7 +63,7 @@ export const BlockCustomers = () => {
               alignItems: 'center'
             }}
           >
-            <ArrowDownwardIcon style={{ color: red[900] }} />
+            <ArrowUpwardIcon style={{ color: red[900] }} />
             <Typography
               style={{
                 color: red[900],
@@ -93,7 +71,7 @@ export const BlockCustomers = () => {
               }}
               variant="body2"
             >
-              {follower.gain_unfollow}
+              {gainUnfollow}
             </Typography>
             <Typography
               color="textSecondary"
