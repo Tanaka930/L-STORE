@@ -46,7 +46,7 @@ const Info = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-  const { handleSubmit, control, watch } = useForm()
+  const { handleSubmit, control, watch, reset } = useForm()
   const [customerInfo, setCustomerInfo] = useState<any>({})
   const [edit, setEdit] = useState<boolean>(false)
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
@@ -93,6 +93,7 @@ const Info = (props: TabPanelProps) => {
 
   const handleToggleButton = () => {
     setEdit(prevState => !prevState)
+    reset()
   }
 
   const getCustomerInfo = async () => {
