@@ -139,6 +139,7 @@ class Api::V1::UsersController < ApplicationController
         follow_count = follow_record.follow
         unfollow_count = follow_record.unfollow
       else
+        # これら二つはいらない
         pre_follow_count = follow_record.follow
         pre_unfollow_count = follow_record.unfollow
       end
