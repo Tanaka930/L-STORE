@@ -55,6 +55,7 @@ class Api::V1::UsersController < ApplicationController
     end
     render json: json_data
   end
+
   def get_follow_data
     # 最新のユーザーを1件取得
     # ここは後ほど修正
@@ -98,6 +99,53 @@ class Api::V1::UsersController < ApplicationController
       "valid_account" => valid_account.ceil(1)
     }
 
+    render json: json_data
+  end
+
+  def create_subscription
+    begin
+      # Stripeのトークン
+      token = params[:body][:stripeToken]
+
+      # ユーザ情報(メールアドレスなど一意なもの)
+      client = params[:body][:client]
+
+      # 顧客の詳細情報
+      detail = params[:body][:detail]
+
+      # 契約するプラン
+      plan = params[:body][:plan]
+
+      # 顧客情報の作成
+      customer = Stripe::Customer.create(
+        :email => client,
+        :source => token,
+        :description => detail
+      )
+
+      # 作成された顧客のIDを取得
+      customer_id = customer.id
+
+      # Subsctiptionの作成
+      Stripe::Subscription.create(
+        :customer => customer_id,
+        :items => [
+          {:price => plan}
+        ]
+      )
+
+      json_data = {
+        "msg" => "success"
+      }
+
+    rescue => e
+      # 例外が発生した際
+      json_data = {
+        "msg" => "error",
+        "detail" => e
+      }
+    end
+    
     render json: json_data
   end
 end

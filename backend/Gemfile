@@ -61,3 +61,6 @@ gem "attr_encrypted"
 
 # メール送信用のgem
 gem 'sendgrid-ruby'
+
+# 決済処理用
+gem 'stripe' 

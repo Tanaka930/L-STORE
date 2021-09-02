@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
       get '/users/:id/follow_data', to: 'users#get_follow_data'
 
+      post '/users/:id/create_subscription', to: 'users#create_subscription'
+
       # end
       resources :messages
       resources :tokens
