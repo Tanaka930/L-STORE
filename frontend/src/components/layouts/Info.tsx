@@ -27,6 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
         paddingBottom: 9
       },
     },
+    age: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: 18
+    },
   }),
 )
 
@@ -43,10 +49,9 @@ const Info = (props: TabPanelProps) => {
   const { handleSubmit, control, watch } = useForm()
   const [customerInfo, setCustomerInfo] = useState<any>({})
   const [edit, setEdit] = useState<boolean>(false)
-  // const [ageData, setAgeData] = useState<number | undefined>()
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [y, m, d] = watch(["year", "month", "day"])
-  
+  let [y, m, d] = watch(["year", "month", "day"])
+
   const forRange = (a: number, z: number) => {
     const list = []
     for (let i = a; i <= z; i++) {
@@ -227,7 +232,7 @@ const Info = (props: TabPanelProps) => {
                               )}
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <Controller
                               name="month"
                               control={control}
@@ -251,7 +256,7 @@ const Info = (props: TabPanelProps) => {
                               )}
                             />
                           </Grid>
-                          <Grid item xs={4}>
+                          <Grid item xs={3}>
                             <Controller
                               name="day"
                               control={control}
@@ -275,10 +280,16 @@ const Info = (props: TabPanelProps) => {
                               )}
                             />
                           </Grid>
+                          <Grid item xs={2} className={classes.age}>
+                            {isNaN(ageData) ?
+                              (`/ ${customerInfo.age}歳`)
+                            :
+                              (`/ ${ageData}歳`)
+                            }
+                          </Grid>
                         </Grid>
-                        <Grid item xs={6}>
-                          {isNaN(ageData) ? "" : ageData}
-                          {/* <Controller
+                        {/* <Grid item xs={6}>
+                          <Controller
                             name="age"
                             control={control}
                             defaultValue={customerInfo.age}
@@ -299,8 +310,8 @@ const Info = (props: TabPanelProps) => {
                                 ))}
                               </TextField>
                             )}
-                          /> */}
-                        </Grid>
+                          />
+                        </Grid> */}
                         <Grid item xs={6}>
                           <Controller
                             name="sex"
