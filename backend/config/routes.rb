@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
       resources :users, only: [:show]
 
-      get '/users/:id/last_seven_day', to: 'users#last_seven'
+      get '/users/:id/last_seven_day', to: 'users#last_seven_day'
 
       get '/users/:id/last_seven_month', to: 'users#last_seven_month'
 
