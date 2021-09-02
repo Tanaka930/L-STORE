@@ -1,4 +1,5 @@
 import { Line } from 'react-chartjs-2';
+
 import {
   Box,
   Button,
@@ -106,6 +107,8 @@ export const Sales = () => {
     }
   };
 
+
+
   return (
     <>
       <Card style={{height: '100%'}}>
@@ -126,6 +129,7 @@ export const Sales = () => {
               id="demo-customized-select"
               defaultValue={10}
               color="primary"
+              disableUnderline={false}
               // value={age}
               // onChange={handleChange}
               // input={<BootstrapInput />}
