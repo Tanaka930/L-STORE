@@ -28,7 +28,7 @@ export const Sales = () => {
 
   const getFriends = async () => {
     try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}`)
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_day`)
       setFriends(res.data)
     } catch(err) {
       console.error(err.message)
