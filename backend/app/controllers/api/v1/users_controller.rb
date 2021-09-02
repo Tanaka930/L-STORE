@@ -56,7 +56,7 @@ class Api::V1::UsersController < ApplicationController
     end
     render json: json_data
   end
-  
+
   def get_follow_data
     # 最新のユーザーを1件取得
     # ここは後ほど修正
@@ -134,18 +134,17 @@ class Api::V1::UsersController < ApplicationController
       )
 
       json_data = {
-        msg = "success"
+        msg => "success"
       }
 
     rescue => e
       # 例外が発生した際
       json_data = {
-        msg = "error"
-        detail = e
+        msg => "error",
+        detail => e
       }
     end
     
     render json: json_data
-
   end
 end
