@@ -106,16 +106,16 @@ class Api::V1::UsersController < ApplicationController
   def create_subscription
     begin
       # Stripeのトークン
-      token = params[:stripeToken]
+      token = params[:body][:stripeToken]
 
       # ユーザ情報(メールアドレスなど一意なもの)
-      client = params[:client]
+      client = params[:body][:client]
 
       # 顧客の詳細情報
-      detail = params[:detail]
+      detail = params[:body][:detail]
 
       # 契約するプラン
-      plan = params[:plan]
+      plan = params[:body][:plan]
 
       # 顧客情報の作成
       customer = Stripe::Customer.create(
@@ -129,19 +129,21 @@ class Api::V1::UsersController < ApplicationController
 
       # Subsctiptionの作成
       Stripe::Subscription.create(
-      customer: customer_id,
-      plan: plan
+        :customer => customer_id,
+        :items => [
+          {:price => plan}
+        ]
       )
 
       json_data = {
-        msg => "success"
+        "msg" => "success"
       }
 
     rescue => e
       # 例外が発生した際
       json_data = {
-        msg => "error",
-        detail => e
+        "msg" => "error",
+        "detail" => e
       }
     end
     
