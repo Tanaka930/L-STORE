@@ -8,7 +8,7 @@ const CheckoutForm = (props: any) => {
   const { currentUser } = useContext(AuthContext)
   async function handleSubmit(e: any) {
     const {token} = await props.stripe.createToken({name: "Name"});
-    console.log(token)
+    // clientはuid、プランはフォームから設定できるようにする
     const body={
       stripeToken: token.id,
       client: "kaito.hasegawa@openstore-japan.com",
