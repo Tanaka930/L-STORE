@@ -11,7 +11,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import AlertMessage from "components/utils/AlertMessage"
 
 type TabPanelProps = {
   index: number
@@ -45,8 +44,6 @@ const Others = (props: TabPanelProps) => {
   const [memoId, setMemoId] = useState<number | undefined>()
   const { handleSubmit, control, reset, setValue } = useForm()
   const classes = useStyles()
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
-  const [messageText, setMessageText] = useState<string>("")
 
   const config = {
     headers: {
@@ -73,8 +70,7 @@ const Others = (props: TabPanelProps) => {
         axios.delete(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos/${id}`, config)
         .then(() => {
           getMemos()
-          setMessageText("メモを削除しました。")
-          setAlertMessageOpen(true)
+          toast.success("削除しました")
         })
         .catch(error => console.error(error))
       } catch(err) {
@@ -101,10 +97,9 @@ const Others = (props: TabPanelProps) => {
         const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, values, config)
         if (response.status === 200) {
           getMemos()
-          setMessageText("メモを投稿しました。")
-          setAlertMessageOpen(true)
           setEdit(false)
           reset()
+          toast.success("メモを投稿しました")
         } else {
           toast.error("投稿に失敗しました")
         }
@@ -119,11 +114,10 @@ const Others = (props: TabPanelProps) => {
         const response = await axios.patch(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos/${memoId}`, values, config)
         if (response.status === 200) {
           getMemos()
-          setMessageText("メモを更新しました。")
-          setAlertMessageOpen(true)
           setEdit(false)
           setMemoId(undefined)
           reset()
+          toast.success("更新しました")
         } else {
           toast.error("更新に失敗しました")
         }
@@ -240,14 +234,6 @@ const Others = (props: TabPanelProps) => {
                         </Paper>
                       ))}
                     </CardContent>
-                    <AlertMessage
-                      open={alertMessageOpen}
-                      setOpen={setAlertMessageOpen}
-                      severity="success"
-                      message={messageText}
-                      vertical="bottom"
-                      horizontal="right"
-                    />
                     <ToastContainer
                       position="bottom-right"
                       autoClose={5000}
