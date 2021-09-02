@@ -40,10 +40,12 @@ const Info = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control, watch } = useForm()
   const [customerInfo, setCustomerInfo] = useState<any>({})
   const [edit, setEdit] = useState<boolean>(false)
+  // const [ageData, setAgeData] = useState<number | undefined>()
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const [y, m, d] = watch(["year", "month", "day"])
   
   const forRange = (a: number, z: number) => {
     const list = []
@@ -56,7 +58,25 @@ const Info = (props: TabPanelProps) => {
   const years = forRange(1920, 2021)
   const months = forRange(1, 12)
   const days = forRange(1, 31)
-  const ages = forRange(9, 99)
+  // const ages = forRange(9, 99)
+
+  const birthday = {
+    year: y,
+    month: m,
+    day: d
+  }
+
+  const getAge = (birthday: any) => {
+    const today = new Date()
+    const thisYearsBirthday = new Date(today.getFullYear(), birthday.month-1, birthday.day)
+    let age = today.getFullYear() - birthday.year
+    if(today < thisYearsBirthday){
+      age--
+    }
+    return age
+  }
+
+  const ageData = getAge(birthday)
 
   const config = {
     headers: {
@@ -256,8 +276,9 @@ const Info = (props: TabPanelProps) => {
                             />
                           </Grid>
                         </Grid>
-                        {/* <Grid item xs={6}>
-                          <Controller
+                        <Grid item xs={6}>
+                          {isNaN(ageData) ? "" : ageData}
+                          {/* <Controller
                             name="age"
                             control={control}
                             defaultValue={customerInfo.age}
@@ -278,8 +299,8 @@ const Info = (props: TabPanelProps) => {
                                 ))}
                               </TextField>
                             )}
-                          />
-                        </Grid> */}
+                          /> */}
+                        </Grid>
                         <Grid item xs={6}>
                           <Controller
                             name="sex"
