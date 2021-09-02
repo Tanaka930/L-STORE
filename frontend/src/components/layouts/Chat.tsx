@@ -245,7 +245,7 @@ const Chat = (props: TabPanelProps) => {
             </form>
           </Paper>
           <ToastContainer
-            position="top-right"
+            position="bottom-right"
             autoClose={5000}
             hideProgressBar
             newestOnTop={false}
