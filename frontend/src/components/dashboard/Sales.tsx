@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 
 import React, { useState, useEffect, useContext } from "react"
-import { FriendList } from "interfaces/index"
+import { Chart } from "interfaces/index"
 import { AuthContext } from "App"
 import axios from "axios"
 
@@ -23,27 +23,41 @@ export const Sales = () => {
   // const { data } = props;
   const theme = useTheme();
   const { currentUser } = useContext(AuthContext)
-  const [friends, setFriends] = useState<FriendList>()
+  const [chart, setChart] = useState<Chart>()
 
 
-  const getFriends = async () => {
+  const getChart = async () => {
     try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_day`)
-      setFriends(res.data)
+      setChart(res.data)
     } catch(err) {
       console.error(err.message)
     }
   }
 
+
   useEffect(() => {
-    getFriends()
+    getChart()
     // const interval = setInterval(()=>{
     //   getFriends()
     // },100000)
     // return() => clearInterval(interval)
   }, [])
 
-  console.log(friends)
+  console.log(chart)
+
+  // const [chart, setChart] = useState<Chart>()
+
+
+  // const getFriends = async () => {
+  //   try {
+  //   const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_week`)
+  //     setFriends(res.data)
+  //   } catch(err) {
+  //     console.error(err.message)
+  //   }
+  // }
+
 
   // const [button, setButton] = useState('Last 7 days')
 
@@ -128,7 +142,7 @@ export const Sales = () => {
               id="demo-customized-select"
               defaultValue={10}
               color="primary"
-              disableUnderline={false}
+              disableUnderline
               // value={age}
               // onChange={handleChange}
               // input={<BootstrapInput />}
@@ -149,7 +163,7 @@ export const Sales = () => {
             }}
           >
             <Line
-              data={friends}
+              data={chart}
               options={options}
             />
           </Box>

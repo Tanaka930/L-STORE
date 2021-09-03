@@ -105,7 +105,7 @@ export type Total = {
   total: number;
 }
 
-export type FriendList = {
+export type Chart = {
   data: { 
           labels: string[]
           datasets: { label: string
