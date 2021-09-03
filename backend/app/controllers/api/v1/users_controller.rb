@@ -75,7 +75,7 @@ class Api::V1::UsersController < ApplicationController
 
       # 取得したデータをもとに配列データを作成
       follow_records.each do |follow_record|
-        if i == 1 and i % 7 == 0
+        if i == 1 or i % 7 == 0
           # 総フォロワー数を取得
           follow_sum = follow_record.follow + follow_record.unfollow
 
@@ -170,51 +170,91 @@ class Api::V1::UsersController < ApplicationController
 
   # 後で別のところに移動
   def create_subscription
-    begin
-      # Stripeのトークン
-      token = params[:body][:stripeToken]
+    # Stripeのトークン
+    token = params[:body][:stripeToken]
 
-      # ユーザ情報(メールアドレスなど一意なもの)
-      client = params[:body][:client]
+    # ユーザ情報(メールアドレスなど一意なもの)
+    client = params[:body][:client]
 
-      # 顧客の詳細情報
-      detail = params[:body][:detail]
+    # 顧客の詳細情報
+    detail = params[:body][:detail]
 
-      # 契約するプラン
-      plan = params[:body][:plan]
+    # 契約するプラン
+    plan = params[:body][:plan]
 
+    # 作成された顧客のIDを取得
+    customer = create_customer(client,token,detail)
+
+    if customer != nil 
+      # 顧客情報の登録に成功した際の処理
+
+      # サブスクリプション作成
+      subscription = create_subscription_data(customer.id, plan)
+
+      if subscription != nil
+        # サブスクリプションの登録に成功した際の処理
+
+        # 処理が成功した際の返却データ
+        json_data = {
+          json: {
+            "status" => 200,
+            "msg" => "success",
+          }
+        }
+      else
+        # サブスクリプションの登録に失敗した際の処理
+        # 返却データ
+        json_data = {
+          status: 400,
+          json:  {
+            "status" => 400,
+            "msg" => "Failed to register the subscription",
+          }
+        }
+      end
+    else
+      # 顧客情報の登録に失敗した際の処理
+      json_data = {
+        status: 400,
+        json:  {
+          "status" => 400,
+          "msg" => "Failed to register customer information",
+        }
+      }
+    end
+    render json_data
+  end
+
+  # 以下プライベートメソッド
+  private
+  def create_customer(client,token,detail)
+    begin 
       # 顧客情報の作成
       customer = Stripe::Customer.create(
         :email => client,
         :source => token,
         :description => detail
       )
+      return customer
+    rescue => e
+      logger.error(e)
+      return nil
+    end
+  end
 
-      logger.log(customer)
-
-      # 作成された顧客のIDを取得
-      customer_id = customer.id
-
+  def create_subscription_data(id, plan)
+    begin 
       # Subsctiptionの作成
-      Stripe::Subscription.create(
-        :customer => customer_id,
+      subscription = Stripe::Subscription.create(
+        :customer => id,
         :items => [
           {:price => plan}
         ]
       )
-
-      json_data = {
-        "msg" => "success"
-      }
-
+      return subscription
     rescue => e
-      # 例外が発生した際
-      json_data = {
-        "msg" => "error",
-        "detail" => e
-      }
+      logger.error(e)
+      return nil
     end
-    
-    render json: json_data
   end
 end
