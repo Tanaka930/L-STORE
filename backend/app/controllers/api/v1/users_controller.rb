@@ -172,34 +172,37 @@ class Api::V1::UsersController < ApplicationController
   def create_subscription
     # idからcredit_idを取得
     user = User.find(params[:id])
+
     # credit_idとplan_idを取得
     credit_id = user.credit_id
 
-    logger.debug(credit_id)
+    # credit_idを使ってcustomerを取得
+    customer = get_customer(credit_id)
+
+    # Stripeのトークン
+    token = params[:body][:stripeToken]
+
+    # ユーザ情報(メールアドレスなど一意なもの)
+    client = params[:body][:client]
+
+    # 顧客の詳細情報
+    detail = params[:body][:detail]
+
+    # 契約するプラン
+    plan = params[:body][:plan]
     
-    if credit_id.nil? or credit_id.empty?
+    # stripeに登録されていない場合
+    if customer.nil?
       # credit_idがnilもしくは空白の場合の処理
 
-      # Stripeのトークン
-      token = params[:body][:stripeToken]
-
-      # ユーザ情報(メールアドレスなど一意なもの)
-      client = params[:body][:client]
-
-      # 顧客の詳細情報
-      detail = params[:body][:detail]
-
-      # 契約するプラン
-      plan = params[:body][:plan]
-
       # 作成された顧客のIDを取得
-      customer = create_customer(user,client,token,detail)
+      new_customer = create_customer(user,client,token,detail)
 
-      if customer != nil 
+      if new_customer != nil 
         # 顧客情報の登録に成功した際の処理
 
         # サブスクリプション作成
-        subscription = create_subscription_data(user,customer.id, plan)
+        subscription = create_subscription_data(user,new_customer.id, plan)
 
         if subscription != nil
           # サブスクリプションの登録に成功した際の処理
@@ -233,16 +236,20 @@ class Api::V1::UsersController < ApplicationController
         }
       end
     else
-      # 顧客情報の登録に失敗した際の処理
+    # 既に登録されている場合更新処理を行う
+      update_customer(customer.id,client,token,detail)
       json_data = {
         json:  {
           "status" => 200,
-          "msg" => "Failed to register customer information",
+          "msg" => "Succeeded in updating customer information",
         }
       }
     end
     render json_data
   end
+
+
+
 
   # 以下プライベートメソッド
   private
@@ -279,6 +286,29 @@ class Api::V1::UsersController < ApplicationController
       return subscription
     rescue => e
       logger.error(e)
+      return nil
+    end
+  end
+
+  def update_customer(id,client,token,detail)
+    customer = Stripe::Customer.update(
+      id,
+      {
+        :email => client,
+        :source => token,
+        :description => detail
+      }
+    )
+  end
+  
+  def get_customer(id)
+    begin
+      # customer取得
+      customer = Stripe::Customer.retrieve(id)
+      # customer返却
+      return customer
+    rescue => e
+      # 存在しない場合、nilを返却
       return nil
     end
   end
