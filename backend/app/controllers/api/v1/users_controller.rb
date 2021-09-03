@@ -170,54 +170,73 @@ class Api::V1::UsersController < ApplicationController
 
   # 後で別のところに移動
   def create_subscription
-    # Stripeのトークン
-    token = params[:body][:stripeToken]
+    # idからcredit_idを取得
+    user = User.find(params[:id])
+    # credit_idとplan_idを取得
+    credit_id = user.credit_id
 
-    # ユーザ情報(メールアドレスなど一意なもの)
-    client = params[:body][:client]
+    logger.debug(credit_id)
+    
+    if credit_id.nil? or credit_id.empty?
+      # credit_idがnilもしくは空白の場合の処理
 
-    # 顧客の詳細情報
-    detail = params[:body][:detail]
+      # Stripeのトークン
+      token = params[:body][:stripeToken]
 
-    # 契約するプラン
-    plan = params[:body][:plan]
+      # ユーザ情報(メールアドレスなど一意なもの)
+      client = params[:body][:client]
 
-    # 作成された顧客のIDを取得
-    customer = create_customer(client,token,detail)
+      # 顧客の詳細情報
+      detail = params[:body][:detail]
 
-    if customer != nil 
-      # 顧客情報の登録に成功した際の処理
+      # 契約するプラン
+      plan = params[:body][:plan]
 
-      # サブスクリプション作成
-      subscription = create_subscription_data(customer.id, plan)
+      # 作成された顧客のIDを取得
+      customer = create_customer(user,client,token,detail)
 
-      if subscription != nil
-        # サブスクリプションの登録に成功した際の処理
+      if customer != nil 
+        # 顧客情報の登録に成功した際の処理
 
-        # 処理が成功した際の返却データ
-        json_data = {
-          json: {
-            "status" => 200,
-            "msg" => "success",
+        # サブスクリプション作成
+        subscription = create_subscription_data(user,customer.id, plan)
+
+        if subscription != nil
+          # サブスクリプションの登録に成功した際の処理
+
+          # 処理が成功した際の返却データ
+          json_data = {
+            json: {
+              "status" => 200,
+              "msg" => "success",
+            }
           }
-        }
+        else
+          # サブスクリプションの登録に失敗した際の処理
+          # 返却データ
+          json_data = {
+            status: 400,
+            json:  {
+              "status" => 400,
+              "msg" => "Failed to register the subscription",
+            }
+          }
+        end
       else
-        # サブスクリプションの登録に失敗した際の処理
-        # 返却データ
+        # 顧客情報の登録に失敗した際の処理
         json_data = {
           status: 400,
           json:  {
             "status" => 400,
-            "msg" => "Failed to register the subscription",
+            "msg" => "Failed to register customer information",
           }
         }
       end
     else
       # 顧客情報の登録に失敗した際の処理
       json_data = {
-        status: 400,
         json:  {
-          "status" => 400,
+          "status" => 200,
           "msg" => "Failed to register customer information",
         }
       }
@@ -227,7 +246,7 @@ class Api::V1::UsersController < ApplicationController
 
   # 以下プライベートメソッド
   private
-  def create_customer(client,token,detail)
+  def create_customer(user,client,token,detail)
     begin 
       # 顧客情報の作成
       customer = Stripe::Customer.create(
@@ -235,6 +254,10 @@ class Api::V1::UsersController < ApplicationController
         :source => token,
         :description => detail
       )
+
+      # stripeに顧客情報を登録した後、customer.idをdbに保存
+      user.update(credit_id: customer.id)
+
       return customer
     rescue => e
       logger.error(e)
@@ -242,7 +265,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def create_subscription_data(id, plan)
+  def create_subscription_data(user,id, plan)
     begin 
       # Subsctiptionの作成
       subscription = Stripe::Subscription.create(
@@ -251,6 +274,8 @@ class Api::V1::UsersController < ApplicationController
           {:price => plan}
         ]
       )
+      # stripeにサブスクリプションを登録した後、planをdbに保存
+      user.update(plan_id: plan)
       return subscription
     rescue => e
       logger.error(e)
