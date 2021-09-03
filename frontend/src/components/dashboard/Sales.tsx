@@ -37,33 +37,37 @@ export const Sales = () => {
 
 
   useEffect(() => {
-    getChart()
+    // getChart()
+    getWeek()
     // const interval = setInterval(()=>{
     //   getFriends()
     // },100000)
     // return() => clearInterval(interval)
   }, [])
 
-  console.log(chart)
+  // console.log(chart)
 
-  // const [chart, setChart] = useState<Chart>()
-
-
-  // const getFriends = async () => {
-  //   try {
-  //   const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_week`)
-  //     setFriends(res.data)
-  //   } catch(err) {
-  //     console.error(err.message)
-  //   }
-  // }
+  // const [weekChart, setWeekChart] = useState<Chart>()
 
 
-  // const [button, setButton] = useState('Last 7 days')
+  const getWeek = async () => {
+    try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_week`)
+      setChart(res.data)
+      console.log(res.data)
+      console.log('getweek')
+      console.log(chart)
+    } catch(err) {
+      console.error(err.message)
+    }
+  }
 
-  // const chartChange = () => {
-  //   setButton('Last weeks')
-  // }
+  const chartChange = (e: any) => {
+    console.log(e.target.value)
+    if (e.target.value == 1) { return getChart() }
+    if (e.target.value == 2) { return getWeek() }
+    // e.target.value == 2 ? getWeek() : getChart()
+  }
 
   const options = {
     animation: false,
@@ -138,18 +142,19 @@ export const Sales = () => {
             //   {/* Last 7 weeks */}
             // </Button>
             <Select
-              labelId="demo-customized-select-label"
-              id="demo-customized-select"
-              defaultValue={10}
+              // labelId="demo-customized-select-label"
+              // id="demo-customized-select"
+              defaultValue={1}
               color="primary"
               disableUnderline
+              onChange={(e) => { chartChange(e) }}
+              
               // value={age}
-              // onChange={handleChange}
               // input={<BootstrapInput />}
             >
-              <MenuItem value={10}>Last 7 days</MenuItem>
-              <MenuItem value={20}>Last week</MenuItem>
-              <MenuItem value={30}>Last month</MenuItem>
+              <MenuItem value={1}>Last 7 days</MenuItem>
+              <MenuItem value={2}>Last week</MenuItem>
+              <MenuItem value={3}>Last month</MenuItem>
             </Select>
           )}
           title="Customers Transition"
@@ -168,23 +173,6 @@ export const Sales = () => {
             />
           </Box>
         </CardContent>
-        {/* <Divider /> */}
-        {/* <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            padding: 16
-          }}
-        >
-          <Button
-            color="primary"
-            endIcon={<ArrowRightIcon />}
-            size="small"
-            variant="text"
-          >
-            Overview
-          </Button>
-        </Box> */}
       </Card>
     </>
   );
