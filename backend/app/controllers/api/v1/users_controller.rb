@@ -59,7 +59,7 @@ class Api::V1::UsersController < ApplicationController
 
 
   # 過去７週間のデータを取得(後でリファルタリング)
-  def last_seven_month
+  def last_seven_week
     begin
       # 過去7週間分のデータ取得
       follow_records = FollowRecord.where(user_id: 1).order(created_at: "ASC").limit(49)
@@ -189,6 +189,8 @@ class Api::V1::UsersController < ApplicationController
         :source => token,
         :description => detail
       )
+
+      logger.log(customer)
 
       # 作成された顧客のIDを取得
       customer_id = customer.id
