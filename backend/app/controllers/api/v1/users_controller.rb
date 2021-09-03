@@ -75,7 +75,7 @@ class Api::V1::UsersController < ApplicationController
 
       # 取得したデータをもとに配列データを作成
       follow_records.each do |follow_record|
-        if i == 1 and i % 7 == 0
+        if i == 1 or i % 7 == 0
           # 総フォロワー数を取得
           follow_sum = follow_record.follow + follow_record.unfollow
 
