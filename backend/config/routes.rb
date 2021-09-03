@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
       get '/users/:id/last_seven_day', to: 'users#last_seven_day'
 
-      get '/users/:id/last_seven_month', to: 'users#last_seven_month'
+      get '/users/:id/last_seven_week', to: 'users#last_seven_week'
 
       get '/users/:id/follow_data', to: 'users#get_follow_data'
 
