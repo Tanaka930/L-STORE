@@ -1,12 +1,12 @@
 class Api::V1::UsersController < ApplicationController
   # ここは後ほど修正
-  # before_action :authenticate_api_v1_user!
+  before_action :authenticate_api_v1_user!
   # 過去７日間のデータを取得
   def last_seven_day
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
     # ここは後ほど修正
-      follow_records = FollowRecord.where(user_id: 1).order(created_at: "ASC").limit(7)
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: "ASC").limit(7)
 
       # からの配列を用意
       follow_record_histories = []
@@ -123,7 +123,7 @@ class Api::V1::UsersController < ApplicationController
   def get_follow_data
     # 最新のユーザーを1件取得
     # ここは後ほど修正
-    follow_records = FollowRecord.where(user_id: 1).order(created_at: :desc).limit(2)
+    follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :desc).limit(2)
 
     # 返却用の配列を用意
     follow_count = 0
@@ -300,7 +300,7 @@ class Api::V1::UsersController < ApplicationController
       }
     )
   end
-  
+
   def get_customer(id)
     begin
       # customer取得
