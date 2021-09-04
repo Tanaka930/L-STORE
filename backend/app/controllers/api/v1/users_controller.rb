@@ -1,12 +1,12 @@
 class Api::V1::UsersController < ApplicationController
   # ここは後ほど修正
-  # before_action :authenticate_api_v1_user!
+  before_action :authenticate_api_v1_user!
   # 過去７日間のデータを取得
   def last_seven_day
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
     # ここは後ほど修正
-      follow_records = FollowRecord.where(user_id: 1).order(created_at: "ASC").limit(7)
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: "ASC").limit(7)
 
       # からの配列を用意
       follow_record_histories = []
@@ -123,7 +123,7 @@ class Api::V1::UsersController < ApplicationController
   def get_follow_data
     # 最新のユーザーを1件取得
     # ここは後ほど修正
-    follow_records = FollowRecord.where(user_id: 1).order(created_at: :desc).limit(2)
+    follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :desc).limit(2)
 
     # 返却用の配列を用意
     follow_count = 0
@@ -170,6 +170,15 @@ class Api::V1::UsersController < ApplicationController
 
   # 後で別のところに移動
   def create_subscription
+    # idからcredit_idを取得
+    user = User.find(params[:id])
+
+    # credit_idとplan_idを取得
+    credit_id = user.credit_id
+
+    # credit_idを使ってcustomerを取得
+    customer = get_customer(credit_id)
+
     # Stripeのトークン
     token = params[:body][:stripeToken]
 
@@ -181,53 +190,70 @@ class Api::V1::UsersController < ApplicationController
 
     # 契約するプラン
     plan = params[:body][:plan]
+    
+    # stripeに登録されていない場合
+    if customer.nil?
+      # credit_idがnilもしくは空白の場合の処理
 
-    # 作成された顧客のIDを取得
-    customer = create_customer(client,token,detail)
+      # 作成された顧客のIDを取得
+      new_customer = create_customer(user,client,token,detail)
 
-    if customer != nil 
-      # 顧客情報の登録に成功した際の処理
+      if new_customer != nil 
+        # 顧客情報の登録に成功した際の処理
 
-      # サブスクリプション作成
-      subscription = create_subscription_data(customer.id, plan)
+        # サブスクリプション作成
+        subscription = create_subscription_data(user,new_customer.id, plan)
 
-      if subscription != nil
-        # サブスクリプションの登録に成功した際の処理
+        if subscription != nil
+          # サブスクリプションの登録に成功した際の処理
 
-        # 処理が成功した際の返却データ
-        json_data = {
-          json: {
-            "status" => 200,
-            "msg" => "success",
+          # 処理が成功した際の返却データ
+          json_data = {
+            json: {
+              "status" => 200,
+              "msg" => "success",
+            }
           }
-        }
+        else
+          # サブスクリプションの登録に失敗した際の処理
+          # 返却データ
+          json_data = {
+            status: 400,
+            json:  {
+              "status" => 400,
+              "msg" => "Failed to register the subscription",
+            }
+          }
+        end
       else
-        # サブスクリプションの登録に失敗した際の処理
-        # 返却データ
+        # 顧客情報の登録に失敗した際の処理
         json_data = {
           status: 400,
           json:  {
             "status" => 400,
-            "msg" => "Failed to register the subscription",
+            "msg" => "Failed to register customer information",
           }
         }
       end
     else
-      # 顧客情報の登録に失敗した際の処理
+    # 既に登録されている場合更新処理を行う
+      update_customer(customer.id,client,token,detail)
       json_data = {
-        status: 400,
         json:  {
-          "status" => 400,
-          "msg" => "Failed to register customer information",
+          "status" => 200,
+          "msg" => "Succeeded in updating customer information",
         }
       }
     end
     render json_data
   end
 
+
+
+
   # 以下プライベートメソッド
   private
-  def create_customer(client,token,detail)
+  def create_customer(user,client,token,detail)
     begin 
       # 顧客情報の作成
       customer = Stripe::Customer.create(
@@ -235,6 +261,10 @@ class Api::V1::UsersController < ApplicationController
         :source => token,
         :description => detail
       )
+
+      # stripeに顧客情報を登録した後、customer.idをdbに保存
+      user.update(credit_id: customer.id)
+
       return customer
     rescue => e
       logger.error(e)
@@ -242,7 +272,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def create_subscription_data(id, plan)
+  def create_subscription_data(user,id, plan)
     begin 
       # Subsctiptionの作成
       subscription = Stripe::Subscription.create(
@@ -251,9 +281,34 @@ class Api::V1::UsersController < ApplicationController
           {:price => plan}
         ]
       )
+      # stripeにサブスクリプションを登録した後、planをdbに保存
+      user.update(plan_id: plan)
       return subscription
     rescue => e
       logger.error(e)
+      return nil
+    end
+  end
+
+  def update_customer(id,client,token,detail)
+    customer = Stripe::Customer.update(
+      id,
+      {
+        :email => client,
+        :source => token,
+        :description => detail
+      }
+    )
+  end
+
+  def get_customer(id)
+    begin
+      # customer取得
+      customer = Stripe::Customer.retrieve(id)
+      # customer返却
+      return customer
+    rescue => e
+      # 存在しない場合、nilを返却
       return nil
     end
   end
