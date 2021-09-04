@@ -20,9 +20,24 @@ import {
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { News, Contents } from "../../interfaces/index"
 import { microClient } from "../../lib/api/microClient";
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 440,
+  },
+});
+
 
 export const LatestOrders = () => {
+
   const [news, setNews] = useState<News[]>([])
+  const classes = useStyles();
 
   const getNews = async () => {
     try {
@@ -30,6 +45,8 @@ export const LatestOrders = () => {
       // if(data.contents.length > 6){
       //     data.contents.pop(); //3件を超えたら配列の先頭の値を削除
       // }
+        console.log(data)
+
       const topNews = data.contents.slice(0, 6)
       setNews(topNews)
       // console.log(topNews)
@@ -45,6 +62,8 @@ export const LatestOrders = () => {
     },10000)
     return() => clearInterval(interval)
   }, [])
+
+
 
   return (
     <>
@@ -82,29 +101,22 @@ export const LatestOrders = () => {
               {/* </TableHead> */}
               <TableBody>
                 {news.map((news) => (
-                  <TableRow
-                    hover
-                    key={news.id}
-                  >
-                    <TableCell>
-                    {moment(news.publishedAt).format('YYYY/MM/DD')}
-                    <br />
-                      {news.title}
-                    </TableCell>
-                    {/* <TableCell> */}
-                      {/* {news.body} */}
-                    {/* </TableCell> */}
-                    {/* <TableCell>
+                  // <Link to={`/news/${news.id}`} className={classes.root} >
+                    <TableRow
+                      hover
+                      key={news.id}
+                    >
+                      <TableCell>
                       {moment(news.publishedAt).format('YYYY/MM/DD')}
-                    </TableCell> */}
-                    <TableCell>
-                      {/* <Chip
-                        color="primary"
-                        label={news.status}
-                        size="small"
-                      /> */}
-                    </TableCell>
-                  </TableRow>
+                      <br />
+                        {news.title}
+                      </TableCell>
+                      {/* <TableCell>
+                      </TableCell>
+                      <TableCell>
+                      </TableCell> */}
+                    </TableRow>
+                //  </Link>
                 ))}
               </TableBody>
             </Table>

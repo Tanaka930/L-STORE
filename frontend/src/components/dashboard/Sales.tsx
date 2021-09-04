@@ -37,8 +37,8 @@ export const Sales = () => {
 
 
   useEffect(() => {
-    // getChart()
-    getWeek()
+    getChart()
+    // getWeek()
     // const interval = setInterval(()=>{
     //   getFriends()
     // },100000)
@@ -70,7 +70,7 @@ export const Sales = () => {
   }
 
   const options = {
-    animation: false,
+    animation: true,
     cornerRadius: 20,
     layout: { padding: 0 },
     legend: { display: false },

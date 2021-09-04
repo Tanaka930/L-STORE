@@ -25,6 +25,8 @@ import PasswordReset from "pages/PasswordReset"
 import PasswordResetPost from "pages/PasswordResetPost"
 import NotFound from "pages/404"
 import CheckOut from "pages/CheckOut"
+import NewsIndex from "pages/NewsIndex"
+import NewsDetail from "pages/NewsDetail"
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {
@@ -98,6 +100,9 @@ const App: React.FC = () => {
                   <Route exact path="/customers" component={CustomersList} />
                   <Route exact path="/customers/:id" component={CustomerDetail} />
                   <Route exact path="/checkout" component={CheckOut} />
+                  <Route exact path="/news" component={NewsIndex} />
+
+                  <Route exact path="/news/:id" component={NewsDetail} />
                 </>
               </Private>
               <Route component={NotFound} />

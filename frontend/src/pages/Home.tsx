@@ -15,7 +15,7 @@ import TotalCustomers from 'components/dashboard/Total';
 
 
 import { Follower } from "interfaces/index"
-// import Cookies from "js-cookie"
+import Cookies from "js-cookie"
 import axios from "axios"
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
