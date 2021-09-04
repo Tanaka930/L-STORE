@@ -91,10 +91,10 @@ export interface News {
   id: string;
   // createdAt: 2021-08-26T01:17:17.174Z,
   // updatedAt: 2021-08-26T01:17:17.174Z,
-  publishedAt: any;
+  publishedAt:  string;
   // revisedAt: 2021-08-26T01:17:17.174Z,
   title: string;
-  body: string;
+  body?: string;
 }
 
 export interface Contents {

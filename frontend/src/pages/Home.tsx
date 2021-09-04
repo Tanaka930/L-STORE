@@ -15,7 +15,7 @@ import TotalCustomers from 'components/dashboard/Total';
 
 
 import { Follower } from "interfaces/index"
-// import Cookies from "js-cookie"
+import Cookies from "js-cookie"
 import axios from "axios"
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
@@ -32,9 +32,17 @@ const Home = () => {
     valid_account: 0
   })
 
+  const config = {
+    headers: {
+    "access-token": Cookies.get("_access_token"),
+    "client": Cookies.get("_client"),
+    "uid": Cookies.get("_uid")
+    }
+  }
+
   const getFollower = async () => {
     try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`, config)
       setFollower(res.data)
       // console.log(res.data)
     } catch(err) {
