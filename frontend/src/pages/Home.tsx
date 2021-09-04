@@ -32,9 +32,17 @@ const Home = () => {
     valid_account: 0
   })
 
+  const config = {
+    headers: {
+    "access-token": Cookies.get("_access_token"),
+    "client": Cookies.get("_client"),
+    "uid": Cookies.get("_uid")
+    }
+  }
+
   const getFollower = async () => {
     try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`)
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`, config)
       setFollower(res.data)
       // console.log(res.data)
     } catch(err) {

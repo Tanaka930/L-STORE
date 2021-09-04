@@ -17,7 +17,7 @@ import React, { useState, useEffect, useContext } from "react"
 import { Chart } from "interfaces/index"
 import { AuthContext } from "App"
 import axios from "axios"
-
+import Cookies from "js-cookie"
 
 export const Sales = () => {
   // const { data } = props;
@@ -25,10 +25,18 @@ export const Sales = () => {
   const { currentUser } = useContext(AuthContext)
   const [chart, setChart] = useState<Chart>()
 
+  const config = {
+    headers: {
+    "access-token": Cookies.get("_access_token"),
+    "client": Cookies.get("_client"),
+    "uid": Cookies.get("_uid")
+    }
+  }
+
 
   const getChart = async () => {
     try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_day`)
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_day`, config)
       setChart(res.data)
     } catch(err) {
       console.error(err.message)
