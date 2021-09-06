@@ -60,11 +60,8 @@ export const Sales = () => {
 
   const getWeek = async () => {
     try {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_week`)
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_week`, config)
       setChart(res.data)
-      console.log(res.data)
-      console.log('getweek')
-      console.log(chart)
     } catch(err) {
       console.error(err.message)
     }

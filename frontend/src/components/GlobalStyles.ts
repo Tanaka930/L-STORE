@@ -19,7 +19,8 @@ const useStyles = makeStyles(() => createStyles({
       width: '100%'
     },
     a: {
-      textDecoration: 'none'
+      textDecoration: 'none',
+      color: '#172b4d'
     },
     '#root': {
       height: '100%',

@@ -21,13 +21,14 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { News, Contents } from "../../interfaces/index"
 import { microClient } from "../../lib/api/microClient";
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  root: {
-    width: '100%',
-  },
+  // tdLink: {
+  //   display: 'block',
+  //   width: '100%',
+  // },
   container: {
     maxHeight: 440,
   },
@@ -101,22 +102,20 @@ export const LatestOrders = () => {
               {/* </TableHead> */}
               <TableBody>
                 {news.map((news) => (
-                  // <Link to={`/news/${news.id}`} className={classes.root} >
+                 
                     <TableRow
                       hover
                       key={news.id}
                     >
-                      <TableCell>
-                      {moment(news.publishedAt).format('YYYY/MM/DD')}
-                      <br />
-                        {news.title}
-                      </TableCell>
-                      {/* <TableCell>
-                      </TableCell>
-                      <TableCell>
-                      </TableCell> */}
+                      <Link to={`/news/${news.id}`} >
+                        <TableCell style={{display: 'block', width: '100%'}}>
+                          {moment(news.publishedAt).format('YYYY/MM/DD')}
+                          <br />
+                          {news.title}
+                        </TableCell>
+                      </Link>
                     </TableRow>
-                //  </Link>
+      
                 ))}
               </TableBody>
             </Table>
