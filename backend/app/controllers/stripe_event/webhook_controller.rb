@@ -12,11 +12,11 @@ class StripeEvent::WebhookController < ApplicationController
 
     case event.type
     when 'invoice.paid'
-        invoice = event.data.object
-    # ... handle other event types
-        logger.debug("success")
+      invoice = event.data.object
+  # ... handle other event types
+      logger.debug("success")
     else
-        puts "Unhandled event type: #{event.type}"
+      puts "Unhandled event type: #{event.type}"
     end
 
 
