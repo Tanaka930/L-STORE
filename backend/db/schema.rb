@@ -159,11 +159,13 @@ ActiveRecord::Schema.define(version: 2021_09_06_055137) do
     t.string "encrypted_credit_id"
     t.string "encrypted_credit_id_iv"
     t.string "plan_id"
+    t.bigint "subscription_plan_id"
     t.string "active_status", default: "0"
     t.string "subscription_status"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["subscription_plan_id"], name: "index_users_on_subscription_plan_id"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
@@ -180,4 +182,5 @@ ActiveRecord::Schema.define(version: 2021_09_06_055137) do
   add_foreign_key "messages", "users"
   add_foreign_key "push_users", "users"
   add_foreign_key "tokens", "users"
+  add_foreign_key "users", "subscription_plans"
 end
