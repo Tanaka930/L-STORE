@@ -94,7 +94,7 @@ export interface News {
   publishedAt:  string;
   // revisedAt: 2021-08-26T01:17:17.174Z,
   title: string;
-  body?: string;
+  body?: HTMLElement;
 }
 
 export interface Contents {

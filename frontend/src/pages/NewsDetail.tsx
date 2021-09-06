@@ -8,8 +8,16 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import moment from 'moment';
 
-import { Container, Box } from "@material-ui/core"
+
+import { Container,
+         Box, 
+         Card,
+         CardContent,
+         CardHeader
+        } from "@material-ui/core"
+
 import { AuthContext } from "App"
 import { News } from "../interfaces/index"
 import { microClient } from "../lib/api/microClient";
@@ -19,6 +27,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
   root: {
     width: '100%',
+    padding: 16
   },
   container: {
     maxHeight: 440,
@@ -73,11 +82,20 @@ const NewsDetail = ()  => {
               }}
             >
               <Container maxWidth={false}>
-                <Paper className={classes.root}>
-
-                  { news !== undefined ?
-                    (news.title) : ('ハズレ')}
-                </Paper>
+                <Card className={classes.root}>
+                  { news !== undefined ? (
+                    <>
+                      <CardHeader
+                        title={news.title}
+                        subheader={moment(news.publishedAt).format('YYYY/MM/DD')}
+                      ></CardHeader>
+                      <CardContent>{news.body}</CardContent>
+                    </>
+                  ) : (
+                    '記事がありません。'
+                    
+                  )}
+                </Card>
               </Container>
             </Box>
           </>
