@@ -1,16 +1,12 @@
 # 支払い処理成功用のクラス
 class StripePaid
-  @object = nil
-  @trg_user = nil
-
 
   def set_parameter(object)
-    # パラメータをセット
-    @object = object
 
-    puts @object
+    # stripeのcustomer_idからユーザーを検索
+    trg_user = User.find_by(credit_id: object.customer)
 
-    trg_user = User.find(1)
+    trg_user.update()
 
   end
 

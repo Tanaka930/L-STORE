@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2021_09_06_055137) do
   create_table "subscription_plans", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "plan", null: false
     t.integer "price"
+    t.string "stripe_plan_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -162,6 +163,7 @@ ActiveRecord::Schema.define(version: 2021_09_06_055137) do
     t.bigint "subscription_plan_id"
     t.string "active_status", default: "0"
     t.string "subscription_status"
+    t.datetime "service_expiration_date"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
