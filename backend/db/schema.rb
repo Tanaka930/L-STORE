@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_03_030016) do
+ActiveRecord::Schema.define(version: 2021_09_06_073709) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -113,6 +113,14 @@ ActiveRecord::Schema.define(version: 2021_09_03_030016) do
     t.index ["user_id"], name: "index_push_users_on_user_id"
   end
 
+  create_table "subscription_plans", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "plan", null: false
+    t.integer "price"
+    t.string "stripe_plan_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tokens", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -149,12 +157,16 @@ ActiveRecord::Schema.define(version: 2021_09_03_030016) do
     t.text "tokens"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "encrypted_credit_id"
-    t.string "encrypted_credit_id_iv"
     t.string "plan_id"
+    t.bigint "subscription_plan_id"
+    t.string "active_status", default: "0"
+    t.string "subscription_status"
+    t.datetime "service_expiration_date"
+    t.string "credit_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["subscription_plan_id"], name: "index_users_on_subscription_plan_id"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
@@ -171,4 +183,5 @@ ActiveRecord::Schema.define(version: 2021_09_03_030016) do
   add_foreign_key "messages", "users"
   add_foreign_key "push_users", "users"
   add_foreign_key "tokens", "users"
+  add_foreign_key "users", "subscription_plans"
 end
