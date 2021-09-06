@@ -20,8 +20,9 @@ import {
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { News, Contents } from "../../interfaces/index"
 import { microClient } from "../../lib/api/microClient";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+
 
 const useStyles = makeStyles({
   // tdLink: {
@@ -63,7 +64,11 @@ export const TopNews = () => {
     return() => clearInterval(interval)
   }, [])
 
+  const history = useHistory();
 
+  const handleClick = () => {
+    history.push('/news');
+  };
 
   return (
     <>
@@ -132,6 +137,7 @@ export const TopNews = () => {
             endIcon={<ArrowRightIcon />}
             size="small"
             variant="text"
+            onClick={handleClick}
           >
             View all
           </Button>
