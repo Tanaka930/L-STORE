@@ -15,7 +15,7 @@ import { News, Contents } from "../interfaces/index"
 import { microClient } from "../lib/api/microClient";
 
 interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density';
+  id: 'title' | 'publishedAt';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -23,29 +23,29 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
-  {
-    id: 'population',
-    label: 'Population',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'size',
-    label: 'Size\u00a0(km\u00b2)',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toFixed(2),
-  },
+  { id: 'title', label: 'Title', minWidth: 170 },
+  { id: 'publishedAt', label: 'ISO\u00a0Code', minWidth: 100 },
+  // {
+  //   id: 'population',
+  //   label: 'Population',
+  //   minWidth: 170,
+  //   align: 'right',
+  //   format: (value: number) => value.toLocaleString('en-US'),
+  // },
+  // {
+  //   id: 'size',
+  //   label: 'Size\u00a0(km\u00b2)',
+  //   minWidth: 170,
+  //   align: 'right',
+  //   format: (value: number) => value.toLocaleString('en-US'),
+  // },
+  // {
+  //   id: 'density',
+  //   label: 'Density',
+  //   minWidth: 170,
+  //   align: 'right',
+  //   format: (value: number) => value.toFixed(2),
+  // },
 ];
 
 interface Data {
@@ -112,9 +112,8 @@ const NewsIndex = ()  => {
       // if(data.contents.length > 6){
       //     data.contents.pop(); //3件を超えたら配列の先頭の値を削除
       // }
-      const topNews = data.contents.slice(0, 6)
-      setNews(topNews)
-      // console.log(topNews)
+      setNews(data.contents)
+      console.log(data.contents)
     } catch(err) {
       console.error(err.message)
     }

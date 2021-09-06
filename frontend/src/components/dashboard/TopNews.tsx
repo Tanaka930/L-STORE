@@ -21,7 +21,6 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { News, Contents } from "../../interfaces/index"
 import { microClient } from "../../lib/api/microClient";
 import { Link } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -35,7 +34,7 @@ const useStyles = makeStyles({
 });
 
 
-export const LatestOrders = () => {
+export const TopNews = () => {
 
   const [news, setNews] = useState<News[]>([])
   const classes = useStyles();
@@ -142,4 +141,4 @@ export const LatestOrders = () => {
   )
 };
 
-export default LatestOrders;
+export default TopNews;
