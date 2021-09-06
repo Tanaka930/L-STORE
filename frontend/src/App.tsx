@@ -20,7 +20,7 @@ import SignIn from "pages/SignIn"
 import Token from "pages/Token"
 import Message from "pages/Message"
 import CustomerIndex from "pages/customers"
-import CustomerDetail from "pages/customers/CustomerDetail"
+import CustomerShow from "pages/customers/show"
 import PasswordReset from "pages/PasswordReset"
 import PasswordResetPost from "pages/PasswordResetPost"
 import NotFound from "pages/404"
@@ -98,7 +98,7 @@ const App: React.FC = () => {
                   <Route exact path="/tokens" component={Token} />
                   <Route exact path="/message" component={Message} />
                   <Route exact path="/customers" component={CustomerIndex} />
-                  <Route exact path="/customers/:id" component={CustomerDetail} />
+                  <Route exact path="/customers/:id" component={CustomerShow} />
                   <Route exact path="/checkout" component={CheckOut} />
                   <Route exact path="/news" component={NewsIndex} />
                   <Route exact path="/news/:id" component={NewsDetail} />
