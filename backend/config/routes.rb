@@ -48,6 +48,6 @@ Rails.application.routes.draw do
     end
   end
   # mount StripeEvent::Engine, at: '/webhooks/stripe'
-  post '/webhooks/stripe', to: 'stripe_event/webhook#event'
+  post '/webhooks/stripe', to: 'stripe_event/webhooks#event'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

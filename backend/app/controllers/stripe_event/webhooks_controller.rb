@@ -1,6 +1,6 @@
-class StripeEvent::WebhookController < ApplicationController
+class StripeEvent::WebhooksController < ApplicationController
   # skip_before_action :verify_authenticity_token,except: :stripe_webhook
-
+  require './app/commonclass/stripe_paid'
   SIGNING_SECRET = ENV['SIGNING_SECRET']
   def event
     sig_header = request.env['HTTP_STRIPE_SIGNATURE']
@@ -12,9 +12,15 @@ class StripeEvent::WebhookController < ApplicationController
 
     case event.type
     when 'invoice.paid'
+      # パラメータオブジェクト取得
       invoice = event.data.object
-  # ... handle other event types
-      logger.debug("success")
+
+      # Paidクラスからインスタンス作成
+      stripe_paid = StripePaid.new
+
+      # Paidクラスからインスタンス作成
+      stripe_paid.set_parameter(invoice)
+
     else
       puts "Unhandled event type: #{event.type}"
     end
@@ -30,6 +36,7 @@ class StripeEvent::WebhookController < ApplicationController
     # 何らかのエラー処理
     head 400
   rescue StandardError => e
+    logger.debug(e)
     # 何らかのエラー処理
     # ビジネスロジック上のエラーではなく、
     # 受信自体のエラー発生時に 500 を返すべき。
