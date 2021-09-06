@@ -12,16 +12,18 @@ import moment from 'moment';
 
 
 import { Container,
-         Box, 
+         Box,
+         Button,
          Card,
          CardContent,
-         CardHeader
+         CardHeader,
+         Divider
         } from "@material-ui/core"
 
 import { AuthContext } from "App"
 import { News } from "../interfaces/index"
 import { microClient } from "../lib/api/microClient";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -37,7 +39,7 @@ const useStyles = makeStyles({
 const NewsDetail = ()  => {
 
   const params = useParams<{ id: string }>();
-
+  const history = useHistory();
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const [news, setNews] = useState<News>()
   const classes = useStyles();
@@ -68,15 +70,16 @@ const NewsDetail = ()  => {
     console.log(news)
   }
 
+  const handleClick = () => {
+    history.goBack();
+  };
+
   return (
     <>
       {
         isSignedIn && currentUser ? (
           <>
             <Box
-              // style={{
-              //   backgroundColor:'background.default',
-              // }}
               sx={{
                 minHeight: '100%',
               }}
@@ -88,8 +91,29 @@ const NewsDetail = ()  => {
                       <CardHeader
                         title={news.title}
                         subheader={moment(news.publishedAt).format('YYYY/MM/DD')}
-                      ></CardHeader>
-                      <CardContent>{news.body}</CardContent>
+                      >
+                      </CardHeader>
+                      <Divider />
+                      <CardContent>
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: `${news.body}`
+                          }}
+                        />
+                      </CardContent>
+                      <Divider />
+                      <CardContent>
+                        <div style={{ float: 'right' }}>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            component="span"
+                            onClick={handleClick}
+                          >
+                            戻る
+                          </Button>
+                        </div>
+                      </CardContent>
                     </>
                   ) : (
                     '記事がありません。'

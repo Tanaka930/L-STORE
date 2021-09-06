@@ -89,12 +89,12 @@ export interface UserInfo {
 
 export interface News {
   id: string;
-  // createdAt: 2021-08-26T01:17:17.174Z,
-  // updatedAt: 2021-08-26T01:17:17.174Z,
   publishedAt:  string;
-  // revisedAt: 2021-08-26T01:17:17.174Z,
   title: string;
   body?: HTMLElement;
+  // createdAt: 2021-08-26T01:17:17.174Z,
+  // updatedAt: 2021-08-26T01:17:17.174Z,
+  // revisedAt: 2021-08-26T01:17:17.174Z,
 }
 
 export interface Contents {

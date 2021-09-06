@@ -5,7 +5,7 @@ import { Container, Box, Grid } from "@material-ui/core"
 
 // import { Helmet } from 'react-helmet';
 import BlockCustomers from 'components/dashboard/Block';
-import LatestOrders from 'components/dashboard/TopNews';
+import TopNews from 'components/dashboard/TopNews';
 // import LatestProducts from 'components/dashboard//LatestProducts';
 import Sales from 'components/dashboard//Sales';
 import TasksProgress from 'components/dashboard/Progress';
@@ -130,7 +130,7 @@ const Home = () => {
                     xl={3}
                     xs={12}
                   >
-                    <LatestOrders />
+                    <TopNews />
                     {/* <TrafficByDevice  /> */}
                   </Grid>
                   {/* <Grid
