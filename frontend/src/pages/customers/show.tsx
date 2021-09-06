@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 
-const CustomerDetail: React.FC = () => {
+const CustomerShow: React.FC = () => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const [ userInfo, setUserInfo ] = useState<UserInfo | undefined>()
@@ -72,4 +72,4 @@ const CustomerDetail: React.FC = () => {
   )
 }
 
-export default CustomerDetail
+export default CustomerShow

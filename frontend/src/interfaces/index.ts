@@ -60,7 +60,7 @@ export interface Message {
 
 // 友達リスト用
 
-export interface CustomerList {
+export interface CustomersParams {
   id: number;
   name: string;
   image?: string;
