@@ -1,7 +1,9 @@
 class Api::V1::UsersController < ApplicationController
   # ここは後ほど修正
-  before_action :authenticate_api_v1_user!
+  before_action :authenticate_api_v1_user!, except: :create_subscription
   # 過去７日間のデータを取得
+
+  @FIRST_BILLING_DATETIME = "2021-09-06 19:00:00"
   def last_seven_day
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
@@ -274,12 +276,36 @@ class Api::V1::UsersController < ApplicationController
 
   def create_subscription_data(user,id, plan)
     begin 
+      # 今月を取得
+      now = Time.current
+
+      now_day = now.strftime("%d")
+
+      if now_day.to_i < 15
+        # 来月を取得
+        next_month = now.next_month.strftime("%Y-%m")
+
+        # 請求日を算出
+        # 決済を同日の0時に行う
+        next_expiration_date = next_month + "-15 23:59:59"
+      else
+        # 今月を取得
+        now_month = now.strftime("%Y-%m")
+
+        # 請求日を算出
+        # 決済を同日の0時に行う
+        next_expiration_date = now_month + "-15 23:59:59"
+        logger.debug(next_expiration_date) 
+      end
+
       # Subsctiptionの作成
       subscription = Stripe::Subscription.create(
         :customer => id,
         :items => [
           {:price => plan}
-        ]
+        ],
+        # 初回請求日時を指定
+        :billing_cycle_anchor => Time.parse('2021-09-06 19:20:00').to_i
       )
       # stripeにサブスクリプションを登録した後、planをdbに保存
       user.update(plan_id: plan)
