@@ -8,6 +8,7 @@ import { Send, RecentActors } from "@material-ui/icons"
 import HomeIcon from "@material-ui/icons/Home"
 import { AuthContext } from "App"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import PaymentIcon from '@material-ui/icons/Payment'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -85,7 +86,7 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemText primary="公式LINE投稿" />
         </ListItem>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/checkout" >
-          <ListItemIcon><Send /></ListItemIcon>
+          <ListItemIcon><PaymentIcon /></ListItemIcon>
           <ListItemText primary="お支払い情報" />
         </ListItem>
         <Hidden lgUp>
