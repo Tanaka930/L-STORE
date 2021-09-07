@@ -62,13 +62,15 @@ const Header: React.FC = () => {
     if (!loading) {
       if (isSignedIn) {
         return (
-          <Button
-            color="inherit"
-            className={classes.linkBtn}
-            onClick={handleSignOut}
-          >
-            ログアウト
-          </Button>
+          <Hidden mdDown>
+            <Button
+              color="inherit"
+              className={classes.linkBtn}
+              onClick={handleSignOut}
+            >
+              ログアウト
+            </Button>
+          </Hidden>
         )
       } else {
         return (
@@ -109,9 +111,9 @@ const Header: React.FC = () => {
           >
             L-store
           </Typography>
-          <Hidden lgDown>
+          {/* <Hidden smDown> */}
             <AuthButtons />
-          </Hidden>
+          {/* </Hidden> */}
           <Hidden lgUp>
             {isSignedIn &&
               <IconButton

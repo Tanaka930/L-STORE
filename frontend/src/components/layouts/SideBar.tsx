@@ -88,7 +88,7 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemIcon><Send /></ListItemIcon>
           <ListItemText primary="お支払い情報" />
         </ListItem>
-        <Hidden mdUp>
+        <Hidden lgUp>
           <Divider />
           <List>
             <ListItem button onClick={handleSignOut} >
