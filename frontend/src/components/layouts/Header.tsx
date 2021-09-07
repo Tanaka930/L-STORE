@@ -3,20 +3,12 @@ import { useHistory, Link } from "react-router-dom"
 import Cookies from "js-cookie"
 import { AuthContext } from "App"
 import { signOut } from "lib/api/auth"
-import { AppBar, Toolbar, Typography, Button, IconButton } from "@material-ui/core"
+import { AppBar, Toolbar, Typography, Button, IconButton, Hidden } from "@material-ui/core"
 import MenuIcon from "@material-ui/icons/Menu"
 import { makeStyles, Theme } from "@material-ui/core/styles"
-import { green } from '@material-ui/core/colors';
-
 import SideBar from "./SideBar"
 
 const useStyles = makeStyles((theme: Theme) => ({
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
   title: {
     flexGrow: 1,
     textDecoration: "none",
@@ -56,13 +48,11 @@ const Header: React.FC = () => {
 
         setIsSignedIn(false)
         history.push("/signin")
-
-        console.log("Succeeded in sign out")
       } else {
-        console.log("Failed in sign out")
+        console.error("Failed in sign out")
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
@@ -111,16 +101,6 @@ const Header: React.FC = () => {
     <>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          { isSignedIn &&
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              onClick={handleSidebarToggle}
-            >
-              <MenuIcon />
-            </IconButton>
-          }
           <Typography
             component={Link}
             to="/"
@@ -129,7 +109,21 @@ const Header: React.FC = () => {
           >
             L-store
           </Typography>
-          <AuthButtons />
+          <Hidden lgDown>
+            <AuthButtons />
+          </Hidden>
+          <Hidden lgUp>
+            {isSignedIn &&
+              <IconButton
+                edge="start"
+                // className={classes.menuButton}
+                color="inherit"
+                onClick={handleSidebarToggle}
+              >
+                <MenuIcon />
+              </IconButton>
+            }
+          </Hidden>
         </Toolbar>
       </AppBar>
       { isSignedIn &&

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-interface Props {
+type Props = {
   children: React.ReactElement
 }
 
