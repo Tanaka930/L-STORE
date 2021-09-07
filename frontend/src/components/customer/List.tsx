@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom'
 import { CustomersParams } from "interfaces/index"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography } from "@material-ui/core"
+import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -11,11 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '& .MuiTableRow-root': {
         cursor: "pointer"
-      }
-    },
-    mobile: {
-      [theme.breakpoints.down('sm')]: {
-        display: "none"
       }
     }
   })
@@ -39,12 +34,16 @@ const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
               <TableCell>
                 アカウント名
               </TableCell>
-              <TableCell className={classes.mobile}>
-                お名前
-              </TableCell>
-              <TableCell className={classes.mobile}>
-                メールアドレス
-              </TableCell>
+              <Hidden xsDown>
+                <TableCell>
+                  お名前
+                </TableCell>
+              </Hidden>
+              <Hidden xsDown>
+                <TableCell>
+                  メールアドレス
+                </TableCell>
+              </Hidden>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,12 +72,16 @@ const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
                     </Typography>
                   </Box>
                 </TableCell>
-                <TableCell className={classes.mobile}>
-                  {customer.full_name}
-                </TableCell>
-                <TableCell className={classes.mobile}>
-                  {customer.mail}
-                </TableCell>
+                <Hidden xsDown>
+                  <TableCell>
+                    {customer.full_name}
+                  </TableCell>
+                </Hidden>
+                <Hidden xsDown>
+                  <TableCell>
+                    {customer.mail}
+                  </TableCell>
+                </Hidden>
               </TableRow>
             ))}
           </TableBody>

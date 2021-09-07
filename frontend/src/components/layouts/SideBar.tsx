@@ -88,7 +88,6 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemIcon><Send /></ListItemIcon>
           <ListItemText primary="お支払い情報" />
         </ListItem>
-
         <Hidden mdUp>
           <Divider />
           <List>
