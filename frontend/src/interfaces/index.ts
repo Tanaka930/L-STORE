@@ -51,7 +51,7 @@ export interface TokenParams {
   // updated_at: Date
 }
 
-// ユーザー
+// ユーザー 
 export interface Message {
   title: string;
   body: string;

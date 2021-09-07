@@ -14,6 +14,8 @@ export const TotalCustomers = (props: { followCount:  number; gainFollow: number
   const followCount = props.followCount;
   const gainFollow = props.gainFollow;
 
+  console.log(followCount)
+
   return (
     <>
       <Card>

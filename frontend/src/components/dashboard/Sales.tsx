@@ -136,26 +136,11 @@ export const Sales = () => {
       <Card style={{height: '100%'}}>
         <CardHeader
           action={(
-            // <Button
-            //   onClick={chartChange}
-            //   endIcon={<ArrowDropDownIcon />}
-            //   size="small"
-            //   color="primary"
-            //   variant="text"
-            // >
-            //   {button}
-            //   {/* Last 7 weeks */}
-            // </Button>
             <Select
-              // labelId="demo-customized-select-label"
-              // id="demo-customized-select"
               defaultValue={1}
               color="primary"
               disableUnderline
               onChange={(e) => { chartChange(e) }}
-              
-              // value={age}
-              // input={<BootstrapInput />}
             >
               <MenuItem value={1}>Last 7 days</MenuItem>
               <MenuItem value={2}>Last week</MenuItem>
