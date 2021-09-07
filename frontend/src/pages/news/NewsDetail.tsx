@@ -12,8 +12,8 @@ import { Container,
         } from "@material-ui/core"
 
 import { AuthContext } from "App"
-import { News } from "../interfaces/index"
-import { microClient } from "../lib/api/microClient";
+import { News } from "../../interfaces/index"
+import { microClient } from "../../lib/api/microClient";
 import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 

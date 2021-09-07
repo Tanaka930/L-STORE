@@ -25,8 +25,8 @@ import PasswordReset from "pages/PasswordReset"
 import PasswordResetPost from "pages/PasswordResetPost"
 import NotFound from "pages/404"
 import CheckOut from "pages/CheckOut"
-import NewsIndex from "pages/NewsIndex"
-import NewsDetail from "pages/NewsDetail"
+import NewsIndex from "pages/news/NewsIndex"
+import NewsDetail from "pages/news/NewsDetail"
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {

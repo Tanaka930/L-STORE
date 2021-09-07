@@ -16,8 +16,8 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import { Container, Box } from "@material-ui/core"
 import { AuthContext } from "App"
-import { News, Contents } from "../interfaces/index"
-import { microClient } from "../lib/api/microClient";
+import { News, Contents } from "../../interfaces/index"
+import { microClient } from "../../lib/api/microClient";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 
@@ -134,19 +134,19 @@ const NewsIndex = () => {
                         </TableBody>
                       </Table>
                     </Box>
-                  <div style={{
+                  {/* <div style={{
                                 display: 'flex',
                                 justifyContent: 'center',
                                 padding: 16
-                                }}>
+                                }}> */}
                     {/* <Pagination 
                       count={10}          //総ページ数
                       color="primary"     //ページネーションの色
                       onChange={(e, page) =>setPage(page)}  //変更されたときに走る関数。第2引数にページ番号が入る
                       page={page}         //現在のページ番号
                     /> */}
-                  </div>
-                  <Divider />
+                  {/* </div>
+                  <Divider /> */}
                   <Box
                     sx={{
                       display: 'flex',
