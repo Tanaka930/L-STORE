@@ -111,14 +111,11 @@ const Header: React.FC = () => {
           >
             L-store
           </Typography>
-          {/* <Hidden smDown> */}
-            <AuthButtons />
-          {/* </Hidden> */}
+          <AuthButtons />
           <Hidden lgUp>
             {isSignedIn &&
               <IconButton
                 edge="start"
-                // className={classes.menuButton}
                 color="inherit"
                 onClick={handleSidebarToggle}
               >
