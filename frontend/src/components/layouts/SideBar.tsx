@@ -1,10 +1,13 @@
 import React, { useContext } from "react"
-import { Link } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
+import Cookies from "js-cookie"
+import { signOut } from "lib/api/auth"
 import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden, Divider } from "@material-ui/core"
 import { Send, RecentActors } from "@material-ui/icons"
-import HomeIcon from '@material-ui/icons/Home';
+import HomeIcon from "@material-ui/icons/Home"
 import { AuthContext } from "App"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,36 +17,17 @@ const useStyles = makeStyles((theme: Theme) =>
     drawer: {
       width: 240,
       flexShrink: 0,
-      [theme.breakpoints.down("sm")]: {
-        width: 200
-      }
     },
     drawerPaper: {
       width: 240,
-      [theme.breakpoints.down("sm")]: {
-        width: 200
-      }
     },
     drawerContainer: {
+      background: "primary",
       overflow: "auto",
-      [theme.breakpoints.down("sm")]: {
-        fontSize: 10
-      }
-    },
-    drawerHeader: {
-      backgroundColor: "#3f51b5",
-      color: "white",
-      fontSize: 20,
-      [theme.breakpoints.up("sm")]: {
-        display: "none"
-      }
     },
     currentUser: {
       justifyContent: "center",
       fontSize: 20,
-      // [theme.breakpoints.up("sm")]: {
-      //   display: "none"
-      // }
     }
   })
 )
@@ -55,15 +39,32 @@ type Props = {
 }
 
 const SideBar: React.FC<Props> = (props) => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, setIsSignedIn } = useContext(AuthContext)
+  const history = useHistory()
   const classes = useStyles()
+
+  const handleSignOut = async () => {
+    try {
+      const res = await signOut()
+
+      if (res.data.success === true) {
+        // サインアウト時には各Cookieを削除
+        Cookies.remove("_access_token")
+        Cookies.remove("_client")
+        Cookies.remove("_uid")
+
+        setIsSignedIn(false)
+        history.push("/signin")
+      } else {
+        console.error("Failed in sign out")
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   const drawer = (
     <div className={classes.drawerContainer}>
-      <Toolbar className={classes.drawerHeader}>
-        L-store
-      </Toolbar>
-      <Divider />
       <List>
         <ListItem className={classes.currentUser} >
           {currentUser?.name}
@@ -87,6 +88,16 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemIcon><Send /></ListItemIcon>
           <ListItemText primary="お支払い情報" />
         </ListItem>
+
+        <Hidden mdUp>
+          <Divider />
+          <List>
+            <ListItem button onClick={handleSignOut} >
+              <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+              <ListItemText primary="ログアウト" />
+            </ListItem>
+          </List>
+        </Hidden>
       </List>
     </div>
   )
@@ -107,7 +118,7 @@ const SideBar: React.FC<Props> = (props) => {
           {drawer}
         </Drawer>
       </Hidden>
-      <Hidden xsDown implementation="css">
+      <Hidden mdDown implementation="css">
         <Drawer
           className={classes.drawer}
           variant="persistent"

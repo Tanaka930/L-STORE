@@ -1,17 +1,10 @@
 import React, { useState, useEffect, createContext } from "react"
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
-
 import { getCurrentUser } from "lib/api/auth"
 import { User } from "interfaces/index"
 import theme from "./theme"
 import { ThemeProvider } from '@material-ui/core'
-import 'react-perfect-scrollbar/dist/css/styles.css';
-
-// import { alpha } from '@material-ui/core/styles';
-
-
-// import { spacing } from '@material-ui/system'
-
+import 'react-perfect-scrollbar/dist/css/styles.css'
 import GlobalStyles from 'components/GlobalStyles';
 import CommonLayout from "components/layouts/CommonLayout"
 import Home from "pages/Home"
