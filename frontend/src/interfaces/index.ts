@@ -1,5 +1,5 @@
 // サインアップ
-export interface SignUpParams {
+export type SignUpParams = {
   name: string;
   email: string;
   password: string;
@@ -7,25 +7,25 @@ export interface SignUpParams {
 }
 
 // サインイン
-export interface SignInParams {
+export type SignInParams = {
   email: string;
   password: string;
 }
 
 // パスワード再設定申請用パラメータ
-export interface PassResetParams {
+export type PassResetParams = {
   email: string;
   redirect_url: string;
 }
 
 // パスワード再設定用パラメータ
-export interface PassResetPostParams {
+export type PassResetPostParams = {
   password: string;
   passwordConfirmation: string;
 }
 
 // ユーザー
-export interface User {
+export type User = {
   id: number;
   uid: string;
   provider: string;
@@ -39,7 +39,7 @@ export interface User {
 }
 
 // トークン
-export interface TokenParams {
+export type TokenParams = {
   // id: number
   chanel_id: string;
   chanel_secret: string;
@@ -52,7 +52,7 @@ export interface TokenParams {
 }
 
 // ユーザー 
-export interface Message {
+export type Message = {
   title: string;
   body: string;
   // image: File
@@ -60,7 +60,7 @@ export interface Message {
 
 // 友達リスト用
 
-export interface CustomersParams {
+export type CustomersParams = {
   id: number;
   name: string;
   image?: string;
@@ -72,7 +72,7 @@ export interface CustomersParams {
 
 // チャット
 
-export interface Chats {
+export type Chats = {
   // id: number;
   body: string;
   image?: string;
@@ -80,14 +80,14 @@ export interface Chats {
   line_customer_id: number;
 }
 
-export interface UserInfo {
+export type UserInfo = {
   id: number;
   image?: string;
   name: string;
   user_id: number;
 }
 
-export interface News {
+export type News = {
   id: string;
   publishedAt:  string;
   title: string;
@@ -97,7 +97,7 @@ export interface News {
   // revisedAt: 2021-08-26T01:17:17.174Z,
 }
 
-export interface Contents {
+export type Contents = {
   contents: News[];
 }
 
