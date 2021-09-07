@@ -83,10 +83,10 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemIcon><Send /></ListItemIcon>
           <ListItemText primary="公式LINE投稿" />
         </ListItem>
-        {/* <ListItem button onClick={props.handleSidebarClose} component={Link} to="/checkout" >
+        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/checkout" >
           <ListItemIcon><Send /></ListItemIcon>
           <ListItemText primary="お支払い情報" />
-        </ListItem> */}
+        </ListItem>
       </List>
     </div>
   )

@@ -30,10 +30,10 @@ const CustomerIndex: React.FC = () => {
 
   useEffect(() => {
     getCustomers()
-    // const interval = setInterval(()=>{
-    //   getCustomers()
-    // },10000)
-    // return() => clearInterval(interval)
+    const interval = setInterval(()=>{
+      getCustomers()
+    },10000)
+    return() => clearInterval(interval)
   }, [])
 
   return (
