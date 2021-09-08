@@ -4,9 +4,9 @@ import datetime
 
 sql_text1 = "INSERT INTO follow_records(user_id,follow,unfollow,created_at,updated_at) VALUES (1,"
 sql_text2 = ");"
-lange = 49
+lange = 365
 now = datetime.datetime.now()
-for num in range(49):
+for num in range(365):
   
   day = now + datetime.timedelta(days=-(lange))
   
