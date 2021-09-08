@@ -2,8 +2,6 @@ class Api::V1::UsersController < ApplicationController
   # ここは後ほど修正
   before_action :authenticate_api_v1_user!, except: :create_subscription
   # 過去７日間のデータを取得
-
-  @FIRST_BILLING_DATETIME = "2021-09-06 19:00:00"
   def last_seven_day
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
@@ -292,7 +290,7 @@ class Api::V1::UsersController < ApplicationController
         }
       end
     else
-    # 既に登録されている場合更新処理を行う
+    # 既にカード情報が登録されている場合更新処理を行う
       update_customer(customer.id,client,token,detail)
       json_data = {
         json:  {
@@ -309,6 +307,7 @@ class Api::V1::UsersController < ApplicationController
 
   # 以下プライベートメソッド
   private
+  # stripeに顧客情報を登録するメソッド
   def create_customer(user,client,token,detail)
     begin 
       # 顧客情報の作成
@@ -328,6 +327,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # 顧客がサブスクリプションを登録する際に使用するメソッド
   def create_subscription_data(user,id, plan)
     begin 
       # 今月を取得
@@ -359,10 +359,12 @@ class Api::V1::UsersController < ApplicationController
           {:price => plan}
         ],
         # 初回請求日時を指定
-        :billing_cycle_anchor => Time.parse('2021-09-06 19:20:00').to_i
+        :billing_cycle_anchor => Time.parse(next_expiration_date).to_i,
+        :proration_behavior => "none"
       )
-      # stripeにサブスクリプションを登録した後、planをdbに保存
-      user.update(plan_id: plan)
+
+      # stripeにサブスクリプションを登録した後、planとサービス有効期限をdbに保存
+      user.update(plan_id: plan, service_expiration_date: next_expiration_date)
       return subscription
     rescue => e
       logger.error(e)
@@ -370,6 +372,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # stripeの顧客情報を更新するメソッド
   def update_customer(id,client,token,detail)
     customer = Stripe::Customer.update(
       id,
@@ -381,6 +384,7 @@ class Api::V1::UsersController < ApplicationController
     )
   end
 
+  # stripeに登録されている顧客情報を取得するメソッド
   def get_customer(id)
     begin
       # customer取得
