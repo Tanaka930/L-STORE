@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
                 # 現在時刻取得
                 now = Time.current
                 # サービスの状態がactiveではないもしくは、有効期限が切れている場合、サービスの機能をストップ
-                if user.subscription_status != "active" or user.service_expiration_date < now
+                if user.subscription_status != "active" and user.subscription_status != "paid" or user.service_expiration_date < now
                         render json: { error: 'forbidden' }, status: :forbidden
                 end
         end

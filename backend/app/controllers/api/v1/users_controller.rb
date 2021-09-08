@@ -238,13 +238,13 @@ class Api::V1::UsersController < ApplicationController
     token = params[:body][:stripeToken]
 
     # ユーザ情報(メールアドレスなど一意なもの)
-    client = params[:body][:client]
+    client = user.uid
 
     # 顧客の詳細情報
     detail = params[:body][:detail]
 
     # 契約するプラン
-    plan = params[:body][:plan]
+    plan = ENV['SUB_PLAN']
     
     # stripeに登録されていない場合
     if customer.nil?
@@ -336,7 +336,7 @@ class Api::V1::UsersController < ApplicationController
 
       now_day = now.strftime("%d")
 
-      if now_day.to_i < 15
+      if now_day.to_i > 15
         # 来月を取得
         next_month = now.next_month.strftime("%Y-%m")
 

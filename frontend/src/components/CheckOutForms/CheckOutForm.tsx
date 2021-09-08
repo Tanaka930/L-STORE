@@ -10,9 +10,7 @@ const CheckoutForm = (props: any) => {
     const {token} = await props.stripe.createToken({name: "Name"});
     // clientはuid、プランはフォームから設定できるようにする
     const body={
-      stripeToken: token.id,
-      client: "kaito.hasegawa@openstore-japan.com",
-      plan: "price_1JV4asIrPhnpYWov561BYZdZ"
+      stripeToken: token.id
     }
 
     const config =     {
