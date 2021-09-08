@@ -39,7 +39,7 @@ export const Sales = () => {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_day`, config)
       setChart(res.data)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
 
@@ -63,14 +63,14 @@ export const Sales = () => {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_week`, config)
       setChart(res.data)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
 
   const chartChange = (e: any) => {
     console.log(e.target.value)
-    if (e.target.value == 1) { return getChart() }
-    if (e.target.value == 2) { return getWeek() }
+    if (e.target.value === 1) { return getChart() }
+    if (e.target.value === 2) { return getWeek() }
     // e.target.value == 2 ? getWeek() : getChart()
   }
 

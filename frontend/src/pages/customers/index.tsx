@@ -23,17 +23,18 @@ const CustomerIndex: React.FC = () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
       setCustomers(res.data)
+      // console.log(res.data)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
 
   useEffect(() => {
     getCustomers()
-    const interval = setInterval(()=>{
-      getCustomers()
-    },10000)
-    return() => clearInterval(interval)
+    // const interval = setInterval(()=>{
+    //   getCustomers()
+    // },10000)
+    // return() => clearInterval(interval)
   }, [])
 
   return (
@@ -44,7 +45,7 @@ const CustomerIndex: React.FC = () => {
       }}
     >
       <Container maxWidth={false}>
-        <CustomerSearch />
+        <CustomerSearch customers={customers} />
         <Box sx={{ pt: 3 }}>
           <CustomersList customers={customers} />
         </Box>
