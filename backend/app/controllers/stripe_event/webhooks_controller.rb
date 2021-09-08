@@ -9,18 +9,29 @@ class StripeEvent::WebhooksController < ApplicationController
       sig_header,
       SIGNING_SECRET,
     )
+    # パラメータオブジェクト取得
+    object = event.data.object
 
     case event.type
+      
+    # 決済が成功した時
     when 'invoice.paid'
-      # パラメータオブジェクト取得
-      invoice = event.data.object
-
-      # Paidクラスからインスタンス作成
+      # PaStripePaididクラスからインスタンス作成
       stripe_paid = StripePaid.new
+      stripe_paid.set_parameter(object)
 
-      # Paidクラスからインスタンス作成
-      stripe_paid.set_parameter(invoice)
+    # サブスクリプションが更新した際
+    when 'customer.subscription.updated'
+      # StripeSubscriptionUpdateクラスからインスタンス作成
+      stripe_subscription_update = StripeSubscriptionUpdate.new
+      stripe_subscription_update.set_parameter(object)
 
+    # サブスクリプションキャンセルが発生した際の処理
+    when 'customer.subscription.deleted'
+      # StripeSubscriptionDeletedクラスからインスタンス作成
+      stripe_subscription_deleted = StripeSubscriptionDeleted.new
+      stripe_subscription_deleted.set_parameter(object)
+    
     else
       puts "Unhandled event type: #{event.type}"
     end
