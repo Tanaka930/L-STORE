@@ -80,7 +80,7 @@ const NewsIndex = () => {
   // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
   //ページ番号
 
-  const [page, setPage] = useState(1); //ページ番号
+  // const [page, setPage] = useState(1); //ページ番号
   // const [pageCount, setPageCount] = useState(); //ページ数
   // const [allItems, setAllItems] = useState([]); //全データ
   // const [displayedItems, setDisplayedItems] = useState([]); //表示データ
