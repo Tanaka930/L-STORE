@@ -4,9 +4,7 @@ class StripePaid
   def set_parameter(object)
 
     # stripeのcustomer_idからユーザーを検索
-    trg_user = User.where(credit_id: "cus_K9nw0JABH4NOYU")
-
-    puts trg_user
+    trg_user = User.where(credit_id: object[:customer])
 
     # 今月を取得
     now = Time.current 
@@ -18,9 +16,7 @@ class StripePaid
     # 決済を同日の0時に行う
     next_expiration_date = next_month + "-15 23:59:59"
 
-
     trg_user.update(subscription_status: "active", service_expiration_date: next_expiration_date)
-
   end
 
 end
