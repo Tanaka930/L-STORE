@@ -2,8 +2,6 @@ class Api::V1::UsersController < ApplicationController
   # ここは後ほど修正
   before_action :authenticate_api_v1_user!, except: :create_subscription
   # 過去７日間のデータを取得
-
-  @FIRST_BILLING_DATETIME = "2021-09-06 19:00:00"
   def last_seven_day
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
@@ -64,7 +62,7 @@ class Api::V1::UsersController < ApplicationController
   def last_seven_week
     begin
       # 過去7週間分のデータ取得
-      follow_records = FollowRecord.where(user_id: 1).order(created_at: :desc).limit(49)
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :desc).limit(49)
 
       # 空の配列を用意
       follow_record_histories = []
@@ -91,6 +89,60 @@ class Api::V1::UsersController < ApplicationController
           follow_record_days.push(follow_record.created_at.strftime("%m/%d"))
         end
         i = i + 1
+      end
+
+      json_data = {
+        # "message" => "success",
+        "datasets" => [
+          {
+            "backgroundColor" => "#06c755",
+            "borderColor" => "#06c755",
+            "data" => follow_sum_record_histories,
+            "label" => "フォロー数"
+          },
+          {
+            "backgroundColor" => "#e53935",
+            "borderColor" => "#e53935",
+            "data" => unfollow_record_histories,
+            "label" => "ブロック数"      
+          }
+        ],
+        "labels" => follow_record_days
+      }
+    rescue => e
+      json_data = {
+        # "message" => "error",
+        "datasets" => e
+      }
+    end
+    # json返却
+    render json: json_data
+  end
+
+
+  # 過去7ヶ月のデータを取得(後でリファルタリング)
+  def last_seven_month
+    begin
+      # 過去7週間分のデータ取得
+      # あいまい検索を用いて初月のデータを取得
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).where("created_at LIKE ?", "%-01 %").order(created_at: :desc).limit(7)
+
+      # 空の配列を用意
+      follow_record_histories = []
+      follow_sum_record_histories = []
+      follow_record_days = []
+      unfollow_record_histories = []
+
+      # 取得したデータをもとに配列データを作成
+      follow_records.each do |follow_record|
+        # 総フォロワー数を取得
+        follow_sum = follow_record.follow + follow_record.unfollow
+
+        # 配列に追加
+        follow_record_histories.push(follow_record.follow)
+        follow_sum_record_histories.push(follow_sum)
+        unfollow_record_histories.push(follow_record.unfollow)
+        follow_record_days.push(follow_record.created_at.strftime("%m/%d"))
       end
 
       json_data = {
@@ -238,7 +290,7 @@ class Api::V1::UsersController < ApplicationController
         }
       end
     else
-    # 既に登録されている場合更新処理を行う
+    # 既にカード情報が登録されている場合更新処理を行う
       update_customer(customer.id,client,token,detail)
       json_data = {
         json:  {
@@ -255,6 +307,7 @@ class Api::V1::UsersController < ApplicationController
 
   # 以下プライベートメソッド
   private
+  # stripeに顧客情報を登録するメソッド
   def create_customer(user,client,token,detail)
     begin 
       # 顧客情報の作成
@@ -274,6 +327,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # 顧客がサブスクリプションを登録する際に使用するメソッド
   def create_subscription_data(user,id, plan)
     begin 
       # 今月を取得
@@ -305,10 +359,12 @@ class Api::V1::UsersController < ApplicationController
           {:price => plan}
         ],
         # 初回請求日時を指定
-        :billing_cycle_anchor => Time.parse('2021-09-06 19:20:00').to_i
+        :billing_cycle_anchor => Time.parse(next_expiration_date).to_i,
+        :proration_behavior => "none"
       )
-      # stripeにサブスクリプションを登録した後、planをdbに保存
-      user.update(plan_id: plan)
+
+      # stripeにサブスクリプションを登録した後、planとサービス有効期限をdbに保存
+      user.update(plan_id: plan, service_expiration_date: next_expiration_date)
       return subscription
     rescue => e
       logger.error(e)
@@ -316,6 +372,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # stripeの顧客情報を更新するメソッド
   def update_customer(id,client,token,detail)
     customer = Stripe::Customer.update(
       id,
@@ -327,6 +384,7 @@ class Api::V1::UsersController < ApplicationController
     )
   end
 
+  # stripeに登録されている顧客情報を取得するメソッド
   def get_customer(id)
     begin
       # customer取得

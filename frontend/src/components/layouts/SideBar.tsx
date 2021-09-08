@@ -4,11 +4,12 @@ import { createStyles, Theme, makeStyles } from "@material-ui/core/styles"
 import Cookies from "js-cookie"
 import { signOut } from "lib/api/auth"
 import { Drawer, CssBaseline, Toolbar, List, ListItem, ListItemIcon, ListItemText, Hidden, Divider } from "@material-ui/core"
-import { Send, RecentActors } from "@material-ui/icons"
+import { RecentActors } from "@material-ui/icons"
 import HomeIcon from "@material-ui/icons/Home"
 import { AuthContext } from "App"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import PaymentIcon from '@material-ui/icons/Payment'
+import EmailIcon from '@material-ui/icons/Email'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -82,7 +83,7 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemText primary="お友達リスト" />
         </ListItem>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/message" >
-          <ListItemIcon><Send /></ListItemIcon>
+          <ListItemIcon><EmailIcon /></ListItemIcon>
           <ListItemText primary="公式LINE投稿" />
         </ListItem>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/checkout" >
@@ -90,7 +91,7 @@ const SideBar: React.FC<Props> = (props) => {
           <ListItemText primary="お支払い情報" />
         </ListItem>
         <Hidden lgUp>
-          <Divider />
+          <Divider variant="middle" />
           <List>
             <ListItem button onClick={handleSignOut} >
               <ListItemIcon><ExitToAppIcon /></ListItemIcon>
