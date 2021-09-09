@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
     begin
       # ユーザーの公式アカウントに対するフォロー情報を取得
     # ここは後ほど修正
-      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :asc).limit(7)
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :desc).limit(7)
 
       # からの配列を用意
       follow_record_histories = []
@@ -37,17 +37,17 @@ class Api::V1::UsersController < ApplicationController
           {
             "backgroundColor" => "#06c755",
             "borderColor" => "#06c755",
-            "data" => follow_sum_record_histories,
+            "data" => follow_sum_record_histories.reverse,
             "label" => "フォロー数"
           },
           {
             "backgroundColor" => "#e53935",
             "borderColor" => "#e53935",
-            "data" => unfollow_record_histories,
+            "data" => unfollow_record_histories.reverse,
             "label" => "ブロック数"      
           }
         ],
-        "labels" => follow_record_days
+        "labels" => follow_record_days.reverse
       }
     rescue => e
       json_data = {
@@ -63,7 +63,7 @@ class Api::V1::UsersController < ApplicationController
   def last_seven_week
     begin
       # 過去7週間分のデータ取得
-      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :asc).limit(49)
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).order(created_at: :desc).limit(49)
 
       # 空の配列を用意
       follow_record_histories = []
@@ -98,17 +98,17 @@ class Api::V1::UsersController < ApplicationController
           {
             "backgroundColor" => "#06c755",
             "borderColor" => "#06c755",
-            "data" => follow_sum_record_histories,
+            "data" => follow_sum_record_histories.reverse,
             "label" => "フォロー数"
           },
           {
             "backgroundColor" => "#e53935",
             "borderColor" => "#e53935",
-            "data" => unfollow_record_histories,
+            "data" => unfollow_record_histories.reverse,
             "label" => "ブロック数"      
           }
         ],
-        "labels" => follow_record_days
+        "labels" => follow_record_days.reverse
       }
     rescue => e
       json_data = {
@@ -126,7 +126,7 @@ class Api::V1::UsersController < ApplicationController
     begin
       # 過去7週間分のデータ取得
       # あいまい検索を用いて初月のデータを取得
-      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).where("created_at LIKE ?", "%-01 %").order(created_at: :asc).limit(7)
+      follow_records = FollowRecord.where(user_id: current_api_v1_user.id).where("created_at LIKE ?", "%-01 %").order(created_at: :desc).limit(7)
 
       # 空の配列を用意
       follow_record_histories = []
@@ -152,17 +152,17 @@ class Api::V1::UsersController < ApplicationController
           {
             "backgroundColor" => "#06c755",
             "borderColor" => "#06c755",
-            "data" => follow_sum_record_histories,
+            "data" => follow_sum_record_histories.reverse,
             "label" => "フォロー数"
           },
           {
             "backgroundColor" => "#e53935",
             "borderColor" => "#e53935",
-            "data" => unfollow_record_histories,
+            "data" => unfollow_record_histories.reverse,
             "label" => "ブロック数"      
           }
         ],
-        "labels" => follow_record_days
+        "labels" => follow_record_days.reverse
       }
     rescue => e
       json_data = {

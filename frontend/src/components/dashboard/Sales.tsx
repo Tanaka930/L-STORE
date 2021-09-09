@@ -67,10 +67,20 @@ export const Sales = () => {
     }
   }
 
+  const getMonth = async () => {
+    try {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_month`, config)
+      setChart(res.data)
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
   const chartChange = (e: any) => {
     console.log(e.target.value)
     if (e.target.value === 1) { return getChart() }
     if (e.target.value === 2) { return getWeek() }
+    if (e.target.value === 3) { return getMonth() }
     // e.target.value == 2 ? getWeek() : getChart()
   }
 
