@@ -73,7 +73,7 @@ class Api::V1::LGroupsController < ApplicationController
   def update
     begin
       # 更新対象のグループ情報を取得
-      trg_group = LGroup.find(params[:id])
+      trg_group = LGroup.find_by(id: params[:id], user_id: current_api_v1_user.id)
 
       # データを更新
       result = data_update(grtrg_groupoup, params[:group_name])
@@ -98,7 +98,38 @@ class Api::V1::LGroupsController < ApplicationController
         }
       }
     end
+
+    render json_data
   end
+
+  def destroy
+    begin
+      # 削除対象のグループ情報を取得
+      trg_group = LGroup.find_by(id: params[:id], user_id: current_api_v1_user.id)
+
+      # データ削除
+      trg_group.destroy
+
+      # 返却用のデータ作成
+      json_data = {
+        json:  {
+          "status" => 200,
+          "msg" => "succsess",
+        }
+      }
+    rescue => e
+
+      # 処理が失敗した際の返却データ
+      json_data = {
+        json:  {
+          "status" => 500,
+          "msg" => "error",
+          "error" => e
+        }
+      }
+    end
+  end
+
 
   private
   def insert(user_id, group_name)

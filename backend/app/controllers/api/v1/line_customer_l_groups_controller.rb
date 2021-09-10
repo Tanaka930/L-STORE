@@ -25,11 +25,50 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         }
       }
     end
+
+    render json_data
   end
 
   def destroy
-    trg_date = LineCustomerLGroup.find(params[:id])
-    trg_date.destroy
+    begin
+      # 対象のデータを取得
+      trg_date = LineCustomerLGroup.find(params[:id])
+
+      # 対象のデータのグループ情報を取得
+      group = LGroup.find(trg_date.id) 
+
+      # ログインしているユーザーのIDと対象のグループ情報を作成したユーザーが同一化を確認
+      if current_api_v1_user.id == group.user_id
+        # 同一であれば、データを削除
+        trg_date.destroy
+        # jsonデータ作成
+        json_data = {
+          json: {
+            "status" => 200,
+            "msg" => "success",
+          }
+        }
+      else
+        # 同一でなければ、無効なリクエストと判断
+        # jsonデータ作成
+        json_data = {
+          json: {
+            "status" => 403,
+            "msg" => "error",
+          }
+        }
+      end
+    rescue => e
+      json_data = {
+        json: {
+          "status" => 500,
+          "msg" => "error",
+          "error" => e,
+        }
+      }
+    end
+
+    render json_data
   end
 
   def index
