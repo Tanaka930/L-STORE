@@ -11,6 +11,6 @@ class Api::V1::LGroupsController < ApplicationController
 
   private
   def insert(user_id, group_name)
-    LGroup.create(user_id, group_name)
+    LGroup.create(user_id: user_id, name: group_name)
   end
 end
