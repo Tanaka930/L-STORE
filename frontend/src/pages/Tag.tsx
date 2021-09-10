@@ -24,7 +24,7 @@ import { AuthContext } from "App"
 
 const Tag = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
-  const [customers, setCustomers] = useState<CustomersParams[]>([])
+  const [tags, setTags] = useState<any[]>([])
 
   const config = {
     headers: {
@@ -34,10 +34,10 @@ const Tag = () => {
     }
   }
 
-  const getCustomers = async () => {
+  const getTags = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-      setCustomers(res.data)
+      setTags(res.data)
       console.log(res.data)
     } catch(err) {
       console.error(err)
@@ -45,7 +45,7 @@ const Tag = () => {
   }
 
   useEffect(() => {
-    getCustomers()
+    getTags()
     // const interval = setInterval(()=>{
     //   getCustomers()
     // },10000)
@@ -59,9 +59,9 @@ const Tag = () => {
           <>
             <Box sx={{ minHeight: '100%' }}>
               <Container maxWidth={false}>
-                <Post customers={customers} />
+                <Post />
                 <Box sx={{ pt: 3 }}>
-                  <TagList customers={customers} />
+                  <TagList tags={tags} />
                 </Box>
               </Container>
             </Box>

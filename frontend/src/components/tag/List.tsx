@@ -1,5 +1,4 @@
 import { useHistory } from 'react-router-dom'
-import { CustomersParams } from "interfaces/index"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
 
@@ -16,25 +15,21 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
+const List: React.FC<{tags: any}> = ({tags}) => {
 
-  const history = useHistory()
+
   const classes = useStyles()
-
-  const handleLinkClick = (id: number) => {
-    history.push("/customers/" + id)
-  }
 
   return (
     <Card className={classes.root}>
       <Box>
         <Table>
           <TableBody>
-            {customers.map((customer: any) => (
+            {tags.map((tag: any) => (
               <TableRow
                 hover
-                key={customer.id}
-                onClick={() => handleLinkClick(customer.id)}
+                key={tag.id}
+                // onClick={() => handleLinkClick(customer.id)}
               >
                 <TableCell>
                   <Box
@@ -43,28 +38,14 @@ const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
                       display: 'flex'
                     }}
                   >
-                    {customer.image
-                      ? <Avatar src={ customer.image } />
-                      : <Avatar />
-                    }
                     <Typography
                       color="textPrimary"
                       variant="body1"
                     >
-                      {customer.name}
+                      {tag.group_name}
                     </Typography>
                   </Box>
                 </TableCell>
-                <Hidden xsDown>
-                  <TableCell>
-                    {customer.full_name}
-                  </TableCell>
-                </Hidden>
-                <Hidden xsDown>
-                  <TableCell>
-                    {customer.mail}
-                  </TableCell>
-                </Hidden>
               </TableRow>
             ))}
           </TableBody>
