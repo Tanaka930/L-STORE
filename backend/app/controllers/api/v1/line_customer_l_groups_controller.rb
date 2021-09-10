@@ -3,19 +3,37 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
   before_action :active_check, except: :create
   def create
     begin
-      l_group_id = params[:l_group_id]
-      line_customer_id = params[:line_customer_id]
-      name = params[:group_name]
-      result = insert(l_group_id,line_customer_id,name)
-      group = LGroup.find(l_group_id)
-      # jsonデータ作成
-      json_data = {
-        json: {
-          "status" => 200,
-          "msg" => "success",
-          "groupName" => group.name,
+      # 紐づけるグループ情報を取得
+      group = LGroup.find(params[:l_group_id]).select("user_id")
+
+      # 紐付けを行うグループの作成者IDが現在ログインしているユーザーのIDと同じかを確認
+      if group.user_id == current_api_v1_user.id
+        # 同一であれば紐付け処理を行う
+
+        # パラメータをもとにデータ作成
+        result = insert(
+          params[:l_group_id],
+          params[:line_customer_id],
+          params[:group_name])
+
+        # jsonデータ作成
+        json_data = {
+          json: {
+            "status" => 200,
+            "msg" => "success",
+            "groupName" => group.name,
+          }
         }
-      }
+      else
+        # 同一でなければ無効な処理と判断
+        # jsonデータ作成
+        json_data = {
+          json: {
+            "status" => 403,
+            "msg" => "error",
+          }
+        }
+      end
     rescue => e
       json_data = {
         json: {
@@ -128,6 +146,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
   end
 
   private
+  # データ登録用のメソッド
   def insert(l_group_id,line_customer_id,name)
     return  LineCustomerLGroup.create(l_group_id: l_group_id, line_customer_id: line_customer_id, name: name)
   end
