@@ -3,7 +3,7 @@ class Api::V1::LGroupsController < ApplicationController
   before_action :active_check
   def create
     # groupの名前のパラメータ取得
-    group_name = params[:name]
+    group_name = params[:group_name]
 
     # データをインサート
     insert(current_api_v1_user.id, group_name)

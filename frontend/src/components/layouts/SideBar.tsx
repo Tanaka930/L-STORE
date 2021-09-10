@@ -10,6 +10,7 @@ import { AuthContext } from "App"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import PaymentIcon from '@material-ui/icons/Payment'
 import EmailIcon from '@material-ui/icons/Email'
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -85,6 +86,10 @@ const SideBar: React.FC<Props> = (props) => {
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/message" >
           <ListItemIcon><EmailIcon /></ListItemIcon>
           <ListItemText primary="公式LINE投稿" />
+        </ListItem>
+        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/tag" >
+          <ListItemIcon><LoyaltyIcon /></ListItemIcon>
+          <ListItemText primary="タグ管理" />
         </ListItem>
         <ListItem button onClick={props.handleSidebarClose} component={Link} to="/checkout" >
           <ListItemIcon><PaymentIcon /></ListItemIcon>
