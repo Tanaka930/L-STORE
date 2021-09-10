@@ -2,7 +2,7 @@ class Api::V1::LGroupsController < ApplicationController
   before_action :authenticate_api_v1_user!
   before_action :active_check
   def index
-    group_names = GroupName.where(user_id, current_api_v1_user.id)
+    group_names = LGroup.where(user_id: current_api_v1_user.id)
     json_data = {
       json:  {
         "status" => 200,
