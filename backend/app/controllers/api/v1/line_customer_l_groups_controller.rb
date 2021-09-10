@@ -1,6 +1,6 @@
 class Api::V1::LineCustomerLGroupsController < ApplicationController
-  # before_action :authenticate_api_v1_user!, except: :create
-  # before_action :active_check, except: :create
+  before_action :authenticate_api_v1_user!, except: :create
+  before_action :active_check, except: :create
   def create
     l_group_id = params[:l_group_id]
     line_customer_id = params[:line_customer_id]
@@ -65,7 +65,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         }
       }
     end
-    
+
     render json_data
   end
 
