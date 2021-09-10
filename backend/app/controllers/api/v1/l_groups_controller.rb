@@ -44,11 +44,8 @@ class Api::V1::LGroupsController < ApplicationController
 
   def create
     begin
-      # groupの名前のパラメータ取得
-      group_name = params[:group_name]
-
       # データをインサート
-      result = insert(current_api_v1_user.id, group_name)
+      result = insert(current_api_v1_user.id, params[:group_name])
 
       # 返却用のデータ作成
       json_data = {
@@ -73,8 +70,42 @@ class Api::V1::LGroupsController < ApplicationController
     render json_data
   end
 
+  def update
+    begin
+      # 更新対象のグループ情報を取得
+      trg_group = LGroup.find(params[:id])
+
+      # データを更新
+      result = data_update(grtrg_groupoup, params[:group_name])
+
+      # 返却用のデータ作成
+      json_data = {
+        json:  {
+          "status" => 200,
+          "msg" => "succsess",
+          "groupId" => result.id,
+          "groupName" => result.name
+        }
+      }
+    rescue => e
+
+      # 処理が失敗した際の返却データ
+      json_data = {
+        json:  {
+          "status" => 500,
+          "msg" => "error",
+          "error" => e
+        }
+      }
+    end
+  end
+
   private
   def insert(user_id, group_name)
     return LGroup.create(user_id: user_id, name: group_name)
+  end
+
+  def data_update(group, name)
+    return group.update(name: name)
   end
 end
