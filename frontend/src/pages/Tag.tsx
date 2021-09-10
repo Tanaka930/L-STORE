@@ -15,8 +15,8 @@ import { Button,
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import Select from "components/tag/Select"
-import CustomersList from "components/customer/List"
+import  Post from "components/tag/Post"
+import TagList from "components/tag/List"
 import axios from "axios"
 import Cookies from "js-cookie"
 import { CustomersParams } from "interfaces/index"
@@ -36,9 +36,9 @@ const Tag = () => {
 
   const getCustomers = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
       setCustomers(res.data)
-      // console.log(res.data)
+      console.log(res.data)
     } catch(err) {
       console.error(err)
     }
@@ -59,9 +59,9 @@ const Tag = () => {
           <>
             <Box sx={{ minHeight: '100%' }}>
               <Container maxWidth={false}>
-                <Select customers={customers} />
+                <Post customers={customers} />
                 <Box sx={{ pt: 3 }}>
-                  <CustomersList customers={customers} />
+                  <TagList customers={customers} />
                 </Box>
               </Container>
             </Box>
