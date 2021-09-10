@@ -32,9 +32,7 @@ Rails.application.routes.draw do
       resources :line_customers do
         resources :chats
         resources :memos
-        resources :l_groups do
-          resources :line_customer_l_groups, only: [:create]
-        end
+        resources :line_customer_l_groups
       end
 
       resources :l_groups

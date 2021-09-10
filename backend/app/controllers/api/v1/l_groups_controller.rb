@@ -7,7 +7,7 @@ class Api::V1::LGroupsController < ApplicationController
       json:  {
         "status" => 200,
         "msg" => "succsess",
-        json_data => group_names
+        "json_data" => group_names
       }
     }
 
