@@ -37,7 +37,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :l_groups, only: [:create]
+      resources :l_groups
 
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
         registrations: 'api/v1/auth/registrations'
