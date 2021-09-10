@@ -14,7 +14,7 @@ import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { postTag } from "lib/api/tag"
 
-const  Post: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
+const  Post  = () => {
   const [group_name, setGroupName] = useState<string>("")
 
   console.log(group_name)
