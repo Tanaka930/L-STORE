@@ -2,10 +2,29 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
   before_action :authenticate_api_v1_user!, except: :create
   before_action :active_check, except: :create
   def create
-    l_group_id = params[:l_group_id]
-    line_customer_id = params[:line_customer_id]
-    name = params[:group_name]
-    insert(l_group_id,line_customer_id,name)
+    begin
+      l_group_id = params[:l_group_id]
+      line_customer_id = params[:line_customer_id]
+      name = params[:group_name]
+      result = insert(l_group_id,line_customer_id,name)
+      group = LGroup.find(l_group_id)
+      # jsonデータ作成
+      json_data = {
+        json: {
+          "status" => 200,
+          "msg" => "success",
+          "groupName" => group.name,
+        }
+      }
+    rescue => e
+      json_data = {
+        json: {
+          "status" => 500,
+          "msg" => "error",
+          "error" => e,
+        }
+      }
+    end
   end
 
   def destroy
@@ -71,7 +90,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
 
   private
   def insert(l_group_id,line_customer_id,name)
-    LineCustomerLGroup.create(l_group_id: l_group_id, line_customer_id: line_customer_id, name: name)
+    return  LineCustomerLGroup.create(l_group_id: l_group_id, line_customer_id: line_customer_id, name: name)
   end
 end
 
