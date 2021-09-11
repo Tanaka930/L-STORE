@@ -125,3 +125,8 @@ export type Follower = {
   unfollow_count: number;
   valid_account: number;
 }
+
+export type Tag = {
+  groupId: number;
+  groupName: string;
+}

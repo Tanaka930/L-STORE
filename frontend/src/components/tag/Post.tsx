@@ -32,11 +32,13 @@ const  Post  = () => {
     e.preventDefault()
     try { 
       const data = createFormData()
+      console.log(data)
       const res = await postTag(data)
+
       console.log(res)
       if(res.status === 200){
         toast.success("送信されました")
-        console.log("ok")
+        setGroupName("")
         // おそらくここにリダイレクト処理などを記述する
       } else {
         toast.error("送信に失敗しました")
