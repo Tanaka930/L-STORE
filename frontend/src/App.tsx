@@ -20,7 +20,7 @@ import NotFound from "pages/404"
 import CheckOut from "pages/CheckOut"
 import NewsIndex from "pages/news/NewsIndex"
 import NewsDetail from "pages/news/NewsDetail"
-import Tag from "pages/Tag"
+import MakeTags from "pages/MakeTag"
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext({} as {
@@ -96,7 +96,7 @@ const App: React.FC = () => {
                   <Route exact path="/checkout" component={CheckOut} />
                   <Route exact path="/news" component={NewsIndex} />
                   <Route exact path="/news/:id" component={NewsDetail} />
-                  <Route exact path="/tag" component={Tag} />
+                  <Route exact path="/tag" component={MakeTags} />
                 </>
               </Private>
               <Route component={NotFound} />

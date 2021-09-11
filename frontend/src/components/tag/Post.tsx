@@ -14,41 +14,8 @@ import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { postTag } from "lib/api/tag"
 
-const  Post  = () => {
-  const [group_name, setGroupName] = useState<string>("")
-
-  console.log(group_name)
-
-  // FormData形式でデータを作成
-  const createFormData = (): FormData => {
-    const formData = new FormData()
-
-    formData.append("group_name", group_name)
-
-    return formData
-  }
-
-  const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try { 
-      const data = createFormData()
-      console.log(data)
-      const res = await postTag(data)
-
-      console.log(res)
-      if(res.status === 200){
-        toast.success("送信されました")
-        setGroupName("")
-        // おそらくここにリダイレクト処理などを記述する
-      } else {
-        toast.error("送信に失敗しました")
-        console.log(res.status + "error")
-      }
-    } catch(err) {
-      toast.warn("通信に失敗しました")
-      console.log(err)
-    }
-  }
+const  Post  = ( props: any ) => {
+  const { group_name, setGroupName, handleCreatePost } = props;
 
   return (
     <form autoComplete="off" onSubmit={handleCreatePost}>
