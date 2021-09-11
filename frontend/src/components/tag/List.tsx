@@ -95,7 +95,7 @@ export const List = () => {
                 </TableCell>
                 <Hidden xsDown>
                   <TableCell>
-                    33
+                    0
                     {/* {customer.full_name} */}
                   </TableCell>
                 </Hidden>
