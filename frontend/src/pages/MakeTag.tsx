@@ -8,7 +8,6 @@ import  Post from "components/tag/Post"
 import TagList from "components/tag/List"
 import { Tag } from '../interfaces/index'
 import { AuthContext } from "App"
-import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { postTag } from "lib/api/tag"
 
@@ -56,21 +55,28 @@ const MakeTag = () => {
       console.log(res)
       if(res.status === 200){
         getTags()
-        toast.success("送信されました")
         setGroupName("")
         // おそらくここにリダイレクト処理などを記述する
       } else {
-        toast.error("送信に失敗しました")
         console.log(res.status + "error")
       }
     } catch(err) {
-      toast.warn("通信に失敗しました")
       console.log(err)
     }
   }
 
-  const handleEditButton = (id: number, groupName: string) => {
-
+  const handleEditButton = (groupId: number, groupName: string) => {
+    console.log(groupId, groupName)
+    try {
+      axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
+      .then(() => {
+        getTags()
+        // toast.success("削除しました")
+      })
+      .catch(error => console.error(error))
+    } catch(err) {
+      console.error(err)
+    }
   }
 
   const handleDeleteButton = (groupId: number) => {
@@ -80,7 +86,7 @@ const MakeTag = () => {
         axios.delete(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
         .then(() => {
           getTags()
-          toast.success("削除しました")
+          // toast.success("削除しました")
         })
         .catch(error => console.error(error))
       } catch(err) {
@@ -126,6 +132,5 @@ const MakeTag = () => {
     </>
   );
 };
-
 
 export default MakeTag
