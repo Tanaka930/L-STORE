@@ -61,7 +61,7 @@ const Tag = () => {
               <Container maxWidth={false}>
                 <Post />
                 <Box sx={{ pt: 3 }}>
-                  <TagList tags={tags} />
+                  <TagList tags={{tags}}/>
                 </Box>
               </Container>
             </Box>

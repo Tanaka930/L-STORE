@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
+import { Box, Button, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,12 +24,27 @@ const List: React.FC<{tags: any}> = ({tags}) => {
     <Card className={classes.root}>
       <Box>
         <Table>
-          <TableBody>
-            {tags.map((tag: any) => (
+          <TableHead>
+              <TableRow>
+                <TableCell>
+                  タグ名
+                </TableCell>
+                <Hidden xsDown>
+                  <TableCell>
+                    アカウント数
+                  </TableCell>
+                </Hidden>
+                <Hidden xsDown>
+                  <TableCell>
+                  </TableCell>
+                </Hidden>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {/* {tags.map((tag: any) => ( */}
               <TableRow
                 hover
-                key={tag.id}
-                // onClick={() => handleLinkClick(customer.id)}
+                // key={tag.id}
               >
                 <TableCell>
                   <Box
@@ -42,12 +57,30 @@ const List: React.FC<{tags: any}> = ({tags}) => {
                       color="textPrimary"
                       variant="body1"
                     >
-                      {tag.group_name}
+                      おしゃかちゃま
+                      {/* {customer.name} */}
                     </Typography>
                   </Box>
                 </TableCell>
+                <Hidden xsDown>
+                  <TableCell>
+                    33
+                    {/* {customer.full_name} */}
+                  </TableCell>
+                </Hidden>
+                <Hidden xsDown>
+                  <TableCell align='right'>
+                    <Button
+                      // onClick={edit}
+                      variant="contained"
+                      color="primary"
+                      type="submit">
+                      edit
+                    </Button>
+                  </TableCell>
+                </Hidden>
               </TableRow>
-            ))}
+            {/* ))} */}
           </TableBody>
         </Table>
       </Box>
