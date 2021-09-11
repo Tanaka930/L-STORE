@@ -1,56 +1,14 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext } from "react"
 // import { makeStyles, Theme, useTheme, createStyles } from '@material-ui/core/styles';
-import { Button,
-         Box,
+import { Box,
          Container,
-         Card,
-         CardHeader,
-         Divider,
-
-         Table,
-         TableBody,
-         TableCell,
-         TableRow,
 } from '@material-ui/core';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import { useHistory } from 'react-router-dom';
-import moment from 'moment';
 import  Post from "components/tag/Post"
 import TagList from "components/tag/List"
-import axios from "axios"
-import Cookies from "js-cookie"
-import { CustomersParams } from "interfaces/index"
 import { AuthContext } from "App"
 
 const Tag = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
-  const [tags, setTags] = useState<any[]>([])
-
-  const config = {
-    headers: {
-    "access-token": Cookies.get("_access_token"),
-    "client": Cookies.get("_client"),
-    "uid": Cookies.get("_uid")
-    }
-  }
-
-  const getTags = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-      setTags(res.data)
-      console.log(res.data)
-    } catch(err) {
-      console.error(err)
-    }
-  }
-
-  useEffect(() => {
-    getTags()
-    // const interval = setInterval(()=>{
-    //   getCustomers()
-    // },10000)
-    // return() => clearInterval(interval)
-  }, [])
 
   return (
     <>
@@ -61,7 +19,7 @@ const Tag = () => {
               <Container maxWidth={false}>
                 <Post />
                 <Box sx={{ pt: 3 }}>
-                  <TagList tags={{tags}}/>
+                  <TagList/>
                 </Box>
               </Container>
             </Box>

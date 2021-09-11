@@ -59,6 +59,7 @@ const  Post  = () => {
             <TextField
               variant="outlined"
               fullWidth
+              required
               label="新規タグ名称"
               value={group_name}
               margin="dense"

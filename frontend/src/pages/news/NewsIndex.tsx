@@ -26,9 +26,6 @@ export const fetchAllPosts = () => {
   microClient.get({ endpoint: 'news', })
   .then((res) => console.log(res));
 
-  // console.log(data)
-
-
   // if (data.contents) {
   //   const news = data.contents
   //   return news
@@ -50,7 +47,7 @@ const NewsIndex = () => {
       //     data.contents.pop(); //3件を超えたら配列の先頭の値を削除
       // }
       setNews(data.contents)
-      // console.log(data.contents)
+      console.log(data.contents)
     } catch(err) {
       console.error(err.message)
     }
