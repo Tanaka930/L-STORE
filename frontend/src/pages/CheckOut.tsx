@@ -12,19 +12,17 @@ const CheckOut = () => {
     <>
       {
         isSignedIn && currentUser ? (
-          <>
+          <StripeProvider apiKey={key}>
             <Box sx={{ minHeight: '100%' }}>
               <Container maxWidth={false}>
                 <Card>
-                  <StripeProvider apiKey={key}>
                     <Elements>
                       <CheckoutForm />
                     </Elements>
-                  </StripeProvider>
                 </Card>
               </Container>
             </Box>
-          </>
+          </StripeProvider>
         ) : (
           <>
             <h1>トップページ</h1>
