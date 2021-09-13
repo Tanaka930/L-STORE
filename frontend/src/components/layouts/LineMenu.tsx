@@ -48,6 +48,7 @@ const LineMenu = () => {
       <Info value={value} index={0} userId={id} />
       <Chat value={value} index={1} userId={id} />
       <MenuTags value={value} index={2} userId={id} />
+      <Others value={value} index={3} userId={id} />
     </>
   )
 }
