@@ -5,7 +5,7 @@ import axios from "axios"
 import { AuthContext } from "App"
 import LineMenu from "components/layouts/LineMenu"
 import { UserInfo } from "interfaces/index"
-import { Box, Avatar, Theme } from "@material-ui/core"
+import { Box, Avatar, Container, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: "center",
   },
   large: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
   name: {
     marginLeft: 30,
@@ -53,21 +53,25 @@ const CustomerShow: React.FC = () => {
   
   return (
     <>
-      {
-        userInfo ? (
-          <>
-            <Box className={classes.account}>
-              <Avatar src={userInfo.image} className={classes.large}/>
-              <p className={classes.name}>{userInfo.name}</p>
-            </Box>
-            <LineMenu />
-          </>
-        ) : (
-          <>
-            <p>データなし</p>
-          </>
-        )
-      }
+      <Box sx={{ minHeight: '100%' }}>
+        <Container maxWidth={false}>
+          {
+            userInfo ? (
+              <>
+                <Box className={classes.account}>
+                  <Avatar src={userInfo.image} className={classes.large}/>
+                  <p className={classes.name}>{userInfo.name}</p>
+                </Box>
+                <LineMenu />
+              </>
+            ) : (
+              <>
+                <p>データなし</p>
+              </>
+            )
+          }
+        </Container>
+      </Box>
     </>
   )
 }
