@@ -36,19 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 // function getStyles(name: string, personName: string[], theme: Theme) {
 //   return {
 //     fontWeight:
@@ -66,14 +53,14 @@ type TabPanelProps = {
 
 const MenuTags = (props: TabPanelProps) => {
   const { value, index, userId } = props
-  // const [edit, setEdit] = useState(false)
   const [tags, setTags] =useState<any[]>([])
+  const [tagId, setTagId] = useState('');
+  const { handleSubmit, control, reset, setValue } = useForm()
   const classes = useStyles();
-  const [personName, setPersonName] = useState('');
 
-  const handleChange = (event: React.ChangeEvent<{ personName?: string | undefined; value: unknown; }>) => {
-    console.log(event.target.personName)
-    setPersonName(event.target.personName as string);
+  const handleChange = (event: React.ChangeEvent<{ value: unknown; }>) => {
+    console.log(event.target.value)
+    setTagId(event.target.value as any);
   };
 
   const config = {
@@ -96,17 +83,18 @@ const MenuTags = (props: TabPanelProps) => {
     }
   }
 
-  console.log(personName)
+  console.log(tagId)
 
-  const onSubmit = async (personName: any) => {
+  const onSubmit = async (value: any) => {
     // ↓↓↓↓↓↓↓↓↓ 新規投稿処理 ↓↓↓↓↓↓↓↓↓
     try {
       console.log('onSubmit')
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups
-      `, personName, config)
+      `, value, config)
       if (response.status === 200) {
         // getTags()
         console.log('post')
+        reset()
         // toast.success("メモを投稿しました")
       } else {
         console.log('not-post')
@@ -135,7 +123,7 @@ const MenuTags = (props: TabPanelProps) => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select-outlined"
-                  value={personName}
+                  value={tagId}
                   onChange={handleChange}
                   label="Tag"
                 >
