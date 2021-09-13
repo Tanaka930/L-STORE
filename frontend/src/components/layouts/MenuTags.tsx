@@ -91,10 +91,11 @@ const MenuTags = (props: TabPanelProps) => {
     // ↓↓↓↓↓↓↓↓↓ 新規投稿処理 ↓↓↓↓↓↓↓↓↓
     try {
       console.log('onSubmit')
+      console.log(value)
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups
       `, value, config)
       if (response.status === 200) {
-        // getTags()
+        getTags()
         console.log('post')
         // toast.success("メモを投稿しました")
       } else {
