@@ -143,7 +143,7 @@ const MenuTags = (props: TabPanelProps) => {
                     <em>None</em>
                   </MenuItem> */}
                   {tags.map((tag: Tag) => (
-                    <MenuItem value={tag.groupId}>{tag.groupName}</MenuItem>
+                    <MenuItem key={tag.groupId} value={tag.groupId}>{tag.groupName}</MenuItem>
                   ))}
                 </Select>
                 <Button type="submit">submit</Button>
