@@ -10,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -66,10 +67,11 @@ type TabPanelProps = {
 
 const MenuTags = (props: TabPanelProps) => {
   const { value, index, userId } = props
+  const classes = useStyles()
+  const { handleSubmit } = useForm()
   // const [edit, setEdit] = useState(false)
   const [tags, setTags] =useState<any[]>([])
-  const classes = useStyles();
-  const [personName, setPersonName] = useState('');
+  const [personName, setPersonName] = useState('')
 
   const handleChange = (event: React.ChangeEvent<{ personName?: string | undefined; value: unknown; }>) => {
     console.log(event.target.personName)
@@ -129,29 +131,32 @@ const MenuTags = (props: TabPanelProps) => {
         <Box py={3} className={classes.root}>
           <Container maxWidth="sm">
             <Card>
-            <form autoComplete="off" onSubmit={onSubmit}>
-              <FormControl variant="outlined" className={classes.formControl} >
-              <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select-outlined"
-                  value={personName}
-                  onChange={handleChange}
-                  label="Tag"
-                >
-                  {/* <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem> */}
-                  {tags.map((tag: Tag) => (
-                    <MenuItem key={tag.groupId} value={tag.groupId}>{tag.groupName}</MenuItem>
-                  ))}
-                </Select>
-                <Button type="submit">submit</Button>
-              </FormControl>
-            </form>
-          </Card>
-        </Container>
-      </Box>
+              <form
+                autoComplete="off"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                <FormControl variant="outlined" className={classes.formControl} >
+                <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select-outlined"
+                    value={personName}
+                    onChange={handleChange}
+                    label="Tag"
+                  >
+                    {/* <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem> */}
+                    {tags.map((tag: Tag) => (
+                      <MenuItem key={tag.groupId} value={tag.groupId}>{tag.groupName}</MenuItem>
+                    ))}
+                  </Select>
+                  <Button type="submit">submit</Button>
+                </FormControl>
+              </form>
+            </Card>
+          </Container>
+        </Box>
       )}
     </>
   )
