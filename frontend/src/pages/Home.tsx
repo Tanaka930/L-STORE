@@ -15,8 +15,8 @@ import TotalCustomers from 'components/dashboard/Total';
 
 
 import { Follower } from "interfaces/index"
-import Cookies from "js-cookie"
 import axios from "axios"
+import { config } from "lib/api/config"
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 
@@ -31,14 +31,6 @@ const Home = () => {
     unfollow_count: 0,
     valid_account: 0
   })
-
-  const config = {
-    headers: {
-    "access-token": Cookies.get("_access_token"),
-    "client": Cookies.get("_client"),
-    "uid": Cookies.get("_uid")
-    }
-  }
 
   const getFollower = async () => {
     try {

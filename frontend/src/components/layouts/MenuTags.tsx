@@ -2,14 +2,20 @@ import { useState, useEffect } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
-import Cookies from "js-cookie"
-import { Box, Container, Card, CardContent, CardHeader, Grid, Paper, TextField, Button, Divider, Typography, IconButton} from "@material-ui/core"
+import { Box,
+         Card,
+         Grid,
+         Button,
+         InputLabel,
+         MenuItem,
+         FormControl,
+         Select,
+         TextField
+} from "@material-ui/core"
 import { Tag } from '../../interfaces/index'
-import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { config } from "lib/api/config"
+import { TabPanelProps } from "../../interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,54 +42,23 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-// function getStyles(name: string, personName: string[], theme: Theme) {
-//   return {
-//     fontWeight:
-//       personName.indexOf(name) === -1
-//         ? theme.typography.fontWeightRegular
-//         : theme.typography.fontWeightMedium,
-//   };
-// }
-
-type TabPanelProps = {
-  index: number
-  value: number
-  userId: string
-}
-
 const MenuTags = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
-  const { handleSubmit, control, watch, reset } = useForm()
+  const { handleSubmit, control } = useForm()
   // const [edit, setEdit] = useState(false)
   const [tags, setTags] =useState<Tag[]>([])
-  const [tagId, setTagId] = useState('')
-
-  const handleChange = (e: React.ChangeEvent<{ value: unknown; }>) => {
-    setTagId(e.target.value as string);
-  };
-
-  const config = {
-    headers: {
-      "access-token": Cookies.get("_access_token"),
-      "client": Cookies.get("_client"),
-      "uid": Cookies.get("_uid")
-    }
-  }
 
   const getTags = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
       if (response.status === 200) {
         setTags(response.data.groupNameList)
-        console.log(response.data.groupNameList)
       }
     } catch(err) {
       console.error(err)
     }
   }
-
-  console.log(tagId)
 
   const onSubmit = async (value: any) => {
     try {
@@ -111,26 +86,27 @@ const MenuTags = (props: TabPanelProps) => {
       {value === index && (
         <Box py={3} className={classes.root}>
           {/* <Container> */}
-            <Card style={{padding: '16px'}}>
+            {/* <Card style={{padding: '16px'}}> */}
               <form
+                noValidate
                 autoComplete="off"
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <Grid container spacing={10}>
                   <Grid item xs={10}>
-                    <FormControl variant="outlined" className={classes.formControl}>
-                      <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel>
+                    {/* <FormControl variant="outlined" className={classes.formControl}>
+                      <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel> */}
                       <Controller
                         name="l_group_id"
                         control={control}
                         // defaultValue={customerInfo.year}
                         render={({ field: { onChange, value } }) => (
-                        <Select
+                        <TextField
                           name="l_group_id"
                           label="タグ"
                           variant="outlined"
-                          labelId="demo-simple-select-label"
-                          id="demo-simple-select-outlined"
+                          fullWidth
+                          select
                           value={value}
                           onChange={onChange}
                         >
@@ -139,10 +115,9 @@ const MenuTags = (props: TabPanelProps) => {
                               {tag.groupName}
                             </MenuItem>
                           ))}
-                        </Select>
+                        </TextField>
                       )}
                       />
-                    </FormControl>
                   </Grid>
                   <Grid item xs={2}>
                     <Box sx={{ height: '100%', width: '100%'}}>
@@ -152,14 +127,13 @@ const MenuTags = (props: TabPanelProps) => {
                         type="submit"
                         size="large"
                         style={{ height: '100%', width: '100%'}} >
-                          submit
+                          追加
                       </Button>
                     </Box>
                   </Grid>
                 </Grid>
               </form>
-
-            </Card>
+            {/* </Card> */}
           {/* </Container> */}
         </Box>
       )}

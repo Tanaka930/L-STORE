@@ -1,15 +1,15 @@
 import React, { useContext, useState, useEffect } from "react"
 import axios from 'axios'
-import Cookies from "js-cookie"
 import { Box,
          Container,
 } from '@material-ui/core';
-import  Post from "components/tag/Post"
+// import  Post from "components/tag/Post"
 import TagList from "components/tag/List"
 import { Tag } from '../interfaces/index'
 import { AuthContext } from "App"
 import "react-toastify/dist/ReactToastify.css"
 import { postTag } from "lib/api/tag"
+import { config } from "lib/api/config"
 
 const MakeTag = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
@@ -17,14 +17,6 @@ const MakeTag = () => {
   const [group_name, setGroupName] = useState<string>("")
 
   console.log(group_name)
-
-  const config = {
-    headers: {
-    "access-token": Cookies.get("_access_token"),
-    "client": Cookies.get("_client"),
-    "uid": Cookies.get("_uid")
-    }
-  }
 
   const getTags = async () => {
     try {
@@ -106,17 +98,19 @@ const MakeTag = () => {
           <>
             <Box sx={{ minHeight: '100%' }}>
               <Container maxWidth={false}>
-                <Post
+                {/* <Post
                   group_name={group_name}
                   setGroupName={setGroupName}
                   handleCreatePost={handleCreatePost}
-                
-                />
+                /> */}
                 <Box sx={{ pt: 3 }}>
                   <TagList
                     tags={tags}
                     handleEditButton={handleEditButton}
                     handleDeleteButton={handleDeleteButton}
+                    group_name={group_name}
+                    setGroupName={setGroupName}
+                    handleCreatePost={handleCreatePost}
                   />
                 </Box>
               </Container>
