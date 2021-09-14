@@ -54,7 +54,7 @@ type TabPanelProps = {
 const MenuTags = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
-  const { handleSubmit } = useForm()
+  const { handleSubmit, control, watch, reset } = useForm()
   // const [edit, setEdit] = useState(false)
   const [tags, setTags] =useState<Tag[]>([])
   const [tagId, setTagId] = useState('')
@@ -85,12 +85,12 @@ const MenuTags = (props: TabPanelProps) => {
 
   console.log(tagId)
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (value: any) => {
     try {
       console.log('onSubmit')
-      console.log(data)
+      console.log(value)
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups
-      `, data, config)
+      `, value, config)
       if (response.status === 200) {
         getTags()
         console.log('post')
@@ -120,17 +120,28 @@ const MenuTags = (props: TabPanelProps) => {
                   <Grid item xs={10}>
                     <FormControl variant="outlined" className={classes.formControl}>
                       <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel>
-                      <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select-outlined"
-                        value={tagId}
-                        onChange={handleChange}
-                        // label="Tag"
-                      >
-                        {tags.map((tag, index) => (
-                          <MenuItem key={index} value={tag.groupId}>{tag.groupName}</MenuItem>
-                        ))}
-                      </Select>
+                      <Controller
+                        name="l_group_id"
+                        control={control}
+                        // defaultValue={customerInfo.year}
+                        render={({ field: { onChange, value } }) => (
+                        <Select
+                          name="l_group_id"
+                          label="タグ"
+                          variant="outlined"
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select-outlined"
+                          value={value}
+                          onChange={onChange}
+                        >
+                          {tags.map((tag, index) => (
+                            <MenuItem key={index} value={tag.groupId}>
+                              {tag.groupName}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      )}
+                      />
                     </FormControl>
                   </Grid>
                   <Grid item xs={2}>
