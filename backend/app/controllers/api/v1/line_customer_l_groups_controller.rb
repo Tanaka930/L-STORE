@@ -14,7 +14,8 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         result = insert(
           params[:l_group_id],
           params[:line_customer_id],
-          params[:group_name])
+          params[:group_name]
+        )
 
         # jsonデータ作成
         json_data = {

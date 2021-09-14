@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
       post '/users/:id/create_subscription', to: 'users#create_subscription'
 
+      post '/line_customer/:user_id/search', to: 'line_customers#search_customer'
+
       # end
       resources :messages
       resources :tokens

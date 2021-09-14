@@ -13,7 +13,7 @@ const CheckoutForm = (props: any) => {
       stripeToken: token.id
     }
 
-    const config =     {
+    const config = {
       headers: {
         "Content-Type": "application/json",
         "access-token": Cookies.get("_access_token"),
@@ -32,11 +32,12 @@ const CheckoutForm = (props: any) => {
     }
   }
   return (
-    <div>
-      checkout
-      <CardElement />
+    <>
+      <CardElement
+        hidePostalCode
+      />
       <button onClick={handleSubmit}>チェックアウト</button>
-    </div>
+    </>
   )
 }
 
