@@ -4,17 +4,19 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
   def create
     begin
       # 紐づけるグループ情報を取得
-      group = LGroup.find(params[:l_group_id]).select("user_id")
+      group = LGroup.find(params[:l_group_id])
 
       # 紐付けを行うグループの作成者IDが現在ログインしているユーザーのIDと同じかを確認
       if group.user_id == current_api_v1_user.id
         # 同一であれば紐付け処理を行う
 
+        # line_customer_idのパラメータ取得
+        line_customer = LineCustomer.find(params[:line_customer_id])
+        
         # パラメータをもとにデータ作成
         result = insert(
-          params[:l_group_id],
-          params[:line_customer_id],
-          params[:group_name]
+          group.id,
+          line_customer.id
         )
 
         # jsonデータ作成
@@ -148,8 +150,9 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
 
   private
   # データ登録用のメソッド
-  def insert(l_group_id,line_customer_id,name)
-    return  LineCustomerLGroup.create(l_group_id: l_group_id, line_customer_id: line_customer_id, name: name)
+  def insert(l_group_id,line_customer_id)
+    result = LineCustomerLGroup.create(l_group_id: l_group_id.to_i, line_customer_id: line_customer_id.to_i)
+    return  result
   end
 end
 

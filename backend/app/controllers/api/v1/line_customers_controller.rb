@@ -155,19 +155,10 @@ class Api::V1::LineCustomersController < LineCommonsController
         :mail)
 
       json_array = make_index_json(line_users)
-      json_data = {
-        json:  {
-          json_array
-        }
-      }
+      rendre json: json_array
     else
-      json_data = {
-        json:  {
-          "status" => 401
-        }
-      }
+
     end
-    rendre json_data
   end
 
   private
