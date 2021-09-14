@@ -3,6 +3,8 @@
     "chartjs",
     "clsx",
     "Selecteds",
+    "signin",
+    "signup",
     "unfollow"
   ]
 }

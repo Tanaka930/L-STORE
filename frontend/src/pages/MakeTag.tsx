@@ -3,11 +3,9 @@ import axios from 'axios'
 import { Box,
          Container,
 } from '@material-ui/core';
-// import  Post from "components/tag/Post"
 import TagList from "components/tag/List"
 import { Tag } from '../interfaces/index'
 import { AuthContext } from "App"
-import "react-toastify/dist/ReactToastify.css"
 import { postTag } from "lib/api/tag"
 import { config } from "lib/api/config"
 
