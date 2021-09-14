@@ -136,28 +136,38 @@ class Api::V1::LineCustomersController < LineCommonsController
     # パラメータを取得
     user_id = params[:user_id]
 
+    logger.debug(user.id == user_id)
     # 現在ログインしているユーザーのIDとパラメータのIDが一致していることを確認
     if user.id == user_id
-      if params[:email] != "" or params[:email] != nil
-        # 一致している場合
-        line_users = LineCustomer.where(
-          user_id: user_id, 
-          blockflg: "0",
-        ).or(
-          LineCustomer.where("name ? ","%" + params[:word] + "%")
-        ).pluck(
-          :id,
-          :user_id,
-          :name,
-          :image,
-          :last_name,
-          :first_name,
-          :mail)
-      end
+      # 一致している場合
+      line_users = LineCustomer.where(
+        user_id: user_id, 
+        blockflg: "0",
+      ).or(
+        LineCustomer.where("name ? ","%" + params[:word] + "%")
+      ).pluck(
+        :id,
+        :user_id,
+        :name,
+        :image,
+        :last_name,
+        :first_name,
+        :mail)
 
       json_array = make_index_json(line_users)
-      render json: json_array
+      json_data = {
+        json:  {
+          json_array
+        }
+      }
+    else
+      json_data = {
+        json:  {
+          "status" => 401
+        }
+      }
     end
+    rendre json_data
   end
 
   private
