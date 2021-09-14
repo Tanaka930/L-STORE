@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
 import Cookies from "js-cookie"
-import { Box, Container, Card, CardContent, CardHeader, Paper, TextField, Button, Divider, Typography, IconButton} from "@material-ui/core"
+import { Box, Container, Card, CardContent, CardHeader, Grid, Paper, TextField, Button, Divider, Typography, IconButton} from "@material-ui/core"
 import { Tag } from '../../interfaces/index'
 import { createStyles, makeStyles, useTheme, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
+      width: "100%",
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -55,14 +54,13 @@ type TabPanelProps = {
 const MenuTags = (props: TabPanelProps) => {
   const { value, index, userId } = props
   const classes = useStyles()
-  const { handleSubmit } = useForm()
+  const { handleSubmit, control, watch, reset } = useForm()
   // const [edit, setEdit] = useState(false)
-  const [tags, setTags] =useState<any[]>([])
-  const [personName, setPersonName] = useState('')
+  const [tags, setTags] =useState<Tag[]>([])
+  const [tagId, setTagId] = useState('')
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown; }>) => {
-    console.log(event.target.value)
-    setPersonName(event.target.value as any);
+  const handleChange = (e: React.ChangeEvent<{ value: unknown; }>) => {
+    setTagId(e.target.value as string);
   };
 
   const config = {
@@ -85,10 +83,9 @@ const MenuTags = (props: TabPanelProps) => {
     }
   }
 
-  console.log(personName)
+  console.log(tagId)
 
   const onSubmit = async (value: any) => {
-    // ↓↓↓↓↓↓↓↓↓ 新規投稿処理 ↓↓↓↓↓↓↓↓↓
     try {
       console.log('onSubmit')
       console.log(value)
@@ -97,14 +94,10 @@ const MenuTags = (props: TabPanelProps) => {
       if (response.status === 200) {
         getTags()
         console.log('post')
-        // toast.success("メモを投稿しました")
       } else {
         console.log('not-post')
-        // toast.error("投稿に失敗しました")
       }
     } catch(err) {
-
-      // toast.warn("通信に失敗しました")
       console.error(err)
     }
   }
@@ -117,33 +110,57 @@ const MenuTags = (props: TabPanelProps) => {
     <>
       {value === index && (
         <Box py={3} className={classes.root}>
-          <Container maxWidth="sm">
-            <Card>
+          {/* <Container> */}
+            <Card style={{padding: '16px'}}>
               <form
                 autoComplete="off"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <FormControl variant="outlined" className={classes.formControl} >
-                <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select-outlined"
-                    value={personName}
-                    onChange={handleChange}
-                    label="Tag"
-                  >
-                    {/* <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem> */}
-                    {tags.map((tag: Tag) => (
-                      <MenuItem key={tag.groupId} value={tag.groupId}>{tag.groupName}</MenuItem>
-                    ))}
-                  </Select>
-                  <Button type="submit">submit</Button>
-                </FormControl>
+                <Grid container spacing={10}>
+                  <Grid item xs={10}>
+                    <FormControl variant="outlined" className={classes.formControl}>
+                      <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel>
+                      <Controller
+                        name="l_group_id"
+                        control={control}
+                        // defaultValue={customerInfo.year}
+                        render={({ field: { onChange, value } }) => (
+                        <Select
+                          name="l_group_id"
+                          label="タグ"
+                          variant="outlined"
+                          labelId="demo-simple-select-label"
+                          id="demo-simple-select-outlined"
+                          value={value}
+                          onChange={onChange}
+                        >
+                          {tags.map((tag, index) => (
+                            <MenuItem key={index} value={tag.groupId}>
+                              {tag.groupName}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      )}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Box sx={{ height: '100%', width: '100%'}}>
+                      <Button
+                        variant="contained"
+                        color='primary'
+                        type="submit"
+                        size="large"
+                        style={{ height: '100%', width: '100%'}} >
+                          submit
+                      </Button>
+                    </Box>
+                  </Grid>
+                </Grid>
               </form>
+
             </Card>
-          </Container>
+          {/* </Container> */}
         </Box>
       )}
     </>
