@@ -130,3 +130,9 @@ export type Tag = {
   groupId: number;
   groupName: string;
 }
+
+export type TabPanelProps = {
+  index: number
+  value: number
+  userId: string
+}
