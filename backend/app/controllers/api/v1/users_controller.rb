@@ -265,7 +265,6 @@ class Api::V1::UsersController < ApplicationController
           # 処理が成功した際の返却データ
           json_data = {
             json: {
-              "status" => 200,
               "msg" => "success",
             }
           }
@@ -275,7 +274,6 @@ class Api::V1::UsersController < ApplicationController
           json_data = {
             status: 400,
             json:  {
-              "status" => 400,
               "msg" => "Failed to register the subscription",
             }
           }
@@ -285,7 +283,6 @@ class Api::V1::UsersController < ApplicationController
         json_data = {
           status: 400,
           json:  {
-            "status" => 400,
             "msg" => "Failed to register customer information",
           }
         }
@@ -295,7 +292,6 @@ class Api::V1::UsersController < ApplicationController
       update_customer(customer.id,client,token,detail)
       json_data = {
         json:  {
-          "status" => 200,
           "msg" => "Succeeded in updating customer information",
         }
       }
