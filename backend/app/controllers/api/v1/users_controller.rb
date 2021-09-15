@@ -238,7 +238,7 @@ class Api::V1::UsersController < ApplicationController
     token = params[:body][:stripeToken]
 
     # ユーザ情報(メールアドレスなど一意なもの)
-    client = user.uid
+    client = user.email
 
     # 顧客の詳細情報
     detail = params[:body][:detail]

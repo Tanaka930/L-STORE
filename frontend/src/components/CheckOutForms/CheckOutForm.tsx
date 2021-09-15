@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import {CardElement, CardNumberElement, CardExpiryElement, CardCVCElement ,injectStripe} from 'react-stripe-elements';
 import { AuthContext } from "App"
 import Cookies from "js-cookie"
 import axios from 'axios'
@@ -33,10 +33,10 @@ const CheckoutForm = (props: any) => {
   }
   return (
     <>
-      <CardElement
-        hidePostalCode
-      />
-      <button onClick={handleSubmit}>チェックアウト</button>
+        <CardNumberElement />
+        <CardExpiryElement />
+        <CardCVCElement />
+      <button onClick={handleSubmit}>お支払い情報を更新</button>
     </>
   )
 }
