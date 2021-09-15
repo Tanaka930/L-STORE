@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 // サインイン用ページ
-const SignIn: React.FC = () => {
+const SignIn = () => {
   const classes = useStyles()
   const history = useHistory()
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)

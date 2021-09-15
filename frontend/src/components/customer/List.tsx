@@ -1,7 +1,7 @@
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom"
 import { CustomersParams } from "interfaces/index"
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,8 +16,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
+type CustomerListProps = {
+  customers: CustomersParams[]
+  searchKeyword: string
+}
 
+const List = ({ customers, searchKeyword }: CustomerListProps) => {
   const history = useHistory()
   const classes = useStyles()
 
@@ -25,6 +29,16 @@ const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
     history.push("/customers/" + id)
   }
 
+  let _customers = customers
+  let search = searchKeyword.trim().toLowerCase()
+
+  if (search.length > 0) {
+    _customers = _customers.filter((customer) => {
+      return customer.full_name.toLowerCase().match(search)
+      // || customer.name.toLowerCase().match(search)
+    })
+  }
+  
   return (
     <Card className={classes.root}>
       <Box>
@@ -47,7 +61,7 @@ const List: React.FC<{customers: CustomersParams[]}> = ({customers}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers.map((customer: any) => (
+            {_customers.map((customer) => (
               <TableRow
                 hover
                 key={customer.id}

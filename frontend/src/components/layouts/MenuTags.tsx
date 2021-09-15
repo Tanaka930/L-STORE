@@ -17,6 +17,7 @@ import { Tag } from '../../interfaces/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { config } from "lib/api/config"
 import { TabPanelProps } from "../../interfaces/index"
+import { TwoColumnTable } from "components/parts/TwoColumnTable"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,6 +92,20 @@ const MenuTags = (props: TabPanelProps) => {
     }
   }
 
+  const handleDeleteButton = (id: number) => {
+    console.log(id)
+    // if (window.confirm("タグを外しますか")) {
+    try {
+      axios.delete(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups/${id} `, config)
+      .then(() => {
+        getTags()
+      })
+      .catch(error => console.error(error))
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
   useEffect(() => {
     getTags()
   }, [])
@@ -98,14 +113,13 @@ const MenuTags = (props: TabPanelProps) => {
   return (
     <>
       {value === index && (
-        <Box py={3} className={classes.root}>
-          {/* <Container> */}
-            {/* <Card style={{padding: '16px'}}> */}
-              <form
-                noValidate
-                autoComplete="off"
-                onSubmit={handleSubmit(onSubmit)}
-              >
+        <Box style={{padding: '16px', backgroundColor: '#fff', marginTop: '1px' }}>
+          <Box sx={{ mb: 3 }}>
+            <form
+              noValidate
+              autoComplete="off"
+              onSubmit={handleSubmit(onSubmit)}
+            >
                 <Grid container spacing={10}>
                   <Grid item xs={10}>
                     {/* <FormControl variant="outlined" className={classes.formControl}>
@@ -147,8 +161,8 @@ const MenuTags = (props: TabPanelProps) => {
                   </Grid>
                 </Grid>
               </form>
-            {/* </Card> */}
-          {/* </Container> */}
+            </Box>
+          <TwoColumnTable data={tags} />
         </Box>
       )}
     </>

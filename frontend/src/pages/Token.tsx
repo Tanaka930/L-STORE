@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 // トークン用ページ
-const Token: React.FC = () => {
+const Token = () => {
   const classes = useStyles()
   const histroy = useHistory()
 

@@ -2,7 +2,6 @@ import { useState } from "react"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Box,
          Button,
-        //  ButtonGroup,
          Card,
          Hidden,
          IconButton,
@@ -14,8 +13,6 @@ import { Box,
          TextField,
          Typography,
 } from "@material-ui/core"
-// import MoreVertIcon from '@material-ui/icons/MoreVert';
-
 import "react-toastify/dist/ReactToastify.css"
 import { Tag } from '../../interfaces/index'
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
@@ -36,15 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-// const ITEM_HEIGHT = 48;
-
 export const List = (props: any) => {
   const classes = useStyles()
   const { tags, handleEditButton, handleDeleteButton, group_name, setGroupName, handleCreatePost } = props;
-  const [edit, setEdit] = useState<boolean>(false)
+  const [state, setState] = useState<boolean>(false)
 
   const handleToggleButton = () => {
-    setEdit(prevState => !prevState)
+    setState(prevState => !prevState)
   }
 
   return (
@@ -64,14 +59,14 @@ export const List = (props: any) => {
                 <Hidden xsDown>
                   <TableCell align='right'>
                     <IconButton onClick={handleToggleButton}>
-                    { edit ? <CloseIcon /> : <AddIcon /> }
+                    { state ? <CloseIcon /> : <AddIcon /> }
                     </IconButton>
                   </TableCell>
                 </Hidden>
               </TableRow>
             </TableHead>
             <TableBody>
-            { edit ?
+            { state ?
               <TableRow>
                 <TableCell style={{ paddingRight: 0,
                 paddingTop: 8,

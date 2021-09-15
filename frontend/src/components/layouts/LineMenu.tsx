@@ -15,7 +15,8 @@ type UserId = {
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.paper,
-    marginTop: 30
+    marginTop: 30,
+    zIndex: 1
   }
 }))
 
@@ -24,7 +25,7 @@ const LineMenu = () => {
   const { id } = useParams<UserId>()
   const [value, setValue] = useState(0)
 
-  const handleChange = (event: React.ChangeEvent<{}>, value: number) => {
+  const handleChange = (e: React.ChangeEvent<{}>, value: number) => {
     setValue(value)
   }
 
@@ -47,7 +48,7 @@ const LineMenu = () => {
       </AppBar>
       <Info value={value} index={0} userId={id} />
       <Chat value={value} index={1} userId={id} />
-      <MenuTags value={value} index={2} userId={id} />
+        <MenuTags value={value} index={2} userId={id} />
       <Others value={value} index={3} userId={id} />
     </>
   )
