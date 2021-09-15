@@ -24,7 +24,7 @@ const LineMenu = () => {
   const { id } = useParams<UserId>()
   const [value, setValue] = useState(0)
 
-  const handleChange = (event: React.ChangeEvent<{}>, value: number) => {
+  const handleChange = (e: React.ChangeEvent<{}>, value: number) => {
     setValue(value)
   }
 

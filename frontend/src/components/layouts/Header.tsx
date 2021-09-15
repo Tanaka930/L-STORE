@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-const Header: React.FC = () => {
+const Header = () => {
   const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext)
   const classes = useStyles()
   const history = useHistory()

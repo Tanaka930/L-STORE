@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 // パスワード再設定用ページ
-const PassReset: React.FC = () => {
+const PassReset = () => {
   const classes = useStyles()
   const history = useHistory()
   const [email, setEmail] = useState<string>("")

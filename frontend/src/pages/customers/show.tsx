@@ -1,5 +1,5 @@
-import { useState ,useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { useState ,useEffect, useContext } from "react"
+import { useParams } from "react-router-dom"
 import Cookies from "js-cookie"
 import axios from "axios"
 import { AuthContext } from "App"
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 
-const CustomerShow: React.FC = () => {
+const CustomerShow = () => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const [ userInfo, setUserInfo ] = useState<UserInfo | undefined>()
@@ -43,7 +43,7 @@ const CustomerShow: React.FC = () => {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${id}`, config)
       setUserInfo(res.data)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
 

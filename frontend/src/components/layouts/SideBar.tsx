@@ -41,7 +41,7 @@ type Props = {
   handleSidebarClose: VoidFunction
 }
 
-const SideBar: React.FC<Props> = (props) => {
+const SideBar = (props: Props) => {
   const { currentUser, setIsSignedIn } = useContext(AuthContext)
   const history = useHistory()
   const classes = useStyles()

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
-const Message: React.FC = () => {
+const Message = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
   const [title, setTitle] = useState<string>("")
