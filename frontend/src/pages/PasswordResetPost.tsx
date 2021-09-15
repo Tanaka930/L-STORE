@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 
 // パスワード再設定登録用ページ
-const PassResetPost: React.FC = () => {
+const PassResetPost = () => {
   const classes = useStyles()
   const history = useHistory()
   const searchResult = useLocation()
