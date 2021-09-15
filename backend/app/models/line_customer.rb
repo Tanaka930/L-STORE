@@ -6,5 +6,4 @@ class LineCustomer < ApplicationRecord
   has_many :chats, dependent: :destroy
   has_many :line_customer_memos, dependent: :destroy
   has_many :line_customer_l_groups, dependent: :destroy
-  has_many :l_groups ,through: :line_customer_l_groups
 end

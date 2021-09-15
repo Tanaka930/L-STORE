@@ -6,44 +6,44 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       # 紐づけるグループ情報を取得
       group = LGroup.find(params[:l_group_id])
 
+      # 各パラメータを変数に格納(group_idをsrtingsに変換 フロント側でかえてもらうかも)
+      group_id = params[:l_group_id].to_s
+      customer_id = params[:line_customer_id]
+
       # 紐付けを行うグループの作成者IDが現在ログインしているユーザーのIDと同じかを確認
-      if group.user_id == current_api_v1_user.id
+      # もしくは、パラメータがnilでないかを確認
+      if group.user_id == current_api_v1_user.id and isNum(group_id,customer_id) and isNonData(group_id,customer_id)
         # 同一であれば紐付け処理を行う
 
-        # line_customer_idのパラメータ取得
-        line_customer = LineCustomer.find(params[:line_customer_id])
-        
         # パラメータをもとにデータ作成
-        result = insert(
-          group.id,
-          line_customer.id
-        )
+        result = insert(group_id, customer_id)
 
         # jsonデータ作成
         json_data = {
           json: {
-            "status" => 200,
             "msg" => "success",
             "groupName" => group.name,
-          }
+          },
+          status: 200
         }
       else
         # 同一でなければ無効な処理と判断
         # jsonデータ作成
         json_data = {
           json: {
-            "status" => 403,
             "msg" => "error",
-          }
+          },
+          status: 403
         }
       end
     rescue => e
+      logger.error(e)
       json_data = {
         json: {
-          "status" => 500,
           "msg" => "error",
           "error" => e,
-        }
+        },
+        status: 500
       }
     end
 
@@ -65,27 +65,27 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         # jsonデータ作成
         json_data = {
           json: {
-            "status" => 200,
             "msg" => "success",
-          }
+          },
+          status: 200
         }
       else
         # 同一でなければ、無効なリクエストと判断
         # jsonデータ作成
         json_data = {
           json: {
-            "status" => 403,
             "msg" => "error",
-          }
+          },
+          status: 403
         }
       end
     rescue => e
       json_data = {
         json: {
-          "status" => 500,
           "msg" => "error",
           "error" => e,
-        }
+        },
+        status: 500
       }
     end
 
@@ -128,20 +128,21 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       # jsonデータ作成
       json_data = {
         json: {
-          "status" => 200,
           "msg" => "success",
           "nowGroupList" => now_group_list,
           "groups" => group_list
-        }
+        },
+        status: 200
       }
     rescue => e
+      logger.debug(e)
       # jsonデータ作成
       json_data = {
         json: {
-          "status" => 500,
           "msg" => "error",
           "error" => e
-        }
+        },
+        status: 500
       }
     end
 
@@ -151,8 +152,35 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
   private
   # データ登録用のメソッド
   def insert(l_group_id,line_customer_id)
-    result = LineCustomerLGroup.create(l_group_id: l_group_id.to_i, line_customer_id: line_customer_id.to_i)
+    begin
+      result = LineCustomerLGroup.create(l_group_id: l_group_id, line_customer_id: line_customer_id)
+    rescue => e
+      logger.debug(e)
+    end
     return  result
+  end
+
+  # 受け取ったパラメータが、数字かどうかを確認するメソッド
+  def isNum(group_id,customer_id)
+    # 正規表現にて確認
+    # group_id custom_id共に数字の時にtrueを返す
+    if group_id =~ /^[0-9]+$/ and customer_id =~ /^[0-9]+$/ 
+      return true
+    else
+      return false
+    end
+  end
+
+  # 受け取ったデータ存在しないかを確認
+  def isNonData(group_id,customer_id)
+    # データがあるかどうかを確認
+    result = !LineCustomerLGroup.exists?(l_group_id: group_id, line_customer_id: customer_id)
+
+    if result
+      return true
+    else
+      return false
+    end
   end
 end
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useForm, Controller } from 'react-hook-form'
+import Cookies from "js-cookie"
 import axios from 'axios'
 import moment from 'moment'
 import { Box,
@@ -48,7 +49,13 @@ const MenuTags = (props: TabPanelProps) => {
   const { handleSubmit, control } = useForm()
   // const [edit, setEdit] = useState(false)
   const [tags, setTags] =useState<Tag[]>([])
-
+  const config = {
+    "headers": {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
+    }
+  }
   const getTags = async () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
@@ -61,6 +68,13 @@ const MenuTags = (props: TabPanelProps) => {
   }
 
   const onSubmit = async (value: any) => {
+    const config = {
+      "headers": {
+        "access-token": Cookies.get("_access_token"),
+        "client": Cookies.get("_client"),
+        "uid": Cookies.get("_uid")
+      }
+    }
     try {
       console.log('onSubmit')
       console.log(value)
