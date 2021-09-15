@@ -34,8 +34,9 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
 
   if (search.length > 0) {
     _customers = _customers.filter((customer) => {
-      return customer.full_name.toLowerCase().match(search)
-      // || customer.name.toLowerCase().match(search)
+      return customer.name.toLowerCase().match(search)
+        || customer.full_name.toLowerCase().match(search)
+        || customer.mail.toLowerCase().match(search)
     })
   }
   
