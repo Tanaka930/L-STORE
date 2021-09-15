@@ -8,9 +8,9 @@ import { RecentActors } from "@material-ui/icons"
 import HomeIcon from "@material-ui/icons/Home"
 import { AuthContext } from "App"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import PaymentIcon from '@material-ui/icons/Payment'
-import EmailIcon from '@material-ui/icons/Email'
-import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import PaymentIcon from "@material-ui/icons/Payment"
+import EmailIcon from "@material-ui/icons/Email"
+import LoyaltyIcon from "@material-ui/icons/Loyalty"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-type Props = {
+type SideBarProps = {
   isOpen: boolean
   handleSidebarToggle: VoidFunction
   handleSidebarClose: VoidFunction
 }
 
-const SideBar = (props: Props) => {
+const SideBar = ({isOpen, handleSidebarToggle, handleSidebarClose}: SideBarProps) => {
   const { currentUser, setIsSignedIn } = useContext(AuthContext)
   const history = useHistory()
   const classes = useStyles()
@@ -75,23 +75,23 @@ const SideBar = (props: Props) => {
       </List>
       <Divider />
       <List>
-        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/" >
+        <ListItem button onClick={handleSidebarClose} component={Link} to="/" >
           <ListItemIcon><HomeIcon /></ListItemIcon>
           <ListItemText primary="HOME" />
         </ListItem>
-        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/customers" >
+        <ListItem button onClick={handleSidebarClose} component={Link} to="/customers" >
           <ListItemIcon><RecentActors /></ListItemIcon>
           <ListItemText primary="お友達リスト" />
         </ListItem>
-        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/message" >
+        <ListItem button onClick={handleSidebarClose} component={Link} to="/message" >
           <ListItemIcon><EmailIcon /></ListItemIcon>
           <ListItemText primary="公式LINE投稿" />
         </ListItem>
-        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/tag" >
+        <ListItem button onClick={handleSidebarClose} component={Link} to="/tag" >
           <ListItemIcon><LoyaltyIcon /></ListItemIcon>
           <ListItemText primary="タグ管理" />
         </ListItem>
-        <ListItem button onClick={props.handleSidebarClose} component={Link} to="/checkout" >
+        <ListItem button onClick={handleSidebarClose} component={Link} to="/checkout" >
           <ListItemIcon><PaymentIcon /></ListItemIcon>
           <ListItemText primary="お支払い情報" />
         </ListItem>
@@ -115,8 +115,8 @@ const SideBar = (props: Props) => {
         <Drawer
           className={classes.drawer}
           variant="temporary"
-          open={props.isOpen}
-          onClose={props.handleSidebarToggle}
+          open={isOpen}
+          onClose={handleSidebarToggle}
           classes={{
             paper: classes.drawerPaper,
           }}
@@ -129,7 +129,7 @@ const SideBar = (props: Props) => {
           className={classes.drawer}
           variant="persistent"
           open
-          onClose={props.handleSidebarToggle}
+          onClose={handleSidebarToggle}
           classes={{
             paper: classes.drawerPaper,
           }}

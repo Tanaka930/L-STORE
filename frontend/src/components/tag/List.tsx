@@ -14,11 +14,11 @@ import { Box,
          Typography,
 } from "@material-ui/core"
 import "react-toastify/dist/ReactToastify.css"
-import { Tag } from '../../interfaces/index'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import EditIcon from '@material-ui/icons/Edit'
-import CloseIcon from '@material-ui/icons/Close'
-import AddIcon from '@material-ui/icons/Add'
+import { Tag } from "../../interfaces/index"
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
+import EditIcon from "@material-ui/icons/Edit"
+import CloseIcon from "@material-ui/icons/Close"
+import AddIcon from "@material-ui/icons/Add"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,9 +33,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export const List = (props: any) => {
+type TagListProps = {
+  tags: Tag[]
+  handleEditButton: (groupId: number, groupName: string) => void
+  handleDeleteButton: (groupId: number) => void
+  group_name: string
+  setGroupName: React.Dispatch<React.SetStateAction<string>>
+  handleCreatePost: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
+}
+
+const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroupName, handleCreatePost }: TagListProps) => {
   const classes = useStyles()
-  const { tags, handleEditButton, handleDeleteButton, group_name, setGroupName, handleCreatePost } = props;
   const [state, setState] = useState<boolean>(false)
 
   const handleToggleButton = () => {

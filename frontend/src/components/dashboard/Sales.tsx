@@ -1,26 +1,12 @@
-import { Line } from 'react-chartjs-2';
-
-import {
-  Box,
-  // Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  useTheme,
-  // colors,
-  Select,
-  MenuItem 
-} from '@material-ui/core';
-
-import React, { useState, useEffect, useContext } from "react"
-import { Chart } from "interfaces/index"
+import { useState, useEffect, useContext } from "react"
 import { AuthContext } from "App"
 import axios from "axios"
 import Cookies from "js-cookie"
+import { Line } from "react-chartjs-2"
+import { Box, Card, CardContent, CardHeader, Divider, useTheme, Select, MenuItem } from "@material-ui/core"
+import { Chart } from "interfaces/index"
 
 export const Sales = () => {
-  // const { data } = props;
   const theme = useTheme();
   const { currentUser } = useContext(AuthContext)
   const [chart, setChart] = useState<Chart>()
@@ -33,7 +19,6 @@ export const Sales = () => {
     }
   }
 
-
   const getChart = async () => {
     try {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/last_seven_day`, config)
@@ -42,7 +27,6 @@ export const Sales = () => {
       console.error(err)
     }
   }
-
 
   useEffect(() => {
     getChart()
@@ -56,7 +40,6 @@ export const Sales = () => {
   // console.log(chart)
 
   // const [weekChart, setWeekChart] = useState<Chart>()
-
 
   const getWeek = async () => {
     try {
@@ -76,7 +59,7 @@ export const Sales = () => {
     }
   }
 
-  const chartChange = (e: any) => {
+  const chartChange = (e: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) => {
     console.log(e.target.value)
     if (e.target.value === 1) { return getChart() }
     if (e.target.value === 2) { return getWeek() }
@@ -139,42 +122,38 @@ export const Sales = () => {
     }
   };
 
-
-
   return (
-    <>
-      <Card style={{height: '100%'}}>
-        <CardHeader
-          action={(
-            <Select
-              defaultValue={1}
-              color="primary"
-              disableUnderline
-              onChange={(e) => { chartChange(e) }}
-            >
-              <MenuItem value={1}>Last 7 days</MenuItem>
-              <MenuItem value={2}>Last week</MenuItem>
-              <MenuItem value={3}>Last month</MenuItem>
-            </Select>
-          )}
-          title="Customers Transition"
-        />
-        <Divider />
-        <CardContent >
-          <Box
-            sx={{
-              height: 450,
-              position: 'relative'
-            }}
+    <Card style={{height: '100%'}}>
+      <CardHeader
+        title="Customers Transition"
+        action={(
+          <Select
+            defaultValue={1}
+            color="primary"
+            disableUnderline
+            onChange={(e) => chartChange(e)}
           >
-            <Line
-              data={chart}
-              options={options}
-            />
-          </Box>
-        </CardContent>
-      </Card>
-    </>
+            <MenuItem value={1}>Last 7 days</MenuItem>
+            <MenuItem value={2}>Last week</MenuItem>
+            <MenuItem value={3}>Last month</MenuItem>
+          </Select>
+        )}
+      />
+      <Divider />
+      <CardContent >
+        <Box
+          sx={{
+            height: 450,
+            position: 'relative'
+          }}
+        >
+          <Line
+            data={chart}
+            options={options}
+          />
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

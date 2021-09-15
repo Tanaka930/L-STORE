@@ -87,7 +87,7 @@ const MakeTag = () => {
 
   useEffect(() => {
     getTags()
-    }, [])
+  }, [])
 
   return (
     <>

@@ -2,10 +2,9 @@ import { useState } from "react"
 import { AppBar, Tabs, Tab, Toolbar } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import { useParams } from "react-router-dom"
-import Info from "components/layouts/Info"
-import Chat from "components/layouts/Chat"
-
-import Others from "components/layouts/Others"
+import Info from "./Info"
+import Chat from "./Chat"
+import Others from "./Others"
 import MenuTags from "./MenuTags"
 
 type UserId = {
@@ -48,7 +47,7 @@ const LineMenu = () => {
       </AppBar>
       <Info value={value} index={0} userId={id} />
       <Chat value={value} index={1} userId={id} />
-        <MenuTags value={value} index={2} userId={id} />
+      <MenuTags value={value} index={2} userId={id} />
       <Others value={value} index={3} userId={id} />
     </>
   )
