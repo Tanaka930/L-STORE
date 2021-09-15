@@ -135,7 +135,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         status: 200
       }
     rescue => e
-      logger.debug(e)
+      logger.error(e)
       # jsonデータ作成
       json_data = {
         json: {
@@ -155,7 +155,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
     begin
       result = LineCustomerLGroup.create(l_group_id: l_group_id, line_customer_id: line_customer_id)
     rescue => e
-      logger.debug(e)
+      logger.error(e)
     end
     return  result
   end
