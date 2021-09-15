@@ -1,15 +1,16 @@
-import React, { useContext, useState, useEffect } from "react"
+import { useContext } from "react"
 import { AuthContext } from "App"
-import 'index.css'
-import {Elements, StripeProvider} from 'react-stripe-elements'
-import CheckoutForm from '../components/CheckOutForms/CheckOutForm'
-import { Box, Card, Container, Divider, Table, TableBody, TableCell,TableRow } from '@material-ui/core'
+import "index.css"
+import {Elements, StripeProvider} from "react-stripe-elements"
+import CheckoutForm from "../components/CheckOutForms/CheckOutForm"
+import { Box, Card, Container } from "@material-ui/core"
 
 
 
 const CheckOut = () => {
-  const {isSignedIn, currentUser } = useContext(AuthContext)
+  const { isSignedIn, currentUser } = useContext(AuthContext)
   const key: any = process.env.REACT_APP_STRIPE_KEY
+
   return (
     <>
       {

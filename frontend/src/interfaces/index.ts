@@ -106,14 +106,15 @@ export type Total = {
 
 export type Chart = {
   data: { 
-          labels: string[]
-          datasets: { label: string
-                      data: number[]
-                      backgroundColor: string
-                      borderColor: string
-                      // borderWidth: number
-                    }[];
-        }
+    labels: string[]
+    datasets: {
+      label: string
+      data: number[]
+      backgroundColor: string
+      borderColor: string
+      // borderWidth: number
+    }[]
+  }
 }
 
 export type Follower = {

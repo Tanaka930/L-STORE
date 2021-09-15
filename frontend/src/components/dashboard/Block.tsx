@@ -12,9 +12,12 @@ import { red } from '@material-ui/core/colors';
 
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-export const BlockCustomers = (props: { unfollowCount:  number; gainUnfollow: number; }) => {
-  const unfollowCount = props.unfollowCount;
-  const gainUnfollow = props.gainUnfollow;
+type BlockCustomersProps = {
+  unfollowCount: number
+  gainUnfollow: number
+}
+
+export const BlockCustomers = ({ unfollowCount, gainUnfollow}: BlockCustomersProps) => {
 
   return (
     <>

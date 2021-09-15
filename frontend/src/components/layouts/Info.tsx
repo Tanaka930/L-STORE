@@ -9,6 +9,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { TabPanelProps } from "../../interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,14 +36,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-type TabPanelProps = {
-  index: number
-  value: number
-  userId: string
+type InfoFormValues = {
+  firstName: string
+  lastName: string
+  address: string
+  year: number
+  month: number
+  day: number
+  email: string
+  sex: number | undefined
+  tel: string
 }
 
-const Info = (props: TabPanelProps) => {
-  const { value, index, userId } = props
+const Info = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const { handleSubmit, control, watch, reset } = useForm()
@@ -105,7 +111,7 @@ const Info = (props: TabPanelProps) => {
     }
   }
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: InfoFormValues) => {
     try {
       const response = await axios.patch(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${userId}`, values, config)
       if (response.status === 200) {

@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom"
-import { CustomersParams } from "interfaces/index"
 import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { CustomersParams } from "interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,8 +34,9 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
 
   if (search.length > 0) {
     _customers = _customers.filter((customer) => {
-      return customer.full_name.toLowerCase().match(search)
-      // || customer.name.toLowerCase().match(search)
+      return customer.name.toLowerCase().match(search)
+        || customer.full_name.toLowerCase().match(search)
+        || customer.mail.toLowerCase().match(search)
     })
   }
   

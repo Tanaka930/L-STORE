@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import Cookies from "js-cookie"
 import axios from 'axios'
-import moment from 'moment'
 import { Box,
          Card,
          Grid,
@@ -17,7 +16,7 @@ import { Tag } from '../../interfaces/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { config } from "lib/api/config"
 import { TabPanelProps } from "../../interfaces/index"
-import { TwoColumnTable } from "components/parts/TwoColumnTable"
+import TwoColumnTable from "components/parts/TwoColumnTable"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,8 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const MenuTags = (props: TabPanelProps) => {
-  const { value, index, userId } = props
+const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
   const { handleSubmit, control } = useForm()
   // const [edit, setEdit] = useState(false)
@@ -94,7 +92,6 @@ const MenuTags = (props: TabPanelProps) => {
 
   const handleDeleteButton = (id: number) => {
     console.log(id)
-    // if (window.confirm("タグを外しますか")) {
     try {
       axios.delete(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups/${id} `, config)
       .then(() => {
@@ -162,7 +159,10 @@ const MenuTags = (props: TabPanelProps) => {
                 </Grid>
               </form>
             </Box>
-          <TwoColumnTable data={tags} />
+          <TwoColumnTable
+            data={tags}
+            handleDeleteButton={handleDeleteButton}
+          />
         </Box>
       )}
     </>

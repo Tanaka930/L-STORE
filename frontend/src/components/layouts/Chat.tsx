@@ -9,13 +9,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { MessageLeft, MessageRight } from "./Message"
-
-
-type TabPanelProps = {
-  index: number
-  value: number
-  userId: string
-}
+import { TabPanelProps } from "../../interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,9 +91,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const Chat = (props: TabPanelProps) => {
+const Chat = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
-  const { value, index, userId } = props
   const [chats, setChats] = useState<any[]>([])
   const [message, setMessage] = useState<string>("")
   const [image, setImage] = useState<File | undefined>()
