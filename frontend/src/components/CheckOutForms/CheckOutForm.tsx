@@ -36,6 +36,11 @@ const CheckoutForm = (props: any) => {
         <CardNumberElement />
         <CardExpiryElement />
         <CardCVCElement />
+        <input 
+        type="text" 
+        placeholder="カード名義"
+        // value={}
+         />
       <button onClick={handleSubmit}>お支払い情報を更新</button>
     </>
   )

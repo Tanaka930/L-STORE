@@ -109,35 +109,42 @@ class Api::V1::LineCustomersController < LineCommonsController
     render json: msg
   end
 
-  def search_customer
+  # グループ検索用のアクション
+  def tag_search_customer
     # ログイン中のユーザーを取得
     user = current_api_v1_user
 
     # パラメータを取得
     user_id = params[:user_id]
 
-    logger.debug(user.id == user_id)
+    # グループのIDを取得
+    l_group_id = params[:l_group_id]
+
     # 現在ログインしているユーザーのIDとパラメータのIDが一致していることを確認
     if user.id == user_id
+    # if "1" == user_id
       # 一致している場合
-      line_users = LineCustomer.where(
-        user_id: user_id, 
-        blockflg: "0",
-      ).or(
-        LineCustomer.where("name ? ","%" + params[:word] + "%")
-      ).pluck(
-        :id,
-        :user_id,
-        :name,
-        :image,
-        :last_name,
-        :first_name,
-        :mail)
-
+      line_users = 
+      LineCustomer.where(
+        user_id: user.id
+      ).joins(
+        :line_customer_l_groups
+      ).merge(
+        LineCustomerLGroup.where(
+          l_group_id: l_group_id
+          )
+        ).pluck(
+          :id,
+          :user_id,
+          :name,
+          :image,
+          :last_name,
+          :first_name,
+          :mail)
       json_array = make_index_json(line_users)
-      rendre json: json_array
+      render json: json_array
     else
-
+      render json: "error", status: 403
     end
   end
 
