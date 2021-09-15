@@ -33,10 +33,10 @@ const CheckoutForm = (props: any) => {
   }
   return (
     <>
-      <CardElement
-        hidePostalCode
-      />
-      <button onClick={handleSubmit}>チェックアウト</button>
+        <CardNumberElement />
+        <CardExpiryElement />
+        <CardCVCElement />
+      <button onClick={handleSubmit}>お支払い情報を更新</button>
     </>
   )
 }

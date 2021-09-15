@@ -5,6 +5,8 @@ import {Elements, StripeProvider} from "react-stripe-elements"
 import CheckoutForm from "../components/CheckOutForms/CheckOutForm"
 import { Box, Card, Container } from "@material-ui/core"
 
+
+
 const CheckOut = () => {
   const { isSignedIn, currentUser } = useContext(AuthContext)
   const key: any = process.env.REACT_APP_STRIPE_KEY
