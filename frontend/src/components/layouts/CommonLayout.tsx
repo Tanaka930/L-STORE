@@ -22,12 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-type Props = {
+type CommonLayoutProps = {
   children: React.ReactElement
 }
 
-const CommonLayout = (props: Props) => {
-  const { children } = props
+const CommonLayout = ({ children }: CommonLayoutProps) => {
   const classes = useStyles()
 
   return (

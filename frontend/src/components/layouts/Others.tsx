@@ -11,12 +11,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-
-type TabPanelProps = {
-  index: number
-  value: number
-  userId: string
-}
+import { TabPanelProps } from "../../interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,10 +32,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const Others = (props: TabPanelProps) => {
-  const { value, index, userId } = props
+type MemoParams = {
+  id: number
+  body: string
+  updated_at: string
+}
+
+type MemoFormValues = {
+  body: string
+}
+
+const Others = ({ value, index, userId }: TabPanelProps) => {
   const [edit, setEdit] = useState(false)
-  const [memos, setMemos] =useState<any[]>([])
+  const [memos, setMemos] =useState<MemoParams[]>([])
   const [memoId, setMemoId] = useState<number | undefined>()
   const { handleSubmit, control, reset, setValue } = useForm()
   const classes = useStyles()
@@ -90,7 +94,7 @@ const Others = (props: TabPanelProps) => {
     }
   }
 
-  const onSubmit = async (values: any) => {
+  const onSubmit = async (values: MemoFormValues) => {
     if (!memoId) {
       // ↓↓↓↓↓↓↓↓↓ 新規投稿処理 ↓↓↓↓↓↓↓↓↓
       try {
@@ -198,7 +202,7 @@ const Others = (props: TabPanelProps) => {
                 ) : (
                   <>
                     <CardContent>
-                      {memos.map((memo, index) => (
+                      {memos.map((memo) => (
                         <Paper
                           key={memo.id}
                           elevation={2}

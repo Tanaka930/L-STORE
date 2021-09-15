@@ -1,15 +1,15 @@
-import React,{useContext} from 'react';
-import {CardElement, injectStripe} from 'react-stripe-elements';
+import React,{ useContext } from "react"
+import { CardElement, injectStripe } from "react-stripe-elements"
 import { AuthContext } from "App"
 import Cookies from "js-cookie"
-import axios from 'axios'
+import axios from "axios"
 
 const CheckoutForm = (props: any) => {
   const { currentUser } = useContext(AuthContext)
   async function handleSubmit(e: any) {
-    const {token} = await props.stripe.createToken({name: "Name"});
+    const {token} = await props.stripe.createToken({name: "Name"})
     // clientはuid、プランはフォームから設定できるようにする
-    const body={
+    const body = {
       stripeToken: token.id
     }
 
@@ -19,7 +19,7 @@ const CheckoutForm = (props: any) => {
         "access-token": Cookies.get("_access_token"),
         "client": Cookies.get("_client"),
         "uid": Cookies.get("_uid")
-              },
+      },
       body: body
     }
 
@@ -27,7 +27,7 @@ const CheckoutForm = (props: any) => {
     if (response.status === 200) {
       console.log(response)
       console.log('success')
-    }else{
+    } else {
       console.log('error')
     }
   }
@@ -41,4 +41,4 @@ const CheckoutForm = (props: any) => {
   )
 }
 
-export default injectStripe(CheckoutForm);
+export default injectStripe(CheckoutForm)
