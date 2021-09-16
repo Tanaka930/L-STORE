@@ -99,7 +99,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       user = current_api_v1_user
 
       # line_customerに紐づくgroup情報を取得
-      now_groups = LineCustomer.where(user_id: user.id).joins(:l_groups).select("l_groups.name,line_customer_l_groups.id")
+      now_groups = LineCustomer.where(user_id: user.id).joins(:l_groups).select("l_groups.name,line_customer_l_groups.id,line_customer_l_groups.l_group_id")
 
       # ユーザーが登録しているグループ情報を取得
       groups = LGroup.where(user_id: user.id).select("id, name")
@@ -108,22 +108,32 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       now_group_list =[]
       group_list = []
 
+      # 制御用の配列
+      ctr_list = []
+
       # 配列にデータを追加する
       now_groups.each do |now_group|
+        # idはLineCustomerLGroupのidを返却
         now_group_list.push(
           {
             "currentGroupsId" => now_group.id,
             "currentGroupsName" => now_group.name,
           }
         )
+        # 制御用の配列にl_group_idを入れていく
+        ctr_list.push(now_group.l_group_id)
       end
+
       groups.each do |group|
-        group_list.push(
-          {
-            "groupId" => group.id,
-            "groupName" => group.name,
-          }
-        )
+
+        if !ctr_list.include? group.id
+          group_list.push(
+            {
+              "groupId" => group.id,
+              "groupName" => group.name
+            }
+          )
+        end
       end
 
       # jsonデータ作成
