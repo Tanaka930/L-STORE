@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Hidden, IconButton, Table, TableRow, TableCell, TableBody, Typography } from "@material-ui/core"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
-import { Tag } from "../../interfaces/index"
+import { CurrentTag } from "../../interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 type TwoColumnTableProps = {
-  datas: Tag[]
+  datas: CurrentTag[]
   handleDeleteButton: (id: number) => void
 }
 

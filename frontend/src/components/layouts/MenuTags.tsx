@@ -12,7 +12,7 @@ import { Box,
          Select,
          TextField
 } from "@material-ui/core"
-import { Tag, TabPanelProps } from '../../interfaces/index'
+import { Tag, CurrentTag, TabPanelProps } from '../../interfaces/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { config } from "lib/api/config"
 import TwoColumnTable from "components/parts/TwoColumnTable"
@@ -46,7 +46,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
   const { handleSubmit, control } = useForm()
   const [tags, setTags] =useState<Tag[]>([])
-  const [cTags, setCTags] =useState<Tag[]>([])
+  const [cTags, setCTags] =useState<CurrentTag[]>([])
   const config = {
     "headers": {
       "access-token": Cookies.get("_access_token"),

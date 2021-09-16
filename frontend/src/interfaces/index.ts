@@ -132,8 +132,14 @@ export type Tag = {
   groupName: string;
 }
 
+export type CurrentTag = {
+  currentGroupsId: number;
+  currentGroupsName: string;
+}
+
 export type TabPanelProps = {
   index: number
   value: number
   userId: string
 }
+
