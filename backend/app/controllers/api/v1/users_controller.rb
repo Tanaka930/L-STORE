@@ -337,16 +337,19 @@ class Api::V1::UsersController < ApplicationController
         next_month = now.next_month.strftime("%Y-%m")
 
         # 請求日を算出
-        # 決済を同日の0時に行う
+        # 決済を15日の0時に行う
+        settlement_date = next_month + "-15 00:00:00"
+        # 有効期限を同日の23:59:59とする
         next_expiration_date = next_month + "-15 23:59:59"
       else
         # 今月を取得
         now_month = now.strftime("%Y-%m")
 
         # 請求日を算出
-        # 決済を同日の0時に行う
+        # 決済を15日の0時に行う
+        settlement_date = now_month + "-15 00:00:00"
+        # 有効期限を同日の23:59:59とする
         next_expiration_date = now_month + "-15 23:59:59"
-        logger.debug(next_expiration_date) 
       end
 
       # Subsctiptionの作成
@@ -356,7 +359,7 @@ class Api::V1::UsersController < ApplicationController
           {:price => plan}
         ],
         # 初回請求日時を指定
-        :billing_cycle_anchor => Time.parse(next_expiration_date).to_i,
+        :billing_cycle_anchor => Time.parse(settlement_date).to_i,
         :proration_behavior => "none"
       )
 
