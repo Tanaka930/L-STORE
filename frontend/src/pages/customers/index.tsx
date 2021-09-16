@@ -3,14 +3,16 @@ import { AuthContext } from "App"
 import axios from "axios"
 import Cookies from "js-cookie"
 import { CustomersParams } from "interfaces/index"
-import { Box, Container } from "@material-ui/core"
-import CustomerSearch from "components/customer/Search"
+import { Box, Container, Card, CardContent, Grid } from "@material-ui/core"
+import SearchWord from "components/customer/Search"
+import SearchTag from "components/tag/Search"
 import CustomersList from "components/customer/List"
 
 const CustomerIndex = () => {
   const [customers, setCustomers] = useState<CustomersParams[]>([])
   const { currentUser } = useContext(AuthContext)
   const [searchKeyword, setSearchKeyword] = useState<string>("")
+  const [searchTag, setSearchTag] = useState<string>("")
 
   // const searchCustomers = async () => {
   //   try {
@@ -64,10 +66,24 @@ const CustomerIndex = () => {
       }}
     >
       <Container maxWidth={false}>
-        <CustomerSearch
-          handleInput={handleInput}
-          // pressEnter={pressEnter}
-        />
+        <Box sx={{ mt: 3 }}>
+          <Card>
+            <CardContent>
+              <Box sx={{ maxWidth: 600 }}>
+                <Grid container spacing={1}>
+
+                  <SearchWord
+                    handleInput={handleInput}
+                    // pressEnter={pressEnter}
+                  />
+
+                  <SearchTag/>
+
+                </Grid>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
         <Box sx={{ pt: 3 }}>
           <CustomersList
             customers={customers}
