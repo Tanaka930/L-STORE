@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useForm, Controller } from 'react-hook-form'
-import Cookies from "js-cookie"
+// import Cookies from "js-cookie"
 import axios from 'axios'
 import { Box,
          Card,
@@ -47,32 +47,32 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const { handleSubmit, control } = useForm()
   const [tags, setTags] =useState<Tag[]>([])
   const [cTags, setCTags] =useState<CurrentTag[]>([])
-  const config = {
-    "headers": {
-      "access-token": Cookies.get("_access_token"),
-      "client": Cookies.get("_client"),
-      "uid": Cookies.get("_uid")
-    }
-  }
-  const getTags = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-      if (response.status === 200) {
-        setTags(response.data.groupNameList)
-      }
-    } catch(err) {
-      console.error(err)
-    }
-  }
+  // const config = {
+  //   "headers": {
+  //     "access-token": Cookies.get("_access_token"),
+  //     "client": Cookies.get("_client"),
+  //     "uid": Cookies.get("_uid")
+  //   }
+  // }
+  // const getTags = async () => {
+  //   try {
+  //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
+  //     if (response.status === 200) {
+  //       setTags(response.data.groupNameList)
+  //     }
+  //   } catch(err) {
+  //     console.error(err)
+  //   }
+  // }
 
   const onSubmit = async (value: any) => {
-    const config = {
-      "headers": {
-        "access-token": Cookies.get("_access_token"),
-        "client": Cookies.get("_client"),
-        "uid": Cookies.get("_uid")
-      }
-    }
+    // const config = {
+    //   "headers": {
+    //     "access-token": Cookies.get("_access_token"),
+    //     "client": Cookies.get("_client"),
+    //     "uid": Cookies.get("_uid")
+    //   }
+    // }
     try {
       console.log('onSubmit')
       console.log(value)
@@ -80,7 +80,6 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
       `, value, config)
       if (response.status === 200) {
         getTags()
-        getCTags()
         console.log('post')
       } else {
         console.log('not-post')
@@ -90,19 +89,20 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
     }
   }
 
-  const getCTags = async () => {
-    const config = {
-      "headers": {
-        "access-token": Cookies.get("_access_token"),
-        "client": Cookies.get("_client"),
-        "uid": Cookies.get("_uid")
-      }
-    }
+  const getTags = async () => {
+    // const config = {
+    //   "headers": {
+    //     "access-token": Cookies.get("_access_token"),
+    //     "client": Cookies.get("_client"),
+    //     "uid": Cookies.get("_uid")
+    //   }
+    // }
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups`, config)
       if (response.status === 200) {
+        setTags(response.data.groups)
         setCTags(response.data.nowGroupList)
-        console.log(response.data.nowGroupList)
+        console.log(response.data)
       }
     } catch(err) {
       console.error(err)
@@ -124,7 +124,6 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
 
   useEffect(() => {
     getTags()
-    getCTags()
   }, [])
 
   return (
