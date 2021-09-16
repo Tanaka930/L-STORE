@@ -80,6 +80,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
       `, value, config)
       if (response.status === 200) {
         getTags()
+        getCTags()
         console.log('post')
       } else {
         console.log('not-post')
@@ -100,8 +101,8 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups`, config)
       if (response.status === 200) {
-        setCTags(response.data.groupNameList)
-        console.log(response.data)
+        setCTags(response.data.nowGroupList)
+        console.log(response.data.nowGroupList)
       }
     } catch(err) {
       console.error(err)
@@ -178,10 +179,10 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
                 </Grid>
               </form>
             </Box>
-          {/* <TwoColumnTable
-            datas={tags}
+          <TwoColumnTable
+            datas={cTags}
             handleDeleteButton={handleDeleteButton}
-          /> */}
+          />
         </Box>
       )}
     </>

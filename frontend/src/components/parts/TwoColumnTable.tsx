@@ -25,7 +25,7 @@ const TwoColumnTable = ({ datas, handleDeleteButton }: TwoColumnTableProps) => {
   return (
     <Table className={classes.root}>
       <TableBody>
-        {datas.map((data: any, index: number) => (
+        {datas.map((data, index: number) => (
           <TableRow
             hover
             key={index}
@@ -35,12 +35,12 @@ const TwoColumnTable = ({ datas, handleDeleteButton }: TwoColumnTableProps) => {
                 color="textPrimary"
                 variant="body1"
               >
-                {data.name}
+                {data.currentGroupsName}
               </Typography>
             </TableCell>
             <Hidden xsDown>
               <TableCell align='right'>
-                <IconButton onClick={() => handleDeleteButton(data.id)}>
+                <IconButton onClick={() => handleDeleteButton(data.currentGroupsId)}>
                   <DeleteForeverIcon />
                 </IconButton>
               </TableCell>
