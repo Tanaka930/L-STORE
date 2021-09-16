@@ -56,7 +56,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       trg_date = LineCustomerLGroup.find(params[:id])
 
       # 対象のデータのグループ情報を取得
-      group = LGroup.find(trg_date.id) 
+      group = LGroup.find(trg_date.l_group_id) 
 
       # ログインしているユーザーのIDと対象のグループ情報を作成したユーザーが同一化を確認
       if current_api_v1_user.id == group.user_id
@@ -80,6 +80,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         }
       end
     rescue => e
+      logger.error(e)
       json_data = {
         json: {
           "msg" => "error",
