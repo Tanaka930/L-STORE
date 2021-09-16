@@ -130,6 +130,7 @@ export type Follower = {
 export type Tag = {
   groupId: number;
   groupName: string;
+  editing: boolean;
 }
 
 export type CurrentTag = {

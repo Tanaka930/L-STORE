@@ -50,6 +50,12 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
     setState(prevState => !prevState)
   }
 
+  const handleEditing = (editing: boolean) => {
+    console.log(editing)
+    editing = true;
+    return
+  }
+
   return (
     <Card className={classes.root}>
       <Box>
@@ -118,36 +124,84 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                 hover
                 key={tag.groupId}
               >
-                <TableCell>
-                  <Box
-                    sx={{
-                      alignItems: 'center',
-                      display: 'flex'
-                    }}
-                  >
-                    <Typography
-                      color="textPrimary"
-                      variant="body1"
-                    >
-                      {tag.groupName}
-                    </Typography>
+                {tag.editing ? (
+                  <>
+                    <TableCell>
+                    <form autoComplete="off" onSubmit={handleCreatePost}>
+                    <Box style={{ display: 'flex',
+                   justifyContent: 'space-between'}}>
+                      <TextField
+                        variant="outlined"
+                        fullWidth
+                        required
+                        label="新規タグ名称"
+                        value={tag.groupName}
+                        margin="dense"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          setGroupName(e.target.value)
+                        }}
+                      />
+                    <Button
+                      style={{
+                        marginTop: "8px",
+                        marginBottom: "4px"
+                      }}
+                      variant="contained"
+                      color="primary"
+                      type="submit">
+                      登録
+                    </Button>
                   </Box>
-                </TableCell>
-                <Hidden xsDown>
-                  <TableCell>
-                    {tag.groupId}
-                  </TableCell>
-                </Hidden>
-                <Hidden xsDown>
-                  <TableCell align='right'>
-                    <IconButton onClick={() => handleEditButton(tag.groupId, tag.groupName)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleDeleteButton(tag.groupId)}>
-                      <DeleteForeverIcon />
-                    </IconButton>
-                  </TableCell>
-                </Hidden>
+                  </form>
+                    </TableCell>
+                    <Hidden xsDown>
+                      <TableCell>
+                        {tag.groupId}
+                      </TableCell>
+                    </Hidden>
+                    <Hidden xsDown>
+                      <TableCell align='right'>
+                        <IconButton onClick={() => handleEditing(tag.editing)}>
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
+                    </Hidden>
+                  </>
+                ):(
+                  <>
+                    <TableCell>
+                      <Box
+                        sx={{
+                          alignItems: 'center',
+                          display: 'flex'
+                        }}
+                      >
+                        <Typography
+                          color="textPrimary"
+                          variant="body1"
+                        >
+                          {tag.groupName}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                    <Hidden xsDown>
+                      <TableCell>
+                        {tag.groupId}
+                      </TableCell>
+                    </Hidden>
+                    <Hidden xsDown>
+                      <TableCell align='right'>
+                        {/* <IconButton onClick={() => handleEditButton(tag.groupId, tag.groupName)}> */}
+                        <IconButton onClick={() => handleEditing(tag.editing)}>
+                          <EditIcon />
+                        </IconButton>
+                        <IconButton onClick={() => handleDeleteButton(tag.groupId)}>
+                          <DeleteForeverIcon />
+                        </IconButton>
+                      </TableCell>
+                    </Hidden>
+                  </>
+                )}
               </TableRow>
             ))}
           </TableBody>

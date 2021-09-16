@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control, reset } = useForm()
   const [tags, setTags] =useState<Tag[]>([])
   const [cTags, setCTags] =useState<CurrentTag[]>([])
   // const getTags = async () => {
@@ -66,6 +66,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
       `, value, config)
       if (response.status === 200) {
         getTags()
+        reset()
         console.log('post')
       } else {
         console.log('not-post')
@@ -122,7 +123,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
                       <Controller
                         name="l_group_id"
                         control={control}
-                        // defaultValue={customerInfo.year}
+                        defaultValue=''
                         render={({ field: { onChange, value } }) => (
                         <TextField
                           name="l_group_id"
