@@ -12,10 +12,9 @@ import { Box,
          Select,
          TextField
 } from "@material-ui/core"
-import { Tag } from '../../interfaces/index'
+import { Tag, TabPanelProps } from '../../interfaces/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { config } from "lib/api/config"
-import { TabPanelProps } from "../../interfaces/index"
 import TwoColumnTable from "components/parts/TwoColumnTable"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,8 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
   const { handleSubmit, control } = useForm()
-  // const [edit, setEdit] = useState(false)
   const [tags, setTags] =useState<Tag[]>([])
+  const [cTags, setCTags] =useState<Tag[]>([])
   const config = {
     "headers": {
       "access-token": Cookies.get("_access_token"),
@@ -90,6 +89,25 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
     }
   }
 
+  const getCTags = async () => {
+    const config = {
+      "headers": {
+        "access-token": Cookies.get("_access_token"),
+        "client": Cookies.get("_client"),
+        "uid": Cookies.get("_uid")
+      }
+    }
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups`, config)
+      if (response.status === 200) {
+        setCTags(response.data.groupNameList)
+        console.log(response.data)
+      }
+    } catch(err) {
+      console.error(err)
+    }
+  }
+
   const handleDeleteButton = (id: number) => {
     console.log(id)
     try {
@@ -105,6 +123,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
 
   useEffect(() => {
     getTags()
+    getCTags()
   }, [])
 
   return (
@@ -159,10 +178,10 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
                 </Grid>
               </form>
             </Box>
-          <TwoColumnTable
-            data={tags}
+          {/* <TwoColumnTable
+            datas={tags}
             handleDeleteButton={handleDeleteButton}
-          />
+          /> */}
         </Box>
       )}
     </>

@@ -15,41 +15,38 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 type TwoColumnTableProps = {
-  data: Tag[]
+  datas: Tag[]
   handleDeleteButton: (id: number) => void
 }
 
-const TwoColumnTable = ({ data, handleDeleteButton }: TwoColumnTableProps) => {
+const TwoColumnTable = ({ datas, handleDeleteButton }: TwoColumnTableProps) => {
   const classes = useStyles()
 
   return (
     <Table className={classes.root}>
       <TableBody>
-        {/* {datas.map((data: any, index: number) => ( */}
+        {datas.map((data: any, index: number) => (
           <TableRow
             hover
-            // key={index}
-            key='1'
+            key={index}
           >
             <TableCell>
               <Typography
                 color="textPrimary"
                 variant="body1"
               >
-                {/* {data.name} */}
-                タグ1
+                {data.name}
               </Typography>
             </TableCell>
             <Hidden xsDown>
               <TableCell align='right'>
-                {/* <IconButton onClick={() => handleDeleteButton(data.id)}> */}
-                <IconButton onClick={() => handleDeleteButton(1)}>
+                <IconButton onClick={() => handleDeleteButton(data.id)}>
                   <DeleteForeverIcon />
                 </IconButton>
               </TableCell>
             </Hidden>
           </TableRow>
-        {/* ))} */}
+        ))}
       </TableBody>
     </Table>
   )
