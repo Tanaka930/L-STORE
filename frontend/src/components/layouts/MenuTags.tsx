@@ -47,13 +47,6 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const { handleSubmit, control } = useForm()
   const [tags, setTags] =useState<Tag[]>([])
   const [cTags, setCTags] =useState<CurrentTag[]>([])
-  // const config = {
-  //   "headers": {
-  //     "access-token": Cookies.get("_access_token"),
-  //     "client": Cookies.get("_client"),
-  //     "uid": Cookies.get("_uid")
-  //   }
-  // }
   // const getTags = async () => {
   //   try {
   //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
@@ -66,13 +59,6 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   // }
 
   const onSubmit = async (value: any) => {
-    // const config = {
-    //   "headers": {
-    //     "access-token": Cookies.get("_access_token"),
-    //     "client": Cookies.get("_client"),
-    //     "uid": Cookies.get("_uid")
-    //   }
-    // }
     try {
       console.log('onSubmit')
       console.log(value)
@@ -90,13 +76,6 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   }
 
   const getTags = async () => {
-    // const config = {
-    //   "headers": {
-    //     "access-token": Cookies.get("_access_token"),
-    //     "client": Cookies.get("_client"),
-    //     "uid": Cookies.get("_uid")
-    //   }
-    // }
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups`, config)
       if (response.status === 200) {
