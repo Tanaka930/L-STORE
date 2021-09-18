@@ -19,11 +19,10 @@ const CheckoutForm = (props: any) => {
         "access-token": Cookies.get("_access_token"),
         "client": Cookies.get("_client"),
         "uid": Cookies.get("_uid")
-      },
-      body: body
+      }
     }
 
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/create_subscription`, config)
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/create_subscription`, body,config)
     if (response.status === 200) {
       console.log(response)
       console.log('success')
