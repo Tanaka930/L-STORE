@@ -3,75 +3,85 @@ class Api::V1::StripesController < ApplicationController
 
   # 後で別のところに移動
   def create_subscription
-    # idからcredit_idを取得
-    # user = User.find(params[:id])
-    user = current_api_v1_user
+    begin
+      # idからcredit_idを取得
+      # user = User.find(params[:id])
+      user = current_api_v1_user
 
-    # credit_idとplan_idを取得
-    credit_id = user.credit_id
+      # credit_idとplan_idを取得
+      credit_id = user.credit_id
 
-    # credit_idを使ってcustomerを取得
-    customer = get_customer(credit_id)
+      # credit_idを使ってcustomerを取得
+      customer = get_customer(credit_id)
 
-    # Stripeのトークン
-    token = params[:stripeToken]
+      # Stripeのトークン
+      token = params[:stripeToken]
 
-    # ユーザ情報(メールアドレスなど一意なもの)
-    client = user.email
+      # ユーザ情報(メールアドレスなど一意なもの)
+      client = user.email
 
-    # 顧客の詳細情報
-    detail = params[:detail]
+      # 顧客の詳細情報
+      detail = params[:detail]
 
-    # 契約するプラン
-    plan = ENV['SUB_PLAN']
-    
-    # stripeに登録されていない場合
-    if customer.nil?
-      # credit_idがnilもしくは空白の場合の処理
+      # 契約するプラン
+      plan = ENV['SUB_PLAN']
+      
+      # stripeに登録されていない場合
+      if customer.nil?
+        # credit_idがnilもしくは空白の場合の処理
 
-      # 作成された顧客のIDを取得
-      new_customer = create_customer(user,client,token,detail)
+        # 作成された顧客のIDを取得
+        new_customer = create_customer(user,client,token,detail)
 
-      if new_customer != nil 
-        # 顧客情報の登録に成功した際の処理
+        if new_customer != nil 
+          # 顧客情報の登録に成功した際の処理
 
-        # サブスクリプション作成
-        subscription = create_subscription_data(user,new_customer.id, plan)
+          # サブスクリプション作成
+          subscription = create_subscription_data(user,new_customer.id, plan)
 
-        if subscription != nil
-          # サブスクリプションの登録に成功した際の処理
+          if subscription != nil
+            # サブスクリプションの登録に成功した際の処理
 
-          # 処理が成功した際の返却データ
-          json_data = {
-            json: {
-              "msg" => "success",
+            # 処理が成功した際の返却データ
+            json_data = {
+              json: {
+                "msg" => "success",
+              }
             }
-          }
+          else
+            # サブスクリプションの登録に失敗した際の処理
+            # 返却データ
+            json_data = {
+              status: 400,
+              json:  {
+                "msg" => "Failed to register the subscription",
+              }
+            }
+          end
         else
-          # サブスクリプションの登録に失敗した際の処理
-          # 返却データ
+          # 顧客情報の登録に失敗した際の処理
           json_data = {
             status: 400,
             json:  {
-              "msg" => "Failed to register the subscription",
+              "msg" => "Failed to register customer information",
             }
           }
         end
       else
-        # 顧客情報の登録に失敗した際の処理
+      # 既にカード情報が登録されている場合更新処理を行う
+        update_customer(customer.id,client,token,detail)
         json_data = {
-          status: 400,
           json:  {
-            "msg" => "Failed to register customer information",
+            "msg" => "Succeeded in updating customer information",
           }
         }
       end
-    else
-    # 既にカード情報が登録されている場合更新処理を行う
-      update_customer(customer.id,client,token,detail)
+    rescue => e
+      logger.error(e)
       json_data = {
+        status: 500,
         json:  {
-          "msg" => "Succeeded in updating customer information",
+          "msg" => "Server error",
         }
       }
     end

@@ -13,47 +13,71 @@ code {
 }
 
 /* 以下チェックアウトページのレイアウト */
+.paymentTitle {
+  text-align: center;
+  font-size: 24px;
+  padding: 15px;
+}
+
 .cardWrapper {
   max-width: 400px;
   margin: 20px 0;
 }
 
 .col-form-label {
-  margin: 5px 0 5px 5%;
+  margin: 5px 0 5px 15%;
 }
 
 .StripeElement {
-  border: 1px solid #eee;
-  margin: 0 0 0 5%;
+  border: 1px solid #cccccc;
+  margin: 0 5% 0 5%;
   height: 30px;
   padding: 5px;
 }
 .inputName {
-  border: 1px solid #eee;
-  margin: 0 0 0 5%;
-  height: 30px;
+  border: 1px solid #cccccc;
+  margin: 0 0 0 20%;
+  height: 35px;
   padding: 5px;
+  width: 60%;
 }
 .cardNum {
   width: 60%;
+  margin: 10px 20%;
 }
 
 .cardLimit {
   width: 20%;
+  margin: 10px 20%;
 }
 
 .securityCord {
   width: 20%;
+  margin: 10px 20%;
 }
 
 .cardSubmit {
   font-size: 16px;
-  margin: 30px 0 5px 5%;
+  margin: 30px 0 10px 20%;
   padding: 10px;
   border-radius: 5px;
   background-color: #1a73e8;
   color: white;
   border: none;
   cursor: pointer;
+  width: 60%;
+}
+
+.cardInfo {
+  margin: 15px 0 15px 20%;
+  width: 60%;
+  background-color: #e6ffe9;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.cardMark {
+  margin: 10px;
 }
 /* 以上チェックアウトページのレイアウト */
