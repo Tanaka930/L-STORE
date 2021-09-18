@@ -1,13 +1,59 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* 以下チェックアウトページのレイアウト */
+.cardWrapper {
+  max-width: 400px;
+  margin: 20px 0;
+}
+
+.col-form-label {
+  margin: 5px 0 5px 5%;
+}
+
+.StripeElement {
+  border: 1px solid #eee;
+  margin: 0 0 0 5%;
+  height: 30px;
+  padding: 5px;
+}
+.inputName {
+  border: 1px solid #eee;
+  margin: 0 0 0 5%;
+  height: 30px;
+  padding: 5px;
+}
+.cardNum {
+  width: 60%;
+}
+
+.cardLimit {
+  width: 20%;
+}
+
+.securityCord {
+  width: 20%;
+}
+
+.cardSubmit {
+  font-size: 16px;
+  margin: 30px 0 5px 5%;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+/* 以上チェックアウトページのレイアウト */

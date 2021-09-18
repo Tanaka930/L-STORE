@@ -24,23 +24,42 @@ const CheckoutForm = (props: any) => {
 
     const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/create_subscription`, body,config)
     if (response.status === 200) {
-      console.log(response)
-      console.log('success')
+
     } else {
       console.log('error')
     }
   }
   return (
     <>
-        <CardNumberElement />
-        <CardExpiryElement />
-        <CardCVCElement />
-        <input 
-        type="text" 
-        placeholder="カード名義"
-        // value={}
-         />
-      <button onClick={handleSubmit}>お支払い情報を更新</button>
+      <div className="cardWrapper">
+        <legend className="col-form-label">カード番号</legend>
+        <CardNumberElement 
+          className="cardNum"
+        />
+        <legend className="col-form-label">有効期限</legend>
+        <CardExpiryElement 
+          className="cardLimit"
+        />
+        <legend className="col-form-label">セキュリティーコード</legend>
+        <CardCVCElement 
+          className="securityCord"
+        />
+        <legend className="col-form-label">お名前</legend>
+        <div>
+          <input 
+          className="inputName"
+          type="text" 
+          placeholder="YAMADA TAROU"
+          // value={}
+          />
+        </div>
+        <button 
+          className="cardSubmit"
+          onClick={handleSubmit}
+        >
+          お支払い情報を更新
+        </button>
+      </div>
     </>
   )
 }
