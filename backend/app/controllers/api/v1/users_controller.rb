@@ -332,28 +332,28 @@ class Api::V1::UsersController < ApplicationController
 
       now_day = now.strftime("%d")
 
-      if now_day.to_i > 17
+      if now_day.to_i > 15
         # 来月を取得
         next_month = now.next_month.strftime("%Y-%m")
 
         # 請求日を算出
         # 決済を15日の0時に行う
-        settlement_date = next_month + "-17 00:00:00"
+        settlement_date = next_month + "-15 00:00:00"
         # 有効期限を同日の23:59:59とする
-        next_expiration_date = next_month + "-17 23:59:59"
+        next_expiration_date = next_month + "-15 23:59:59"
       else
         # 今月を取得
         now_month = now.strftime("%Y-%m")
 
         # 請求日を算出
         # 決済を15日の0時に行う
-        settlement_date = now_month + "-17 00:00:00"
+        settlement_date = now_month + "-15 00:00:00"
         # 有効期限を同日の23:59:59とする
-        next_expiration_date = now_month + "-17 23:59:59"
+        next_expiration_date = now_month + "-15 23:59:59"
       end
 
       # 15日以外の場合は決済日の指定処理
-      if now_day.to_i != 17
+      if now_day.to_i != 15
         # Subsctiptionの作成
         subscription = Stripe::Subscription.create(
           :customer => id,
