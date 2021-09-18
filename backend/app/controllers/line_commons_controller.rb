@@ -134,6 +134,7 @@ class LineCommonsController < ApplicationController
         line_user.update(blockflg: "1")
       end
     rescue => e
+      logger.error(e)
     end
   end
 
