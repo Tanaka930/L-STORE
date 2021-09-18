@@ -186,7 +186,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                     </TableCell>
                     <Hidden xsDown>
                       <TableCell>
-                        {tag.groupId}
+                        {tag.groupCount}
                       </TableCell>
                     </Hidden>
                     <Hidden xsDown>

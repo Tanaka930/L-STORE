@@ -131,6 +131,7 @@ export type Tag = {
   groupId: number;
   groupName: string;
   editing: boolean;
+  groupCount: number;
 }
 
 export type CurrentTag = {

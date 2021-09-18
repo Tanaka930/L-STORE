@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_06_073709) do
+ActiveRecord::Schema.define(version: 2021_09_18_083404) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2021_09_06_073709) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "count", default: 0, null: false
     t.index ["user_id"], name: "index_l_groups_on_user_id"
   end
 

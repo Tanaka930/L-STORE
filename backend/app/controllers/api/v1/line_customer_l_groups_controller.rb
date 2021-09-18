@@ -18,6 +18,9 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
         # パラメータをもとにデータ作成
         result = insert(group_id, customer_id)
 
+        # l_groupのcountを更新
+        change_count(group)
+
         # jsonデータ作成
         json_data = {
           json: {
@@ -62,6 +65,10 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       if current_api_v1_user.id == group.user_id
         # 同一であれば、データを削除
         trg_date.destroy
+
+        # l_groupのcountを更新
+        change_count(group)
+
         # jsonデータ作成
         json_data = {
           json: {
@@ -192,6 +199,11 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
     else
       return false
     end
+  end
+
+  def change_count(group)
+    count = LineCustomerLGroup.where(l_group_id: group.id).count
+    group.update(count: count)
   end
 end
 
