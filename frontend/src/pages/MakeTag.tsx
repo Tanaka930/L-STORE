@@ -55,13 +55,12 @@ const MakeTag = () => {
     }
   }
 
-  const handleEditButton = (groupId: number, groupName: string) => {
+  const handleEditButton = (groupId: number, groupName: string ) => {
     console.log(groupId, groupName)
     try {
       axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
       .then(() => {
-        getTags()
-        // toast.success("削除しました")
+        
       })
       .catch(error => console.error(error))
     } catch(err) {
