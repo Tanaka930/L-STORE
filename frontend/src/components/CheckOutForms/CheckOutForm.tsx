@@ -1,4 +1,4 @@
-import React,{ useContext } from "react"
+import React,{ useContext,useState } from "react"
 import {CardElement, CardNumberElement, CardExpiryElement, CardCVCElement ,injectStripe} from 'react-stripe-elements'
 import { AuthContext } from "App"
 import Cookies from "js-cookie"
@@ -8,13 +8,22 @@ import { Icon } from '@iconify/react';
 
 const CheckoutForm = (props: any) => {
   const { currentUser } = useContext(AuthContext)
+
+  const [cardOwner, setCardOwner] = useState('')
+
+  const handleChange = (e: any) => {
+    setCardOwner(() => e.target.value)
+  }
+
+  
   async function handleSubmit(e: any) {
     
     try{
       const {token} = await props.stripe.createToken({name: "Name"})
       // clientはuid、プランはフォームから設定できるようにする
       const body = {
-        stripeToken: token.id
+        stripeToken: token.id,
+        detail: cardOwner
       }
     
       const config = {
@@ -89,7 +98,8 @@ const CheckoutForm = (props: any) => {
           className="inputName"
           type="text" 
           placeholder="YAMADA TAROU"
-          // value={}
+          value={cardOwner}
+          onChange={handleChange}
           />
         </div>
         <button 
