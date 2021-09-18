@@ -99,7 +99,7 @@ class Api::V1::LineCustomerLGroupsController < ApplicationController
       user = current_api_v1_user
 
       # line_customerに紐づくgroup情報を取得
-      now_groups = LineCustomer.where(user_id: user.id).joins(:l_groups).select("l_groups.name,line_customer_l_groups.id,line_customer_l_groups.l_group_id")
+      now_groups = LineCustomer.where(id: params[:line_customer_id]).joins(:l_groups).select("l_groups.name,line_customer_l_groups.id,line_customer_l_groups.l_group_id")
 
       # ユーザーが登録しているグループ情報を取得
       groups = LGroup.where(user_id: user.id).select("id, name")
