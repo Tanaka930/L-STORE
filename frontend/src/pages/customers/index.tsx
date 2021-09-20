@@ -72,18 +72,19 @@ const CustomerIndex = () => {
         <Box sx={{ mt: 3 }}>
           <Card>
             <CardContent>
-              <Box sx={{ maxWidth: 600 }}>
-                <Grid container spacing={1}>
-
-                  <SearchWord
-                    handleInput={handleInput}
-                    // pressEnter={pressEnter}
-                  />
-
-                  <SearchTag
-                    handleSearchTag={handleSearchTag}
-                  />
-
+              <Box sx={{ maxWidth: 660 }}>
+                <Grid container spacing={3}>
+                  <Grid item md={7} xs={12}>
+                    <SearchWord
+                      handleInput={handleInput}
+                      // pressEnter={pressEnter}
+                    />
+                  </Grid>
+                  <Grid item md={5} xs={12}>
+                    <SearchTag
+                      handleSearchTag={handleSearchTag}
+                    />
+                  </Grid>
                 </Grid>
               </Box>
             </CardContent>
