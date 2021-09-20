@@ -3,8 +3,22 @@ import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
 import axios from 'axios'
 import Cookies from "js-cookie"
-import { Grid, TextField, MenuItem, Button } from "@material-ui/core"
+import { Box, TextField, MenuItem, Button } from "@material-ui/core"
+import { createStyles, makeStyles } from "@material-ui/core/styles"
 import { CustomersParams } from "interfaces/index"
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      '& .MuiFormControl-root': {
+        marginRight: 6
+      },
+      '& .MuiButton-root': {
+        width: 124
+      }
+    }
+  })
+)
 
 type TagsParams = {
   groupId: number
@@ -20,6 +34,7 @@ type SearchTagProps = {
 }
 
 const SearchTag = ({handleSearchTag}: SearchTagProps) => {
+  const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const [tags, setTags] = useState<TagsParams[]>([])
   const { handleSubmit, control } = useForm()
@@ -44,11 +59,9 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   }
 
   const onSubmit = async (values: SearchTagValue) => {
-    console.log(values)
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
       if (response.status === 200) {
-        console.log(response.data)
         handleSearchTag(response.data)
       }
     } catch(err) {
@@ -61,12 +74,13 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   }, [])
 
   return (
-    <Grid item md={4} xs={12}>
-      <form
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <form
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+      className={classes.root}
+    >
+      <Box sx={{ display: 'flex'}}>
         <Controller
           name="groupId"
           control={control}
@@ -94,10 +108,10 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
           color="primary"
           type="submit"
         >
-          検索
+          タグ検索
         </Button>
-      </form>
-    </Grid>
+      </Box>
+    </form>
   )
 }
 
