@@ -11,7 +11,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { TabPanelProps } from "../../interfaces/index"
+import { TabPanelProps } from "../../types/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

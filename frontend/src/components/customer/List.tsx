@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom"
 import { Box, Card, Table, TableHead, TableRow, TableCell, TableBody, Avatar, Typography, Hidden } from "@material-ui/core"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import { CustomersParams } from "interfaces/index"
+import { CustomersParams } from "types/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

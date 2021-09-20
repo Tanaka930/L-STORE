@@ -4,7 +4,7 @@ import Cookies from "js-cookie"
 import axios from "axios"
 import { AuthContext } from "App"
 import LineMenu from "components/layouts/LineMenu"
-import { UserInfo } from "interfaces/index"
+import { UserInfo } from "types/index"
 import { Box, Avatar, Container, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 

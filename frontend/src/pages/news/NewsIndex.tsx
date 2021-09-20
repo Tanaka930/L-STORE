@@ -16,7 +16,7 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import { Container, Box } from "@material-ui/core"
 import { AuthContext } from "App"
-import { News, Contents } from "../../interfaces/index"
+import { News, Contents } from "../../types/index"
 import { microClient } from "../../lib/api/microClient";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';

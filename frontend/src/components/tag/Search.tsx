@@ -5,7 +5,7 @@ import axios from 'axios'
 import Cookies from "js-cookie"
 import { Box, TextField, MenuItem, Button } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { CustomersParams } from "interfaces/index"
+import { CustomersParams } from "types/index"
 
 const useStyles = makeStyles(() =>
   createStyles({
