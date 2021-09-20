@@ -84,6 +84,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
         <Controller
           name="groupId"
           control={control}
+          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               name="groupId"
@@ -91,7 +92,6 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
               variant="outlined"
               fullWidth
               select
-              defaultValue=""
               value={value}
               onChange={onChange}
             >
