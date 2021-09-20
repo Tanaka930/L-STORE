@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
+import Cookies from "js-cookie"
 import client from "lib/api/client"
-import { config } from 'lib/api/config'
 import { getTags } from "lib/api/tag"
 import { Box, TextField, MenuItem, Button } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
@@ -36,6 +36,13 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   const { handleSubmit, control } = useForm()
 
   const onSubmit = async (values: SearchTagValue) => {
+    const config = { 
+      headers: {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
+      }
+    }
     try {
       const res = await client.get(`line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
       if (res.status === 200) {
