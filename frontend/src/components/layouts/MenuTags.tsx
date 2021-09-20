@@ -14,7 +14,8 @@ import { Box,
 } from "@material-ui/core"
 import { Tag, CurrentTag, TabPanelProps } from '../../interfaces/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { config } from "lib/api/config"
+// import { config } from "lib/api/config"
+import Cookies from "js-cookie"
 import TwoColumnTable from "components/parts/TwoColumnTable"
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -59,15 +60,18 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   // }
 
   const onSubmit = async (value: any) => {
+    const config = { 
+      headers: {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
+    }}
     try {
-      console.log('onSubmit')
-      console.log(value)
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups
       `, value, config)
       if (response.status === 200) {
         getTags()
         reset()
-        console.log('post')
       } else {
         console.log('not-post')
       }
@@ -77,6 +81,12 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   }
 
   const getTags = async () => {
+    const config = { 
+      headers: {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
+    }}
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups`, config)
       if (response.status === 200) {
@@ -90,7 +100,12 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   }
 
   const handleDeleteButton = (id: number) => {
-    console.log(id)
+    const config = { 
+      headers: {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
+    }}
     try {
       axios.delete(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/line_customer_l_groups/${id} `, config)
       .then(() => {
