@@ -4,7 +4,7 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { Line } from "react-chartjs-2"
 import { Box, Card, CardContent, CardHeader, Divider, useTheme, Select, MenuItem } from "@material-ui/core"
-import { Chart } from "interfaces/index"
+import { Chart } from "types/index"
 
 export const Sales = () => {
   const theme = useTheme();

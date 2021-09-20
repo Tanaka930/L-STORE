@@ -1,11 +1,12 @@
 import { useState, useEffect, useContext } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
-import axios from 'axios'
 import Cookies from "js-cookie"
+import client from "lib/api/client"
+import { getTags } from "lib/api/tag"
 import { Box, TextField, MenuItem, Button } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { CustomersParams } from "interfaces/index"
+import { CustomersParams, GetTagsParams } from "types/index"
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,11 +21,6 @@ const useStyles = makeStyles(() =>
   })
 )
 
-type TagsParams = {
-  groupId: number
-  groupName: string
-}
-
 type SearchTagValue = {
   groupId: number
 }
@@ -36,33 +32,21 @@ type SearchTagProps = {
 const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-  const [tags, setTags] = useState<TagsParams[]>([])
+  const [tags, setTags] = useState<GetTagsParams[]>([])
   const { handleSubmit, control } = useForm()
 
-  const config = {
-    headers: {
+  const onSubmit = async (values: SearchTagValue) => {
+    const config = { 
+      headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),
       "uid": Cookies.get("_uid")
-    }
-  }
-
-  const getTags = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-      if (response.status === 200) {
-        setTags(response.data.groupNameList)
       }
-    } catch(err) {
-      console.error(err)
     }
-  }
-
-  const onSubmit = async (values: SearchTagValue) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
-      if (response.status === 200) {
-        handleSearchTag(response.data)
+      const res = await client.get(`line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
+      if (res.status === 200) {
+        handleSearchTag(res.data)
       }
     } catch(err) {
       console.error(err)
@@ -70,7 +54,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   }
 
   useEffect(() => {
-    getTags()
+    getTags(setTags)
   }, [])
 
   return (
@@ -84,6 +68,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
         <Controller
           name="groupId"
           control={control}
+          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               name="groupId"
@@ -91,7 +76,6 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
               variant="outlined"
               fullWidth
               select
-              defaultValue=""
               value={value}
               onChange={onChange}
             >

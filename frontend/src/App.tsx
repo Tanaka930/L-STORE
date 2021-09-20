@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react"
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import { getCurrentUser } from "lib/api/auth"
-import { User } from "interfaces/index"
+import { User } from "types/index"
 import theme from "./theme"
 import { ThemeProvider } from '@material-ui/core'
 import 'react-perfect-scrollbar/dist/css/styles.css'
