@@ -14,7 +14,7 @@ import TotalCustomers from 'components/dashboard/Total';
 // import TrafficByDevice from 'components/dashboard//TrafficByDevice';
 
 
-import { Follower } from "interfaces/index"
+import { Follower } from "types/index"
 import axios from "axios"
 import Cookies from "js-cookie"
 // import { config } from "lib/api/config"
@@ -45,7 +45,7 @@ const Home = () => {
       setFollower(res.data)
       // console.log(res.data)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
 

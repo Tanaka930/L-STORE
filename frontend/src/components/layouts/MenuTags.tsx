@@ -12,7 +12,7 @@ import { Box,
          Select,
          TextField
 } from "@material-ui/core"
-import { Tag, CurrentTag, TabPanelProps } from '../../interfaces/index'
+import { Tag, CurrentTag, TabPanelProps } from '../../types/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import { config } from "lib/api/config"
 import Cookies from "js-cookie"

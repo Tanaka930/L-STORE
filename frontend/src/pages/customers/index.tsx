@@ -2,7 +2,7 @@ import { useState ,useEffect, useContext } from "react"
 import { AuthContext } from "App"
 import axios from "axios"
 import Cookies from "js-cookie"
-import { CustomersParams } from "interfaces/index"
+import { CustomersParams } from "types/index"
 import { Box, Container, Card, CardContent, Grid } from "@material-ui/core"
 import SearchWord from "components/customer/Search"
 import SearchTag from "components/tag/Search"
@@ -12,25 +12,13 @@ const CustomerIndex = () => {
   const [customers, setCustomers] = useState<CustomersParams[]>([])
   const { currentUser } = useContext(AuthContext)
   const [searchKeyword, setSearchKeyword] = useState<string>("")
-  const [searchTag, setSearchTag] = useState<string>("")
-
-  // const searchCustomers = async () => {
-  //   try {
-  //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/${searchKeyword}`, config)
-  //     console.log(res.data)
-  //   } catch(err) {
-  //     console.error(err)
-  //   }
-  // }
-
-  // const pressEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   if (e.key === 'Enter') {
-  //     searchCustomers()
-  //   }
-  // }
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
+  }
+
+  const handleSearchTag = (data: CustomersParams[]) => {
+    setCustomers(data)
   }
 
   const config = {
@@ -69,16 +57,18 @@ const CustomerIndex = () => {
         <Box sx={{ mt: 3 }}>
           <Card>
             <CardContent>
-              <Box sx={{ maxWidth: 600 }}>
-                <Grid container spacing={1}>
-
-                  <SearchWord
-                    handleInput={handleInput}
-                    // pressEnter={pressEnter}
-                  />
-
-                  <SearchTag/>
-
+              <Box sx={{ maxWidth: 660 }}>
+                <Grid container spacing={3}>
+                  <Grid item md={7} xs={12}>
+                    <SearchWord
+                      handleInput={handleInput}
+                    />
+                  </Grid>
+                  <Grid item md={5} xs={12}>
+                    <SearchTag
+                      handleSearchTag={handleSearchTag}
+                    />
+                  </Grid>
                 </Grid>
               </Box>
             </CardContent>

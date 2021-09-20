@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import { AuthContext } from "App"
 import AlertMessage from "components/utils/AlertMessage"
 import { token } from "lib/api/test"
-import { TokenParams } from "interfaces/index"
+import { TokenParams } from "types/index"
 import { TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 

@@ -1,45 +1,52 @@
 import { useState, useEffect, useContext } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
-import axios from 'axios'
 import Cookies from "js-cookie"
-import { Grid, TextField, MenuItem, Button } from "@material-ui/core"
+import client from "lib/api/client"
+import { getTags } from "lib/api/tag"
+import { Box, TextField, MenuItem, Button } from "@material-ui/core"
+import { createStyles, makeStyles } from "@material-ui/core/styles"
+import { CustomersParams, GetTagsParams } from "types/index"
 
-type TagsParams = {
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      '& .MuiFormControl-root': {
+        marginRight: 6
+      },
+      '& .MuiButton-root': {
+        width: 124
+      }
+    }
+  })
+)
+
+type SearchTagValue = {
   groupId: number
-  groupName: string
 }
 
-const SearchTag = () => {
+type SearchTagProps = {
+  handleSearchTag: (data: CustomersParams[]) => void
+}
+
+const SearchTag = ({handleSearchTag}: SearchTagProps) => {
+  const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-  const [tags, setTags] = useState<TagsParams[]>([])
+  const [tags, setTags] = useState<GetTagsParams[]>([])
   const { handleSubmit, control } = useForm()
 
-  const config = {
-    headers: {
+  const onSubmit = async (values: SearchTagValue) => {
+    const config = { 
+      headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),
       "uid": Cookies.get("_uid")
-    }
-  }
-
-  const getTags = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-      if (response.status === 200) {
-        setTags(response.data.groupNameList)
       }
-    } catch(err) {
-      console.error(err)
     }
-  }
-
-  const onSubmit = async (values: any) => {
-    console.log(values.groupId)
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
-      if (response.status === 200) {
-        console.log(response.data)
+      const res = await client.get(`line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
+      if (res.status === 200) {
+        handleSearchTag(res.data)
       }
     } catch(err) {
       console.error(err)
@@ -47,19 +54,21 @@ const SearchTag = () => {
   }
 
   useEffect(() => {
-    getTags()
+    getTags(setTags)
   }, [])
 
   return (
-    <Grid item md={4} xs={12}>
-      <form
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <form
+      noValidate
+      autoComplete="off"
+      onSubmit={handleSubmit(onSubmit)}
+      className={classes.root}
+    >
+      <Box sx={{ display: 'flex'}}>
         <Controller
           name="groupId"
           control={control}
+          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               name="groupId"
@@ -67,7 +76,6 @@ const SearchTag = () => {
               variant="outlined"
               fullWidth
               select
-              defaultValue=""
               value={value}
               onChange={onChange}
             >
@@ -84,10 +92,10 @@ const SearchTag = () => {
           color="primary"
           type="submit"
         >
-          検索
+          タグ検索
         </Button>
-      </form>
-    </Grid>
+      </Box>
+    </form>
   )
 }
 

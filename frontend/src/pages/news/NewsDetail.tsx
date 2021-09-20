@@ -12,7 +12,7 @@ import { Container,
         } from "@material-ui/core"
 
 import { AuthContext } from "App"
-import { News } from "../../interfaces/index"
+import { News } from "../../types/index"
 import { microClient } from "../../lib/api/microClient";
 import { useParams, useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -45,7 +45,7 @@ const NewsDetail = ()  => {
         setNews(data)
       // console.log(topNews)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
   

@@ -4,7 +4,7 @@ import moment from "moment"
 import { microClient } from "../../lib/api/microClient"
 import { Box, Button, Card, CardHeader, Divider, Table, TableBody, TableCell, TableRow,} from "@material-ui/core"
 import ArrowRightIcon from "@material-ui/icons/ArrowRight"
-import { News, Contents } from "../../interfaces/index"
+import { News, Contents } from "../../types/index"
 // import { v4 as uuid } from "uuid"
 // import PerfectScrollbar from "react-perfect-scrollbar"
 

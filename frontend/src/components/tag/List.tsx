@@ -14,7 +14,7 @@ import { Box,
          Typography,
 } from "@material-ui/core"
 import "react-toastify/dist/ReactToastify.css"
-import { Tag } from "../../interfaces/index"
+import { Tag } from "../../types/index"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import EditIcon from "@material-ui/icons/Edit"
 import CloseIcon from "@material-ui/icons/Close"
