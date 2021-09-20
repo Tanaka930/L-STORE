@@ -45,7 +45,7 @@ const NewsDetail = ()  => {
         setNews(data)
       // console.log(topNews)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
   

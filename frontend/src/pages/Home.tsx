@@ -38,7 +38,7 @@ const Home = () => {
       setFollower(res.data)
       // console.log(res.data)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
 

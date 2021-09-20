@@ -49,7 +49,7 @@ const NewsIndex = () => {
       setNews(data.contents)
       console.log(data.contents)
     } catch(err) {
-      console.error(err.message)
+      console.error(err)
     }
   }
   
