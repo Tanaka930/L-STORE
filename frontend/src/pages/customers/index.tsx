@@ -13,21 +13,6 @@ const CustomerIndex = () => {
   const { currentUser } = useContext(AuthContext)
   const [searchKeyword, setSearchKeyword] = useState<string>("")
 
-  // const searchCustomers = async () => {
-  //   try {
-  //     const res = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/${searchKeyword}`, config)
-  //     console.log(res.data)
-  //   } catch(err) {
-  //     console.error(err)
-  //   }
-  // }
-
-  // const pressEnter = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   if (e.key === 'Enter') {
-  //     searchCustomers()
-  //   }
-  // }
-
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
   }
@@ -77,7 +62,6 @@ const CustomerIndex = () => {
                   <Grid item md={7} xs={12}>
                     <SearchWord
                       handleInput={handleInput}
-                      // pressEnter={pressEnter}
                     />
                   </Grid>
                   <Grid item md={5} xs={12}>
