@@ -4,7 +4,7 @@ import { Box,
          Container,
 } from '@material-ui/core';
 import TagList from "components/tag/List"
-import { Tag } from '../interfaces/index'
+import { Tag } from '../types/index'
 import { AuthContext } from "App"
 import { postTag } from "lib/api/tag"
 import { config } from "lib/api/config"

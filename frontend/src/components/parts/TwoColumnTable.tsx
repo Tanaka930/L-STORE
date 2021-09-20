@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { Hidden, IconButton, Table, TableRow, TableCell, TableBody, Typography } from "@material-ui/core"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
-import { CurrentTag } from "../../interfaces/index"
+import { CurrentTag } from "../../types/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useHistory , useLocation} from "react-router-dom"
 import AlertMessage from "components/utils/AlertMessage"
-import { PassResetPostParams } from "interfaces/index"
+import { PassResetPostParams } from "types/index"
 import {  TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 

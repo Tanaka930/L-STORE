@@ -1,6 +1,6 @@
 import client from "lib/api/client"
 import Cookies from "js-cookie"
-import { TokenParams } from "interfaces/index"
+import { TokenParams } from "types/index"
 
 // 動作確認用
 export const execTest = () => {

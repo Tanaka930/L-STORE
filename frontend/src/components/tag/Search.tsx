@@ -5,7 +5,7 @@ import axios from 'axios'
 import Cookies from "js-cookie"
 import { Box, TextField, MenuItem, Button } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { CustomersParams } from "interfaces/index"
+import { CustomersParams } from "types/index"
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -84,6 +84,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
         <Controller
           name="groupId"
           control={control}
+          defaultValue=""
           render={({ field: { onChange, value } }) => (
             <TextField
               name="groupId"
@@ -91,7 +92,6 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
               variant="outlined"
               fullWidth
               select
-              defaultValue=""
               value={value}
               onChange={onChange}
             >
