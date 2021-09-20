@@ -12,7 +12,6 @@ const CustomerIndex = () => {
   const [customers, setCustomers] = useState<CustomersParams[]>([])
   const { currentUser } = useContext(AuthContext)
   const [searchKeyword, setSearchKeyword] = useState<string>("")
-  const [searchTag, setSearchTag] = useState<string>("")
 
   // const searchCustomers = async () => {
   //   try {
@@ -31,6 +30,10 @@ const CustomerIndex = () => {
 
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setSearchKeyword(e.target.value)
+  }
+
+  const handleSearchTag = (data: CustomersParams[]) => {
+    setCustomers(data)
   }
 
   const config = {
@@ -77,7 +80,9 @@ const CustomerIndex = () => {
                     // pressEnter={pressEnter}
                   />
 
-                  <SearchTag/>
+                  <SearchTag
+                    handleSearchTag={handleSearchTag}
+                  />
 
                 </Grid>
               </Box>

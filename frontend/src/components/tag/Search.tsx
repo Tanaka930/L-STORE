@@ -4,13 +4,22 @@ import { AuthContext } from "App"
 import axios from 'axios'
 import Cookies from "js-cookie"
 import { Grid, TextField, MenuItem, Button } from "@material-ui/core"
+import { CustomersParams } from "interfaces/index"
 
 type TagsParams = {
   groupId: number
   groupName: string
 }
 
-const SearchTag = () => {
+type SearchTagValue = {
+  groupId: number
+}
+
+type SearchTagProps = {
+  handleSearchTag: (data: CustomersParams[]) => void
+}
+
+const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   const { currentUser } = useContext(AuthContext)
   const [tags, setTags] = useState<TagsParams[]>([])
   const { handleSubmit, control } = useForm()
@@ -34,12 +43,13 @@ const SearchTag = () => {
     }
   }
 
-  const onSubmit = async (values: any) => {
-    console.log(values.groupId)
+  const onSubmit = async (values: SearchTagValue) => {
+    console.log(values)
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
       if (response.status === 200) {
         console.log(response.data)
+        handleSearchTag(response.data)
       }
     } catch(err) {
       console.error(err)
