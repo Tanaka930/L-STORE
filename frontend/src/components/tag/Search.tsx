@@ -2,10 +2,11 @@ import { useState, useEffect, useContext } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
 import axios from 'axios'
-import Cookies from "js-cookie"
+import { config } from 'lib/api/config'
+import { getTags } from "lib/api/tag"
 import { Box, TextField, MenuItem, Button } from "@material-ui/core"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
-import { CustomersParams } from "types/index"
+import { CustomersParams, GetTagsParams } from "types/index"
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -20,11 +21,6 @@ const useStyles = makeStyles(() =>
   })
 )
 
-type TagsParams = {
-  groupId: number
-  groupName: string
-}
-
 type SearchTagValue = {
   groupId: number
 }
@@ -36,27 +32,8 @@ type SearchTagProps = {
 const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
-  const [tags, setTags] = useState<TagsParams[]>([])
+  const [tags, setTags] = useState<GetTagsParams[]>([])
   const { handleSubmit, control } = useForm()
-
-  const config = {
-    headers: {
-      "access-token": Cookies.get("_access_token"),
-      "client": Cookies.get("_client"),
-      "uid": Cookies.get("_uid")
-    }
-  }
-
-  const getTags = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-      if (response.status === 200) {
-        setTags(response.data.groupNameList)
-      }
-    } catch(err) {
-      console.error(err)
-    }
-  }
 
   const onSubmit = async (values: SearchTagValue) => {
     try {
@@ -70,7 +47,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   }
 
   useEffect(() => {
-    getTags()
+    getTags(setTags)
   }, [])
 
   return (
