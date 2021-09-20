@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react"
 import { useForm, Controller } from 'react-hook-form'
 import { AuthContext } from "App"
-import axios from 'axios'
+import client from "lib/api/client"
 import { config } from 'lib/api/config'
 import { getTags } from "lib/api/tag"
 import { Box, TextField, MenuItem, Button } from "@material-ui/core"
@@ -37,9 +37,9 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
 
   const onSubmit = async (values: SearchTagValue) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
-      if (response.status === 200) {
-        handleSearchTag(response.data)
+      const res = await client.get(`line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
+      if (res.status === 200) {
+        handleSearchTag(res.data)
       }
     } catch(err) {
       console.error(err)
