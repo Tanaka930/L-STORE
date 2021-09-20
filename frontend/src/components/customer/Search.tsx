@@ -1,6 +1,5 @@
 import { TextField, InputAdornment, SvgIcon} from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search"
-// import escapeStringRegexp from "escape-string-regexp"
 
 type SearchProps = {
   handleInput: (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void
