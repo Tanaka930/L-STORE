@@ -1,8 +1,7 @@
 import { useState ,useEffect, useContext } from "react"
 import { useParams } from "react-router-dom"
-import Cookies from "js-cookie"
-import axios from "axios"
 import { AuthContext } from "App"
+import { getCustomerDetail } from "lib/api/customer"
 import LineMenu from "components/layouts/LineMenu"
 import { UserInfo } from "types/index"
 import { Box, Avatar, Container, Theme } from "@material-ui/core"
@@ -23,56 +22,34 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-
 const CustomerShow = () => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const [ userInfo, setUserInfo ] = useState<UserInfo | undefined>()
   const { id } = useParams<{ id: string }>()
 
-  const config = {
-    headers: {
-    "access-token": Cookies.get("_access_token"),
-    "client": Cookies.get("_client"),
-    "uid": Cookies.get("_uid")
-    }
-  }
-
-  const getCustomerDetail = async () => {
-    try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers/${id}`, config)
-      setUserInfo(res.data)
-    } catch(err) {
-      console.error(err)
-    }
-  }
-
   useEffect(() => {
-    getCustomerDetail()
+    getCustomerDetail( setUserInfo, currentUser, id )
   }, [])
   
   return (
-    <>
-      <Box sx={{ minHeight: '100%' }}>
-        <Container maxWidth={false}>
-          {
-            userInfo ? (
-              <>
-                <Box className={classes.account}>
-                  <Avatar src={userInfo.image} className={classes.large}/>
-                  <p className={classes.name}>{userInfo.name}</p>
-                </Box>
-                <LineMenu />
-              </>
-            ) : (
-              <>
-                <p>データなし</p>
-              </>
-            )
-          }
-        </Container>
-      </Box>
-    </>
+    <Box sx={{ minHeight: '100%' }}>
+      <Container maxWidth={false}>
+        {
+          userInfo ? (
+            <>
+              <Box className={classes.account}>
+                <Avatar src={userInfo.image} className={classes.large}/>
+                <p className={classes.name}>{userInfo.name}</p>
+              </Box>
+              <LineMenu />
+            </>
+          ) : (
+            <p>データなし</p>
+          )
+        }
+      </Container>
+    </Box>
   )
 }
 
