@@ -13,7 +13,6 @@ import { Box,
          TextField,
          Typography,
 } from "@material-ui/core"
-import "react-toastify/dist/ReactToastify.css"
 import { Tag } from "../../types/index"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import EditIcon from "@material-ui/icons/Edit"
@@ -45,14 +44,15 @@ type TagListProps = {
 const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroupName, handleCreatePost }: TagListProps) => {
   const classes = useStyles()
   const [state, setState] = useState<boolean>(false)
+  const [isEdit, setIsEdit] = useState<boolean[]>([false]);
 
   const handleToggleButton = () => {
     setState(prevState => !prevState)
   }
 
-  const handleEditing = (editing: boolean) => {
-    editing = true;
-    return
+  const handleEditing = () => {
+    setIsEdit([true]);
+    console.log(isEdit)
   }
 
   return (
@@ -123,50 +123,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                 hover
                 key={tag.groupId}
               >
-                {tag.editing ? (
-                  <>
-                    <TableCell>
-                    <form autoComplete="off" onSubmit={handleCreatePost}>
-                    <Box style={{ display: 'flex',
-                   justifyContent: 'space-between'}}>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        required
-                        label="新規タグ名称"
-                        value={tag.groupName}
-                        margin="dense"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setGroupName(e.target.value)
-                        }}
-                      />
-                    <Button
-                      style={{
-                        marginTop: "8px",
-                        marginBottom: "4px"
-                      }}
-                      variant="contained"
-                      color="primary"
-                      type="submit">
-                      登録
-                    </Button>
-                  </Box>
-                  </form>
-                    </TableCell>
-                    <Hidden xsDown>
-                      <TableCell>
-                        {tag.groupId}
-                      </TableCell>
-                    </Hidden>
-                    <Hidden xsDown>
-                      <TableCell align='right'>
-                        <IconButton onClick={() => handleEditing(tag.editing)}>
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                    </Hidden>
-                  </>
-                ):(
+                {isEdit ? (
                   <>
                     <TableCell>
                       <Box
@@ -190,12 +147,55 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                     </Hidden>
                     <Hidden xsDown>
                       <TableCell align='right'>
-                        {/* <IconButton onClick={() => handleEditButton(tag.groupId, tag.groupName)}> */}
-                        <IconButton onClick={() => handleEditing(tag.editing)}>
+                        <IconButton onClick={handleEditing}>
+                        {/* <IconButton onClick={handleEditing}> */}
                           <EditIcon />
                         </IconButton>
                         <IconButton onClick={() => handleDeleteButton(tag.groupId)}>
                           <DeleteForeverIcon />
+                        </IconButton>
+                      </TableCell>
+                    </Hidden>
+                  </>
+                ):(
+                  <>
+                    <TableCell>
+                      <form autoComplete="off" onSubmit={handleCreatePost}>
+                        <Box style={{ display: 'flex',
+                        justifyContent: 'space-between'}}>
+                          <TextField
+                            variant="outlined"
+                            fullWidth
+                            required
+                            label="新規タグ名称"
+                            value={tag.groupName}
+                            margin="dense"
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              setGroupName(e.target.value)
+                            }}
+                          />
+                          <Button
+                            style={{
+                            marginTop: "8px",
+                            marginBottom: "4px"
+                            }}
+                            variant="contained"
+                            color="primary"
+                            type="submit">
+                            登録
+                          </Button>
+                        </Box>
+                      </form>
+                    </TableCell>
+                    <Hidden xsDown>
+                      <TableCell>
+                        {tag.groupId}
+                      </TableCell>
+                    </Hidden>
+                    <Hidden xsDown>
+                      <TableCell align='right'>
+                        <IconButton onClick={handleEditing}>
+                          <EditIcon />
                         </IconButton>
                       </TableCell>
                     </Hidden>
