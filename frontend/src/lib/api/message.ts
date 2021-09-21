@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import { AxiosPromise } from 'axios';
 
 // サインアップ（新規アカウント作成）
-// export const postMessage = (params: Message) => {
 export const postMessage = (params: FormData): AxiosPromise => {
   const config = {
     headers: {

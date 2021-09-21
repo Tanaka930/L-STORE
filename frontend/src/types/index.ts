@@ -64,8 +64,8 @@ export type CustomersParams = {
   id: number;
   name: string;
   image?: string;
-  user_id: number;
-  full_name: string;
+  userId: number;
+  fullName: string;
   mail: string;
 }
 

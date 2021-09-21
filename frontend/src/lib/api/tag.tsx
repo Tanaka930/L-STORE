@@ -19,7 +19,7 @@ export const postTag = (params: FormData): AxiosPromise => {
 
 // タグ一覧取得(表示)用
 export const getTags = async (setTags: React.Dispatch<React.SetStateAction<GetTagsParams[]>>) => {
-  const config = { 
+  const config = {
     headers: {
     "access-token": Cookies.get("_access_token"),
     "client": Cookies.get("_client"),

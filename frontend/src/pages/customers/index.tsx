@@ -1,3 +1,4 @@
+import client from "lib/api/client"
 import { useState ,useEffect, useContext } from "react"
 import { AuthContext } from "App"
 import axios from "axios"
@@ -31,7 +32,7 @@ const CustomerIndex = () => {
 
   const getCustomers = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/tokens/${currentUser?.id}/line_customers`, config)
+      const res = await client.get(`/tokens/${currentUser?.id}/line_customers`, config)
       setCustomers(res.data)
     } catch(err) {
       console.error(err)
