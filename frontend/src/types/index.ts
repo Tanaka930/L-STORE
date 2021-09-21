@@ -142,6 +142,7 @@ export type CurrentTag = {
 export type GetTagsParams = {
   groupId: number
   groupName: string
+  groupCount: number;
 }
 
 export type TabPanelProps = {
