@@ -77,6 +77,18 @@ export type Chats = {
   line_customer_id: number;
 }
 
+export type ChatDatas = {
+  id: number
+  body: string
+  chatImage: {
+    url: string | null
+  }
+  lineCustomerId: number
+  sendFlg: string
+  createdAt: string
+  updatedAt: string
+}
+
 export type UserInfo = {
   id: number;
   image?: string;
