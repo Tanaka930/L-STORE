@@ -37,8 +37,6 @@ export const Sales = () => {
     // return() => clearInterval(interval)
   }, [])
 
-  // console.log(chart)
-
   // const [weekChart, setWeekChart] = useState<Chart>()
 
   const getWeek = async () => {
@@ -60,7 +58,6 @@ export const Sales = () => {
   }
 
   const chartChange = (e: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) => {
-    console.log(e.target.value)
     if (e.target.value === 1) { return getChart() }
     if (e.target.value === 2) { return getWeek() }
     if (e.target.value === 3) { return getMonth() }

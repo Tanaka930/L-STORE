@@ -1,7 +1,6 @@
 import client from "lib/api/client"
 import { useState ,useEffect, useContext } from "react"
 import { AuthContext } from "App"
-import axios from "axios"
 import Cookies from "js-cookie"
 import { CustomersParams } from "types/index"
 import { Box, Container, Card, CardContent, Grid } from "@material-ui/core"

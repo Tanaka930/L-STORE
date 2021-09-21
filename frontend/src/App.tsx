@@ -47,10 +47,10 @@ const App = () => {
         setIsSignedIn(true)
         setCurrentUser(res?.data.data)
       } else {
-        console.log("No current user")
+        console.error("No current user")
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
 
     setLoading(false)

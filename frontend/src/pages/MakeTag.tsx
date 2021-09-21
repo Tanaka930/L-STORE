@@ -14,13 +14,10 @@ const MakeTag = () => {
   const [tags, setTags] = useState<Tag[]>([])
   const [group_name, setGroupName] = useState<string>("")
 
-  console.log(group_name)
-
   const getTags = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
       setTags(res.data.groupNameList)
-      console.log(res.data.groupNameList)
     } catch(err) {
       console.error(err)
     }
@@ -39,24 +36,21 @@ const MakeTag = () => {
     e.preventDefault()
     try { 
       const data = createFormData()
-      console.log(data)
       const res = await postTag(data)
 
-      console.log(res)
       if(res.status === 200){
         getTags()
         setGroupName("")
         // おそらくここにリダイレクト処理などを記述する
       } else {
-        console.log(res.status + "error")
+        console.error(res.status + "error")
       }
     } catch(err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
   const handleEditButton = (groupId: number, groupName: string ) => {
-    console.log(groupId, groupName)
     try {
       axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
       .then(() => {
@@ -69,7 +63,6 @@ const MakeTag = () => {
   }
 
   const handleDeleteButton = (groupId: number) => {
-    console.log(groupId)
     if (window.confirm("削除してもよろしいでしょうか？")) {
       try {
         axios.delete(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)

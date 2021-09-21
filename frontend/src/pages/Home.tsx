@@ -43,7 +43,6 @@ const Home = () => {
       }}
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/follow_data`, config)
       setFollower(res.data)
-      // console.log(res.data)
     } catch(err) {
       console.error(err)
     }

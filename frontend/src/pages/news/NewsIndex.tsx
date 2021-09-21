@@ -47,7 +47,6 @@ const NewsIndex = () => {
       //     data.contents.pop(); //3件を超えたら配列の先頭の値を削除
       // }
       setNews(data.contents)
-      console.log(data.contents)
     } catch(err) {
       console.error(err)
     }
@@ -61,9 +60,6 @@ const NewsIndex = () => {
     // return() => clearInterval(interval)
   }, [])
   
-
-  // console.log(news)
-
   const history = useHistory();
 
   const handleClick = () => {

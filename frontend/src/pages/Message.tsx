@@ -83,18 +83,15 @@ const Message = () => {
     try { 
       const data = createFormData()
       const res = await postMessage(data)
-      console.log(res)
       if(res.status === 200){
         toast.success("送信されました")
-        console.log("ok")
-        // おそらくここにリダイレクト処理などを記述する
       } else {
         toast.error("送信に失敗しました")
-        console.log(res.status + "error")
+        console.error(res.status + "error")
       }
     } catch(err) {
       toast.warn("通信に失敗しました")
-      console.log(err)
+      console.error(err)
     }
   }
 

@@ -53,7 +53,6 @@ const Token = () => {
 
     try {
       const res = await token(params)
-      console.log(res)
 
       if (res.status === 200) {
         // アカウント作成と同時にログインさせてしまう
@@ -65,15 +64,12 @@ const Token = () => {
         // setIsSignedIn(true)
         // setCurrentUser(res.data.data)
 
-
         histroy.push("/")
-
-        console.log("Signed in successfully!")
       } else {
         setAlertMessageOpen(true)
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
       setAlertMessageOpen(true)
     }
   }

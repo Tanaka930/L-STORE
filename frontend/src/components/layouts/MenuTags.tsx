@@ -73,7 +73,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
         getTags()
         reset()
       } else {
-        console.log('not-post')
+        console.error('not-post')
       }
     } catch(err) {
       console.error(err)
@@ -92,7 +92,6 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
       if (response.status === 200) {
         setTags(response.data.groups)
         setCTags(response.data.nowGroupList)
-        console.log(response.data)
       }
     } catch(err) {
       console.error(err)
