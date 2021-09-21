@@ -51,7 +51,6 @@ const SignUp = () => {
 
     try {
       const res = await signUp(params)
-      console.log(res)
 
       if (res.status === 200) {
         // アカウント作成と同時にログインさせてしまう
@@ -64,13 +63,11 @@ const SignUp = () => {
         setCurrentUser(res.data.data)
 
         histroy.push("/")
-
-        console.log("Signed in successfully!")
       } else {
         setAlertMessageOpen(true)
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
       setAlertMessageOpen(true)
     }
   }

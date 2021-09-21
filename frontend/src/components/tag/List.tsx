@@ -51,7 +51,6 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
   }
 
   const handleEditing = (editing: boolean) => {
-    console.log(editing)
     editing = true;
     return
   }

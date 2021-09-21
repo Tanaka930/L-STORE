@@ -52,7 +52,6 @@ const PassReset = () => {
 
     try {
       const res = await passReset(params)
-      console.log(res)
 
       if (res.status === 200) {
 
@@ -65,7 +64,7 @@ const PassReset = () => {
       }
     } catch (err) {
       // 例外処理
-      console.log(err)
+      console.error(err)
       setAlertMessageOpen(true)
     }
   }

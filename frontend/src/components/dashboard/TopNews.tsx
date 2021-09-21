@@ -29,7 +29,6 @@ export const TopNews = () => {
       // }
       const topNews = data.contents.slice(0, 6)
       setNews(topNews)
-      // console.log(topNews)
     } catch(err) {
       console.error(err)
     }

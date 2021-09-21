@@ -35,15 +35,10 @@ const NewsDetail = ()  => {
   const [news, setNews] = useState<News>()
   const classes = useStyles();
 
-  console.log(params.id)
-
   const getNews = async () => {
     try {
       const data: News = await microClient.get({ endpoint: 'news',contentId: `${params.id}`, });
-
-        console.log(data)
         setNews(data)
-      // console.log(topNews)
     } catch(err) {
       console.error(err)
     }
@@ -56,10 +51,6 @@ const NewsDetail = ()  => {
     // },10000)
     // return() => clearInterval(interval)
   }, [])
-
-  if (news !== undefined) {
-    console.log(news)
-  }
 
   const handleClick = () => {
     history.goBack();

@@ -83,7 +83,7 @@ const PassResetPost = () => {
       }
     } catch (err) {
       // 例外処理
-      console.log(err)
+      console.error(err)
       setAlertMessageOpen(true)
     }
   }

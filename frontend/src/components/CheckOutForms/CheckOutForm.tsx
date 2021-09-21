@@ -36,7 +36,6 @@ const CheckoutForm = (props: any) => {
       }
 
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/create_subscription`, body,config)
-      console.log(response.status)
       if (response.status === 200) {
         toast.success("情報を更新しました")
       } else {
@@ -47,7 +46,7 @@ const CheckoutForm = (props: any) => {
         toast.error("入力情報をご確認ください")
       }else{
         toast.error("サーバーでエラーが発生しました")
-        console.log(e)
+        console.error(e)
       }
     }
   }

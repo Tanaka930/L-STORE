@@ -53,11 +53,9 @@ const SignIn = () => {
 
     try {
       const res = await signIn(params)
-      console.log(res)
 
       if (res.status === 200) {
         // ログインに成功した場合はCookieに各値を格納
-        console.log(res.headers["access-token"])
         Cookies.set("_access_token", res.headers["access-token"])
         Cookies.set("_client", res.headers["client"])
         Cookies.set("_uid", res.headers["uid"])
@@ -70,7 +68,7 @@ const SignIn = () => {
         setAlertMessageOpen(true)
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
       setAlertMessageOpen(true)
     }
   }
