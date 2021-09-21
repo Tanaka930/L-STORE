@@ -59,7 +59,6 @@ export type Message = {
 }
 
 // 友達リスト用
-
 export type CustomersParams = {
   id: number;
   name: string;
@@ -70,7 +69,6 @@ export type CustomersParams = {
 }
 
 // チャット
-
 export type Chats = {
   // id: number;
   body: string;
@@ -142,6 +140,7 @@ export type CurrentTag = {
 export type GetTagsParams = {
   groupId: number
   groupName: string
+  groupCount: number
 }
 
 export type TabPanelProps = {
