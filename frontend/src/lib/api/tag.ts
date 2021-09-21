@@ -31,6 +31,7 @@ export const getTags = async (setTags: React.Dispatch<React.SetStateAction<GetTa
     const res = await client.get('l_groups', config)
     if (res.status === 200) {
       setTags(res.data.groupNameList)
+      console.log(res.data.groupNameList)
     }
   } catch(err) {
     console.error(err)

@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react"
-import axios from 'axios'
-import { Box,
-         Container,
-} from '@material-ui/core';
+import axios from "axios"
+import Cookies from "js-cookie"
+import { Box, Container } from "@material-ui/core"
 import TagList from "components/tag/List"
-import { Tag } from '../types/index'
+import { Tag } from "../types/index"
 import { AuthContext } from "App"
 import { postTag } from "lib/api/tag"
 import { config } from "lib/api/config"
@@ -15,6 +14,13 @@ const MakeTag = () => {
   const [group_name, setGroupName] = useState<string>("")
 
   const getTags = async () => {
+    const config = {
+      headers: {
+        "access-token": Cookies.get("_access_token"),
+        "client": Cookies.get("_client"),
+        "uid": Cookies.get("_uid")
+      }
+    }
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
       setTags(res.data.groupNameList)
