@@ -1,12 +1,11 @@
-import client from "lib/api/client"
 import { useState ,useEffect, useContext } from "react"
 import { AuthContext } from "App"
-import Cookies from "js-cookie"
-import { CustomersParams } from "types/index"
-import { Box, Container, Card, CardContent, Grid } from "@material-ui/core"
+import { getCustomers } from "lib/api/customer"
 import SearchWord from "components/customer/Search"
 import SearchTag from "components/tag/Search"
 import CustomersList from "components/customer/List"
+import { Box, Container, Card, CardContent, Grid } from "@material-ui/core"
+import { CustomersParams } from "types/index"
 
 const CustomerIndex = () => {
   const [customers, setCustomers] = useState<CustomersParams[]>([])
@@ -21,25 +20,8 @@ const CustomerIndex = () => {
     setCustomers(data)
   }
 
-  const config = {
-    headers: {
-    "access-token": Cookies.get("_access_token"),
-    "client": Cookies.get("_client"),
-    "uid": Cookies.get("_uid")
-    }
-  }
-
-  const getCustomers = async () => {
-    try {
-      const res = await client.get(`/tokens/${currentUser?.id}/line_customers`, config)
-      setCustomers(res.data)
-    } catch(err) {
-      console.error(err)
-    }
-  }
-
   useEffect(() => {
-    getCustomers()
+    getCustomers(setCustomers, currentUser)
     // const interval = setInterval(()=>{
     //   getCustomers()
     // },10000)
