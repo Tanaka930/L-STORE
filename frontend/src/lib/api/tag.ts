@@ -3,6 +3,7 @@ import Cookies from "js-cookie"
 import { AxiosPromise } from "axios"
 import { GetTagsParams } from "types/index"
 
+
 // タグ追加用
 export const postTag = (params: FormData): AxiosPromise => {
   const config = {
