@@ -36,7 +36,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   const { handleSubmit, control } = useForm()
 
   const onSubmit = async (values: SearchTagValue) => {
-    const config = { 
+    const config = {
       headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),

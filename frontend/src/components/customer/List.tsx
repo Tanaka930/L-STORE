@@ -28,14 +28,14 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
   const handleLinkClick = (id: number) => {
     history.push("/customers/" + id)
   }
-
+  
   let _customers = customers
   let search = searchKeyword.trim().toLowerCase()
 
   if (search.length > 0) {
     _customers = _customers.filter((customer) => {
       return customer.name.toLowerCase().match(search)
-        || customer.full_name.toLowerCase().match(search)
+        || customer.fullName.toLowerCase().match(search)
         || customer.mail.toLowerCase().match(search)
     })
   }
@@ -89,7 +89,7 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
                 </TableCell>
                 <Hidden xsDown>
                   <TableCell>
-                    {customer.full_name}
+                    {customer.fullName}
                   </TableCell>
                 </Hidden>
                 <Hidden xsDown>
