@@ -3,13 +3,13 @@ import Avatar from "@material-ui/core/Avatar"
 
 type MsgLeftProps = {
   message: string
-  image: string
+  image: string | null
   icon: string
 }
 
 type MsgRightProps = {
   message: string
-  image: string
+  image: string | null
 }
 
 const useStyles = makeStyles((theme: Theme) =>
