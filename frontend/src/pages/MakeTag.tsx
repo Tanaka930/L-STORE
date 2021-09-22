@@ -59,6 +59,13 @@ const MakeTag = () => {
 
   const handleEditButton = (groupId: number, group_name: string ) => {
     try {
+      const config = {
+        headers: {
+        "access-token": Cookies.get("_access_token"),
+        "client": Cookies.get("_client"),
+        "uid": Cookies.get("_uid")
+        }
+      }
       const value = {group_name: group_name}
       axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
       .then(() => {
@@ -74,6 +81,13 @@ const MakeTag = () => {
   const handleDeleteButton = (groupId: number) => {
     if (window.confirm("削除してもよろしいでしょうか？")) {
       try {
+        const config = {
+          headers: {
+          "access-token": Cookies.get("_access_token"),
+          "client": Cookies.get("_client"),
+          "uid": Cookies.get("_uid")
+          }
+        }
         axios.delete(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
         .then(() => {
           getTags()
