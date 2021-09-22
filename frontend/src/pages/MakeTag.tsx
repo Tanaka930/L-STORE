@@ -59,6 +59,7 @@ const MakeTag = () => {
 
   const handleEditButton = (groupId: number, group_name: string ) => {
     try {
+      console.log(group_name)
       const value = {group_name: group_name}
       axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
       .then(() => {

@@ -150,16 +150,17 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                             variant="contained"
                             color="primary"
                             type="submit"
+                            disabled={!group_name}
                             onClick={() => handleEditButton(tag.groupId, group_name)}
                             >
-                            登録
+                            更新
                           </Button>
                         </Box>
                       </form>
                     </TableCell>
                     <Hidden xsDown>
                       <TableCell>
-                        {tag.groupId}
+                        {tag.groupCount}
                       </TableCell>
                     </Hidden>
                     <Hidden xsDown>
