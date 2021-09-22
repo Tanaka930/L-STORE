@@ -18,6 +18,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import EditIcon from "@material-ui/icons/Edit"
 import CloseIcon from "@material-ui/icons/Close"
 import AddIcon from "@material-ui/icons/Add"
+import ReplayIcon from '@material-ui/icons/Replay';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -165,7 +166,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                     <Hidden xsDown>
                       <TableCell align='right'>
                         <IconButton onClick={() => handleEditing(index)}>
-                          <EditIcon />
+                          <ReplayIcon />
                         </IconButton>
                       </TableCell>
                     </Hidden>
