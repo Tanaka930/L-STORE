@@ -32,6 +32,16 @@ const MakeTag = () => {
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
     const formData = new FormData()
+    console.log(formData)
+
+    formData.append("group_name", group_name)
+
+    return formData
+  }
+
+  const patchFormData = (): FormData => {
+    const formData = new FormData()
+    console.log(formData)
 
     formData.append("group_name", group_name)
 
@@ -40,27 +50,28 @@ const MakeTag = () => {
 
   const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try { 
-      const data = createFormData()
-      const res = await postTag(data)
+      try { 
+        const data = createFormData()
+        const res = await postTag(data)
 
-      if(res.status === 200){
-        getTags()
-        setGroupName("")
-        // おそらくここにリダイレクト処理などを記述する
-      } else {
-        console.error(res.status + "error")
+        if(res.status === 200){
+          getTags()
+          setGroupName("")
+          // おそらくここにリダイレクト処理などを記述する
+        } else {
+          console.error(res.status + "error")
+        }
+      } catch(err) {
+        console.error(err)
       }
-    } catch(err) {
-      console.error(err)
     }
-  }
 
   const handleEditButton = (groupId: number, groupName: string ) => {
     try {
-      axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
+      axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, groupName, config)
       .then(() => {
-        
+        // getTags()
+        console.log('ok')
       })
       .catch(error => console.error(error))
     } catch(err) {
