@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef, useLayoutEffect, useContext } from "react"
 import Cookies from "js-cookie"
 import axios from "axios"
+import { getChats } from "lib/api/chat"
 import { AuthContext } from "App"
 import { Paper, TextField, IconButton, Box } from "@material-ui/core"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
@@ -9,7 +10,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { MessageLeft, MessageRight } from "./Message"
-import { TabPanelProps } from "../../types/index"
+import { TabPanelProps, ChatDatas } from "types/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -93,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Chat = ({ value, index, userId }: TabPanelProps) => {
   const classes = useStyles()
-  const [chats, setChats] = useState<any[]>([])
+  const [chats, setChats] = useState<ChatDatas[]>([])
   const [message, setMessage] = useState<string>("")
   const [image, setImage] = useState<File | undefined>()
   const [preview, setPreview] = useState("")
@@ -121,14 +122,6 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
     formData.append("body", message)
     if (image) formData.append("image", image)
       return formData
-  }
-
-  const getChats = async () => {
-    await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/chats`, config)
-    .then(res => {
-      setChats(res.data)
-    })
-    .catch(err => console.error(err))
   }
 
   const getCustomerIcon = async () => {
@@ -162,7 +155,7 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
 
   useEffect(() => {
     getCustomerIcon()
-    getChats()
+    getChats(setChats, userId)
     // const interval = setInterval(()=>{
     //   getChats()
     // },30000)
@@ -181,16 +174,16 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
             <Paper id="style-1" className={classes.messagesBody}>
               {chats.map((chat, index) => (
                 <span key={index}>
-                  {chat.send_flg === "0" && (
+                  {chat.sendFlg === "0" && (
                     <MessageRight
                       message={chat.body}
-                      image={chat.chat_image.url}
+                      image={chat.chatImage.url}
                     />
                   )}
-                  {chat.send_flg === "1" && (
+                  {chat.sendFlg === "1" && (
                     <MessageLeft
                       message={chat.body}
-                      image={chat.chat_image.url}
+                      image={chat.chatImage.url}
                       icon={customerIcon}
                     />
                   )}

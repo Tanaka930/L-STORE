@@ -123,6 +123,11 @@ const SignIn = () => {
                 <Link to="/password" className={classes.link}>
                   再設定
                 </Link>
+                <div>
+                  <a href="https://sites.google.com/openstore-japan.com/l-store--manual/%E3%83%9B%E3%83%BC%E3%83%A0" target="_blank">
+                    操作マニュアルについて
+                  </a>
+                </div>
               </Typography>
             </Box>
           </CardContent>
