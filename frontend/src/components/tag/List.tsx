@@ -94,7 +94,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                         variant="outlined"
                         fullWidth
                         required
-                        label="新規タグ名称"
+                        label="Tag Name"
                         value={group_name}
                         margin="dense"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,9 +135,8 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                             variant="outlined"
                             fullWidth
                             required
-                            // label={tag.groupName}
-                            placeholder={tag.groupName}
-                            value={group_name}
+                            label="Tag Name"
+                            defaultValue={tag.groupName}
                             margin="dense"
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                               setGroupName(e.target.value)

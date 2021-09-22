@@ -39,15 +39,6 @@ const MakeTag = () => {
     return formData
   }
 
-  const patchFormData = (): FormData => {
-    const formData = new FormData()
-    console.log(formData)
-
-    formData.append("group_name", group_name)
-
-    return formData
-  }
-
   const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
       try { 
@@ -68,7 +59,7 @@ const MakeTag = () => {
 
   const handleEditButton = (groupId: number, group_name: string ) => {
     try {
-      const value = {groupName: group_name}
+      const value = {group_name: group_name}
       axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
       .then(() => {
         // getTags()
