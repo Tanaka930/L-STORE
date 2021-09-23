@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import { AuthContext } from "App"
 import AlertMessage from "components/utils/AlertMessage"
@@ -69,11 +69,9 @@ const Token = () => {
     }
   }
 
-  getWebhookUrl()
-
-
-
-  
+  useEffect(() => {
+    getWebhookUrl()
+  }, [])
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
