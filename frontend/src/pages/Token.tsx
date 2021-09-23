@@ -7,6 +7,9 @@ import { TokenParams } from "types/index"
 import { TextField, Card, CardContent, CardHeader, Button } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
+import Cookies from "js-cookie"
+import axios from "axios"
+
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -41,6 +44,37 @@ const Token = () => {
   const [login_token, setLoginToken] = useState<string>("")
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
 
+  const [webhookUrl, setWebhookUrl] = useState<string>("")
+
+  const getWebhookUrl = async () => {
+
+    const config = {
+      headers: {
+        "access-token": Cookies.get("_access_token"),
+        "client": Cookies.get("_client"),
+        "uid": Cookies.get("_uid")
+      }
+    }
+    try{
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/whebhook`, config)
+      setChanelId(res.data.chanelId)
+      setWebhookUrl(res.data.webHookUrl)
+      setChanelSecret(res.data.chanelSecret)
+      setMessagingToken(res.data.messagingToken)
+      setLoginToken(res.data.loginToken)
+    }
+    catch(e){
+      console.log(e)
+      setWebhookUrl("webhookはまだ設定されていません")
+    }
+  }
+
+  getWebhookUrl()
+
+
+
+  
+
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -55,14 +89,6 @@ const Token = () => {
       const res = await token(params)
 
       if (res.status === 200) {
-        // アカウント作成と同時にログインさせてしまう
-        // 本来であればメール確認などを挟むべきだが、今回はサンプルなので
-        // Cookies.set("_access_token", res.headers["access-token"])
-        // Cookies.set("_client", res.headers["client"])
-        // Cookies.set("_uid", res.headers["uid"])
-
-        // setIsSignedIn(true)
-        // setCurrentUser(res.data.data)
 
         histroy.push("/")
       } else {
@@ -133,6 +159,12 @@ const Token = () => {
                   登録
                 </Button>
               </CardContent>
+              <div>
+                webhoolurl: 
+              </div>
+              {webhookUrl}
+              <div>
+              </div>
             </Card>
           </form>
         ) : (
