@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
       get '/line_customer/:user_id/search/group/:l_group_id', to: 'line_customers#tag_search_customer'
 
-      get '/users/:id/whebhook', to: 'tokens#get_webhook_url'
+      get '/users/:id/webhook', to: 'tokens#get_webhook_url'
 
       post '/users/:id/create_subscription', to: 'stripes#create_subscription'
 
