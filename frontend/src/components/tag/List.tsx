@@ -14,8 +14,7 @@ import { Box,
          Typography,
 } from "@material-ui/core"
 import { Tag } from "../../types/index"
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
-import EditIcon from "@material-ui/icons/Edit"
+
 import CloseIcon from "@material-ui/icons/Close"
 import AddIcon from "@material-ui/icons/Add"
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -39,11 +38,13 @@ type TagListProps = {
   handleEditButton: (groupId: number, groupName: string) => void
   handleDeleteButton: (groupId: number) => void
   group_name: string
+  patch_name: string
   setGroupName: React.Dispatch<React.SetStateAction<string>>
+  setPatchName: React.Dispatch<React.SetStateAction<string>>
   handleCreatePost: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
 }
 
-const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroupName, handleCreatePost }: TagListProps) => {
+const List = ({ tags, handleEditButton, handleDeleteButton, group_name, patch_name, setGroupName, setPatchName, handleCreatePost }: TagListProps) => {
   const classes = useStyles()
   const [state, setState] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean[]>([false]);
@@ -56,7 +57,6 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
     const newEdit = isEdit.slice();
     newEdit[i] = !newEdit[i];
     setIsEdit(newEdit);
-    console.log('sowhat')
   }
 
   return (
@@ -66,7 +66,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
           <TableHead>
               <TableRow>
                 <TableCell>
-                  タグ名
+                  <h3>タグ名</h3>
                 </TableCell>
                 <Hidden xsDown>
                   <TableCell>
@@ -141,7 +141,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                             defaultValue={tag.groupName}
                             margin="dense"
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                              setGroupName(e.target.value)
+                              setPatchName(e.target.value)
                             }}
                           />
                           <Button
@@ -152,8 +152,8 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                             variant="contained"
                             color="primary"
                             type="submit"
-                            disabled={!group_name}
-                            onClick={() => handleEditButton(tag.groupId, group_name)}
+                            disabled={!patch_name}
+                            onClick={() => handleEditButton(tag.groupId, patch_name)}
                             >
                             更新
                           </Button>
@@ -203,12 +203,6 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                         handleDeleteButton={handleDeleteButton}
                         groupId={tag.groupId}
                       />
-                      {/* <IconButton onClick={() => handleEditing(index)}>
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton onClick={() => handleDeleteButton(tag.groupId)}>
-                        <DeleteForeverIcon />
-                      </IconButton> */}
                     </TableCell>
                   </>
 

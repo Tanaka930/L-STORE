@@ -143,7 +143,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
                         render={({ field: { onChange, value } }) => (
                         <TextField
                           name="l_group_id"
-                          label="タグ"
+                          label="Add Tags"
                           variant="outlined"
                           fullWidth
                           select

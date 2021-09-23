@@ -12,6 +12,7 @@ const MakeTag = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const [tags, setTags] = useState<Tag[]>([])
   const [group_name, setGroupName] = useState<string>("")
+  const [patch_name, setPatchName] = useState<string>("")
 
   const getTags = async () => {
     const config = {
@@ -57,7 +58,7 @@ const MakeTag = () => {
       }
     }
 
-  const handleEditButton = (groupId: number, group_name: string ) => {
+  const handleEditButton = (groupId: number, patch_name: string ) => {
     try {
       // console.log(group_name)
       const config = {
@@ -68,10 +69,10 @@ const MakeTag = () => {
         }
       }
 
-      const value = {group_name: group_name}
-      axios.patch(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
+      const value = {group_name: patch_name}
+      axios.put(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
       .then(() => {
-        // getTags()
+        getTags()
         console.log('ok')
       })
       .catch(error => console.error(error))
@@ -124,7 +125,9 @@ const MakeTag = () => {
                     handleEditButton={handleEditButton}
                     handleDeleteButton={handleDeleteButton}
                     group_name={group_name}
+                    patch_name={patch_name}
                     setGroupName={setGroupName}
+                    setPatchName={setPatchName}
                     handleCreatePost={handleCreatePost}
                   />
                 </Box>
