@@ -170,11 +170,12 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
                           追加
                       </Button> */}
                       <IconButton
-                        style={{ height: '100%', width: '100%', padding: 0}} 
+                        style={{ height: '100%', padding: 0}} 
+                        
                         color='primary'
                         type='submit'
                       >
-                        <AddBoxIcon style={{ height: '100%', width: '100%'}} />
+                        <AddBoxIcon style={{ fontSize: 56 }}/>
                       </IconButton>
                     </Box>
                   </Grid>
