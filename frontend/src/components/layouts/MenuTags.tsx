@@ -6,12 +6,14 @@ import { Box,
          Card,
          Grid,
          Button,
+         IconButton,
          InputLabel,
          MenuItem,
          FormControl,
          Select,
          TextField
 } from "@material-ui/core"
+import AddBoxIcon from '@material-ui/icons/AddBox';
 import { Tag, CurrentTag, TabPanelProps } from '../../types/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import { config } from "lib/api/config"
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '& .MuiPaper-root': {
         marginBottom: 24
-      }
+      },
     },
     formControl: {
       width: "100%",
@@ -130,7 +132,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
               autoComplete="off"
               onSubmit={handleSubmit(onSubmit)}
             >
-                <Grid container spacing={10}>
+                <Grid container spacing={1}>
                   <Grid item xs={10}>
                     {/* <FormControl variant="outlined" className={classes.formControl}>
                       <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel> */}
@@ -159,14 +161,21 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
                   </Grid>
                   <Grid item xs={2}>
                     <Box sx={{ height: '100%', width: '100%'}}>
-                      <Button
+                      {/* <Button
                         variant="contained"
                         color='primary'
                         type="submit"
                         size="large"
                         style={{ height: '100%', width: '100%'}} >
                           追加
-                      </Button>
+                      </Button> */}
+                      <IconButton
+                        style={{ height: '100%', width: '100%', padding: 0}} 
+                        color='primary'
+                        type='submit'
+                      >
+                        <AddBoxIcon style={{ height: '100%', width: '100%'}} />
+                      </IconButton>
                     </Box>
                   </Grid>
                 </Grid>

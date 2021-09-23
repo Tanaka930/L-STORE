@@ -1,5 +1,5 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
-import { Hidden, IconButton, Table, TableRow, TableCell, TableBody, Typography } from "@material-ui/core"
+import { IconButton, Table, TableRow, TableCell, TableBody, Typography } from "@material-ui/core"
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever"
 import { CurrentTag } from "../../types/index"
 
@@ -38,13 +38,11 @@ const TwoColumnTable = ({ datas, handleDeleteButton }: TwoColumnTableProps) => {
                 {data.currentGroupsName}
               </Typography>
             </TableCell>
-            <Hidden xsDown>
               <TableCell align='right'>
                 <IconButton onClick={() => handleDeleteButton(data.currentGroupsId)}>
                   <DeleteForeverIcon />
                 </IconButton>
               </TableCell>
-            </Hidden>
           </TableRow>
         ))}
       </TableBody>

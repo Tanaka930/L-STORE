@@ -19,6 +19,7 @@ import EditIcon from "@material-ui/icons/Edit"
 import CloseIcon from "@material-ui/icons/Close"
 import AddIcon from "@material-ui/icons/Add"
 import ReplayIcon from '@material-ui/icons/Replay';
+import MoreMenu from "components/parts/MoreMenu"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,6 +56,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
     const newEdit = isEdit.slice();
     newEdit[i] = !newEdit[i];
     setIsEdit(newEdit);
+    console.log('sowhat')
   }
 
   return (
@@ -71,13 +73,11 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                     アカウント数
                   </TableCell>
                 </Hidden>
-                <Hidden xsDown>
-                  <TableCell align='right'>
-                    <IconButton onClick={handleToggleButton}>
-                    { state ? <CloseIcon /> : <AddIcon /> }
-                    </IconButton>
-                  </TableCell>
-                </Hidden>
+                <TableCell align='right'>
+                  <IconButton onClick={handleToggleButton}>
+                  { state ? <CloseIcon /> : <AddIcon /> }
+                  </IconButton>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -89,7 +89,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                  }} >
                   <form autoComplete="off" onSubmit={handleCreatePost}>
                     <Box style={{ display: 'flex',
-                   justifyContent: 'space-between'}}>
+                    justifyContent: 'space-between'}}>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -114,7 +114,9 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                   </Box>
                   </form>
                 </TableCell>
-                <TableCell></TableCell>
+                <Hidden xsDown>
+                  <TableCell></TableCell>
+                </Hidden>
                 <TableCell></TableCell>
               </TableRow>
             :
@@ -163,13 +165,11 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                         {tag.groupCount}
                       </TableCell>
                     </Hidden>
-                    <Hidden xsDown>
-                      <TableCell align='right'>
-                        <IconButton onClick={() => handleEditing(index)}>
-                          <ReplayIcon />
-                        </IconButton>
-                      </TableCell>
-                    </Hidden>
+                    <TableCell align='right'>
+                      <IconButton onClick={() => handleEditing(index)}>
+                        <ReplayIcon />
+                      </IconButton>
+                    </TableCell>
                   </>
 
                 ):(
@@ -195,17 +195,21 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, setGroup
                         {tag.groupCount}
                       </TableCell>
                     </Hidden>
-                    <Hidden xsDown>
-                      <TableCell align='right'>
-                        <IconButton onClick={() => handleEditing(index)}>
-                        {/* <IconButton onClick={handleEditing}> */}
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton onClick={() => handleDeleteButton(tag.groupId)}>
-                          <DeleteForeverIcon />
-                        </IconButton>
-                      </TableCell>
-                    </Hidden>
+                    <TableCell align='right'>
+                      <MoreMenu
+                        handleEditButton={handleEditButton}
+                        index={index}
+                        handleEditing={handleEditing}
+                        handleDeleteButton={handleDeleteButton}
+                        groupId={tag.groupId}
+                      />
+                      {/* <IconButton onClick={() => handleEditing(index)}>
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton onClick={() => handleDeleteButton(tag.groupId)}>
+                        <DeleteForeverIcon />
+                      </IconButton> */}
+                    </TableCell>
                   </>
 
                 )}
