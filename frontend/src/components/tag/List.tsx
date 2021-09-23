@@ -130,7 +130,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, patch_na
                 {isEdit[index] ? (
                   <>
                     <TableCell>
-                      <form autoComplete="off">
+                      {/* <form autoComplete="off"> */}
                         <Box style={{ display: 'flex',
                         justifyContent: 'space-between'}}>
                           <TextField
@@ -158,7 +158,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, patch_na
                             更新
                           </Button>
                         </Box>
-                      </form>
+                      {/* </form> */}
                     </TableCell>
                     <Hidden xsDown>
                       <TableCell>
