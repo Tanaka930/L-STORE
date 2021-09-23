@@ -56,7 +56,7 @@ const Token = () => {
       }
     }
     try{
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/whebhook`, config)
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/${currentUser?.id}/webhook`, config)
       setChanelId(res.data.chanelId)
       setWebhookUrl(res.data.webHookUrl)
       setChanelSecret(res.data.chanelSecret)
