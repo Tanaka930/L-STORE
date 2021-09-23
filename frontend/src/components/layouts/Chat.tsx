@@ -157,10 +157,10 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
   useEffect(() => {
     getCustomerIcon()
     getChats(setChats, userId)
-    // const interval = setInterval(()=>{
-    //   getChats()
-    // },30000)
-    // return() => clearInterval(interval)
+    const interval = setInterval(()=>{
+      getChats(setChats, userId)
+    },10000)
+    return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {
