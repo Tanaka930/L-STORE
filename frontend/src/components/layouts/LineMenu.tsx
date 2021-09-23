@@ -38,7 +38,7 @@ const LineMenu = () => {
             textColor="primary"
             indicatorColor="primary"
           >
-            <Tab label="アカウント情報" />
+            <Tab label="顧客情報" />
             <Tab label="トーク" />
             <Tab label="タグ管理" />
             <Tab label="メモ" />

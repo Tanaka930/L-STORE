@@ -119,7 +119,7 @@ const Info = ({ value, index, userId }: TabPanelProps) => {
           // 更新に成功した際の処理
           getCustomerInfo()
           setEdit(false)
-          toast.success("アカウント情報を更新しました")
+          toast.success("顧客情報を更新しました")
         } else {
           // 更新に失敗した際の処理
           setEdit(false)
@@ -156,7 +156,7 @@ const Info = ({ value, index, userId }: TabPanelProps) => {
                 </IconButton>
               </Box>
               <CardHeader
-                title="アカウント情報"
+                title="顧客情報"
                 subheader={edit && "お客様情報をご入力ください"}
               />
               <Divider variant="middle" />

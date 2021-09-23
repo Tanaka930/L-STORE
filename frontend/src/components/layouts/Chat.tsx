@@ -27,8 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
         height: "50vh",
       },
       [theme.breakpoints.down("sm")]: {
-        width: "100%",
+        // width: "100%",
         alignItems: "start",
+        height: "65VH"
       }
     },
     paper2: {
