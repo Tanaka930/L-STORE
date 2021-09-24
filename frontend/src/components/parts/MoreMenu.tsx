@@ -7,7 +7,7 @@ import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@materia
 
 // ----------------------------------------------------------------------
 
-const MoreMenu = ({handleEditing, index, handleDeleteButton, groupId }: any) => {
+const MoreMenu = ({handleEditing, index, handleDeleteButton, groupId}: any) => {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,7 +16,6 @@ const MoreMenu = ({handleEditing, index, handleDeleteButton, groupId }: any) => 
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
         <MoreVertIcon width={20} height={20} />
       </IconButton>
-
       <Menu
         open={isOpen}
         anchorEl={ref.current}
@@ -27,7 +26,7 @@ const MoreMenu = ({handleEditing, index, handleDeleteButton, groupId }: any) => 
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={() => handleDeleteButton(groupId)} >
+        <MenuItem onClick={() => handleDeleteButton(groupId)}>
           <ListItemIcon>
               <DeleteIcon width={24} height={24} />
 

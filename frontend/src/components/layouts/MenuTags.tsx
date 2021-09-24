@@ -50,16 +50,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   const { handleSubmit, control, reset } = useForm()
   const [tags, setTags] =useState<Tag[]>([])
   const [cTags, setCTags] =useState<CurrentTag[]>([])
-  // const getTags = async () => {
-  //   try {
-  //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/l_groups`, config)
-  //     if (response.status === 200) {
-  //       setTags(response.data.groupNameList)
-  //     }
-  //   } catch(err) {
-  //     console.error(err)
-  //   }
-  // }
+
 
   const onSubmit = async (value: any) => {
     const config = { 

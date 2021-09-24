@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: "2rem"
   },
   link: {
+    color: "#007cff",
     textDecoration: "none"
   }
 }))
@@ -74,7 +75,7 @@ const SignIn = () => {
   }
 
   return (
-    <>
+    <div style={{margin:'0 16px'}}>
       <form noValidate autoComplete="off">
         <Card className={classes.card}>
           <CardHeader className={classes.header} title="ログイン" />
@@ -114,12 +115,12 @@ const SignIn = () => {
             </Button>
             <Box textAlign="center" className={classes.box}>
               <Typography variant="body2">
-                アカウントをお持ちでないですか？ &nbsp;
+                アカウントをお持ちでないですか？ <br />
                 <Link to="/signup" className={classes.link}>
                   新規登録
                 </Link>
                 <br />
-                パスワードを忘れた方はこちら &nbsp;
+                パスワードを忘れた方はこちら <br />
                 <Link to="/password" className={classes.link}>
                   再設定
                 </Link>
@@ -141,7 +142,7 @@ const SignIn = () => {
         vertical="top"
         horizontal="center"
       />
-    </>
+    </div>
   )
 }
 

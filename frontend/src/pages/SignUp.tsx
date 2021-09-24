@@ -73,7 +73,7 @@ const SignUp = () => {
   }
 
   return (
-    <>
+    <div style={{margin:'0 16px'}}>
       <form noValidate autoComplete="off">
         <Card className={classes.card}>
           <CardHeader className={classes.header} title="新規登録" />
@@ -141,7 +141,7 @@ const SignUp = () => {
         vertical="top"
         horizontal="center"
       />
-    </>
+    </div>
   )
 }
 

@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   title: {
     flexGrow: 1,
     textDecoration: "none",
-    color: "inherit"
+    color: "inherit",
+    fontWeight: "bold"
   },
   linkBtn: {
     textTransform: "none"
@@ -109,7 +110,7 @@ const Header = () => {
             variant="h4"
             className={classes.title}
           >
-            L-store
+            L-STORE
           </Typography>
           <AuthButtons />
           <Hidden lgUp>

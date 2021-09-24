@@ -58,30 +58,6 @@ const MakeTag = () => {
       }
     }
 
-
-
-  const handleDeleteButton = (groupId: number) => {
-    if (window.confirm("削除してもよろしいでしょうか？")) {
-      try {
-        const config = {
-          headers: {
-          "access-token": Cookies.get("_access_token"),
-          "client": Cookies.get("_client"),
-          "uid": Cookies.get("_uid")
-          }
-        }
-        axios.delete(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
-        .then(() => {
-          getTags()
-          // toast.success("削除しました")
-        })
-        .catch(error => console.error(error))
-      } catch(err) {
-        console.error(err)
-      }
-    }
-  }
-
   useEffect(() => {
     getTags()
   }, [])
@@ -102,7 +78,6 @@ const MakeTag = () => {
                   <TagList
                     tags={tags}
                     // handleEditButton={handleEditButton}
-                    handleDeleteButton={handleDeleteButton}
                     group_name={group_name}
                     patch_name={patch_name}
                     setGroupName={setGroupName}

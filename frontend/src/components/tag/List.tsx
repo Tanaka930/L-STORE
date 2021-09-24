@@ -14,12 +14,10 @@ import { Box,
          Typography,
 } from "@material-ui/core"
 import { Tag } from "../../types/index"
-
 import CloseIcon from "@material-ui/icons/Close"
 import AddIcon from "@material-ui/icons/Add"
 import ReplayIcon from '@material-ui/icons/Replay';
 import MoreMenu from "components/parts/MoreMenu"
-
 import axios from "axios"
 import Cookies from "js-cookie"
 
@@ -38,7 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type TagListProps = {
   tags: Tag[]
-  handleDeleteButton: (groupId: number) => void
   group_name: string
   patch_name: string
   setGroupName: React.Dispatch<React.SetStateAction<string>>
@@ -47,7 +44,7 @@ type TagListProps = {
   getTags: any
 }
 
-const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, setPatchName, handleCreatePost, getTags }: TagListProps) => {
+const List = ({ tags, group_name, patch_name, setGroupName, setPatchName, handleCreatePost, getTags }: TagListProps) => {
   const classes = useStyles()
   const [state, setState] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean[]>([false]);
@@ -60,7 +57,6 @@ const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, 
     const newEdit = isEdit.slice();
     newEdit[i] = !newEdit[i];
     setIsEdit(newEdit);
-    // getTags()
   }
 
   const handleEditButton = (groupId: number, patch_name: string, i: number ) => {
@@ -87,37 +83,62 @@ const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, 
     }
   }
 
+  const handleDeleteButton = (groupId: number) => {
+    if (window.confirm("削除してもよろしいでしょうか？")) {
+      try {
+        const config = {
+          headers: {
+          "access-token": Cookies.get("_access_token"),
+          "client": Cookies.get("_client"),
+          "uid": Cookies.get("_uid")
+          }
+        }
+        axios.delete(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, config)
+        .then(() => {
+          getTags()
+          // toast.success("削除しました")
+        })
+        .catch(error => console.error(error))
+      } catch(err) {
+        console.error(err)
+      }
+    }
+  }
+
   return (
     <Card className={classes.root}>
       <Box>
         <Table>
-          <TableHead>
-              <TableRow>
+          <TableHead style={{backgroundColor: '#e8e8e8'}}>
+            <TableRow>
+              <TableCell style={{fontSize: '16px', fontWeight: 'bold'}}>
+                タグ名
+              </TableCell>
+              <Hidden xsDown>
                 <TableCell>
-                  <h3>タグ名</h3>
+                  アカウント数
                 </TableCell>
-                <Hidden xsDown>
-                  <TableCell>
-                    アカウント数
-                  </TableCell>
-                </Hidden>
-                <TableCell align='right'>
-                  <IconButton onClick={handleToggleButton}>
+              </Hidden>
+              <TableCell align='right' style={{fontSize: '16px', fontWeight: 'bold'}}>
+                <IconButton onClick={handleToggleButton}>
                   { state ? <CloseIcon /> : <AddIcon /> }
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+                </IconButton>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             { state ?
               <TableRow>
-                <TableCell style={{ paddingRight: 0,
-                paddingTop: 8,
-                paddingBottom: 8,
-                 }} >
+                <TableCell style={{
+                  paddingRight: 0,
+                  paddingTop: 8,
+                  paddingBottom: 8,
+                }}>
                   <form autoComplete="off" onSubmit={handleCreatePost}>
-                    <Box style={{ display: 'flex',
-                    justifyContent: 'space-between'}}>
+                    <Box style={{
+                      display: 'flex',
+                      justifyContent: 'space-between'
+                    }}>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -129,17 +150,17 @@ const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, 
                           setGroupName(e.target.value)
                         }}
                       />
-                    <Button
-                      style={{
-                        marginTop: "8px",
-                        marginBottom: "4px"
-                      }}
-                      variant="contained"
-                      color="primary"
-                      type="submit">
-                      追加
-                    </Button>
-                  </Box>
+                      <Button
+                        style={{
+                          marginTop: "8px",
+                          marginBottom: "4px"
+                        }}
+                        variant="contained"
+                        color="primary"
+                        type="submit">
+                        追加
+                      </Button>
+                    </Box>
                   </form>
                 </TableCell>
                 <Hidden xsDown>
@@ -158,7 +179,6 @@ const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, 
                 {isEdit[index] ? (
                   <>
                     <TableCell>
-                      {/* <form autoComplete="off"> */}
                         <Box style={{ display: 'flex',
                         justifyContent: 'space-between'}}>
                           <TextField
@@ -186,7 +206,6 @@ const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, 
                             更新
                           </Button>
                         </Box>
-                      {/* </form> */}
                     </TableCell>
                     <Hidden xsDown>
                       <TableCell>
