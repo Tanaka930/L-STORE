@@ -20,6 +20,9 @@ import AddIcon from "@material-ui/icons/Add"
 import ReplayIcon from '@material-ui/icons/Replay';
 import MoreMenu from "components/parts/MoreMenu"
 
+import axios from "axios"
+import Cookies from "js-cookie"
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -35,16 +38,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type TagListProps = {
   tags: Tag[]
-  handleEditButton: (groupId: number, groupName: string) => void
   handleDeleteButton: (groupId: number) => void
   group_name: string
   patch_name: string
   setGroupName: React.Dispatch<React.SetStateAction<string>>
   setPatchName: React.Dispatch<React.SetStateAction<string>>
   handleCreatePost: (e: React.FormEvent<HTMLFormElement>) => Promise<void>
+  getTags: any
 }
 
-const List = ({ tags, handleEditButton, handleDeleteButton, group_name, patch_name, setGroupName, setPatchName, handleCreatePost }: TagListProps) => {
+const List = ({ tags, handleDeleteButton, group_name, patch_name, setGroupName, setPatchName, handleCreatePost, getTags }: TagListProps) => {
   const classes = useStyles()
   const [state, setState] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<boolean[]>([false]);
@@ -57,6 +60,31 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, patch_na
     const newEdit = isEdit.slice();
     newEdit[i] = !newEdit[i];
     setIsEdit(newEdit);
+    // getTags()
+  }
+
+  const handleEditButton = (groupId: number, patch_name: string, i: number ) => {
+    try {
+      // console.log(group_name)
+      const config = {
+        headers: {
+        "access-token": Cookies.get("_access_token"),
+        "client": Cookies.get("_client"),
+        "uid": Cookies.get("_uid")
+        }
+      }
+
+      const value = {group_name: patch_name}
+      axios.put(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
+      .then(() => {
+        getTags()
+        handleEditing(i)
+        console.log('ok')
+      })
+      .catch(error => console.error(error))
+    } catch(err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -153,7 +181,7 @@ const List = ({ tags, handleEditButton, handleDeleteButton, group_name, patch_na
                             color="primary"
                             type="submit"
                             disabled={!patch_name}
-                            onClick={() => handleEditButton(tag.groupId, patch_name)}
+                            onClick={() => handleEditButton(tag.groupId, patch_name, index)}
                             >
                             更新
                           </Button>

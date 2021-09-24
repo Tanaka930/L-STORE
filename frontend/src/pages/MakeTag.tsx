@@ -58,28 +58,7 @@ const MakeTag = () => {
       }
     }
 
-  const handleEditButton = (groupId: number, patch_name: string ) => {
-    try {
-      // console.log(group_name)
-      const config = {
-        headers: {
-        "access-token": Cookies.get("_access_token"),
-        "client": Cookies.get("_client"),
-        "uid": Cookies.get("_uid")
-        }
-      }
 
-      const value = {group_name: patch_name}
-      axios.put(`${process.env.REACT_APP_API_URL}/l_groups/${groupId}`, value, config)
-      .then(() => {
-        getTags()
-        console.log('ok')
-      })
-      .catch(error => console.error(error))
-    } catch(err) {
-      console.error(err)
-    }
-  }
 
   const handleDeleteButton = (groupId: number) => {
     if (window.confirm("削除してもよろしいでしょうか？")) {
@@ -122,13 +101,14 @@ const MakeTag = () => {
                 <Box sx={{ pt: 3 }}>
                   <TagList
                     tags={tags}
-                    handleEditButton={handleEditButton}
+                    // handleEditButton={handleEditButton}
                     handleDeleteButton={handleDeleteButton}
                     group_name={group_name}
                     patch_name={patch_name}
                     setGroupName={setGroupName}
                     setPatchName={setPatchName}
                     handleCreatePost={handleCreatePost}
+                    getTags={getTags}
                   />
                 </Box>
               </Container>
