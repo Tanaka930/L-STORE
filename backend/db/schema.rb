@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_18_083404) do
+ActiveRecord::Schema.define(version: 2021_09_24_065443) do
 
   create_table "chatimages", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "chat_id"
@@ -59,17 +59,17 @@ ActiveRecord::Schema.define(version: 2021_09_18_083404) do
   end
 
   create_table "line_customer_l_groups", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "l_group_id"
     t.bigint "line_customer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "l_group_id"
     t.index ["l_group_id"], name: "index_line_customer_l_groups_on_l_group_id"
     t.index ["line_customer_id"], name: "index_line_customer_l_groups_on_line_customer_id"
   end
 
   create_table "line_customer_memos", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "line_customer_id"
-    t.string "body", null: false
+    t.text "body", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["line_customer_id"], name: "index_line_customer_memos_on_line_customer_id"
