@@ -98,7 +98,7 @@ const MakeTag = () => {
                   setGroupName={setGroupName}
                   handleCreatePost={handleCreatePost}
                 /> */}
-                <Box sx={{ pt: 3 }}>
+                <Box>
                   <TagList
                     tags={tags}
                     // handleEditButton={handleEditButton}
