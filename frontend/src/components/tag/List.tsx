@@ -109,9 +109,9 @@ const List = ({ tags, group_name, patch_name, setGroupName, setPatchName, handle
     <Card className={classes.root}>
       <Box>
         <Table>
-          <TableHead style={{backgroundColor: '#e8e8e8'}}>
+          <TableHead >
             <TableRow>
-              <TableCell style={{fontSize: '16px', fontWeight: 'bold'}}>
+              <TableCell style={{fontSize: '16px'}}>
                 タグ名
               </TableCell>
               <Hidden xsDown>
