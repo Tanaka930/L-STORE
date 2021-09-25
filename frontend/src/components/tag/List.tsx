@@ -20,6 +20,7 @@ import ReplayIcon from '@material-ui/icons/Replay';
 import MoreMenu from "components/parts/MoreMenu"
 import axios from "axios"
 import Cookies from "js-cookie"
+import PrimaryButton from "./PrimaryButton"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -111,7 +112,7 @@ const List = ({ tags, group_name, patch_name, setGroupName, setPatchName, handle
         <Table>
           <TableHead >
             <TableRow>
-              <TableCell style={{fontSize: '16px'}}>
+              <TableCell style={{fontSize: '16px', fontWeight: 'bold'}}>
                 タグ名
               </TableCell>
               <Hidden xsDown>
@@ -150,16 +151,18 @@ const List = ({ tags, group_name, patch_name, setGroupName, setPatchName, handle
                           setGroupName(e.target.value)
                         }}
                       />
-                      <Button
+                      <PrimaryButton>追加</PrimaryButton>
+                      {/* <Button
                         style={{
                           marginTop: "8px",
-                          marginBottom: "4px"
+                          marginBottom: "4px",
+                          fontWeight: "bold"
                         }}
                         variant="contained"
                         color="primary"
                         type="submit">
                         追加
-                      </Button>
+                      </Button> */}
                     </Box>
                   </form>
                 </TableCell>

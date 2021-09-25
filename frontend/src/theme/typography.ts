@@ -21,7 +21,7 @@ export default {
     letterSpacing: '-0.06px'
   },
   h5: {
-    fontWeight: 500,
+    fontWeight: 900,
     fontSize: 16,
     letterSpacing: '-0.05px'
   },

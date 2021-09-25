@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   submitBtn: {
     marginTop: theme.spacing(2),
     flexGrow: 1,
-    textTransform: "none"
+    textTransform: "none",
+    fontWeight: "bold"
   },
   header: {
-    textAlign: "center"
+    textAlign: "center",
   },
   card: {
     margin: "0 auto",
@@ -78,7 +79,7 @@ const SignIn = () => {
     <div style={{margin:'0 16px'}}>
       <form noValidate autoComplete="off">
         <Card className={classes.card}>
-          <CardHeader className={classes.header} title="ログイン" />
+          <CardHeader className={classes.header} title="ログイン"/>
           <CardContent>
             <TextField
               variant="outlined"
@@ -111,7 +112,7 @@ const SignIn = () => {
               className={classes.submitBtn}
               onClick={handleSubmit}
             >
-              ログイン
+              サインイン
             </Button>
             <Box textAlign="center" className={classes.box}>
               <Typography variant="body2">

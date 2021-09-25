@@ -15,18 +15,20 @@ const useStyles = makeStyles((theme: Theme) => ({
   submitBtn: {
     marginTop: theme.spacing(2),
     flexGrow: 1,
-    textTransform: "none"
+    textTransform: "none",
+    fontWeight: "bold"
   },
   header: {
-    textAlign: "center"
+    textAlign: "center",
   },
   card: {
     margin: "0 auto",
     padding: theme.spacing(2),
     maxWidth: 400,
     marginTop: 40
-  }
+  },
 }))
+
 
 // サインアップ用ページ
 const SignUp = () => {
@@ -128,7 +130,7 @@ const SignUp = () => {
               className={classes.submitBtn}
               onClick={handleSubmit}
             >
-              新規登録
+              サインアップ
             </Button>
           </CardContent>
         </Card>
@@ -137,7 +139,7 @@ const SignUp = () => {
         open={alertMessageOpen}
         setOpen={setAlertMessageOpen}
         severity="error"
-        message="Invalid emai or password"
+        message="Invalid email or password"
         vertical="top"
         horizontal="center"
       />
