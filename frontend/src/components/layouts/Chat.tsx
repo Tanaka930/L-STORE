@@ -15,7 +15,7 @@ import { TabPanelProps, ChatDatas } from "types/index"
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      width: "80vw",
+      width: "90vw",
       height: "60vh",
       maxWidth: "500px",
       maxHeight: "700px",
