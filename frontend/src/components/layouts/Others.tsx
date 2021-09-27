@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
       '& .MuiCardHeader-title': {
         fontSize: 24,
       },
+      '& .MuiContainer-root': {
+        padding: 0,
+      },
       '& .MuiCardHeader-root': {
         textAlign: "center",
         padding: 0,
