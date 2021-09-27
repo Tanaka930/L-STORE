@@ -29,14 +29,9 @@ const CustomerIndex = () => {
   }, [])
 
   return (
-    <Box
-      sx={{
-        minHeight: '100%',
-        py: 3
-      }}
-    >
+    <Box sx={{minHeight: '100%'}}>
       <Container maxWidth={false}>
-        <Box sx={{ mt: 3 }}>
+        <Box>
           <Card>
             <CardContent>
               <Box sx={{ maxWidth: 660 }}>

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useContext } from "react"
 import { AuthContext } from "App"
 import { postMessage } from "lib/api/message"
-import { TextField, Card, CardContent, CardHeader, Button, Box, IconButton } from "@material-ui/core"
+import { Container, TextField, Card, CardContent, CardHeader, Button, Box, IconButton } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import { ToastContainer, toast } from "react-toastify"
@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     margin: "0 auto",
-    padding: theme.spacing(2),
     maxWidth: 400
   },
   box: {
@@ -101,80 +100,82 @@ const Message = () => {
         isSignedIn && currentUser ? (
           <>
             {/* <h2 className={classes.welcome}>ようこそ {currentUser?.name}さん</h2> */}
-            <form autoComplete="off" onSubmit={handleCreatePost}>
-              <Card className={classes.card}>
-                <CardHeader className={classes.header} title="公式ライン投稿" />
-                <CardContent>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    label="タイトル"
-                    value={title}
-                    margin="dense"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setTitle(e.target.value)
-                    }}
-                  />
-                  <TextField
-                    id="outlined-multiline-static"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    multiline
-                    rows={10}
-                    label="メッセージ"
-                    value={body}
-                    margin="dense"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setBody(e.target.value)
-                    }}
-                  />
-                  <Box display="flex" >
-                    <input accept="image/*"
-                      className={classes.input}
-                      id="icon-button-file"
-                      type="file"
+            <Container maxWidth={false}>
+              <form autoComplete="off" onSubmit={handleCreatePost}>
+                <Card className={classes.card}>
+                  <CardHeader className={classes.header} title="公式ライン投稿" />
+                  <CardContent>
+                    <TextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      label="タイトル"
+                      value={title}
+                      margin="dense"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        uploadImage(e)
+                        setTitle(e.target.value)
                       }}
                     />
-                    <label htmlFor="icon-button-file">
-                      <IconButton className={classes.uploadBtn}
+                    <TextField
+                      id="outlined-multiline-static"
+                      variant="outlined"
+                      required
+                      fullWidth
+                      multiline
+                      rows={10}
+                      label="メッセージ"
+                      value={body}
+                      margin="dense"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setBody(e.target.value)
+                      }}
+                    />
+                    <Box display="flex" >
+                      <input accept="image/*"
+                        className={classes.input}
+                        id="icon-button-file"
+                        type="file"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          uploadImage(e)
+                        }}
+                      />
+                      <label htmlFor="icon-button-file">
+                        <IconButton className={classes.uploadBtn}
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span">
+                          <PhotoLibraryIcon />
+                        </IconButton>
+                      </label>
+                      
+                      <Button
+                        className={classes.submitBtn}
+                        variant="contained"
                         color="primary"
-                        aria-label="upload picture"
-                        component="span">
-                        <PhotoLibraryIcon />
-                      </IconButton>
-                    </label>
-                    
-                    <Button
-                      className={classes.submitBtn}
-                      variant="contained"
-                      color="primary"
-                      type="submit">
-                      投稿する
-                    </Button>
+                        type="submit">
+                        投稿する
+                      </Button>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </form>
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover={false}
+              />
+                { preview &&
+                  <Box className={classes.prevImgArea}>
+                    <img className={classes.prevImg} src={preview} alt="プレビュー画像" />
                   </Box>
-                </CardContent>
-              </Card>
-            </form>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover={false}
-            />
-              { preview &&
-                <Box className={classes.prevImgArea}>
-                  <img className={classes.prevImg} src={preview} alt="プレビュー画像" />
-                </Box>
-              }
+                }
+            </Container>
           </>
         ) : (
           <>
