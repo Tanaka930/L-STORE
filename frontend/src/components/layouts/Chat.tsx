@@ -162,7 +162,10 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
       setFlg(true)
       getChats(setChats, userId)
     }, 10000)
-    return() => clearInterval(interval)
+    return() => {
+      clearInterval(interval)
+      setFlg(false)
+    }
   }, [])
 
   useLayoutEffect(() => {
