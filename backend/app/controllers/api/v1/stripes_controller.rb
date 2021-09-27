@@ -183,6 +183,10 @@ class Api::V1::StripesController < ApplicationController
 
       # stripeにサブスクリプションを登録した後、planとサービス有効期限をdbに保存,またsubscription_statusを有効にし、active_statusを1に更新する
       user.update(plan_id: plan, service_expiration_date: next_expiration_date, subscription_status: "active" ,active_status: 1)
+
+      # ユーザーにお知らせのメールを送信
+      StripeMailer.send_thank(user).deliver
+
       return subscription
     rescue => e
       logger.error(e)
