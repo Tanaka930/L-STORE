@@ -61,7 +61,6 @@ const Home = () => {
       {
         isSignedIn && currentUser ? (
           <>
-
             <Box
               style={{
                 backgroundColor:'background.default',

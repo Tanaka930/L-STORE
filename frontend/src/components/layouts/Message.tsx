@@ -1,5 +1,6 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
+import { RingVolume } from "@material-ui/icons"
 
 type MsgLeftProps = {
   message: string
@@ -77,12 +78,17 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(5)
     },
     postImgLeft: {
+      textAlign: "left",
       marginLeft: 15,
       marginBottom: 10,
     },
     postImgRight: {
+      textAlign: "right",
       marginRight: 15,
       marginBottom: 10,
+    },
+    imgArea: {
+      maxWidth: "80%",
     }
   })
 )
@@ -112,7 +118,7 @@ export const MessageLeft = (props: MsgLeftProps) => {
             src={icon}
           ></Avatar>
           <div className={classes.postImgLeft}>
-            <img src={image} alt="投稿画像" />
+            <img className={classes.imgArea} src={image} alt="投稿画像" />
           </div>
         </div>
       )}
@@ -136,7 +142,7 @@ export const MessageRight = (props: MsgRightProps) => {
       { image && (
         <div className={classes.messageRowRight}>
           <div className={classes.postImgRight}>
-            <img src={image} alt="投稿画像" />
+            <img className={classes.imgArea} src={image} alt="投稿画像" />
           </div>
         </div>
       )}
