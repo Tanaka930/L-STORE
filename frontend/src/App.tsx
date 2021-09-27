@@ -6,8 +6,6 @@ import theme from "./theme"
 import { ThemeProvider } from '@material-ui/core'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
-import Cookies from "js-cookie"
-
 import GlobalStyles from 'components/GlobalStyles';
 import CommonLayout from "components/layouts/CommonLayout"
 import Home from "pages/Home"
