@@ -92,7 +92,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   }
 
   const handleDeleteButton = (id: number) => {
-    const config = { 
+    const config = {
       headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),
@@ -116,63 +116,63 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
   return (
     <>
       {value === index && (
-        <Box style={{padding: '16px', backgroundColor: '#fff', marginTop: '1px' }}>
+        <Box style={{padding: '16px', backgroundColor: '#fff', marginTop: '24px' }}>
           <Box sx={{ mb: 3 }}>
             <form
               noValidate
               autoComplete="off"
               onSubmit={handleSubmit(onSubmit)}
             >
-                <Grid container spacing={1}>
-                  <Grid item xs={10}>
-                    {/* <FormControl variant="outlined" className={classes.formControl}>
-                      <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel> */}
-                      <Controller
+              <Grid container spacing={1}>
+                <Grid item xs={10}>
+                  {/* <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-outlined-label">タグ</InputLabel> */}
+                    <Controller
+                      name="l_group_id"
+                      control={control}
+                      defaultValue=''
+                      render={({ field: { onChange, value } }) => (
+                      <TextField
                         name="l_group_id"
-                        control={control}
-                        defaultValue=''
-                        render={({ field: { onChange, value } }) => (
-                        <TextField
-                          name="l_group_id"
-                          label="Add Tags"
-                          variant="outlined"
-                          fullWidth
-                          select
-                          value={value}
-                          onChange={onChange}
-                        >
-                          {tags.map((tag, index) => (
-                            <MenuItem key={index} value={tag.groupId}>
-                              {tag.groupName}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      )}
-                      />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Box sx={{ height: '100%', width: '100%'}}>
-                      {/* <Button
-                        variant="contained"
-                        color='primary'
-                        type="submit"
-                        size="large"
-                        style={{ height: '100%', width: '100%'}} >
-                          追加
-                      </Button> */}
-                      <IconButton
-                        style={{ height: '100%', padding: 0}} 
-                        
-                        color='primary'
-                        type='submit'
+                        label="Add Tags"
+                        variant="outlined"
+                        fullWidth
+                        select
+                        value={value}
+                        onChange={onChange}
                       >
-                        <AddBoxIcon style={{ fontSize: 56 }}/>
-                      </IconButton>
-                    </Box>
-                  </Grid>
+                        {tags.map((tag, index) => (
+                          <MenuItem key={index} value={tag.groupId}>
+                            {tag.groupName}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                    />
                 </Grid>
-              </form>
-            </Box>
+                <Grid item xs={2}>
+                  <Box sx={{ height: '100%', width: '100%'}}>
+                    {/* <Button
+                      variant="contained"
+                      color='primary'
+                      type="submit"
+                      size="large"
+                      style={{ height: '100%', width: '100%'}} >
+                        追加
+                    </Button> */}
+                    <IconButton
+                      style={{ height: '100%', padding: 0}} 
+                      
+                      color='primary'
+                      type='submit'
+                    >
+                      <AddBoxIcon style={{ fontSize: 56 }}/>
+                    </IconButton>
+                  </Box>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
           <TwoColumnTable
             datas={cTags}
             handleDeleteButton={handleDeleteButton}

@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      '& .MuiContainer-root': {
+        padding: 0,
+      },
       '& .MuiCardHeader-title': {
         fontSize: 24,
-      },
-      '& .MuiCardContent-root': {
-        padding: 24,
       },
       '& .MuiCardHeader-root': {
         textAlign: "center",
