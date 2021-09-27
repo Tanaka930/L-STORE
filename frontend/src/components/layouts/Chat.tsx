@@ -100,8 +100,9 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
   const [image, setImage] = useState<File | undefined>()
   const [preview, setPreview] = useState("")
   const [customerIcon, setCustomerIcon] = useState("")
-  const scrollBottomRef = useRef<HTMLDivElement>(null)
+  const [flg, setFlg] = useState<boolean>(false)
   const { currentUser } = useContext(AuthContext)
+  const scrollBottomRef = useRef<HTMLDivElement>(null)
 
   const uploadImage = useCallback((e) => {
     const file = e.target.files[0]
@@ -157,14 +158,17 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
   useEffect(() => {
     getCustomerIcon()
     getChats(setChats, userId)
-    const interval = setInterval(()=>{
+    const interval = setInterval(() => {
+      setFlg(true)
       getChats(setChats, userId)
-    },10000)
+    }, 10000)
     return() => clearInterval(interval)
   }, [])
 
   useLayoutEffect(() => {
-    scrollBottomRef?.current?.scrollIntoView()
+    if(flg === false) {
+      scrollBottomRef?.current?.scrollIntoView()
+    }
   })
 
   return (
