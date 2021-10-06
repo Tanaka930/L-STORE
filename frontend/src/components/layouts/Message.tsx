@@ -1,3 +1,4 @@
+import moment from "moment"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import { RingVolume } from "@material-ui/icons"
@@ -6,11 +7,13 @@ type MsgLeftProps = {
   message: string
   image: string | null
   icon: string
+  createdAt: string
 }
 
 type MsgRightProps = {
   message: string
   image: string | null
+  createdAt: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -78,17 +81,25 @@ const useStyles = makeStyles((theme: Theme) =>
       height: theme.spacing(5)
     },
     postImgLeft: {
+      maxWidth: "60%",
       textAlign: "left",
       marginLeft: 15,
       marginBottom: 10,
     },
     postImgRight: {
+      maxWidth: "60%",
       textAlign: "right",
       marginRight: 15,
       marginBottom: 10,
     },
     imgArea: {
-      maxWidth: "80%",
+      width: "100%",
+    },
+    time: {
+      display: "flex",
+      alignItems: "flex-end",
+      margin: "0 3px 12px",
+      fontSize: 12,
     }
   })
 )
@@ -97,6 +108,7 @@ export const MessageLeft = (props: MsgLeftProps) => {
   const message = props.message && props.message
   const image = props.image && props.image
   const icon = props.icon && props.icon
+  const createdAt = props.createdAt && props.createdAt
   const classes = useStyles()
   return (
     <>
@@ -109,6 +121,9 @@ export const MessageLeft = (props: MsgLeftProps) => {
           <div className={classes.messageWhite}>
             <p className={classes.messageContent}>{message}</p>
           </div>
+          <p className={classes.time}>
+            {moment(createdAt).format('HH:mm')}
+          </p>
         </div>
       )}
       { image && (
@@ -120,6 +135,9 @@ export const MessageLeft = (props: MsgLeftProps) => {
           <div className={classes.postImgLeft}>
             <img className={classes.imgArea} src={image} alt="投稿画像" />
           </div>
+          <p className={classes.time}>
+            {moment(createdAt).format('HH:mm')}
+          </p>
         </div>
       )}
     </>
@@ -130,10 +148,14 @@ export const MessageRight = (props: MsgRightProps) => {
   const classes = useStyles()
   const message = props.message && props.message
   const image = props.image && props.image
+  const createdAt = props.createdAt && props.createdAt
   return (
     <>
       { message && (
         <div className={classes.messageRowRight}>
+          <p className={classes.time}>
+            {moment(createdAt).format('HH:mm')}
+          </p>
           <div className={classes.messageGreen}>
             <p className={classes.messageContent}>{message}</p>
           </div>
@@ -141,6 +163,9 @@ export const MessageRight = (props: MsgRightProps) => {
       )}
       { image && (
         <div className={classes.messageRowRight}>
+          <p className={classes.time}>
+            {moment(createdAt).format('HH:mm')}
+          </p>
           <div className={classes.postImgRight}>
             <img className={classes.imgArea} src={image} alt="投稿画像" />
           </div>
