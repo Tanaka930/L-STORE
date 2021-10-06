@@ -186,12 +186,14 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
                     <MessageRight
                       message={chat.body}
                       image={chat.chatImage.url}
+                      createdAt={chat.createdAt}
                     />
                   )}
                   {chat.sendFlg === "1" && (
                     <MessageLeft
                       message={chat.body}
                       image={chat.chatImage.url}
+                      createdAt={chat.createdAt}
                       icon={customerIcon}
                     />
                   )}
