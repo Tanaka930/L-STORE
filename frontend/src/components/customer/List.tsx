@@ -59,6 +59,11 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
                   メールアドレス
                 </TableCell>
               </Hidden>
+              <Hidden xsDown>
+                <TableCell>
+                  電話番号
+                </TableCell>
+              </Hidden>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -95,6 +100,11 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
                 <Hidden xsDown>
                   <TableCell>
                     {customer.mail}
+                  </TableCell>
+                </Hidden>
+                <Hidden xsDown>
+                  <TableCell>
+                    {customer.telNum}
                   </TableCell>
                 </Hidden>
               </TableRow>

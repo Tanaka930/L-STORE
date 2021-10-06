@@ -33,7 +33,7 @@ const MakeTag = () => {
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
     const formData = new FormData()
-    console.log(formData)
+    // console.log(formData)
 
     formData.append("group_name", group_name)
 

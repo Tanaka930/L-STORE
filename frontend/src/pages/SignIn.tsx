@@ -5,7 +5,14 @@ import { AuthContext } from "App"
 import AlertMessage from "components/utils/AlertMessage"
 import { signIn } from "lib/api/auth"
 import { SignInParams } from "types/index"
-import { Typography, TextField, Card, CardContent, CardHeader, Button, Box } from "@material-ui/core"
+import { Typography,TextField, Card, CardContent, CardHeader, Button, Box, Divider } from "@material-ui/core"
+import ArrowRightIcon from '@material-ui/icons/ArrowRight'
+import LibraryBooksRoundedIcon from '@material-ui/icons/LibraryBooksRounded';
+import LibraryBooksSharpIcon from '@material-ui/icons/LibraryBooksSharp';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import LibraryBooksTwoToneIcon from '@material-ui/icons/LibraryBooksTwoTone'
+import { IconButton } from '@material-ui/core'
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -32,7 +39,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     color: "#007cff",
-    textDecoration: "none"
+    textDecoration: "none",
+    '&:hover': {
+      textDecoration: "underline",
+    },
+  },
+  manualLink: {
+    float: "right",
+  },
+  divider: {
+    marginBottom: 3
   }
 }))
 
@@ -115,21 +131,39 @@ const SignIn = () => {
               サインイン
             </Button>
             <Box textAlign="center" className={classes.box}>
-              <Typography variant="body2">
-                アカウントをお持ちでないですか？ <br />
+              <Typography
+                variant="body2"
+                gutterBottom
+                color="textSecondary"
+              >
+                パスワードを忘れた方は
+                <Link to="/password" className={classes.link}>
+                  こちら
+                </Link>
+              </Typography>
+              <Typography
+                variant="body2"
+                paragraph
+                color="textSecondary"
+              >
+                アカウントをお持ちでない場合&nbsp;
                 <Link to="/signup" className={classes.link}>
                   新規登録
                 </Link>
-                <br />
-                パスワードを忘れた方はこちら <br />
-                <Link to="/password" className={classes.link}>
-                  再設定
-                </Link>
-                <div>
-                  <a href="https://sites.google.com/openstore-japan.com/l-store--manual/%E3%83%9B%E3%83%BC%E3%83%A0" target="_blank">
-                    操作マニュアルについて
-                  </a>
-                </div>
+              </Typography>
+              <Divider className={classes.divider} />
+              <Typography
+                variant="caption"
+              >
+                <a
+                  className={classes.manualLink}
+                  href="https://sites.google.com/openstore-japan.com/l-store--manual/%E3%83%9B%E3%83%BC%E3%83%A0" target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <IconButton>
+                    <LibraryBooksSharpIcon fontSize="small" />
+                  </IconButton>
+                </a>
               </Typography>
             </Box>
           </CardContent>
