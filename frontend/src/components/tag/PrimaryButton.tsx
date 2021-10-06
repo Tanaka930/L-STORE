@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core"
 
 const PrimaryButton = (props: any) => {
   const { children } = props;
- console.log(children)
+//  console.log(children)
   return (
     <>
       <Button

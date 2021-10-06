@@ -14,7 +14,6 @@ export const getCustomers = async ( setCustomers: React.Dispatch<React.SetStateA
   }
   try {
     const res = await client.get(`/tokens/${currentUser?.id}/line_customers`, config)
-    console.log(res.data)
     setCustomers(res.data)
   } catch(err) {
     console.error(err)
