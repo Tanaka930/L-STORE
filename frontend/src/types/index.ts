@@ -66,6 +66,7 @@ export type CustomersParams = {
   userId: number;
   fullName: string;
   mail: string;
+  telNum: number;
 }
 
 // チャット

@@ -64,7 +64,7 @@ const Token = () => {
       setLoginToken(res.data.loginToken)
     }
     catch(e){
-      console.log(e)
+      // console.log(e)
       setWebhookUrl("webhookはまだ設定されていません")
     }
   }

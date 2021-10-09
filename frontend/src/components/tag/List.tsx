@@ -76,7 +76,7 @@ const List = ({ tags, group_name, patch_name, setGroupName, setPatchName, handle
       .then(() => {
         getTags()
         handleEditing(i)
-        console.log('ok')
+        // console.log('ok')
       })
       .catch(error => console.error(error))
     } catch(err) {
