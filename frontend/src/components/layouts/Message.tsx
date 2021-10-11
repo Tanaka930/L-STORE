@@ -74,7 +74,8 @@ const useStyles = makeStyles((theme: Theme) =>
     messageContent: {
       padding: 0,
       margin: 0,
-      wordBreak: "break-all"
+      wordBreak: "break-all",
+      whiteSpace: "pre-wrap",
     },
     icon: {
       width: theme.spacing(5),
