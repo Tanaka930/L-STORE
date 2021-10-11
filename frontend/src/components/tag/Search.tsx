@@ -33,7 +33,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const [tags, setTags] = useState<GetTagsParams[]>([])
-  const { handleSubmit, control } = useForm()
+  const { handleSubmit, control, reset } = useForm()
 
   const onSubmit = async (values: SearchTagValue) => {
     const config = {
@@ -47,6 +47,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
       const res = await client.get(`line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
       if (res.status === 200) {
         handleSearchTag(res.data)
+        reset()
       }
     } catch(err) {
       console.error(err)
