@@ -37,6 +37,7 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
       return customer.name.toLowerCase().match(search)
         || customer.fullName.toLowerCase().match(search)
         || customer.mail.toLowerCase().match(search)
+        || customer.telNum.toLowerCase().match(search)
     })
   }
   
