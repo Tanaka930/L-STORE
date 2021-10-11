@@ -69,10 +69,15 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 9
     },
     wrapText: {
-      width: "100%"
+      width: "100%",
+      marginBottom: 10,
     },
     input: {
       display: 'none',
+    },
+    uploadBtnArea: {
+      display: "flex",
+      alignItems: "flex-end"
     },
     uploadBtn: {
       marginTop: theme.spacing(1),
@@ -86,6 +91,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 300,
       height: 300,
       objectFit: "contain"
+    },
+    sendBtnArea: {
+      display: "flex",
+      alignItems: "flex-end"
     },
     sendBtn: {
       marginTop: theme.spacing(1),
@@ -214,7 +223,10 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
                   uploadImage(e)
                 }}
               />
-              <label htmlFor="icon-button-file">
+              <label
+                htmlFor="icon-button-file"
+                className={classes.uploadBtnArea}
+              >
                 <IconButton className={classes.uploadBtn}
                   color="primary"
                   aria-label="upload picture"
@@ -224,20 +236,23 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
               </label>
               <TextField
                 label="メッセージ"
+                multiline
                 value={message}
                 className={classes.wrapText}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setMessage(e.target.value)
                 }}
               />
-              <IconButton
-                className={classes.sendBtn}
-                color="primary"
-                type="submit"
-                disabled={!message && !image}
-              >
-                <SendIcon />
-              </IconButton>
+              <div className={classes.sendBtnArea}>
+                <IconButton
+                  className={classes.sendBtn}
+                  color="primary"
+                  type="submit"
+                  disabled={!message && !image}
+                >
+                  <SendIcon />
+                </IconButton>
+              </div>
             </form>
           </Paper>
           <ToastContainer
