@@ -1,11 +1,13 @@
-import React, { useCallback, useState, useContext } from "react"
+import { useCallback, useState, useContext, useEffect } from "react"
 import { AuthContext } from "App"
 import { postMessage } from "lib/api/message"
-import { Container, TextField, Card, CardContent, CardHeader, Button, Box, IconButton } from "@material-ui/core"
+import { getTags } from "lib/api/tag"
+import { Container, TextField, Card, CardContent, CardHeader, Button, Box, IconButton, MenuItem } from "@material-ui/core"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { GetTagsParams } from "types/index"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -56,6 +58,8 @@ const Message = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
   const [title, setTitle] = useState<string>("")
+  const [tagList, setTagList] = useState<GetTagsParams[]>([])
+  const [tag, setTag] = useState<string>("")
   const [body, setBody] = useState<string>("")
   const [image, setImage] = useState<File>()
   const [preview, setPreview] = useState("")
@@ -69,21 +73,20 @@ const Message = () => {
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
     const formData = new FormData()
-
     formData.append("title", title)
     formData.append("body", body)
     if (image) formData.append("image", image)
-
     return formData
   }
 
   const handleCreatePost  = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try { 
+    try {
       const data = createFormData()
       const res = await postMessage(data)
-      if(res.status === 200){
+      if(res.status === 200) {
         toast.success("送信されました")
+        setBody("")
       } else {
         toast.error("送信に失敗しました")
         console.error(res.status + "error")
@@ -94,18 +97,29 @@ const Message = () => {
     }
   }
 
+  useEffect(() => {
+    getTags(setTagList)
+  }, [])
+
+  const initialTagData = {
+    groupId: 0,
+    groupName: "全体",
+    groupCount: 0,
+  }
+  
+  const initialTagList = [initialTagData, ...tagList]
+
   return (
     <>
       {
         isSignedIn && currentUser ? (
           <>
-            {/* <h2 className={classes.welcome}>ようこそ {currentUser?.name}さん</h2> */}
             <Container maxWidth={false}>
               <form autoComplete="off" onSubmit={handleCreatePost}>
                 <Card className={classes.card}>
                   <CardHeader className={classes.header} title="公式ライン投稿" />
                   <CardContent>
-                    <TextField
+                    {/* <TextField
                       variant="outlined"
                       required
                       fullWidth
@@ -115,7 +129,24 @@ const Message = () => {
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setTitle(e.target.value)
                       }}
-                    />
+                    /> */}
+                    <TextField
+                      name="groupId"
+                      label="送信先(タグ指定)"
+                      variant="outlined"
+                      fullWidth
+                      select
+                      value={tag}
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                        setTag(e.target.value)
+                      }}
+                    >
+                      {initialTagList.map((list) => (
+                        <MenuItem key={list.groupId} value={list.groupId}>
+                          {list.groupName}
+                        </MenuItem>
+                      ))}
+                    </TextField>
                     <TextField
                       id="outlined-multiline-static"
                       variant="outlined"
