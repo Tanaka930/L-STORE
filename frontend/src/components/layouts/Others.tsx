@@ -32,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: 24
       }
     },
+    memoBody: {
+      whiteSpace: "pre-wrap",
+    },
   }),
 )
 
@@ -91,6 +94,7 @@ const Others = ({ value, index, userId }: TabPanelProps) => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, config)
       if (response.status === 200) {
         setMemos(response.data)
+        console.log(response.data)
       }
     } catch(err) {
       console.error(err)
@@ -213,6 +217,7 @@ const Others = ({ value, index, userId }: TabPanelProps) => {
                           <Box sx={{pt: 2, px:2}}>
                             <Typography
                               color="textPrimary"
+                              className={classes.memoBody}
                             >
                               {memo.body}
                             </Typography>

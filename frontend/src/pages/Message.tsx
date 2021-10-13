@@ -53,13 +53,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }))
 
-// とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Message = () => {
   const {isSignedIn, currentUser } = useContext(AuthContext)
   const classes = useStyles()
   const [title, setTitle] = useState<string>("")
   const [tagList, setTagList] = useState<GetTagsParams[]>([])
-  const [tag, setTag] = useState<string>("")
+  const [groupId, setGroupId] = useState<string>("0")
   const [body, setBody] = useState<string>("")
   const [image, setImage] = useState<File>()
   const [preview, setPreview] = useState("")
@@ -83,7 +82,7 @@ const Message = () => {
     e.preventDefault()
     try {
       const data = createFormData()
-      const res = await postMessage(data)
+      const res = await postMessage(data, groupId)
       if(res.status === 200) {
         toast.success("送信されました")
         setBody("")
@@ -136,9 +135,9 @@ const Message = () => {
                       variant="outlined"
                       fullWidth
                       select
-                      value={tag}
+                      value={groupId}
                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-                        setTag(e.target.value)
+                        setGroupId(e.target.value)
                       }}
                     >
                       {initialTagList.map((list) => (

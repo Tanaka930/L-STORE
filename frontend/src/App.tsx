@@ -8,6 +8,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 
 import GlobalStyles from 'components/GlobalStyles';
 import CommonLayout from "components/layouts/CommonLayout"
+// import TopPage from "pages/index"   ログイン前のトップページ作る場合
 import Home from "pages/Home"
 import SignUp from "pages/SignUp"
 import SignIn from "pages/SignIn"
@@ -82,6 +83,7 @@ const App = () => {
           <GlobalStyles />
           <CommonLayout>
             <Switch>
+              {/* <Route exact path="/" component={TopPage} /> */}
               <Route exact path="/signup" component={SignUp} />
               <Route exact path="/signin" component={SignIn} />
               <Route exact path="/password" component={PasswordReset} />
