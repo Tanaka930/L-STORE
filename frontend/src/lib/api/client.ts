@@ -1,5 +1,5 @@
-import applyCaseMiddleware from 'axios-case-converter';
-import axios from 'axios';
+import applyCaseMiddleware from 'axios-case-converter'
+import axios from 'axios'
 
 // applyCaseMiddleware:
 // axiosで受け取ったレスポンスの値をスネークケース→キャメルケースに変換
@@ -15,6 +15,6 @@ const client = applyCaseMiddleware(
     baseURL: process.env.REACT_APP_API_URL,
   }),
   options
-);
+)
 
 export default client
