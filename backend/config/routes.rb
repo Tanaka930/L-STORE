@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
       post '/users/:id/create_subscription', to: 'stripes#create_subscription'
 
-      post '/messages/target_message', to: 'messages#target_message'
+      post '/messages/:group_id/target_message', to: 'messages#target_message'
 
       # end
       resources :messages
