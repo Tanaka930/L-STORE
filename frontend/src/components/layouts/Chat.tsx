@@ -201,10 +201,15 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
     }
   })
   const today = moment().format("YYYY/MM/DD");
-  const apple = chats[95]
-  console.log(apple)
+  // const apple = chats
+  // console.log(apple)
   
   let prev = "";
+
+  const DateReverse = (createdAt: any) => {
+    prev = moment(createdAt).format("YYYY/MM/DD");
+  }
+
 
   return (
     <>
@@ -241,9 +246,10 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
                         icon={customerIcon} />
                     )}
                   </span>
-                  <span className={classes.none}>
+                  {/* <span className={classes.none}>
                     {prev = moment(chat.createdAt).format("YYYY/MM/DD")}
-                  </span>
+                  </span> */}
+                  {DateReverse(chat.createdAt)}
                 </>
               ))}
               <div ref={scrollBottomRef}/>
