@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { MessageLeft, MessageRight } from "./Message"
 import { TabPanelProps, ChatDatas } from "types/index"
+import moment from 'moment'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -99,6 +100,21 @@ const useStyles = makeStyles((theme: Theme) =>
     sendBtn: {
       marginTop: theme.spacing(1),
     },
+    date: {
+      margin: "5px auto 10px",
+      padding: "3px 10px",
+      borderRadius: "30px",
+      textAlign: "center",
+      backgroundColor: "#333",
+      color: "#fff",
+      // fontWeight: "bold"
+    },
+    dailyBox: {
+      display: "flex",
+    },
+    none: {
+      display: "none"
+    }
   })
 )
 
@@ -112,6 +128,8 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
   const [flg, setFlg] = useState<boolean>(false)
   const { currentUser } = useContext(AuthContext)
   const scrollBottomRef = useRef<HTMLDivElement>(null)
+
+  // const [created, setCreated] = useState<any>("")
 
   const uploadImage = useCallback((e) => {
     const file = e.target.files[0]
@@ -182,6 +200,11 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
       scrollBottomRef?.current?.scrollIntoView()
     }
   })
+  const today = moment().format("YYYY/MM/DD");
+  const apple = chats[95]
+  console.log(apple)
+  
+  let prev = "";
 
   return (
     <>
@@ -190,23 +213,38 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
           <Paper className={classes.paper}>
             <Paper id="style-1" className={classes.messagesBody}>
               {chats.map((chat, index) => (
-                <span key={index}>
-                  {chat.sendFlg === "0" && (
-                    <MessageRight
-                      message={chat.body}
-                      image={chat.chatImage.url}
-                      createdAt={chat.createdAt}
-                    />
-                  )}
-                  {chat.sendFlg === "1" && (
-                    <MessageLeft
-                      message={chat.body}
-                      image={chat.chatImage.url}
-                      createdAt={chat.createdAt}
-                      icon={customerIcon}
-                    />
-                  )}
-                </span>
+                <>
+                  <div className={classes.dailyBox}>
+                    {moment(chat.createdAt).format("YYYY/MM/DD") !== prev && moment(chat.createdAt).format("YYYY/MM/DD") === today &&
+                    (
+                      <span className={classes.date}>今日</span>
+                    )
+                    }
+                    {moment(chat.createdAt).format("YYYY/MM/DD") !== prev && moment(chat.createdAt).format("YYYY/MM/DD") !== today &&
+                    (
+                      <span className={classes.date}>{moment(chat.createdAt).format("MM/DD")}</span>
+                    )
+                    }
+                  </div>
+                  <span key={index}>
+                    {chat.sendFlg === "0" && (
+                      <MessageRight
+                        message={chat.body}
+                        image={chat.chatImage.url}
+                        createdAt={chat.createdAt} />
+                    )}
+                    {chat.sendFlg === "1" && (
+                      <MessageLeft
+                        message={chat.body}
+                        image={chat.chatImage.url}
+                        createdAt={chat.createdAt}
+                        icon={customerIcon} />
+                    )}
+                  </span>
+                  <span className={classes.none}>
+                    {prev = moment(chat.createdAt).format("YYYY/MM/DD")}
+                  </span>
+                </>
               ))}
               <div ref={scrollBottomRef}/>
             </Paper>
