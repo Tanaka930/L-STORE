@@ -47,7 +47,7 @@ const SearchTag = ({handleSearchTag}: SearchTagProps) => {
       const res = await client.get(`line_customer/${currentUser?.id}/search/group/${values.groupId}`, config)
       if (res.status === 200) {
         handleSearchTag(res.data)
-        reset()
+        // reset()
       }
     } catch(err) {
       console.error(err)
