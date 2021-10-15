@@ -34,7 +34,7 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
 
   if (search.length > 0) {
     _customers = _customers.filter((customer) => {
-      console.log(customer)
+      // console.log(customer)
 
       let customerName:any = ''
       let customerFullName: any = ''
