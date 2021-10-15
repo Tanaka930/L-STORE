@@ -34,10 +34,31 @@ const List = ({ customers, searchKeyword }: CustomerListProps) => {
 
   if (search.length > 0) {
     _customers = _customers.filter((customer) => {
-      return customer.name.toLowerCase().match(search)
-        || customer.fullName.toLowerCase().match(search)
-        || customer.mail.toLowerCase().match(search)
-        || customer.telNum.toLowerCase().match(search)
+      console.log(customer)
+
+      let customerName:any = ''
+      let customerFullName: any = ''
+      let customerMail: any = ''
+      let customerTelNum: any = ''
+
+      if (customer.name) {
+        customerName = customer.name.toLowerCase().match(search)
+      }
+
+      if (customer.fullName) {
+        customerFullName = customer.fullName.toLowerCase().match(search)
+      }
+
+      if (customer.mail) {
+        customerMail = customer.mail.toLowerCase().match(search)
+      }
+
+      if (customer.telNum) {
+        customerTelNum = customer.telNum.toLowerCase().match(search)
+      }
+
+      return customerName || customerFullName || customerMail || customerTelNum
+
     })
   }
   

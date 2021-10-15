@@ -217,7 +217,7 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
         <div className={classes.container}>
           <Paper className={classes.paper}>
             <Paper id="style-1" className={classes.messagesBody}>
-              {chats.map((chat, index) => (
+              {chats.map((chat) => (
                 <>
                   <div className={classes.dailyBox}>
                     {moment(chat.createdAt).format("YYYY/MM/DD") !== prev && moment(chat.createdAt).format("YYYY/MM/DD") === today &&
@@ -231,7 +231,7 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
                     )
                     }
                   </div>
-                  <span key={index}>
+                  <span key={chat.id}>
                     {chat.sendFlg === "0" && (
                       <MessageRight
                         message={chat.body}
