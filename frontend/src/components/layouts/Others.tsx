@@ -94,7 +94,7 @@ const Others = ({ value, index, userId }: TabPanelProps) => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/line_customers/${userId}/memos`, config)
       if (response.status === 200) {
         setMemos(response.data)
-        console.log(response.data)
+        // console.log(response.data)
       }
     } catch(err) {
       console.error(err)
