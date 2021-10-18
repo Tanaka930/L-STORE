@@ -14,7 +14,7 @@ import { Box,
          TextField
 } from "@material-ui/core"
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import { Tag, CurrentTag, TabPanelProps } from '../../types/index'
+import { Tag, CurrentTag } from '../../types/index'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import { config } from "lib/api/config"
 import Cookies from "js-cookie"
@@ -45,7 +45,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const MenuTags = ({ value, index, userId }: TabPanelProps) => {
+type Props = {
+  userId: string
+}
+
+const MenuTags = ({ userId }: Props) => {
   const classes = useStyles()
   const { handleSubmit, control, reset } = useForm()
   const [tags, setTags] =useState<Tag[]>([])
@@ -115,7 +119,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
 
   return (
     <>
-      {value === index && (
+      {
         <Box style={{padding: '16px', backgroundColor: '#fff', marginTop: '24px' }}>
           <Box sx={{ mb: 3 }}>
             <form
@@ -178,7 +182,7 @@ const MenuTags = ({ value, index, userId }: TabPanelProps) => {
             handleDeleteButton={handleDeleteButton}
           />
         </Box>
-      )}
+      }
     </>
   )
 }

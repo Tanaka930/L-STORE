@@ -45,10 +45,22 @@ const LineMenu = () => {
           </Tabs>
         </Toolbar>
       </AppBar>
-      <Info value={value} index={0} userId={id} />
+      {(() => {
+        switch(value) {
+          case 0:
+            return <Info userId={id} />
+          case 1:
+            return <Chat userId={id} />
+          case 2:
+            return <MenuTags userId={id} />
+          case 3:
+            return <Others userId={id} />
+        }
+      })()}
+      {/* <Info value={value} index={0} userId={id} />
       <Chat value={value} index={1} userId={id} />
       <MenuTags value={value} index={2} userId={id} />
-      <Others value={value} index={3} userId={id} />
+      <Others value={value} index={3} userId={id} /> */}
     </>
   )
 }

@@ -10,7 +10,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { MessageLeft, MessageRight } from "./Message"
-import { TabPanelProps, ChatDatas } from "types/index"
+import { ChatDatas } from "types/index"
 import moment from 'moment'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -118,7 +118,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const Chat = ({ value, index, userId }: TabPanelProps) => {
+type Props = {
+  userId: string
+}
+
+const Chat = ({ userId }: Props) => {
   const classes = useStyles()
   const [chats, setChats] = useState<ChatDatas[]>([])
   const [message, setMessage] = useState<string>("")
@@ -213,12 +217,12 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
 
   return (
     <>
-      { value === index && (
+      {
         <div className={classes.container}>
           <Paper className={classes.paper}>
             <Paper id="style-1" className={classes.messagesBody}>
-              {chats.map((chat) => (
-                <>
+              {chats.map((chat, index) => (
+                <div key={index}>
                   <div className={classes.dailyBox}>
                     {moment(chat.createdAt).format("YYYY/MM/DD") !== prev && moment(chat.createdAt).format("YYYY/MM/DD") === today &&
                     (
@@ -250,7 +254,7 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
                     {prev = moment(chat.createdAt).format("YYYY/MM/DD")}
                   </span> */}
                   {DateReverse(chat.createdAt)}
-                </>
+                </div>
               ))}
               <div ref={scrollBottomRef}/>
             </Paper>
@@ -316,7 +320,7 @@ const Chat = ({ value, index, userId }: TabPanelProps) => {
             </Box>
           }
         </div>
-      )}
+      }
     </>
   )
 }
