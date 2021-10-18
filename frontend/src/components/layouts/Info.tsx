@@ -9,7 +9,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { TabPanelProps } from "../../types/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,7 +47,11 @@ type InfoFormValues = {
   tel: string
 }
 
-const Info = ({ value, index, userId }: TabPanelProps) => {
+type Props = {
+  userId: string
+}
+
+const Info = ({ userId }: Props) => {
   const classes = useStyles()
   const { currentUser } = useContext(AuthContext)
   const { handleSubmit, control, watch, reset } = useForm()
@@ -140,7 +143,7 @@ const Info = ({ value, index, userId }: TabPanelProps) => {
 
   return (
     <>
-      {value === index && (
+      {
         <Box py={3} className={classes.root}>
           <Container maxWidth="sm">
             <Card>
@@ -511,7 +514,7 @@ const Info = ({ value, index, userId }: TabPanelProps) => {
             </Card>
           </Container>
         </Box>
-      )}
+      }
     </>
   )
 }

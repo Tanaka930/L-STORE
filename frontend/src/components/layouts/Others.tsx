@@ -11,7 +11,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
-import { TabPanelProps } from "../../types/index"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,7 +47,11 @@ type MemoFormValues = {
   body: string
 }
 
-const Others = ({ value, index, userId }: TabPanelProps) => {
+type Props = {
+  userId: string
+}
+
+const Others = ({ userId }: Props) => {
   const [edit, setEdit] = useState(false)
   const [memos, setMemos] =useState<MemoParams[]>([])
   const [memoId, setMemoId] = useState<number | undefined>()
@@ -146,7 +149,7 @@ const Others = ({ value, index, userId }: TabPanelProps) => {
 
   return (
     <>
-      {value === index && (
+      {
         <Box py={3} className={classes.root}>
           <Container maxWidth="sm">
             <Card>
@@ -262,7 +265,7 @@ const Others = ({ value, index, userId }: TabPanelProps) => {
             </Card>
           </Container>
         </Box>
-      )}
+      }
     </>
   )
 }
