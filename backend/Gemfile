@@ -67,6 +67,3 @@ gem 'stripe'
 
 # サブスクリプションの決済webhook用のgem
 gem 'stripe_event'
-
-# データ一括登録用のgem
-gem 'activerecord-import'
