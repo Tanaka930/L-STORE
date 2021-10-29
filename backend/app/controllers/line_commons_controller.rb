@@ -67,6 +67,7 @@ class LineCommonsController < ApplicationController
         for i in 0..image_count-1 do
           # LINEに画像情報を問い合わせし取得
           img_file = line.lineImgSaves(request, i)
+          # 以下処理は修正する必要あり
           # インサートする
           insert(trg_line_user.id, nil,img_file,"1")
         end
