@@ -1,11 +1,11 @@
 # L-STORE
 
-# Frontend: React
-# FrontServer: AWS S3 CloudFront
+Frontend: React
+FrontServer: AWS S3 CloudFront
 
-# Backend: Ruby on Rails Apiモード
-# BackServer: AWS EC2
+Backend: Ruby on Rails Apiモード
+BackServer: AWS EC2
 
-# Database: MySQL
+Database: MySQL
 
-# api: LINEメッセージングapi
+api: LINEメッセージングapi
