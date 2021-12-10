@@ -10,6 +10,4 @@
 
 - Database: MySQL
 
-- api: LINEメッセージングapi
-- 　　　　　　　　　　stripe
-- 　　　　　　　　　　microCMS
+- api: LINEメッセージングapi, stripe, microCMS, sendGrid
