@@ -1,6 +1,6 @@
 ## L-STORE
 
-- Frontend: React
+- Frontend: React -TypeScript
 
 - FrontServer: AWS S3 CloudFront
 
@@ -11,3 +11,5 @@
 - Database: MySQL
 
 - api: LINEメッセージングapi
+- 　　　　　　　　　　stripe
+- 　　　　　　　　　　microCMS
