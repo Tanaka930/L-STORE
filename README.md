@@ -10,4 +10,6 @@
 
 - Database: MySQL
 
+- restApi接続: axios
+
 - api: LINEメッセージングapi, stripe, microCMS, sendGrid
